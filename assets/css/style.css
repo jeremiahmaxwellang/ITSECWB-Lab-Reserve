@@ -294,4 +294,16 @@
     font-weight: 400;
     white-space: nowrap;
   }
-  
+
+.profile-divider {
+  width: 391px; 
+  height: 1px; 
+  left: 16px; 
+  top: 211px; /* CHANGE LATER: cannot have the same top positioning for every divider */
+  position: absolute; 
+  background: rgba(255, 255, 255, 0); 
+  justify-content: center; 
+  align-items: center; 
+  gap: 12px; 
+  display: inline-flex"
+}
