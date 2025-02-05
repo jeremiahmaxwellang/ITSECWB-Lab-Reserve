@@ -34,8 +34,8 @@
   
   .register-html .register-image {
     border-radius: 23.16;
-    width: 852.75px;
-    height: 994.88px;
+    width: 470px;
+    height: 1078px;
     left: 0;
     position: absolute;
     top: 0;
@@ -80,8 +80,8 @@
   }
   
   .register-html .register-frame {
-    width: 800px;
-    height: 1000px;
+    width: 1000px;
+    height: 1078px;
     left: 425px;
     background-color: #ffffff;
     border-radius: 30px;
