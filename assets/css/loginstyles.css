@@ -1,0 +1,227 @@
+/* General Styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Newsreader', serif;
+    background: white;
+}
+
+/* Container */
+.container {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 5.26px rgba(0, 0, 0, 0) solid;
+}
+
+/* Input Fields */
+.input-field {
+    width: 415.85px;
+    height: 47.38px;
+    background: #F3F3F3;
+    border-radius: 15.79px;
+    position: absolute;
+}
+
+.input-field.username {
+    left: 966.09px;
+    top: 442.17px;
+}
+
+.input-field.password {
+    left: 966.09px;
+    top: 510.60px;
+}
+
+.input-field::placeholder {
+    color: #B4B4B4;
+    font-size: 21.06px;
+    font-family: 'Newsreader', serif;
+    font-weight: 500;
+    line-height: 21.06px;
+}
+
+/* Dividers */
+.divider {
+    width: 380.05px;
+    height: 0px;
+    border: 1.05px #377684 solid;
+    opacity: 0.50;
+    position: absolute;
+}
+
+.divider.username {
+    left: 981.88px;
+    top: 489.54px;
+}
+
+.divider.password {
+    left: 981.88px;
+    top: 557.97px;
+}
+
+/* Labels */
+.label {
+    color: #B4B4B4;
+    font-size: 21.06px;
+    font-family: 'Newsreader', serif;
+    font-weight: 500;
+    line-height: 21.06px;
+    position: absolute;
+}
+
+.label.username {
+    left: 1023.99px;
+    top: 457.96px;
+}
+
+.label.password {
+    left: 1023.99px;
+    top: 524.28px;
+}
+
+/* Icons */
+.icon {
+    width: 17.90px;
+    height: 20px;
+    background: #377684;
+    position: absolute;
+}
+
+.icon.username {
+    left: 986.09px;
+    top: 457.96px;
+}
+
+.icon.password {
+    left: 986.09px;
+    top: 524.28px;
+}
+
+/* Text Sections */
+.text-section {
+    color: #4F4F4F;
+    font-size: 22.11px;
+    font-family: 'Newsreader', serif;
+    font-weight: 400;
+    line-height: 22.11px;
+    position: absolute;
+}
+
+.text-section.details {
+    left: 1027px;
+    top: 336px;
+}
+
+.text-section.remember-me {
+    font-size: 18.95px;
+    font-weight: 500;
+    left: 999.78px;
+    top: 574.82px;
+}
+
+.text-section.forgot-password {
+    font-size: 18.95px;
+    font-weight: 500;
+    left: 1234.18px;
+    top: 572.71px;
+}
+
+.text-section.sign-up {
+    font-size: 18.95px;
+    font-weight: 400;
+    left: 1023.26px;
+    top: 677.99px;
+}
+
+/* Login Button */
+.login-button {
+    width: 408.48px;
+    height: 47.38px;
+    background: #377684;
+    border-radius: 15.79px;
+    border: 1px #377684 solid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 970.30px;
+    top: 622.19px;
+    color: #F5F5F5;
+    font-size: 16px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    line-height: 16px;
+}
+
+/* Image Section */
+.image-section {
+    width: 852.75px;
+    height: 994.88px;
+    position: absolute;
+    left: 47.38px;
+    top: 42.11px;
+    border-radius: 23.16px;
+    background: #748285;
+    opacity: 0.60;
+}
+
+.image-section img {
+    width: 100%;
+    height: 100%;
+    border-radius: 23.16px;
+}
+
+/* Header */
+.header {
+    width: 940.13px;
+    padding-top: 23.16px;
+    padding-left: 28.43px;
+    padding-right: 696.06px;
+    position: absolute;
+    left: 58.96px;
+    top: 42.11px;
+    display: flex;
+    align-items: center;
+}
+
+.header img {
+    width: 72.64px;
+    height: 72.64px;
+}
+
+.header .logo-text {
+    color: #F5F5F5;
+    font-size: 33.69px;
+    font-family: 'Newsreader', serif;
+    font-weight: 500;
+    line-height: 33.69px;
+}
+
+/* Title */
+.title {
+    width: 357px;
+    height: 38px;
+    position: absolute;
+    left: 999px;
+    top: 281px;
+}
+
+.title .sign-in {
+    color: black;
+    font-size: 37.90px;
+    font-family: 'Newsreader', serif;
+    font-weight: 700;
+    line-height: 37.90px;
+}
+
+.title .labyrinth {
+    color: #377684;
+    font-size: 37.90px;
+    font-family: 'Newsreader', serif;
+    font-weight: 700;
+    line-height: 37.90px;
+}
