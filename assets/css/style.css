@@ -617,62 +617,50 @@
 }
 
 .dashboard-html .current-reservations {
-  position: absolute;
+  position: relative;
   width: 875px;
   height: 309px;
   top: 39px;
   left: 40px;
-  background-color: #363636;
   border-radius: 4px;
   overflow: hidden;
-  border: 1px solid;
-  border-color: #5b5b5b;
+  border: 3px solid;
 }
 
-.dashboard-html .row {
-  top: 0;
-  left: 0;
-  background-color: #ffffff;
-  display: flex;
-  align-items: flex-start;
+.dashboard-html th, 
+.dashboard-html td {
+  padding: 5px;
 }
 
-.dashboard-html .cell {
-  background-color: #ffffff;
-  border-color: #fffcfc;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  position: relative;
-  flex: 1;
-  align-self: stretch;
-  flex-grow: 1;
-  border-top-width: 1px;
-  border-top-style: solid;
-  border-left-width: 1px;
-  border-left-style: solid;
-}
-
-.dashboard-html .content {
-  display: flex;
-  align-items: flex-start;
-  padding: 10px 12px;
-  width: 100%;
-  flex: 0 0 auto;
-  position: relative;
-  align-self: stretch;
-}
-
-.dashboard-html .text {
+.dashboard-html .reservationHeader {
   font-family: "Outfit-Regular", Helvetica;
   font-size: 24px;
-  line-height: 31.2px;
   position: relative;
-  flex: 1;
-  margin-top: -1.00px;
   font-weight: 400;
   color: #000000;
-  letter-spacing: 0;
+  border-bottom: 3px solid black;
+  padding: 5px;
+}
+
+.dashboard-html .table1Header {
+  font-family: "Outfit-Regular", Helvetica;
+  font-size: 20px;
+  position: relative;
+  color: #000000;
+  border-right: 3px solid black;
+  border-left: 3px solid black;
+}
+
+/* Remove left border for the first column */
+.dashboard-html th:first-child, 
+.dashboard-html td:first-child {
+  border-left: none;
+}
+
+/* Remove right border for the last column */
+.dashboard-html th:last-child, 
+.dashboard-html td:last-child {
+  border-right: none;
 }
 
 .dashboard-html .row-2 {
@@ -699,17 +687,6 @@
   border-left-style: solid;
 }
 
-.dashboard-html .text-2 {
-  font-family: "Outfit-Regular", Helvetica;
-  font-size: 20px;
-  line-height: 26.0px;
-  position: relative;
-  flex: 1;
-  margin-top: -1.00px;
-  font-weight: 400;
-  color: #000000;
-  letter-spacing: 0;
-}
 
 .dashboard-html .overlap-group-2 {
   position: absolute;
