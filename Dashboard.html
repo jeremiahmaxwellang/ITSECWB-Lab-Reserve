@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="globals.css" />
-    <link rel="stylesheet" href="styleguide.css" />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="assets/css/global.css" />
+    <link rel="stylesheet" href="assets/css/styleguide.css" />
+    <link rel="stylesheet" href="assets/css/style.css" />
   </head>
   <body>
     <div class="dashboard-html">
@@ -15,72 +15,42 @@
             <p class="p">Don’t get lost in scheduling — Book easily!</p>
             <div class="overlap-group">
               <div class="reservations"><div class="rectangle"></div></div>
+
+              <!-- Current Reservations Table -->
               <div class="current-reservations">
-                <div class="row">
-                  <div class="cell">
-                    <div class="content"><div class="text">Current Reservations:</div></div>
-                  </div>
-                </div>
-                <div class="row-2">
-                  <div class="content-wrapper">
-                    <div class="content"><div class="text-2">Room Number:</div></div>
-                  </div>
-                  <div class="content-wrapper">
-                    <div class="content"><div class="text-2">Seat Number:</div></div>
-                  </div>
-                  <div class="content-wrapper">
-                    <div class="content"><p class="text-2">Date and Time of Reservation:</p></div>
-                  </div>
-                  <div class="content-wrapper">
-                    <div class="content"><div class="text-2">Edit your Lab Reservation:</div></div>
-                  </div>
-                </div>
-                <div class="overlap-group-2">
-                  <div class="row-3">
-                    <div class="content-wrapper">
-                      <div class="content"><div class="text-3">GK01</div></div>
-                    </div>
-                    <div class="content-wrapper">
-                      <div class="content"><div class="text-3">Seat #01</div></div>
-                    </div>
-                    <div class="content-wrapper">
-                      <div class="content"><p class="text-4">August 5, 2025 - 01:01:01 PM</p></div>
-                    </div>
-                    <div class="content-wrapper"><div class="content"></div></div>
-                  </div>
-                  <button class="edit-button"><button class="button">Edit</button></button>
-                </div>
-                <div class="overlap-2">
-                  <div class="row-3">
-                    <div class="content-wrapper">
-                      <div class="content"><div class="text-3">GK01</div></div>
-                    </div>
-                    <div class="content-wrapper">
-                      <div class="content"><div class="text-3">Seat #01</div></div>
-                    </div>
-                    <div class="content-wrapper">
-                      <div class="content"><p class="text-3">August 5, 2025 - 01:01:01 PM</p></div>
-                    </div>
-                    <div class="content-wrapper"><div class="content"></div></div>
-                  </div>
-                  <button class="edit-button-2"><button class="button-2">Edit</button></button>
-                </div>
-                <div class="overlap-3">
-                  <div class="row-3">
-                    <div class="content-wrapper">
-                      <div class="content"><div class="text-3">GK01</div></div>
-                    </div>
-                    <div class="content-wrapper">
-                      <div class="content"><div class="text-3">Seat #01</div></div>
-                    </div>
-                    <div class="content-wrapper">
-                      <div class="content"><p class="text-3">August 5, 2025 - 01:01:01 PM</p></div>
-                    </div>
-                    <div class="content-wrapper"><div class="content"></div></div>
-                  </div>
-                  <button class="edit-button"><button class="button-2">Edit</button></button>
-                </div>
+                <h2>Current Reservations:</h2>
+                <table class="current-reservations">
+                  <tr class="row-1">
+                    <th>Room Number</th>
+                    <th>Seat Number</th>
+                    <th>Date and Time of Reservation</th>
+                    <th>Edit your Lab Reservation</th>
+                  </tr>
+                  
+                  <tr class="row-2">
+                    <td>GK01</td>
+                    <td>Seat #01</td>
+                    <td>August 5, 2025 - 01:01:01 PM</td>
+                    <td><button class="edit-button">Edit</button></td>
+                  </tr>
+                  
+                  <tr class="row-3">
+                    <td>GK01</td>
+                    <td>Seat #01</td>
+                    <td>August 5, 2025 - 01:01:01 PM</td>
+                    <td><button class="edit-button">Edit</button></td>
+                  </tr>
+    
+                  <tr>
+                    <td>GK01</td>
+                    <td>Seat #01</td>
+                    <td>August 5, 2025 - 01:01:01 PM</td>
+                    <td><button class="edit-button">Edit</button></td>
+                  </tr>
+                </table>
               </div>
+
+              <!-- Recent Reservations Table -->
               <div class="recent-reservations">
                 <div class="row-4">
                   <div class="cell">
@@ -149,9 +119,13 @@
           <div class="right-side">
             <div class="overlap-4">
               <p class="text-wrapper-2">Reserve your Laboratory Slot now!</p>
-              <button class="button-3"><button class="button-2">Reserve Now!</button></button>
+              <button class="button-3">
+                <span class="button-2">Reserve Now!</span>
+                </button>
             </div>
           </div>
+
+          <!-- System Calendar and Time -->
           <div class="date-picker">
             <div class="date-picker-header">
               <div class="frame">
@@ -239,7 +213,7 @@
               </div>
             </div>
           </div>
-          <img class="untitled-design" src="assets/iamges/untitled-design-3-3.png" />
+          <img class="untitled-design" src="assets/images/Classroom-Art.png" />
           <div class="untitled-design-2"></div>
         </div>
         <header class="header">
