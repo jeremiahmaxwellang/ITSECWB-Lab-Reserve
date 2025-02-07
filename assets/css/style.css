@@ -552,8 +552,9 @@
 
 .dashboard-html .left-side {
   position: absolute;
+  overflow: visible;
   width: 961px;
-  height: 783px;
+  min-height: 500px;
   top: 38px;
   left: 0;
 }
@@ -589,6 +590,7 @@
 
 .dashboard-html .overlap-group {
   position: absolute;
+  overflow: visible;
   width: 955px;
   height: 696px;
   top: 97px;
@@ -616,20 +618,23 @@
   border-radius: 24px;
 }
 
-.dashboard-html .current-reservations {
+.dashboard-html .reservationContainer {
   position: relative;
   width: 875px;
-  height: 309px;
+  min-height: 100px;
   top: 39px;
-  left: 40px;
   border-radius: 4px;
-  overflow: hidden;
+  overflow: visible;
   border: 3px solid;
+  display: flex;
+  flex-direction: column;
 }
 
 .dashboard-html th, 
 .dashboard-html td {
   padding: 5px;
+  border-right: 3px solid black;
+  border-left: 3px solid black;
 }
 
 .dashboard-html .reservationHeader {
@@ -639,7 +644,8 @@
   font-weight: 400;
   color: #000000;
   border-bottom: 3px solid black;
-  padding: 5px;
+  padding: 12px;
+  text-align: left;
 }
 
 .dashboard-html .table1Header {
@@ -647,8 +653,17 @@
   font-size: 20px;
   position: relative;
   color: #000000;
-  border-right: 3px solid black;
-  border-left: 3px solid black;
+  text-align: left;
+  padding: 10px;
+}
+
+.dashboard-html .tableCell {
+  font-family: "Outfit-Regular", Helvetica;
+  font-size: 16px;
+  position: relative;
+  color: #000000;
+  border: 3px solid black;
+  padding: 10px;
 }
 
 /* Remove left border for the first column */
@@ -663,12 +678,23 @@
   border-right: none;
 }
 
-.dashboard-html .row-2 {
-  top: 51px;
-  left: 0;
-  background-color: #ffffff;
+.dashboard-html .edit-button {
+  box-sizing: border-box;
   display: flex;
-  align-items: flex-start;
+  width: 120px;
+  justify-content: center;
+  margin: auto;
+  padding: var(--size-space-300);
+  border-radius: var(--size-radius-200);
+  color: white;
+  background-color: #2C2C2C;
+  border: 1px solid;
+  border-color: #585858;
+}
+
+.dashboard-html .edit-button:hover {
+  color:black;
+  background-color: #E3E3E3;
 }
 
 .dashboard-html .content-wrapper {
@@ -687,7 +713,6 @@
   border-left-style: solid;
 }
 
-
 .dashboard-html .overlap-group-2 {
   position: absolute;
   width: 875px;
@@ -705,49 +730,6 @@
   background-color: #ffffff;
   display: flex;
   align-items: flex-start;
-}
-
-.dashboard-html .text-3 {
-  font-family: "Outfit-Regular", Helvetica;
-  font-size: 16px;
-  line-height: 20.8px;
-  position: relative;
-  flex: 1;
-  margin-top: -1.00px;
-  font-weight: 400;
-  color: #000000;
-  letter-spacing: 0;
-}
-
-.dashboard-html .text-4 {
-  font-family: "Inter-Regular", Helvetica;
-  font-size: 16px;
-  line-height: 20.8px;
-  position: relative;
-  flex: 1;
-  margin-top: -1.00px;
-  font-weight: 400;
-  color: #000000;
-  letter-spacing: 0;
-}
-
-.dashboard-html .edit-button {
-  all: unset;
-  box-sizing: border-box;
-  display: flex;
-  width: 119px;
-  align-items: center;
-  justify-content: center;
-  gap: var(--size-space-200);
-  padding: var(--size-space-300);
-  position: absolute;
-  top: 11px;
-  left: 707px;
-  background-color: var(--color-background-brand-default);
-  border-radius: var(--size-radius-200);
-  overflow: hidden;
-  border: 1px solid;
-  border-color: #585858;
 }
 
 .dashboard-html .button {
@@ -817,41 +799,6 @@
   left: 0;
 }
 
-.dashboard-html .recent-reservations {
-  display: flex;
-  flex-direction: column;
-  width: 875px;
-  align-items: flex-start;
-  position: absolute;
-  top: 358px;
-  left: 40px;
-  background-color: #363636;
-  border-radius: 4px;
-  overflow: hidden;
-  border: 1px solid;
-  border-color: #5b5b5b;
-}
-
-.dashboard-html .row-4 {
-  height: 51px;
-  position: relative;
-  align-self: stretch;
-  width: 100%;
-  background-color: #ffffff00;
-  display: flex;
-  align-items: flex-start;
-}
-
-.dashboard-html .row-5 {
-  height: 72px;
-  position: relative;
-  align-self: stretch;
-  width: 100%;
-  background-color: #ffffff;
-  display: flex;
-  align-items: flex-start;
-}
-
 .dashboard-html .div-wrapper {
   border-color: #5b5b5b;
   display: flex;
@@ -877,16 +824,6 @@
   font-weight: 400;
   color: #000000;
   letter-spacing: 0;
-}
-
-.dashboard-html .row-6 {
-  display: flex;
-  height: 62px;
-  align-items: flex-start;
-  position: relative;
-  align-self: stretch;
-  width: 100%;
-  background-color: #ffffff;
 }
 
 .dashboard-html .right-side {
