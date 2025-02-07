@@ -530,16 +530,48 @@
   background-color: #f5f5f5;
   display: flex;
   flex-direction: row;
-  justify-content: center;
   width: 100%;
 }
 
-.dashboard-html .div {
-  background-color: var(--color-background-default-secondary);
-  overflow: hidden;
-  width: 1440px;
-  height: 1080px;
-  position: relative;
+.dashboard-html .header {
+  float: left;
+  width: 2000px;
+  height: 100%;
+  background-color: var(--variable-collection-color);
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-color: var(--color-border-default-default);
+}
+
+.dashboard-html .labyrinthHeader {
+  width: 201px;
+  height: 55px;
+  font-family: "Odor Mean Chey-Regular", Helvetica;
+  font-weight: 400;
+  color: #ffffff;
+  font-size: 48px;
+  line-height: 57.6px;
+  white-space: nowrap;
+  margin: auto;
+}
+
+.dashboard-html .logo {
+  width: 69px;
+  height: 69px;
+  float: left;
+}
+
+.dashboard-html .element-avatar {
+  width: 73px;
+  height: 73px;
+  border-radius: 1823.17px;
+  border: 1.82px solid;
+  border-color: var(--x-backgrounddefault);
+  background-image: "assets/images/1.0 Avatar.png";
+  background-size: cover;
+  background-position: 50% 50%;
+  float: right;
+  padding-right: 50px;
 }
 
 .dashboard-html .overlap {
@@ -622,12 +654,14 @@
   position: relative;
   width: 875px;
   min-height: 100px;
-  top: 39px;
+  top: 40px;
+  bottom: 40px;
   border-radius: 4px;
   overflow: visible;
   border: 3px solid;
   display: flex;
   flex-direction: column;
+  padding-bottom: 10px;
 }
 
 .dashboard-html th, 
@@ -1234,55 +1268,3 @@
   top: 516px;
 }
 
-.dashboard-html .header {
-  position: absolute;
-  width: 1441px;
-  height: 112px;
-  top: 0;
-  left: 0;
-  background-color: var(--variable-collection-color);
-  border-top-style: none;
-  border-right-style: none;
-  border-bottom-width: 1px;
-  border-bottom-style: solid;
-  border-left-style: none;
-  border-color: var(--color-border-default-default);
-}
-
-.dashboard-html .text-wrapper-6 {
-  position: absolute;
-  width: 201px;
-  height: 55px;
-  top: 22px;
-  left: 620px;
-  font-family: "Odor Mean Chey-Regular", Helvetica;
-  font-weight: 400;
-  color: #ffffff;
-  font-size: 48px;
-  letter-spacing: -0.96px;
-  line-height: 57.6px;
-  white-space: nowrap;
-}
-
-.dashboard-html .logo {
-  position: absolute;
-  width: 69px;
-  height: 69px;
-  top: 26px;
-  left: 39px;
-  object-fit: cover;
-}
-
-.dashboard-html .element-avatar {
-  position: absolute;
-  width: 73px;
-  height: 73px;
-  top: 20px;
-  left: 1334px;
-  border-radius: 1823.17px;
-  border: 1.82px solid;
-  border-color: var(--x-backgrounddefault);
-  background-image: "assets/images/1.0 Avatar.png";
-  background-size: cover;
-  background-position: 50% 50%;
-}
