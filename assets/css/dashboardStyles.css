@@ -1,0 +1,602 @@
+/*------------------------- Dashboard.html style.css -------------------------*/
+.dashboard-html {
+    background-color: #f5f5f5;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+  }
+  
+  .dashboard-html .header {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    background-color: var(--variable-collection-color);
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-color: var(--color-border-default-default);
+  }
+  
+  .dashboard-html .labyrinthHeader {
+    width: 201px;
+    height: 55px;
+    font-family: "Odor Mean Chey-Regular", Helvetica;
+    font-weight: 400;
+    color: #ffffff;
+    font-size: 48px;
+    line-height: 57.6px;
+    white-space: nowrap;
+    margin: auto;
+  }
+  
+  .dashboard-html .logo {
+    width: 69px;
+    height: 69px;
+    float: left;
+    display: flex;''
+  }
+  
+  .dashboard-html .element-avatar {
+    width: 73px;
+    height: 73px;
+    border-radius: 1823.17px;
+    border: 1.82px solid;
+    border-color: var(--x-backgrounddefault);
+    background-image: "assets/images/1.0 Avatar.png";
+    background-size: cover;
+    background-position: 50% 50%;
+    float: right;
+    padding-right: 50px;
+  }
+  
+  .dashboard-html .overlap {
+    position: absolute;
+    width: 1422px;
+    height: 947px;
+    top: 134px;
+    left: 18px;
+  }
+  
+  .dashboard-html .left-side {
+    position: absolute;
+    overflow: visible;
+    width: 961px;
+    min-height: 500px;
+    top: 38px;
+    left: 0;
+  }
+  
+  .dashboard-html .welcomeHeader {
+    font-family: "Odor Mean Chey-Regular", Helvetica;
+    font-weight: 400;
+    color: var(--variable-collection-color);
+    font-size: 48px;
+    letter-spacing: -0.96px;
+    white-space: nowrap;
+    padding 
+  }
+  
+  .dashboard-html .sloganHeader {
+    font-family: "Newsreader-Regular", Helvetica;
+    font-weight: 400;
+    color: var(--variable-collection-color);
+    font-size: 24px;
+    letter-spacing: -0.48px;
+    white-space: nowrap;
+  }
+  
+  .dashboard-html .overlap-group {
+    position: absolute;
+    overflow: visible;
+    width: 100%;
+  }
+  
+  .dashboard-html .reservations {
+    display: flex;
+    flex-direction: column;
+    width: 955px;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  
+  .dashboard-html .rectangle {
+    position: relative;
+    align-self: stretch;
+    width: 100%;
+    height: 676px;
+    background-color: #ffffff;
+    border-radius: 24px;
+  }
+  
+  .dashboard-html .reservationContainer {
+    position: relative;
+    width: 875px;
+    min-height: 100px;
+    top: 40px;
+    bottom: 40px;
+    border-radius: 4px;
+    overflow: visible;
+    border: 3px solid;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 10px;
+  }
+  
+  .dashboard-html th, 
+  .dashboard-html td {
+    padding: 5px;
+    border-right: 3px solid black;
+    border-left: 3px solid black;
+  }
+  
+  .dashboard-html .reservationHeader {
+    font-family: "Outfit-Regular", Helvetica;
+    font-size: 24px;
+    position: relative;
+    font-weight: 400;
+    color: #000000;
+    border-bottom: 3px solid black;
+    padding: 12px;
+    text-align: left;
+  }
+  
+  .dashboard-html .table1Header {
+    font-family: "Outfit-Regular", Helvetica;
+    font-size: 20px;
+    position: relative;
+    color: #000000;
+    text-align: left;
+    padding: 10px;
+  }
+  
+  .dashboard-html .tableCell {
+    font-family: "Outfit-Regular", Helvetica;
+    font-size: 16px;
+    position: relative;
+    color: #000000;
+    border: 3px solid black;
+    padding: 10px;
+  }
+  
+  /* Remove left border for the first column */
+  .dashboard-html th:first-child, 
+  .dashboard-html td:first-child {
+    border-left: none;
+  }
+  
+  /* Remove right border for the last column */
+  .dashboard-html th:last-child, 
+  .dashboard-html td:last-child {
+    border-right: none;
+  }
+  
+  .dashboard-html .edit-button {
+    box-sizing: border-box;
+    display: flex;
+    width: 120px;
+    justify-content: center;
+    margin: auto;
+    padding: var(--size-space-300);
+    border-radius: var(--size-radius-200);
+    color: white;
+    background-color: #2C2C2C;
+    border: 1px solid;
+    border-color: #585858;
+  }
+  
+  .dashboard-html .edit-button:hover {
+    color:black;
+    background-color: #E3E3E3;
+  }
+  
+  /* Reserve your Slot Now Button */
+  
+  .dashboard-html .div-wrapper {
+    border-color: #5b5b5b;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    position: relative;
+    flex: 1;
+    align-self: stretch;
+    flex-grow: 1;
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-left-width: 1px;
+    border-left-style: solid;
+  }
+  
+  .dashboard-html .right-side {
+    position: absolute;
+    width: 479px;
+    height: 947px;
+    left: 943px;
+  }
+  
+  .dashboard-html .reserveLabSlot {
+    position: relative;
+    width: 395px;
+    height: 400px;
+    top: 850px;
+    background-color: var(--variable-collection-color);
+    border-radius: 24px;
+  }
+  
+  .dashboard-html .text-wrapper-2 {
+    position: absolute;
+    width: 316px;
+    top: 11px;
+    left: 34px;
+    font-family: "Newsreader-Regular", Helvetica;
+    font-weight: 400;
+    color: #ffffff;
+    font-size: 32px;
+    letter-spacing: -0.64px;
+    line-height: 38.4px;
+  }
+  
+  .dashboard-html .reserveButton {
+    box-sizing: border-box;
+    display: flex;
+    width: 329px;
+    justify-content: center;
+    padding: var(--size-space-300);
+    position: absolute;
+    top: 340px;
+    left: 34px;
+    background-color: var(--color-background-brand-default);
+    border-radius: var(--size-radius-200);
+    overflow: hidden;
+    border: 1px solid;
+    border-color: var(--color-border-brand-default);
+    font-family: var(--single-line-body-base-font-family);
+    font-weight: var(--single-line-body-base-font-weight);
+    font-size: var(--single-line-body-base-font-size);
+    font-style: var(--single-line-body-base-font-style);
+    color: white;
+  }
+  
+  .dashboard-html .calendarContainer {
+    display: flex;
+    width: 395px;
+    height: 384px;
+    padding: 20.32px;
+    left: 979px;
+    background-color: var(--colori-neutralibianco-chiaro);
+    border-radius: 20.32px;
+    border: 1.27px solid;
+    border-color: var(--primariogrigio-50);
+    box-shadow: var(--large);
+  }
+  
+  .dashboard-html .date-picker-header {
+    width: 359.44px;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex: 0 0 auto;
+    margin-right: -5.08px;
+    display: flex;
+  }
+  
+  .dashboard-html .frame {
+    display: inline-flex;
+    align-items: center;
+    gap: 2.54px;
+    position: relative;
+    flex: 0 0 auto;
+  }
+  
+  .dashboard-html .month {
+    position: relative;
+    width: fit-content;
+    margin-top: -1.27px;
+    font-family: "Inter-Medium", Helvetica;
+    font-weight: 500;
+    color: #0e0e0f;
+    font-size: 16.5px;
+    letter-spacing: 0;
+    line-height: 30.5px;
+    white-space: nowrap;
+  }
+  
+  .dashboard-html .u-angle-down {
+    position: relative;
+    width: 19.05px;
+    height: 19.05px;
+  }
+  
+  .dashboard-html .img {
+    position: relative;
+    width: 78.75px;
+  }
+  
+  .dashboard-html .div-2 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    position: relative;
+    flex: 1;
+    align-self: stretch;
+    width: 100%;
+    flex-grow: 1;
+  }
+  
+  .dashboard-html .date-picker-weekdays {
+    align-items: flex-start;
+    flex: 1;
+    align-self: stretch;
+    width: 100%;
+    flex-grow: 1;
+    display: flex;
+    position: relative;
+  }
+  
+  .dashboard-html .content-2 {
+    display: flex;
+    align-items: flex-start;
+    flex: 1;
+    flex-grow: 1;
+    position: relative;
+    align-self: stretch;
+  }
+  
+  .dashboard-html .text-wrapper-3 {
+    flex: 1;
+    margin-top: -1.27px;
+    font-family: "Inter-Regular", Helvetica;
+    font-weight: 400;
+    color: #cdcdcd;
+    font-size: 12.7px;
+    text-align: center;
+    letter-spacing: 0.38px;
+    line-height: normal;
+    position: relative;
+    align-self: stretch;
+  }
+  
+  .dashboard-html .date-picker-row {
+    align-items: center;
+    justify-content: space-between;
+    flex: 1;
+    align-self: stretch;
+    width: 100%;
+    flex-grow: 1;
+    display: flex;
+    position: relative;
+  }
+  
+  .dashboard-html .date-picker-day-slot {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    width: 50.8px;
+    height: 43.18px;
+    position: relative;
+  }
+  
+  .dashboard-html .element-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12.7px;
+    position: relative;
+    flex: 1;
+    align-self: stretch;
+    width: 100%;
+    flex-grow: 1;
+    border-radius: 127.01px;
+  }
+  
+  .dashboard-html .element {
+    font-family: "Inter-Medium", Helvetica;
+    font-weight: 500;
+    color: #e8e9f1;
+    position: relative;
+    flex: 1;
+    align-self: stretch;
+    margin-top: -1.27px;
+    font-size: 17.8px;
+    text-align: center;
+    letter-spacing: 0;
+    line-height: 30.5px;
+  }
+  
+  .dashboard-html .date-picker-day-slot-wrapper {
+    align-items: flex-start;
+    margin-left: -0.21px;
+    display: flex;
+    flex-direction: column;
+    width: 50.8px;
+    height: 43.18px;
+    position: relative;
+  }
+  
+  .dashboard-html .date-picker-day-slot-2 {
+    align-items: center;
+    justify-content: center;
+    gap: 12.7px;
+    margin-left: -0.21px;
+    display: flex;
+    flex-direction: column;
+    width: 50.8px;
+    height: 43.18px;
+    position: relative;
+  }
+  
+  .dashboard-html .element-2 {
+    font-family: "Inter-Medium", Helvetica;
+    font-weight: 500;
+    color: #44454a;
+    position: relative;
+    flex: 1;
+    align-self: stretch;
+    margin-top: -1.27px;
+    font-size: 17.8px;
+    text-align: center;
+    letter-spacing: 0;
+    line-height: 30.5px;
+  }
+  
+  .dashboard-html .date-picker-day-slot-3 {
+    align-items: center;
+    justify-content: center;
+    gap: 12.7px;
+    display: flex;
+    flex-direction: column;
+    width: 50.8px;
+    height: 43.18px;
+    position: relative;
+  }
+  
+  .dashboard-html .date-picker-day-slot-4 {
+    align-items: flex-start;
+    gap: 12.7px;
+    margin-left: -0.21px;
+    display: flex;
+    flex-direction: column;
+    width: 50.8px;
+    height: 43.18px;
+    position: relative;
+  }
+  
+  .dashboard-html .element-3 {
+    font-family: "Inter-SemiBold", Helvetica;
+    font-weight: 600;
+    color: #4295fd;
+    position: relative;
+    flex: 1;
+    align-self: stretch;
+    margin-top: -1.27px;
+    font-size: 17.8px;
+    text-align: center;
+    letter-spacing: 0;
+    line-height: 30.5px;
+  }
+  
+  .dashboard-html .date-picker-row-2 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    align-self: stretch;
+    width: 100%;
+    flex: 0 0 auto;
+  }
+  
+  .dashboard-html .frame-2 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 7.62px 0px 0px;
+    align-self: stretch;
+    width: 100%;
+    flex: 0 0 auto;
+  }
+  
+  .dashboard-html .text-wrapper-4 {
+    position: relative;
+    width: fit-content;
+    font-family: "Inter-SemiBold", Helvetica;
+    font-weight: 600;
+    color: #000000;
+    font-size: 15.2px;
+    text-align: center;
+    letter-spacing: 0.46px;
+    line-height: normal;
+    white-space: nowrap;
+  }
+  
+  .dashboard-html .frame-3 {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 7.62px;
+    position: relative;
+    flex: 0 0 auto;
+  }
+  
+  .dashboard-html .frame-4 {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12.7px;
+    padding: 2.54px 7.62px 2.54px 16.51px;
+    position: relative;
+    flex: 0 0 auto;
+    background-color: #f4f4f4;
+    border-radius: 5.08px;
+    overflow: hidden;
+  }
+  
+  .dashboard-html .text-wrapper-5 {
+    position: relative;
+    width: fit-content;
+    margin-top: -1.27px;
+    font-family: "Inter-Regular", Helvetica;
+    font-weight: 400;
+    color: #000000;
+    font-size: 20.3px;
+    text-align: center;
+    letter-spacing: 0.61px;
+    line-height: normal;
+  }
+  
+  .dashboard-html .AM-PM-selector {
+    position: relative;
+    width: 91.45px;
+    height: 30.48px;
+    background-color: #f4f4f4;
+    border-radius: 5.08px;
+  }
+  
+  .dashboard-html .AM-wrapper {
+    position: absolute;
+    width: 42px;
+    height: 28px;
+    top: 1px;
+    left: 1px;
+    background-color: #ffffff;
+    border-radius: 5.08px;
+    box-shadow: 0px 2.54px 5.59px #00000024;
+  }
+  
+  .dashboard-html .AM {
+    position: absolute;
+    height: 18px;
+    top: 3px;
+    left: 8px;
+    font-family: "Inter-Regular", Helvetica;
+    font-weight: 400;
+    color: #000000;
+    font-size: 15.2px;
+    text-align: center;
+    letter-spacing: 0.46px;
+    line-height: normal;
+    white-space: nowrap;
+  }
+  
+  .dashboard-html .PM {
+    position: absolute;
+    height: 18px;
+    top: 4px;
+    left: 57px;
+    font-family: "Inter-Regular", Helvetica;
+    font-weight: 400;
+    color: #000000;
+    font-size: 15.2px;
+    text-align: center;
+    letter-spacing: 0.46px;
+    line-height: normal;
+    white-space: nowrap;
+  }
+  
+  .dashboard-html .classroomArt {
+    width: 253px;
+    height: 253px;
+    position: absolute;
+    left: 60px;
+    top: 100px;
+  }
