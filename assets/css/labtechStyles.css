@@ -265,29 +265,14 @@
   }
   
   .LabTech-html .calendarContainer {
-    display: flex;
     width: 395px;
     height: 384px;
-    padding: 20.32px;
-    left: 979px;
+    padding: 20px;
     background-color: var(--colori-neutralibianco-chiaro);
-    border-radius: 20.32px;
-    border: 1.27px solid;
+    border-radius: 20px;
+    border: 1px solid;
     border-color: var(--primariogrigio-50);
     box-shadow: var(--large);
-  }
-
-  .LabTech-html .month {
-    position: relative;
-    width: fit-content;
-    margin-top: -1.27px;
-    font-family: "Inter-Medium", Helvetica;
-    font-weight: 500;
-    color: #0e0e0f;
-    font-size: 16.5px;
-    letter-spacing: 0;
-    line-height: 30.5px;
-    white-space: nowrap;
   }
 
   .LabTech-html .frame-2 {

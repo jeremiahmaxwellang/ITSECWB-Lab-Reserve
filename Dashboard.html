@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="assets/css/global.css" />
     <link rel="stylesheet" href="assets/css/styleguide.css" />
     <link rel="stylesheet" href="assets/css/dashboardStyles.css" />
-    <link rel="stylesheet" href="assets/css/month.css" />
+    <link rel="stylesheet" href="assets/css/calendar.css" />
   </head>
 
   <body>
@@ -182,38 +182,78 @@
             </div>
 
             <!-- System Calendar and Time -->
-             <div class="calendarContainer">
+            <div class="calendarContainer">
               <div class="month">
                 <ul>
                   <li class="prev">&#10094;</li>
                   <li class="next">&#10095;</li>
-                  <li>August<br><span style="font-size:18px">2021</span></li>
+                  <li>
+                    February
+                    <br>
+                    <span style="font-size:18px">2025</span>
+                  </li>
                 </ul>
               </div>
-              
-              <ul class="weekdays">
-                <li>Monday</li>
-                <li>Tuesday</li>
-                <li>Wednesday</li>
-                <li>Thursday</li>
-                <li>Friday</li>
-                <li>Saturday</li>
-                <li>Sunday</li>
-              </ul>
-              
-              <ul class="days">
-                <li>1</li>
-                <li>2</li>
-                <li>3</li>
-                <li>4</li>
-                <li>5</li>
-                <li>6</li>
-                <li>7</li>
-                <li>8</li>
-                <li>9</li>
-                <li><span class="active">10</span></li>
-                <li>11</li>
-              </ul>
+                <table class="weekdays">
+                    <thead>
+                        <tr>
+                            <th class="days">MON</th>
+                            <th class="days">TUES</th>
+                            <th class="days">WED</th>
+                            <th class="days">THURS</th>
+                            <th class="days">FRI</th>
+                            <th class="days">SAT</th>
+                            <th class="days">SUN</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td class="days">1</td>
+                            <td class="days">2</td>
+                        </tr>
+                        <tr>
+                            <td class="days">3</td>
+                            <td class="days">4</td>
+                            <td class="days">5</td>
+                            <td class="days">6</td>
+                            <td class="days">7</td>
+                            <td class="days">8</td>
+                            <td class="days">9</td>
+                        </tr>
+                        <tr>
+                            <td class="days">10</td>
+                            <td class="days">11</td>
+                            <td class="days">12</td>
+                            <td class="days">13</td>
+                            <td class="days"><span class="active">14</span></td>
+                            <td class="days">15</td>
+                            <td class="days">16</td>
+                        </tr>
+                        <tr>
+                          <td class="days">17</td>
+                          <td class="days">18</td>
+                          <td class="days">19</td>
+                          <td class="days">20</td>
+                          <td class="days">21</td>
+                          <td class="days">22</td>
+                          <td class="days">23</td>
+                      </tr>
+                      <tr>
+                        <td class="days">24</td>
+                        <td class="days">25</td>
+                        <td class="days">26</td>
+                        <td class="days">27</td>
+                        <td class="days">28</td>
+                        <td class="days"></td>
+                        <td class="days"></td>
+                      </tr>
+                    </tbody>
+                </table>
             </div>
 
             <div class="frame-2">
