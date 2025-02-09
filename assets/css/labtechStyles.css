@@ -10,7 +10,7 @@
     display: flex;
     width: 100%;
     height: 100%;
-    background-color: #3B6B53;
+    background: #3B6B53;
     border-bottom: 1px solid;
     border-color: #3B6B53;
   }
@@ -227,21 +227,6 @@
   
   /* Reserve your Slot Now Button */
   
-  .LabTech-html .div-wrapper {
-    border-color: #5b5b5b;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    position: relative;
-    flex: 1;
-    align-self: stretch;
-    flex-grow: 1;
-    border-top-width: 1px;
-    border-top-style: solid;
-    border-left-width: 1px;
-    border-left-style: solid;
-  }
-  
   .LabTech-html .right-side {
     position: absolute;
     width: 479px;
@@ -291,24 +276,7 @@
     border-color: var(--primariogrigio-50);
     box-shadow: var(--large);
   }
-  
-  .LabTech-html .date-picker-header {
-    width: 359.44px;
-    align-items: flex-start;
-    justify-content: space-between;
-    flex: 0 0 auto;
-    margin-right: -5.08px;
-    display: flex;
-  }
-  
-  .LabTech-html .frame {
-    display: inline-flex;
-    align-items: center;
-    gap: 2.54px;
-    position: relative;
-    flex: 0 0 auto;
-  }
-  
+
   .LabTech-html .month {
     position: relative;
     width: fit-content;
@@ -321,107 +289,6 @@
     line-height: 30.5px;
     white-space: nowrap;
   }
-  
-  .LabTech-html .u-angle-down {
-    position: relative;
-    width: 19.05px;
-    height: 19.05px;
-  }
-  
-  .LabTech-html .img {
-    position: relative;
-    width: 78.75px;
-  }
-  
-  .LabTech-html .div-2 {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    position: relative;
-    flex: 1;
-    align-self: stretch;
-    width: 100%;
-    flex-grow: 1;
-  }
-  
-  .LabTech-html .content-2 {
-    display: flex;
-    align-items: flex-start;
-    flex: 1;
-    flex-grow: 1;
-    position: relative;
-    align-self: stretch;
-  }
-  
-  .LabTech-html .text-wrapper-3 {
-    flex: 1;
-    margin-top: -1.27px;
-    font-family: "Inter-Regular", Helvetica;
-    font-weight: 400;
-    color: #cdcdcd;
-    font-size: 12.7px;
-    text-align: center;
-    letter-spacing: 0.38px;
-    line-height: normal;
-    position: relative;
-    align-self: stretch;
-  }
-  
-  .LabTech-html .element-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 12.7px;
-    position: relative;
-    flex: 1;
-    align-self: stretch;
-    width: 100%;
-    flex-grow: 1;
-    border-radius: 127.01px;
-  }
-  
-  .LabTech-html .element {
-    font-family: "Inter-Medium", Helvetica;
-    font-weight: 500;
-    color: #e8e9f1;
-    position: relative;
-    flex: 1;
-    align-self: stretch;
-    margin-top: -1.27px;
-    font-size: 17.8px;
-    text-align: center;
-    letter-spacing: 0;
-    line-height: 30.5px;
-  }
-  
-  .LabTech-html .element-2 {
-    font-family: "Inter-Medium", Helvetica;
-    font-weight: 500;
-    color: #44454a;
-    position: relative;
-    flex: 1;
-    align-self: stretch;
-    margin-top: -1.27px;
-    font-size: 17.8px;
-    text-align: center;
-    letter-spacing: 0;
-    line-height: 30.5px;
-  }
-  
-  .LabTech-html .element-3 {
-    font-family: "Inter-SemiBold", Helvetica;
-    font-weight: 600;
-    color: #4295fd;
-    position: relative;
-    flex: 1;
-    align-self: stretch;
-    margin-top: -1.27px;
-    font-size: 17.8px;
-    text-align: center;
-    letter-spacing: 0;
-    line-height: 30.5px;
-  }
 
   .LabTech-html .frame-2 {
     display: flex;
@@ -431,6 +298,19 @@
     align-self: stretch;
     width: 100%;
     flex: 0 0 auto;
+  }
+
+  .LabTech-html .text-wrapper-2 {
+    position: absolute;
+    width: 316px;
+    top: 11px;
+    left: 34px;
+    font-family: "Newsreader-Regular", Helvetica;
+    font-weight: 400;
+    color: #ffffff;
+    font-size: 32px;
+    letter-spacing: -0.64px;
+    line-height: 38.4px;
   }
   
   .LabTech-html .text-wrapper-4 {
@@ -535,4 +415,23 @@
     position: absolute;
     left: 60px;
     top: 100px;
+  }
+
+  .LabTech-html #DeletionOverlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 50px;
+    color: black;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+  }
+
+  .LabTech-html #ReservationDeletion {
+    width: 403px;
+    height: 279px;
+    border-radius: 8.92px;
+    border: 1px solid var(--sds-color-border-default-default);
+    background-color: var(--sds-color-background-default-default);
+    cursor: pointer;
   }
