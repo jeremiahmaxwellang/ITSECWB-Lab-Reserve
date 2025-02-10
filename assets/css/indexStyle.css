@@ -1,0 +1,210 @@
+.index-html {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    min-height: 100vh;
+    position: relative;
+    background-color: var(--color-background-default-secondary);
+    overflow: hidden;
+  }
+  
+  .index-html .main-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 100vh;
+    text-align: center;
+    position: relative;
+    margin-top: 90px;
+  }
+  
+  .index-html .overlap-group-wrapper {
+    background-color: var(--color-background-default-secondary);
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+  }
+  
+  .index-html .overlap-group {
+    position: relative;
+    width: 1441px;
+    height: 1080px;
+    left: -1px;
+  }
+  
+  .index-html .bg-container {
+    position: absolute;
+    width: 100%;
+    height: auto;
+    top: 0px;
+    left: 1px;
+    object-fit: cover;
+  }
+  
+  .index-html .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center all items horizontally */
+    padding: 0 20px;
+    background-color: var(--variable-collection-color);
+    border-bottom: none;
+    z-index: 1000;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .index-html .text-wrapper {
+    font-family: "Odor Mean Chey", Helvetica, sans-serif;
+    font-size: 32px;
+    color: #ffffff;
+    text-align: center;
+    flex-grow: 0; 
+    position: absolute; 
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .index-html .logo {
+    position: absolute;
+    width: 75px; 
+    height: auto;
+    left: 39px;
+    object-fit: cover;
+  }
+  
+  .index-html .header-auth {
+    display: flex;
+    gap: 10px;
+    position: absolute;
+    right: 20px;
+  }
+  
+  .index-html .button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 16px;
+    font-family: "Newsreader", Helvetica, sans-serif;
+    font-size: 14px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    min-width: 90px;
+    text-align: center;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    border: none;
+  }
+  
+  .index-html .button-login {
+    background-color: white;
+    color: black;
+  }
+  
+  .index-html .button-login:hover {
+    background-color: #cecece;
+  }
+  
+  
+  .index-html .button-register {
+    background-color: #2C2C2C;
+    color: white;
+  }
+  
+  .index-html .button-register:hover {
+    background-color: black;
+    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
+  }
+  
+  .index-html .button-main {
+    display: inline-block;
+    padding: 12px 40px;
+    font-size: 16px;
+    background-color: #2C2C2C;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    border: none;
+    margin-top: 20px;
+    transition: background-color 0.3s ease, padding 0.3s ease;
+    text-align: center;
+    min-width: 180px;
+  }
+  
+  .index-html .button-main:hover {
+    background-color: black;
+    padding: 12px 60px;
+  }
+  
+  .index-html .index-rectangle {
+    width: 100%;
+    height: 400px;
+    max-width: 1100px;
+    background-color: white;
+    padding: 50px;
+    border-radius: 20px;
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+    text-align: left;
+    position: absolute;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    margin-top: 200px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth animation */
+  }
+  
+  .index-html .index-rectangle:hover {
+    transform: scale(1.02); /* Slight zoom effect */
+    box-shadow: 0px 12px 25px rgba(0, 0, 0, 0.3); /* More prominent shadow */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .rectangle-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  .text-box {
+    flex: 1;
+    text-align: left;
+    padding-right: 20px;
+  }
+  
+  .index-html .text-wrapper-2 {
+    position: static;
+    font-family: "Odor Mean Chey", Helvetica, sans-serif;
+    font-size: 70px;
+    color: var(--variable-collection-color);
+    letter-spacing: -1.92px;
+  }
+  
+  .index-html .p {
+    position: static;
+    font-family: "Newsreader", Helvetica;
+    font-weight: 400;
+    color: var(--variable-collection-color);
+    font-size: 24px;
+    letter-spacing: -0.64px;
+    line-height: 38.4px;
+    white-space: nowrap;
+    margin-bottom: 50px;
+  }
+  
+  .index-html .index-BG-image {
+    position: static;
+    width: 40%;
+    max-width: 350px;
+    height: auto;
+    margin-left: 20px;
+    width: 80%;
+    margin-top: 20px;
+  }

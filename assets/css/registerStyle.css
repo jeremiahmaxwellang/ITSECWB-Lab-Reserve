@@ -1,0 +1,308 @@
+.register-html {
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .register-html .overlap-wrapper {
+    background-color: #ffffff;
+    width: 1440px;
+    height: 1078px;
+  }
+  
+  .register-html .overlap {
+    position: relative;
+    height: 1078px;
+  }
+  
+  .register-html .register-BG-image {
+    position: absolute;
+    width: 480px;
+    height: 1078px;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+  }
+  
+  .register-html .overlap-group {
+    position: relative;
+    width: 940px;
+    height: 1078px;
+  }
+  
+  .register-html .register-image {
+    border-radius: 23.16;
+    width: 470px;
+    height: 1078px;
+    left: 0;
+    position: absolute;
+    top: 0;
+  }
+  
+  .register-html .register-rectangle {
+    width: 852.75;
+    left: 0;
+    position: absolute;
+    height: 994.88;
+    top: 0;
+  }
+  
+  .register-html .labyrinth-logo-frame {
+    position: absolute;
+    width: 940px;
+    height: 96px;
+    top: 0;
+    left: 0;
+  }
+  
+  .register-html .text-wrapper {
+    position: absolute;
+    top: 41px;
+    left: 101px;
+    font-family: "Newsreader-Medium", Helvetica;
+    font-weight: 500;
+    color: var(--color-text-brand-on-brand);
+    font-size: 33.7px;
+    letter-spacing: -0.34px;
+    line-height: 33.7px;
+    white-space: nowrap;
+  }
+  
+  .register-html .labyrinth-logo {
+    position: absolute;
+    width: 73px;
+    height: 73px;
+    top: 23px;
+    left: 28px;
+    object-fit: cover;
+  }
+  
+  .register-html .register-frame {
+    width: 1000px;
+    height: 1078px;
+    left: 425px;
+    background-color: #ffffff;
+    border-radius: 30px;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+  }
+  
+  .register-html .register-your {
+    position: absolute;
+    width: 583px;
+    top: 240px;
+    left: 123px;
+    font-family: "Newsreader-Bold", Helvetica;
+    font-weight: 700;
+    color: transparent;
+    font-size: 37.9px;
+    letter-spacing: -0.38px;
+    line-height: 37.9px;
+    white-space: nowrap;
+  }
+  
+  .register-html .span {
+    color: #000000;
+    letter-spacing: -0.14px;
+  }
+  
+  .register-html .text-wrapper-2 {
+    color: #377684;
+    letter-spacing: -0.14px;
+  }
+  
+  .register-html .register-input-field {
+    width: 365px;
+    top: 339px;
+    left: 124px;
+    position: absolute;
+    height: 54px;
+    border-radius: 8px;
+    border: 1px solid;
+    border-color: #4f4f4f;
+  }
+  
+  .register-html .first-name-frame {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 0px 10px;
+    position: relative;
+    top: -10px;
+    left: 16px;
+    background-color: #ffffff;
+  }
+  
+  .register-html .div {
+    position: relative;
+    width: fit-content;
+    margin-top: -1.00px;
+    font-family: "Newsreader-Regular", Helvetica;
+    font-weight: 400;
+    color: #4f4f4f;
+    font-size: 20px;
+    letter-spacing: -0.20px;
+    line-height: 20px;
+    white-space: nowrap;
+  }
+  
+  .register-html .first-name-frame-wrapper {
+    width: 365px;
+    top: 339px;
+    left: 527px;
+    position: absolute;
+    height: 54px;
+    border-radius: 8px;
+    border: 1px solid;
+    border-color: #4f4f4f;
+  }
+  
+  .register-html .register-input-field-2 {
+    width: 769px;
+    top: 439px;
+    left: 123px;
+    position: absolute;
+    height: 54px;
+    border-radius: 8px;
+    border: 1px solid;
+    border-color: #4f4f4f;
+  }
+  
+  .register-html .div-wrapper {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 0px 10px;
+    position: absolute;
+    top: -10px;
+    left: 16px;
+    background-color: #ffffff;
+  }
+  
+  .register-html .placeholder {
+    display: flex;
+    width: 194px;
+    align-items: center;
+    position: absolute;
+    top: 15px;
+    left: 30px;
+  }
+  
+  .register-html .text-wrapper-3 {
+    position: relative;
+    width: 194px;
+    margin-top: -1.00px;
+    font-family: "Newsreader-Regular", Helvetica;
+    font-weight: 400;
+    color: #898989;
+    font-size: 16px;
+    letter-spacing: 0;
+    line-height: 25.6px;
+  }
+  
+  .register-html .register-input-field-3 {
+    width: 769px;
+    top: 539px;
+    left: 123px;
+    position: absolute;
+    height: 54px;
+    border-radius: 8px;
+    border: 1px solid;
+    border-color: #4f4f4f;
+  }
+  
+  .register-html .register-input-field-4 {
+    width: 769px;
+    top: 639px;
+    left: 123px;
+    position: absolute;
+    height: 54px;
+    border-radius: 8px;
+    border: 1px solid;
+    border-color: #4f4f4f;
+  }
+  
+  .register-html .button {
+    all: unset;
+    display: flex;
+    width: 769px;
+    height: 47px;
+    align-items: center;
+    justify-content: center;
+    gap: var(--size-space-200);
+    padding: var(--size-space-300);
+    position: absolute;
+    top: 771px;
+    left: 123px;
+    background-color: var(--variable-collection-color);
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1.05px solid;
+    border-color: var(--variable-collection-color);
+  }
+  
+  .register-html .LOGIN {
+    position: relative;
+    width: fit-content;
+    font-family: "Inter-Regular", Helvetica;
+    color: var(--color-text-brand-on-brand);
+    font-size: 16.8px;
+    letter-spacing: 0;
+    line-height: 16.8px;
+    font-weight: 400;
+    white-space: nowrap;
+  }
+  
+  .register-html .overlap-2 {
+    position: absolute;
+    width: 500px;
+    height: 19px;
+    top: 838px;
+    left: 123px;
+  }
+  
+  .register-html .text-wrapper-4 {
+    position: absolute;
+    width: 292px;
+    top: 0;
+    left: 0;
+    font-family: "Newsreader-Regular", Helvetica;
+    font-weight: 400;
+    color: #4f4f4f;
+    font-size: 20px;
+    letter-spacing: -0.20px;
+    line-height: 20px;
+    white-space: nowrap;
+  }
+  
+  .register-html .text-wrapper-5 {
+    position: absolute;
+    width: 292px;
+    top: 0;
+    left: 208px;
+    font-family: "Newsreader-Regular", Helvetica;
+    color: #377684;
+    font-size: 20px;
+    letter-spacing: -0.20px;
+    line-height: 20px;
+    font-weight: 400;
+    white-space: nowrap;
+  }
+
+.profile-divider {
+  width: 391px; 
+  height: 1px; 
+  left: 16px; 
+  top: 211px; /* CHANGE LATER: cannot have the same top positioning for every divider */
+  position: absolute; 
+  background: rgba(255, 255, 255, 0); 
+  justify-content: center; 
+  align-items: center; 
+  gap: 12px; 
+  display: inline-flex"
+}

@@ -4,191 +4,258 @@
     <meta charset="utf-8" />
     <link rel="stylesheet" href="assets/css/global.css" />
     <link rel="stylesheet" href="assets/css/styleguide.css" />
-    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/dashboardStyles.css" />
+    <link rel="stylesheet" href="assets/css/calendar.css" />
   </head>
+
   <body>
     <div class="dashboard-html">
-      <div class="div">
+        <header class="header">
+          <img class="logo" src="assets/images/labyrinth-logo.png" />
+          <span class="labyrinthHeader">Labyrinth</span>
+          <span class="element-avatar"></span>
+        </header>
         <div class="overlap">
           <div class="left-side">
-            <div class="text-wrapper">Welcome, Jeremiah</div>
-            <p class="p">Don’t get lost in scheduling — Book easily!</p>
+            <h1 class="welcomeHeader">Welcome, Jeremiah</h1>
+            <p class="sloganHeader">Don’t get lost in scheduling — Book easily!</p>
             <div class="overlap-group">
-              <div class="reservations"><div class="rectangle"></div></div>
+              <div class="reservations">
+                <div class="rectangle">
+                
+                  <!-- Current Reservations Table -->
+                  <div class="reservationContainer">
+                  <table>
+                    <tr>
+                      <th colspan="4" class="reservationHeader">Current Reservations:</th>
+                    </tr>
 
-              <!-- Current Reservations Table -->
-              <div class="current-reservations">
-                <table>
-                  <tr>
-                    <th colspan="4" class="reservationHeader">Merged Column</th>
-                  </tr>
+                    <!-- Table Header -->
+                    <tr>
+                      <th class="table1Header">Room Number</th>
+                      <th class="table1Header">Seat Number</th>
+                      <th class="table1Header">Date and Time of Reservation</th>
+                      <th class="table1Header">Edit your Lab Reservation</th>
+                    </tr>
 
-                  <tr>
-                    <th class="table1Header">Room Number</th>
-                    <th class="table1Header">Seat Number</th>
-                    <th class="table1Header">Date and Time of Reservation</th>
-                    <th class="table1Header">Edit your Lab Reservation</th>
-                  </tr>
+                    <!-- Table Row 1 -->
+                    <tr>
+                      <td class="tableCell">GK01</td>
+                      <td class="tableCell">Seat #01</td>
+                      <td class="tableCell">August 5, 2025 - 01:01:01 PM</td>
+                      <td class="tableCell">
+                        <button class="edit-button">Edit</button>
+                      </td>
+                    </tr>
 
-                  <tr>
+                    <!-- Table Row 2 -->
+                    <tr>
+                      <td class="tableCell">GK01</td>
+                      <td class="tableCell">Seat #01</td>
+                      <td class="tableCell">August 5, 2025 - 01:01:01 PM</td>
+                      <td class="tableCell">
+                        <button class="edit-button">Edit</button>
+                      </td>
+                    </tr>
+
+                    <!-- Table Row 3 -->
+                    <tr>
+                      <td class="tableCell">GK01</td>
+                      <td class="tableCell">Seat #01</td>
+                      <td class="tableCell">August 5, 2025 - 01:01:01 PM</td>
+                      <td class="tableCell">
+                        <button class="edit-button">Edit</button>
+                      </td>
+                    </tr>
+
+                    <!-- Table Row 4 -->
+                    <tr>
+                      <td class="tableCell">GK01</td>
+                      <td class="tableCell">Seat #01</td>
+                      <td class="tableCell">August 5, 2025 - 01:01:01 PM</td>
+                      <td class="tableCell">
+                        <button class="edit-button">Edit</button>
+                      </td>
+                    </tr>
+
+                    <!-- Table Row 5 -->
+                    <tr>
+                      <td class="tableCell">GK01</td>
+                      <td class="tableCell">Seat #01</td>
+                      <td class="tableCell">August 5, 2025 - 01:01:01 PM</td>
+                      <td class="tableCell">
+                        <button class="edit-button">Edit</button>
+                      </td>
+                    </tr>
+
+                    <!-- Table Row 6 -->
+                    <tr>
+                      <td class="tableCell">GK01</td>
+                      <td class="tableCell">Seat #01</td>
+                      <td class="tableCell">August 5, 2025 - 01:01:01 PM</td>
+                      <td class="tableCell">
+                        <button class="edit-button">Edit</button>
+                      </td>
+                    </tr>
                     
-                  </tr>
-                  
-                </table>
-              </div>
+                  </table>
 
-              <!-- Recent Reservations Table -->
-              <div class="recent-reservations">
-                <div class="row-4">
-                  <div class="cell">
-                    <div class="content"><div class="text">Recent Reservations</div></div>
+                  <!-- Recent Reservations Table -->
+                    <table>
+                      <tr>
+                        <th colspan="4" class="reservationHeader">Recent Reservations:</th>
+                      </tr>
+
+                      <!-- Table Header -->
+                      <tr>
+                        <th class="table1Header">Room Number</th>
+                        <th class="table1Header">Seat Number</th>
+                        <th class="table1Header">Date and Time of Reservation</th>
+                        <th class="table1Header">Who Reserved?</th>
+                      </tr>
+
+                      <!-- Table Row 1 -->
+                      <tr>
+                        <td class="tableCell">GK01</td>
+                        <td class="tableCell">Seat #01</td>
+                        <td class="tableCell">August 5, 2025 - 01:01:01 PM</td>
+                        <td class="tableCell">John Reservation</td>
+                      </tr>
+
+                      <!-- Table Row 2 -->
+                      <tr>
+                        <td class="tableCell">GK02</td>
+                        <td class="tableCell">Seat #01</td>
+                        <td class="tableCell">August 5, 2025 - 01:01:01 PM</td>
+                        <td class="tableCell">John Reservation</td>
+                      </tr>
+
+                      <!-- Table Row 3 -->
+                      <tr>
+                        <td class="tableCell">GK03</td>
+                        <td class="tableCell">Seat #01</td>
+                        <td class="tableCell">August 5, 2025 - 01:01:01 PM</td>
+                        <td class="tableCell">John Reservation</td>
+                      </tr>
+
+                      <!-- Table Row 4 -->
+                      <tr>
+                        <td class="tableCell">GK04</td>
+                        <td class="tableCell">Seat #01</td>
+                        <td class="tableCell">August 5, 2025 - 01:01:01 PM</td>
+                        <td class="tableCell">John Reservation</td>
+                      </tr>
+
+                      <!-- Table Row 5 -->
+                      <tr>
+                        <td class="tableCell">GK05</td>
+                        <td class="tableCell">Seat #01</td>
+                        <td class="tableCell">August 5, 2025 - 01:01:01 PM</td>
+                        <td class="tableCell">John Reservation</td>
+                      </tr>
+
+                      <!-- Table Row 6 -->
+                      <tr>
+                        <td class="tableCell">GK06</td>
+                        <td class="tableCell">Seat #01</td>
+                        <td class="tableCell">August 5, 2025 - 01:01:01 PM</td>
+                        <td class="tableCell">John Reservation</td>
+                      </tr>
+                      
+                    </table>
                   </div>
-                </div>
-                <div class="row-5">
-                  <div class="div-wrapper">
-                    <div class="content"><div class="text-2">Room Number:</div></div>
-                  </div>
-                  <div class="div-wrapper">
-                    <div class="content"><div class="text-2">Seat Number:</div></div>
-                  </div>
-                  <div class="div-wrapper">
-                    <div class="content"><p class="text-2">Date and Time of Reservation:</p></div>
-                  </div>
-                  <div class="div-wrapper">
-                    <div class="content"><div class="text-5">Who reserved?</div></div>
-                  </div>
-                </div>
-                <div class="row-6">
-                  <div class="div-wrapper">
-                    <div class="content"><div class="text-3">GK01</div></div>
-                  </div>
-                  <div class="div-wrapper">
-                    <div class="content"><div class="text-3">Seat #01</div></div>
-                  </div>
-                  <div class="div-wrapper">
-                    <div class="content"><p class="text-3">August 5, 2025 - 01:01:01 PM</p></div>
-                  </div>
-                  <div class="div-wrapper">
-                    <div class="content"><div class="text-3">John Reservation</div></div>
-                  </div>
-                </div>
-                <div class="row-6">
-                  <div class="div-wrapper">
-                    <div class="content"><div class="text-3">GK01</div></div>
-                  </div>
-                  <div class="div-wrapper">
-                    <div class="content"><div class="text-3">Seat #01</div></div>
-                  </div>
-                  <div class="div-wrapper">
-                    <div class="content"><p class="text-3">August 5, 2025 - 01:01:01 PM</p></div>
-                  </div>
-                  <div class="div-wrapper">
-                    <div class="content"><div class="text-3">John Reservation</div></div>
-                  </div>
-                </div>
-                <div class="row-6">
-                  <div class="div-wrapper">
-                    <div class="content"><div class="text-3">GK01</div></div>
-                  </div>
-                  <div class="div-wrapper">
-                    <div class="content"><div class="text-3">Seat #01</div></div>
-                  </div>
-                  <div class="div-wrapper">
-                    <div class="content"><p class="text-3">August 5, 2025 - 01:01:01 PM</p></div>
-                  </div>
-                  <div class="div-wrapper">
-                    <div class="content"><div class="text-3">John Reservation</div></div>
-                  </div>
-                </div>
+              </div>
+              </div>
               </div>
             </div>
           </div>
+
+          <!-- Right Side of the Screen-->
           <div class="right-side">
-            <div class="overlap-4">
-              <p class="text-wrapper-2">Reserve your Laboratory Slot now!</p>
-              <button class="button-3">
-                <span class="button-2">Reserve Now!</span>
-                </button>
-            </div>
-          </div>
 
-          <!-- System Calendar and Time -->
-          <div class="date-picker">
-            <div class="date-picker-header">
-              <div class="frame">
-                <div class="month">March 2024</div>
-                <img class="u-angle-down" src="img/u-angle-down.svg" />
-              </div>
-              <img class="img" src="img/frame-313221.svg" />
+            <!-- Reserve Now Section -->
+            <div class="reserveLabSlot">
+              <p class="text-wrapper-2">Reserve your Laboratory Slot now!</p>
+              <button class="reserveButton">Reserve Now!</button>
+              
+              <img class="classroomArt" src="assets/images/Classroom-Art.png" />
             </div>
-            <div class="div-2">
-              <div class="div-2">
-                <div class="date-picker-weekdays">
-                  <div class="content-2">
-                    <div class="text-wrapper-3">MON</div>
-                    <div class="text-wrapper-3">TUE</div>
-                    <div class="text-wrapper-3">WED</div>
-                    <div class="text-wrapper-3">THU</div>
-                    <div class="text-wrapper-3">FRI</div>
-                    <div class="text-wrapper-3">SAT</div>
-                    <div class="text-wrapper-3">SUN</div>
-                  </div>
-                </div>
-                <div class="date-picker-row">
-                  <div class="date-picker-day-slot">
-                    <div class="element-wrapper"><div class="element">26</div></div>
-                  </div>
-                  <div class="date-picker-day-slot-wrapper">
-                    <div class="element-wrapper"><div class="element">27</div></div>
-                  </div>
-                  <div class="date-picker-day-slot-wrapper">
-                    <div class="element-wrapper"><div class="element">28</div></div>
-                  </div>
-                  <div class="date-picker-day-slot-wrapper">
-                    <div class="element-wrapper"><div class="element">29</div></div>
-                  </div>
-                  <div class="date-picker-day-slot-2"><div class="element-2">1</div></div>
-                  <div class="date-picker-day-slot-2"><div class="element-2">2</div></div>
-                  <div class="date-picker-day-slot-2"><div class="element-2">3</div></div>
-                </div>
-                <div class="date-picker-row">
-                  <div class="date-picker-day-slot-3"><div class="element-2">4</div></div>
-                  <div class="date-picker-day-slot-2"><div class="element-2">05</div></div>
-                  <div class="date-picker-day-slot-2"><div class="element-2">06</div></div>
-                  <div class="date-picker-day-slot-2"><div class="element-2">07</div></div>
-                  <div class="date-picker-day-slot-2"><div class="element-2">08</div></div>
-                  <div class="date-picker-day-slot-2"><div class="element-2">09</div></div>
-                  <div class="date-picker-day-slot-2"><div class="element-2">10</div></div>
-                </div>
-                <div class="date-picker-row">
-                  <div class="date-picker-day-slot-3"><div class="element-2">11</div></div>
-                  <div class="date-picker-day-slot-4"><div class="element-3">12</div></div>
-                  <div class="date-picker-day-slot-2"><div class="element-2">13</div></div>
-                  <div class="date-picker-day-slot-2"><div class="element-2">14</div></div>
-                  <div class="date-picker-day-slot-2"><div class="element-2">15</div></div>
-                  <div class="date-picker-day-slot-2"><div class="element-2">16</div></div>
-                  <div class="date-picker-day-slot-2"><div class="element-2">17</div></div>
-                </div>
-                <div class="date-picker-row-2">
-                  <div class="date-picker-day-slot-3"><div class="element-2">18</div></div>
-                  <div class="date-picker-day-slot-2"><div class="element-2">19</div></div>
-                  <div class="date-picker-day-slot-2"><div class="element-2">20</div></div>
-                  <div class="date-picker-day-slot-2"><div class="element-2">21</div></div>
-                  <div class="date-picker-day-slot-2"><div class="element-2">22</div></div>
-                  <div class="date-picker-day-slot-2"><div class="element-2">23</div></div>
-                  <div class="date-picker-day-slot-2"><div class="element-2">24</div></div>
-                </div>
-                <div class="date-picker-row">
-                  <div class="date-picker-day-slot-3"><div class="element-2">25</div></div>
-                  <div class="date-picker-day-slot-2"><div class="element-2">26</div></div>
-                  <div class="date-picker-day-slot-2"><div class="element-2">27</div></div>
-                  <div class="date-picker-day-slot-2"><div class="element-2">28</div></div>
-                  <div class="date-picker-day-slot-2"><div class="element-2">29</div></div>
-                  <div class="date-picker-day-slot-2"><div class="element-2">30</div></div>
-                  <div class="date-picker-day-slot-2"><div class="element-2">31</div></div>
-                </div>
+
+            <!-- System Calendar and Time -->
+            <div class="calendarContainer">
+              <div class="month">
+                <ul>
+                  <li class="prev">&#10094;</li>
+                  <li class="next">&#10095;</li>
+                  <li>
+                    February
+                    <br>
+                    <span style="font-size:18px">2025</span>
+                  </li>
+                </ul>
               </div>
+                <table class="weekdays">
+                    <thead>
+                        <tr>
+                            <th class="days">MON</th>
+                            <th class="days">TUES</th>
+                            <th class="days">WED</th>
+                            <th class="days">THURS</th>
+                            <th class="days">FRI</th>
+                            <th class="days">SAT</th>
+                            <th class="days">SUN</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td class="days">1</td>
+                            <td class="days">2</td>
+                        </tr>
+                        <tr>
+                            <td class="days">3</td>
+                            <td class="days">4</td>
+                            <td class="days">5</td>
+                            <td class="days">6</td>
+                            <td class="days">7</td>
+                            <td class="days">8</td>
+                            <td class="days">9</td>
+                        </tr>
+                        <tr>
+                            <td class="days">10</td>
+                            <td class="days">11</td>
+                            <td class="days">12</td>
+                            <td class="days">13</td>
+                            <td class="days"><span class="active">14</span></td>
+                            <td class="days">15</td>
+                            <td class="days">16</td>
+                        </tr>
+                        <tr>
+                          <td class="days">17</td>
+                          <td class="days">18</td>
+                          <td class="days">19</td>
+                          <td class="days">20</td>
+                          <td class="days">21</td>
+                          <td class="days">22</td>
+                          <td class="days">23</td>
+                      </tr>
+                      <tr>
+                        <td class="days">24</td>
+                        <td class="days">25</td>
+                        <td class="days">26</td>
+                        <td class="days">27</td>
+                        <td class="days">28</td>
+                        <td class="days"></td>
+                        <td class="days"></td>
+                      </tr>
+                    </tbody>
+                </table>
             </div>
+
             <div class="frame-2">
               <div class="text-wrapper-4">Time</div>
               <div class="frame-3">
@@ -199,17 +266,9 @@
                 </div>
               </div>
             </div>
-          </div>
-          <img class="untitled-design" src="assets/images/Classroom-Art.png" />
-          <div class="untitled-design-2"></div>
+            
         </div>
-        <header class="header">
-          <div class="text-wrapper-6">Labyrinth</div>
-          <img class="logo" src="assets/images/labyrinth-logo.png" />
-          <div class="element-avatar"></div>
-        </header>
       </div>
-    </div>
   </body>
 <!-- PUSHHHH  -->
 </html>
