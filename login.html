@@ -5,50 +5,78 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
     <link rel="stylesheet" href="assets/css/loginStyle.css">
+    <link rel="stylesheet" href="assets/css/styleguide.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
     <div class="container">
-        <!-- Input Fields -->
-        <div class="input-field username"></div>
-        <div class="input-field password"></div>
-
-        <!-- Dividers -->
-        <div class="divider username"></div>
-        <div class="divider password"></div>
-
-        <!-- Labels -->
-        <div class="label username">Username</div>
-        <div class="label password">Password</div>
-
-        <!-- Icons -->
-        <div class="icon username"></div>
-        <div class="icon password"></div>
-
-        <!-- Text Sections -->
-        <div class="text-section details">Kindly Enter your Details Below</div>
-        <div class="text-section remember-me">Remember me</div>
-        <div class="text-section forgot-password">Forgot password?</div>
-        <div class="text-section sign-up">Don’t have an account? <a href="register.html">Sign up here</a></div>
-
-        <!-- Login Button (Now a link to Dashboard.html) -->
-        <a href="Dashboard.html" class="login-button">LOGIN</a>
-
-        <!-- Image Section -->
+        
+        <!-- Left Image Section -->
         <div class="image-section">
-            <img src="assets/images/Rectangle 2.svg" alt="Background Image">
+            <div class="overlay"></div>
+            <img src="assets/images/LoginPhoto.jpg" alt="Background Image">
+            <div class="logo-container">
+                <img src="assets/images/LabyrinthLogo.png" alt="Labyrinth Logo">
+                <span class="logo-text">Labyrinth</span>
+            </div>
         </div>
 
-        <!-- Header -->
-        <div class="header">
-            <img src="assets/images/LabyrinthLogo.png" alt="Logo">
-            <div class="logo-text">Labyrinth</div>
-        </div>
+        <!-- Right Login Section -->
+        <div class="login-section">
+            <div class="title">
+                <b>Sign in to </b><span class="labyrinth">Labyrinth</span>
+            </div>
+            <p class="text-section details">Kindly Enter your Details Below</p>
 
-        <!-- Title -->
-        <div class="title">
-            <span class="sign-in">Sign in to </span>
-            <span class="labyrinth">Labyrinth</span>
+            <form action="Dashboard.html">
+                <div class="input-container">
+                    <i class="fa-solid fa-user icon"></i>
+                    <input type="text" placeholder="Username" class="input-field">
+                </div>
+                
+                <div class="input-container">
+                    <i class="fa-solid fa-lock icon"></i>
+                    <input type="password" placeholder="Password" class="input-field">
+                </div>
+
+                <div class="remember-forgot">
+                    <label>
+                        <input type="checkbox"> Remember me
+                    </label>
+                    <a href="#" id="forgot-password-link">Forgot password?</a>
+                </div>
+
+                <button type="submit" class="login-button">LOGIN</button>
+
+                <p class="sign-up">Don’t have an account? <a href="register.html">Sign up here</a></p>
+            </form>
         </div>
     </div>
+
+<!-- Forgot Password Overlay -->
+<div id="forgot-password-modal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <i class="fa-solid fa-lock lock-icon"></i>
+        
+        <h2 class="forgot-title">Forgot Password?</h2>
+        <p class="forgot-text">Please enter your email address to reset your password</p>
+        
+        <div class="forgot-input-container">
+            <label for="email" class="forgot-label">DLSU Email</label>
+            <div class="forgot-field">
+                <input type="email" id="email" placeholder="example_name@dlsu.edu.ph" class="forgot-input">
+            </div>
+        </div>
+
+        <button class="submit-btn">Submit</button>
+        <a href="#" id="back-to-login" class="back-link">Back to Login</a>
+
+        <!-- Forgot Password Image -->
+        <img src="assets/images/ForgotPassword.png" alt="Forgot Password Illustration" class="forgot-img">
+    </div>
+</div>
+
+    <script src="assets/js/loginJS.js"></script>
 </body>
 </html>
