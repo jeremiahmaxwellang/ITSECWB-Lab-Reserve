@@ -4,10 +4,8 @@
     <meta charset="utf-8" />
     <link rel="stylesheet" href="assets/css/global.css">
     <link rel="stylesheet" href="assets/css/styleguide.css">
-    <link rel="stylesheet" href="assets/css/labtechStyles.css">
+    <link rel="stylesheet" href="assets\css\labtechStyle.css">
     <link rel="stylesheet" href="assets/css/calendar.css">
-
-    <script src="labTechJS.js"></script>
   </head>
 
   <body>
@@ -80,8 +78,7 @@
                       <td class="tableCell">August 5, 2025 - 01:01:01 PM</td>
                       <td class="buttonCell">
                         <button class="editButton">Edit</button>
-                        <button class="deleteButton">Delete</button>
-                      </td>
+                        <button class="deleteButton">Delete</button>                      </td>
                     </tr>
 
                     <!-- Table Row 5 -->
@@ -91,8 +88,7 @@
                       <td class="tableCell">August 5, 2025 - 01:01:01 PM</td>
                       <td class="buttonCell">
                         <button class="editButton">Edit</button>
-                        <button class="deleteButton">Delete</button>
-                      </td>
+                        <button class="deleteButton">Delete</button>                      </td>
                     </tr>
 
                     <!-- Table Row 6 -->
@@ -102,8 +98,7 @@
                       <td class="tableCell">August 5, 2025 - 01:01:01 PM</td>
                       <td class="buttonCell">
                         <button class="editButton">Edit</button>
-                        <button class="deleteButton">Delete</button>
-                      </td>
+                        <button class="deleteButton">Delete</button>                      </td>
                     </tr>
                     
                   </table>
@@ -209,10 +204,26 @@
                 </div>
               </div>
             </div>
-            
+  </div>
+
+  <!-- Pop Up Overlays -->
+
+  <!-- Delete Confirmation Overlay -->
+  <div class="deletePopUp" id="deletePopUp">
+    <div class="overlay"></div>
+      <div class="popUpContent">
+        <h2>Are you sure you want to delete this Reservation?</h2>
+        <p>This action is permanent.</p>
+        <p>You will need to create a new reservation once this is deleted.</p>
+        <div class="controls">
+          <button class="cancelButton">Cancel</button>
+          <button class="closeButton">Confirm</button>
         </div>
       </div>
+    </div>
+  </div>
 
-  </body>
+<script src="assets\js\labTechJS.js"></script>
+</body>
 <!-- PUSHHHH  -->
 </html>
