@@ -1,54 +1,117 @@
+<!-- 
+    Last updated by: Jeremiah Ang
+    Date: Feb 11, 2025 - 10:32PM
+
+    Notes: 
+    - Added text fields
+    - Create account button leads to login page
+    - "Login" href leads to login page
+
+    - TODO: put Labyrinth logo on the left side
+-->
+
 <!DOCTYPE html>
+
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <link rel="stylesheet" href="assets/css/global.css" />
-    <link rel="stylesheet" href="assets/css/styleguide.css" />
-    <link rel="stylesheet" href="assets/css/resiterStyle.css" />
-  </head>
-  <body>
-    <div class="register-html">
-      <div class="overlap-wrapper">
-        <div class="overlap">
-          <div class="register-BG-image">
-            <div class="overlap-group">
-              <img class="register-image" src="assets/images/RegisterPhoto.png" />
-              <div class="labyrinth-logo-frame">
-                <div class="text-wrapper">Labyrinth</div>
-                <img class="labyrinth-logo" src="assets/images/LabyrinthLogo.png" />
-              </div>
+    <head>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="assets/css/global.css" />
+        <link rel="stylesheet" href="assets/css/styleguide.css" />
+
+        <link rel="stylesheet" href="assets/css/registerStyle.css"/>
+        <title>Labyrinth Register Page</title>
+    </head>
+
+
+    <body>
+        <div class="register-container">
+            <div class="register-photo">
+
+                <div class="right-side">
+
+                    <!-- Register your account! -->
+                    <p class="register-your-account">
+                        <span class="span">Register your</span>
+                        <span class="blue-text"> Labyrinth </span>
+                        <span class="span">Account</span>
+                    </p>
+    
+                    <div class="register-names-container">
+    
+                        <!-- First Name -->
+                        <div class="name-input-field">
+                            <div>
+                                <input type="text" class="name-text-field" placeholder="Jimmy">
+                                <div class="label-white-frame"><div class="label">First Name</div></div>
+                                </input>
+                            </div>
+                        </div>
+                    
+                        <!-- Last Name -->
+                        <div class="name-input-field">
+                            <div>
+                                <input type="text" class="name-text-field" placeholder="McGill">
+                                <div class="label-white-frame"><div class="label">Last Name</div></div>
+                                </input>
+                            </div>
+                        </div>
+    
+                    </div>
+    
+    
+                    <!-- DLSU Email -->
+                    <div class="register-input-field">
+                        <div>
+                            <input type="text" class="text-field" placeholder="jimmy_mcgill@dlsu.edu.ph">
+                            <div class="label-white-frame"><div class="label">DLSU Email</div></div>
+                            </input>
+                        </div>
+                    </div>
+    
+    
+                    <!-- Password -->
+                    <div class="register-input-field">
+                        <div>
+                            <input type="text" class="text-field" placeholder="Password must be at least 15 characters">
+                            <div class="label-white-frame"><div class="label">Enter password</div></div>
+                            </input>
+                        </div>
+                    </div>
+    
+                    <!-- Re-enter Password -->
+                    <div class="register-input-field">
+                        <div>
+                            <input type="text" class="text-field" placeholder="Re-enter Password">
+                            <div class="label-white-frame"><div class="label">Confirm password</div></div>
+                            </input>
+                        </div>
+                    </div>
+    
+    
+                    <!-- Create Account Button -->
+                    <button class="create-button" onclick="redirectToLogin()">
+                    <div class="create-button-label">Create Account</div>
+                    </button>
+
+                    <!-- temp javascript for redirecting to login page -->
+                    <script>
+                        function redirectToLogin(){
+                            window.location.href ='login.html';
+                        }
+                    </script>
+    
+                    <!-- "Already have an account?" section -->
+                    <div class="login-container">
+                        <div class="already-account">Already have an account?</div>
+                        <a href="login.html"> <div class="login">Login</div> </a>
+                    </div>
+    
+    
+                </div>
+
             </div>
-          </div>
-          <div class="register-frame">
-            <p class="register-your">
-              <span class="span">Register your</span>
-              <span class="text-wrapper-2"> Labyrinth </span>
-              <span class="span">Account</span>
-            </p>
-            <div class="register-input-field">
-              <div class="first-name-frame"><div class="div">First Name</div></div>
-            </div>
-            <div class="first-name-frame-wrapper">
-              <div class="first-name-frame"><div class="div">Last Name</div></div>
-            </div>
-            <div class="register-input-field-2">
-              <div class="div-wrapper"><div class="div">DLSU Email</div></div>
-              <div class="placeholder"><div class="text-wrapper-3">example_name@dlsu.edu.ph</div></div>
-            </div>
-            <div class="register-input-field-3">
-              <div class="first-name-frame"><div class="div">Enter password</div></div>
-            </div>
-            <div class="register-input-field-4">
-              <div class="first-name-frame"><div class="div">Re-enter password</div></div>
-            </div>
-            <button class="button"><div class="LOGIN">REGISTER ACCOUNT</div></button>
-            <div class="overlap-2">
-              <div class="text-wrapper-4">Already have an account?</div>
-              <div class="text-wrapper-5">Login</div>
-            </div>
-          </div>
+
+            
         </div>
-      </div>
-    </div>
-  </body>
+    </body>
 </html>
