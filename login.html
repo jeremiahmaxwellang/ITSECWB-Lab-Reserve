@@ -53,29 +53,43 @@
         </div>
     </div>
 
+
+
+
 <!-- Forgot Password Overlay -->
 <div id="forgot-password-modal" class="modal">
     <div class="modal-content">
-        <span class="close">&times;</span>
-        <i class="fa-solid fa-lock lock-icon"></i>
-        
-        <h2 class="forgot-title">Forgot Password?</h2>
-        <p class="forgot-text">Please enter your email address to reset your password</p>
-        
-        <div class="forgot-input-container">
-            <label for="email" class="forgot-label">DLSU Email</label>
-            <div class="forgot-field">
-                <input type="email" id="email" placeholder="example_name@dlsu.edu.ph" class="forgot-input">
-            </div>
+        <!-- Top Section: Outlined Lock Icon & Close Button -->
+        <div class="modal-header">
+            <i class="fa fa-unlock-alt lock-icon"></i> <!-- Outlined Lock Icon -->
+            <span class="close">&times;</span> <!-- Thick Close 'X' Button -->
         </div>
 
-        <button class="submit-btn">Submit</button>
-        <a href="#" id="back-to-login" class="back-link">Back to Login</a>
+        <!-- Body: Left (Form) | Right (Image) -->
+        <div class="modal-body">
+            <!-- Left Section: Form -->
+            <div class="forgot-form-container">
+                <h2 class="forgot-title">Forgot Password?</h2>
+                <p class="forgot-text">Please enter your email address to reset your password</p>
 
-        <!-- Forgot Password Image -->
-        <img src="assets/images/ForgotPassword.png" alt="Forgot Password Illustration" class="forgot-img">
+                <div class="input-group">
+                    <label class="static-label" for="email">DLSU Email</label>
+                    <input type="email" id="email" class="static-input" placeholder="example_name@dlsu.edu.ph">
+                </div>                                                                                                       
+
+                <button class="submit-btn">Submit</button>
+                <a href="#" id="back-to-login" class="back-link">Back to Login</a>
+            </div>
+
+            <!-- Right Section: Image -->
+            <div class="forgot-image-container">
+                <img src="assets/images/ForgotPassword.png" class="forgot-img">
+            </div>
+        </div>
     </div>
 </div>
+
+
 
     <script src="assets/js/loginJS.js"></script>
 </body>
