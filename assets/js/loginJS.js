@@ -1,94 +1,84 @@
-document.addEventListener("DOMContentLoaded", function () {
-    // Select modal elements
-    const forgotModal = document.getElementById("forgot-password-modal");
-    const otpModal = document.getElementById("otp-modal");
+class ModalHandler {
+    constructor(modalId, closeBtnId) {
+        this.modal = document.getElementById(modalId);
+        this.closeBtn = document.getElementById(closeBtnId);
 
-    // Select buttons and links
+        if (!this.modal) {
+            console.error(`Modal with ID '${modalId}' not found.`);
+            return;
+        }
+
+        this.modal.style.display = "none"; // Hide on load
+
+        // Close modal when clicking the close button
+        if (this.closeBtn) {
+            this.closeBtn.addEventListener("click", () => this.close());
+        }
+
+        // Prevent clicking inside the modal from closing it
+        this.modal.querySelector(".modal-content").addEventListener("click", (event) => {
+            event.stopPropagation();
+        });
+
+        // Close modal when clicking outside of it
+        this.modal.addEventListener("click", (event) => {
+            if (event.target === this.modal) {
+                this.close();
+            }
+        });
+    }
+
+    open() {
+        if (this.modal) {
+            console.log(`Opening modal: ${this.modal.id}`);
+            this.modal.style.display = "flex";
+        }
+    }
+
+    close() {
+        if (this.modal) {
+            console.log(`Closing modal: ${this.modal.id}`);
+            this.modal.style.display = "none";
+        }
+    }
+}
+
+// Instantiate modal handlers
+const forgotPasswordModal = new ModalHandler("forgot-password-modal", "close-forgot");
+const otpModal = new ModalHandler("otp-modal", "close-otp");
+
+// Ensure elements exist before adding event listeners
+document.addEventListener("DOMContentLoaded", function () {
     const forgotPasswordLink = document.getElementById("forgot-password-link");
     const forgotSubmitBtn = document.getElementById("forgot-submit");
-    const closeForgotBtn = document.getElementById("close-forgot");
-    const closeOtpBtn = document.getElementById("close-otp");
     const backToLogin = document.getElementById("back-to-login");
-
-    // Hide modals on page load
-    if (forgotModal) forgotModal.style.display = "none";
-    if (otpModal) otpModal.style.display = "none";
-
-    // Function to open a modal
-    function openModal(modal) {
-        if (modal) {
-            modal.style.display = "flex";
-        }
-    }
-
-    // Function to close a modal
-    function closeModal(modal) {
-        if (modal) {
-            modal.style.display = "none";
-        }
-    }
 
     // Open Forgot Password Modal
     if (forgotPasswordLink) {
         forgotPasswordLink.addEventListener("click", function (event) {
             event.preventDefault();
-            console.log("Opening Forgot Password modal");
-            openModal(forgotModal);
+            forgotPasswordModal.open();
         });
     }
 
-    // Close Forgot Password Modal
-    if (closeForgotBtn) {
-        closeForgotBtn.addEventListener("click", function () {
-            console.log("Closing Forgot Password modal");
-            closeModal(forgotModal);
-        });
-    }
-
-    // Close OTP Modal
-    if (closeOtpBtn) {
-        closeOtpBtn.addEventListener("click", function () {
-            console.log("Closing OTP modal");
-            closeModal(otpModal);
-        });
-    }
-
-    // Click "Submit" -> Close Forgot Modal & Open OTP Modal
-    if (forgotSubmitBtn) {
-        forgotSubmitBtn.addEventListener("click", function (event) {
-            event.preventDefault();
-            console.log("Submitting Forgot Password, opening OTP modal");
-            closeModal(forgotModal);
-
-            // Delay opening OTP modal slightly to prevent accidental closure
-            setTimeout(() => {
-                openModal(otpModal);
-            }, 200);
-        });
-    }
-
-    // Click "Back to Login" -> Close Forgot Password Modal
+    // Back to Login closes Forgot Password Modal
     if (backToLogin) {
         backToLogin.addEventListener("click", function (event) {
             event.preventDefault();
-            console.log("Going back to login, closing Forgot Password modal");
-            closeModal(forgotModal);
+            forgotPasswordModal.close();
         });
     }
 
-    // FIX: Prevent closing modal when clicking inside
-    document.addEventListener("click", function (event) {
-        if (forgotModal.style.display === "flex") {
-            if (!forgotModal.querySelector(".modal-content").contains(event.target) && event.target !== forgotPasswordLink) {
-                console.log("Click outside modal, closing Forgot Password modal");
-                closeModal(forgotModal);
-            }
-        }
-        if (otpModal.style.display === "flex") {
-            if (!otpModal.querySelector(".modal-content").contains(event.target)) {
-                console.log("Click outside modal, closing OTP modal");
-                closeModal(otpModal);
-            }
-        }
-    });
+    // Clicking "Submit" closes Forgot Password Modal and opens OTP Modal
+    if (forgotSubmitBtn) {
+        forgotSubmitBtn.addEventListener("click", function (event) {
+            event.preventDefault();
+            forgotPasswordModal.close();
+
+            // Delay to prevent accidental closure
+            setTimeout(() => {
+                otpModal.open();
+            }, 200);
+        });
+    }
 });
