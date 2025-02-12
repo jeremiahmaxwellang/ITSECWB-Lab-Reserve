@@ -148,16 +148,17 @@ form {
     width: 16px;
     height: 16px;
     border-radius: 50%;
-    border: 2px solid #377684;
+    background-color: #ccc;
     cursor: pointer;
     position: relative;
     vertical-align: middle;
     margin-right: 5px;
 }
 
-.remember-forgot input[type="checkbox"]:checked {
-    background-color: #377684;
-    border: 2px solid #377684;
+.remember-forgot input[type="checkbox"]:checked{
+    background-color: #898989;
+    border: 2px solid #ccc;
+
 }
 
 /* Forgot Password */
@@ -384,6 +385,46 @@ form {
     height: auto;
     flex-shrink: 0;
 }
+
+/*------------------------------------------------------------------- */
+
+/* OTP Modal Layout */
+.otp-body {
+    text-align: center;
+    padding: 20px;
+}
+
+/* OTP Input Fields */
+.otp-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.otp-input {
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    text-align: center;
+    border: 2px solid #D1D5DB;
+    border-radius: 8px;
+    outline: none;
+    transition: border 0.3s ease;
+}
+
+.otp-input:focus {
+    border: 2px solid #377684;
+}
+
+/* Confirm Button */
+.submit-btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+}
+
 
 
 

@@ -1,33 +1,86 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const modal = document.getElementById("forgot-password-modal");
+document.addEventListener("DOMContentLoaded", function () {
+    // Select modal elements
+    const forgotModal = document.getElementById("forgot-password-modal");
+    const otpModal = document.getElementById("otp-modal");
+
+    // Select buttons and links
     const forgotPasswordLink = document.getElementById("forgot-password-link");
-    const closeBtn = document.querySelector(".close");
+    const forgotSubmitBtn = document.getElementById("forgot-submit");
+    const closeForgotBtn = document.getElementById("close-forgot");
+    const closeOtpBtn = document.getElementById("close-otp");
     const backToLogin = document.getElementById("back-to-login");
 
-    // Ensure the modal is always hidden when the page loads
-    modal.style.display = "none";
+    // Hide modals on page load
+    forgotModal.style.display = "none";
+    otpModal.style.display = "none";
 
-    // Show modal when "Forgot Password?" is clicked
-    forgotPasswordLink.addEventListener("click", function(event) {
-        event.preventDefault();
-        modal.style.display = "flex";
-    });
+    // Function to open a modal
+    function openModal(modal) {
+        if (modal) {
+            modal.style.display = "flex";
+        }
+    }
 
-    // Hide modal when close button (X) is clicked
-    closeBtn.addEventListener("click", function() {
-        modal.style.display = "none";
-    });
-
-    // Hide modal when "Back to Login" is clicked
-    backToLogin.addEventListener("click", function(event) {
-        event.preventDefault();
-        modal.style.display = "none";
-    });
-
-    // Hide modal when clicking outside the modal content
-    window.addEventListener("click", function(event) {
-        if (event.target === modal) {
+    // Function to close a modal
+    function closeModal(modal) {
+        if (modal) {
             modal.style.display = "none";
+        }
+    }
+
+    // Open Forgot Password Modal
+    if (forgotPasswordLink) {
+        forgotPasswordLink.addEventListener("click", function (event) {
+            event.preventDefault();
+            console.log("Opening Forgot Password modal");
+            openModal(forgotModal);
+        });
+    }
+
+    // Close Forgot Password Modal
+    if (closeForgotBtn) {
+        closeForgotBtn.addEventListener("click", function () {
+            console.log("Closing Forgot Password modal");
+            closeModal(forgotModal);
+        });
+    }
+
+    // Close OTP Modal
+    if (closeOtpBtn) {
+        closeOtpBtn.addEventListener("click", function () {
+            console.log("Closing OTP modal");
+            closeModal(otpModal);
+        });
+    }
+
+    // Click "Submit" -> Close Forgot Modal & Open OTP Modal
+    if (forgotSubmitBtn) {
+        forgotSubmitBtn.addEventListener("click", function (event) {
+            event.preventDefault();
+            console.log("Submitting Forgot Password, opening OTP modal");
+            closeModal(forgotModal);
+            openModal(otpModal);
+        });
+    }
+
+    // Click "Back to Login" -> Close Forgot Password Modal
+    if (backToLogin) {
+        backToLogin.addEventListener("click", function (event) {
+            event.preventDefault();
+            console.log("Going back to login, closing Forgot Password modal");
+            closeModal(forgotModal);
+        });
+    }
+
+    // Click outside modal -> Close it
+    document.addEventListener("click", function (event) {
+        if (forgotModal.style.display === "flex" && !forgotModal.querySelector(".modal-content").contains(event.target)) {
+            console.log("Click outside modal, closing Forgot Password modal");
+            closeModal(forgotModal);
+        }
+        if (otpModal.style.display === "flex" && !otpModal.querySelector(".modal-content").contains(event.target)) {
+            console.log("Click outside modal, closing OTP modal");
+            closeModal(otpModal);
         }
     });
 });

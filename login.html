@@ -76,7 +76,7 @@
                     <input type="email" id="email" class="static-input" placeholder="example_name@dlsu.edu.ph">
                 </div>                                                                                                       
 
-                <button class="submit-btn">Submit</button>
+                <button id="forgot-submit" class="submit-btn">Submit</button>
                 <a href="#" id="back-to-login" class="back-link">Back to Login</a>
             </div>
 
@@ -87,6 +87,32 @@
         </div>
     </div>
 </div>
+
+    <!-- OTP Overlay -->
+    <div id="otp-modal" class="modal">
+        <div class="modal-content">
+            <!-- Top Section: Key Icon & Close Button -->
+            <div class="modal-header">
+                <i class="fa fa-key lock-icon"></i> <!-- Key Icon -->
+                <span class="close" id="close-otp">&times;</span> <!-- Thick Close 'X' Button -->
+            </div>
+
+            <!-- Body: OTP Input -->
+            <div class="modal-body otp-body">
+                <h2 class="forgot-title">One Time Pin</h2>
+                <p class="forgot-text">Please enter the 4 digit code sent to your email.</p>
+
+                <div class="otp-container">
+                    <input type="text" maxlength="1" class="otp-input" autofocus>
+                    <input type="text" maxlength="1" class="otp-input">
+                    <input type="text" maxlength="1" class="otp-input">
+                    <input type="text" maxlength="1" class="otp-input">
+                </div>
+
+                <button class="submit-btn">Confirm</button>
+            </div>
+        </div>
+    </div>
 
 
 
