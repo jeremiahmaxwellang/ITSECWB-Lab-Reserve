@@ -11,8 +11,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const backToLogin = document.getElementById("back-to-login");
 
     // Hide modals on page load
-    forgotModal.style.display = "none";
-    otpModal.style.display = "none";
+    if (forgotModal) forgotModal.style.display = "none";
+    if (otpModal) otpModal.style.display = "none";
 
     // Function to open a modal
     function openModal(modal) {
@@ -59,7 +59,11 @@ document.addEventListener("DOMContentLoaded", function () {
             event.preventDefault();
             console.log("Submitting Forgot Password, opening OTP modal");
             closeModal(forgotModal);
-            openModal(otpModal);
+
+            // Delay opening OTP modal slightly to prevent accidental closure
+            setTimeout(() => {
+                openModal(otpModal);
+            }, 200);
         });
     }
 
@@ -72,15 +76,19 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // Click outside modal -> Close it
+    // FIX: Prevent closing modal when clicking inside
     document.addEventListener("click", function (event) {
-        if (forgotModal.style.display === "flex" && !forgotModal.querySelector(".modal-content").contains(event.target)) {
-            console.log("Click outside modal, closing Forgot Password modal");
-            closeModal(forgotModal);
+        if (forgotModal.style.display === "flex") {
+            if (!forgotModal.querySelector(".modal-content").contains(event.target) && event.target !== forgotPasswordLink) {
+                console.log("Click outside modal, closing Forgot Password modal");
+                closeModal(forgotModal);
+            }
         }
-        if (otpModal.style.display === "flex" && !otpModal.querySelector(".modal-content").contains(event.target)) {
-            console.log("Click outside modal, closing OTP modal");
-            closeModal(otpModal);
+        if (otpModal.style.display === "flex") {
+            if (!otpModal.querySelector(".modal-content").contains(event.target)) {
+                console.log("Click outside modal, closing OTP modal");
+                closeModal(otpModal);
+            }
         }
     });
 });
