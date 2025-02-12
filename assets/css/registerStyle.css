@@ -1,12 +1,15 @@
 /* 
     Last updated by: Jeremiah Ang
-    Date: Feb 11, 2025 - 10:32PM
+    Date: Feb 12, 2025 - 11:54AM
 
     Notes: 
-    - Polished CSS
+    - Shrank the register form elements
+    - Placed Labyrinth logo on the left side
+    - Aligned text fields
+    - Imported fonts
 
-    - TODO: put Labyrinth logo on the left side
-    - TODO: fix alignment of text fields (it's a bit off on the right)
+    TODO:
+    - Popup css styling
 */
 
   .register-page-container {
