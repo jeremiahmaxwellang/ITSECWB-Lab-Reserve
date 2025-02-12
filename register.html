@@ -24,8 +24,13 @@
 
 
     <body>
-        <div class="register-container">
+        <div class="register-page-container">
             <div class="register-photo">
+                <!-- Logo -->
+                <div class="logo-container">
+                    <img src="assets/images/LabyrinthLogo.png" alt="Labyrinth Logo">
+                    <span class="logo-text">Labyrinth</span>
+                </div>
 
                 <div class="right-side">
 
@@ -36,21 +41,25 @@
                         <span class="span">Account</span>
                     </p>
     
-                    <div class="register-names-container">
+                    <!-- Registration Form -->
+                    <div class="registration-container">
+
+                    <!-- Row 1 -->
+                    <div class="input-row-container">
     
                         <!-- First Name -->
-                        <div class="name-input-field">
+                        <div class="short-input-container">
                             <div>
-                                <input type="text" class="name-text-field" placeholder="Jimmy">
+                                <input type="text" class="short-text-field" placeholder="Jimmy">
                                 <div class="label-white-frame"><div class="label">First Name</div></div>
                                 </input>
                             </div>
                         </div>
                     
                         <!-- Last Name -->
-                        <div class="name-input-field">
+                        <div class="short-input-container">
                             <div>
-                                <input type="text" class="name-text-field" placeholder="McGill">
+                                <input type="text" class="short-text-field" placeholder="McGill">
                                 <div class="label-white-frame"><div class="label">Last Name</div></div>
                                 </input>
                             </div>
@@ -58,14 +67,28 @@
     
                     </div>
     
+
+                    <!-- Row 2 -->
+                    <div class="input-row-container">
     
-                    <!-- DLSU Email -->
-                    <div class="register-input-field">
-                        <div>
-                            <input type="text" class="text-field" placeholder="jimmy_mcgill@dlsu.edu.ph">
-                            <div class="label-white-frame"><div class="label">DLSU Email</div></div>
-                            </input>
+                        <!-- DLSU Email -->
+                        <div class="short-input-container">
+                            <div>
+                                <input type="text" class="short-text-field" placeholder="jimmy_mcgill@dlsu.edu.ph">
+                                <div class="label-white-frame"><div class="label">DLSU Email</div></div>
+                                </input>
+                            </div>
                         </div>
+                    
+                        <!-- DLSU ID Number -->
+                        <div class="short-input-container">
+                            <div>
+                                <input type="text" class="short-text-field" placeholder="1220987">
+                                <div class="label-white-frame"><div class="label">DLSU ID Number</div></div>
+                                </input>
+                            </div>
+                        </div>
+    
                     </div>
     
     
@@ -105,6 +128,10 @@
                         <div class="already-account">Already have an account?</div>
                         <a href="login.html"> <div class="login">Login</div> </a>
                     </div>
+
+                    </div>
+                    <!-- End of Registration Form -->
+ 
     
     
                 </div>
