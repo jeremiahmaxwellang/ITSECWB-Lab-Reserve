@@ -210,8 +210,8 @@ form {
 
 /*------------------------------------------------------------------- */
 .modal-content, 
-.forgot-title, 
-.forgot-text, 
+.overlay-title, 
+.overlay-text, 
 .static-label, 
 .static-input, 
 .submit-btn{
@@ -278,6 +278,7 @@ form {
     display: flex;
     justify-content: space-between;
     padding-top: 40px;
+    
 }
 
 /* Left Section - Form */
@@ -287,18 +288,19 @@ form {
 }
 
 /* Title */
-.forgot-title {
+.overlay-title {
     font-size: 22px;
     font-weight: bold;
-    margin-top: 60px;
-    margin-bottom: 20px;
+    margin-top: 30px;
+    margin-bottom: 15px;
     align-items: left;
 }
 
 /* Description Text */
-.forgot-text {
+.overlay-text {
     color: #6C757D;
     font-size: 16px;
+    align-items: center;
 }
 
 /* Input Group */
@@ -391,7 +393,6 @@ form {
 
 /* OTP Modal Layout */
 .otp-body {
-    text-align: center;
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -399,27 +400,12 @@ form {
 }
 
 /* Key Icon (Left) */
-.otp-header {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    width: 100%;
-}
-
-.otp-header .lock-icon {
-    font-size: 22px;
-    margin-right: 10px;
-}
-
-/* Title (One Time Pin - Left Aligned) */
-.otp-title {
-    
-    font-size: 22px;
-    font-weight: bold;
-    text-align: left;
-    width: 100%;
-    margin-top: 15px;
-    margin-bottom: 20px;
+.key-icon {
+    font-size: 24px;
+    color: black;
+    position: absolute;
+    top: 16px;
+    left: 16px;
 }
 
 /* Description (Centered) */
@@ -463,6 +449,131 @@ form {
     background: #F3F4F6;
     border-color: #B0B3B8;
 }
+
+/*------------------------------------------------------------------- */
+
+/* Change Password Modal */
+.change-password-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+}
+
+/* Modal Content */
+.change-password-modal .modal-content {
+    background: white;
+    border-radius: 16px;
+    padding: 30px;
+    width: 450px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    align-items: center;
+}
+
+/* Modal Header */
+.change-password-modal .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    position: absolute;
+    top: 12px;
+    right: 16px;
+}
+
+/* Lock Icon */
+.change-password-modal .lock-icon {
+    font-size: 24px;
+    color: black;
+    position: absolute;
+    top: 16px;
+    left: 16px;
+}
+
+/* Close Button */
+.close-change-password {
+    position: absolute;
+    top: 12px;
+    right: 50px;
+    font-size: 22px;
+    cursor: pointer;
+    color: #000;
+}
+
+/* Title */
+.change-password-modal .overlay-title {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 40px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+/* Description Text */
+.change-password-modal .overlay-text {
+    color: #6C757D;
+    font-size: 16px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Modal Body (Stacked Layout) */
+.change-password-modal .modal-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+/* Input Fields (Stacked Layout) */
+.change-password-modal .input-group {
+    width: 100%;
+    max-width: 350px;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+/* Label for Input */
+.change-password-modal .static-label {
+    font-size: 14px;
+    color: #4F4F4F;
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* Input Box Styling */
+.change-password-modal .static-input {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #D1D5DB;
+    border-radius: 8px;
+    background: white;
+    outline: none;
+    transition: border 0.3s ease;
+}
+
+/* Focus State */
+.change-password-modal .static-input:focus {
+    border: 1px solid #377684;
+}
+
+.change-submit-btn {
+    width: 70%; /* Overrides only width */
+}
+
+
+
+
+
 
 
 

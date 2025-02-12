@@ -64,8 +64,8 @@
         </div>
 
         <!-- Move Text Above Both Form & Image -->
-        <h2 class="forgot-title">Forgot Password?</h2>
-        <p class="forgot-text">Please enter your email address to reset your password</p>
+        <h2 class="overlay-title">Forgot Password?</h2>
+        <p class="overlay-text">Please enter your email address to reset your password</p>
 
         <!-- Modal Body -->
         <div class="modal-body">
@@ -90,33 +90,70 @@
 
 
 
-    <!-- OTP Modal -->
-    <div id="otp-modal" class="modal">
-        <div class="modal-content">
-            <!-- Top Section: Key Icon & Close Button -->
-            <div class="modal-header">
-                <i class="fa fa-key lock-icon"></i> <!-- Key Icon -->
-                <span class="close" id="close-otp">&times;</span> <!-- Close Button -->
+<!-- OTP Modal -->
+<div id="otp-modal" class="modal">
+    <div class="modal-content">
+        <!-- Top Section: Key Icon & Close Button -->
+        <div class="modal-header">
+            <i class="fa fa-key key-icon"></i> <!-- Key Icon -->
+            <span class="close" id="close-otp">&times;</span> <!-- Close Button -->
+        </div>
+
+        <h2 class="overlay-title">One Time Pin</h2>
+        
+        <!-- OTP Input Fields -->
+        <div class="modal-body otp-body">
+            <p class="overlay-text">Please enter the 6-digit code sent to your email.</p>
+
+            <div class="otp-container">
+                <input type="text" maxlength="1" class="otp-input" autofocus>
+                <input type="text" maxlength="1" class="otp-input">
+                <input type="text" maxlength="1" class="otp-input">
+                <input type="text" maxlength="1" class="otp-input">
+                <input type="text" maxlength="1" class="otp-input">
+                <input type="text" maxlength="1" class="otp-input">
             </div>
 
-            <!-- OTP Input Fields -->
-            <div class="modal-body otp-body">
-                <h2 class="otp-title">One Time Pin</h2>
-                <p class="forgot-text">Please enter the 6-digit code sent to your email.</p>
-
-                <div class="otp-container">
-                    <input type="text" maxlength="1" class="otp-input" autofocus>
-                    <input type="text" maxlength="1" class="otp-input">
-                    <input type="text" maxlength="1" class="otp-input">
-                    <input type="text" maxlength="1" class="otp-input">
-                    <input type="text" maxlength="1" class="otp-input">
-                    <input type="text" maxlength="1" class="otp-input">
-                </div>
-
-                <button class="submit-btn otp-submit-btn">Confirm</button>
-            </div>
+            <button class="submit-btn otp-submit-btn">Confirm</button>
         </div>
     </div>
+</div>
+
+
+<!-- Change Password Modal -->
+<div class="modal change-password-modal">
+    <div class="modal-content">
+        <!-- Top Section: Lock Icon & Close Button -->
+        <div class="modal-header">
+            <i class="fa fa-lock lock-icon"></i> <!-- Lock Icon -->
+            <span class="close close-change-password">&times;</span> <!-- Close Button -->
+        </div>
+
+        <!-- Title & Description -->
+        <h2 class="overlay-title">Create New Password</h2>
+        <p class="overlay-text">Please enter and confirm your new password.</p>
+
+        <!-- Modal Body -->
+        <div class="modal-body">
+            <!-- Input Fields (Stacked Layout) -->
+            <div class="input-group">
+                <label class="static-label" for="new-password">New Password:</label>
+                <input type="password" id="new-password" class="static-input">
+            </div> 
+            
+            <div class="input-group">
+                <label class="static-label" for="confirm-password">Confirm Password:</label>
+                <input type="password" id="confirm-password" class="static-input">
+            </div>   
+
+            <!-- Submit Button -->
+            <button class="submit-btn change-submit-btn">Submit</button>
+        </div>
+    </div>
+</div>
+
+
+
 
     <script src="assets/js/loginJS.js"></script>
 </body>
