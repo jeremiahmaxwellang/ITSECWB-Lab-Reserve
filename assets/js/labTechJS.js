@@ -42,10 +42,13 @@ if (deletePopUp) {
   }
 }
 
-// Close reservationDeleted popup when homeButton is clicked
-if (reservationDeletedPopup) {
+// Close BOTH popups when homeButton is clicked
+if (reservationDeletedPopup && deletePopUp) {
   let homeButton = document.querySelector("#reservationDeleted .homeButton");
   if (homeButton) {
-    homeButton.addEventListener("click", reservationDeletedPopup.closePopup);
+    homeButton.addEventListener("click", () => {
+      reservationDeletedPopup.closePopup();
+      deletePopUp.closePopup();
+    });
   }
 }
