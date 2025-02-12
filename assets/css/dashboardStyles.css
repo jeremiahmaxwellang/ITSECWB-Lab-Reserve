@@ -125,14 +125,14 @@
     padding-bottom: 10px;
   }
   
-  .dashboard-html th, 
-  .dashboard-html td {
+  .reservationContainer th, 
+  .reservationContainer td {
     padding: 5px;
     border-right: 3px solid black;
     border-left: 3px solid black;
   }
   
-  .dashboard-html .reservationHeader {
+  .reservationContainer .reservationHeader {
     font-family: "Outfit-Regular", Helvetica;
     font-size: 24px;
     position: relative;
@@ -143,7 +143,7 @@
     text-align: left;
   }
   
-  .dashboard-html .table1Header {
+  .reservationContainer .table1Header {
     font-family: "Outfit-Regular", Helvetica;
     font-size: 20px;
     position: relative;
@@ -152,7 +152,7 @@
     padding: 10px;
   }
   
-  .dashboard-html .tableCell {
+  .reservationContainer .tableCell {
     font-family: "Outfit-Regular", Helvetica;
     font-size: 16px;
     position: relative;
@@ -162,18 +162,18 @@
   }
   
   /* Remove left border for the first column */
-  .dashboard-html th:first-child, 
-  .dashboard-html td:first-child {
+  .reservationContainer th:first-child, 
+  .reservationContainer td:first-child {
     border-left: none;
   }
   
   /* Remove right border for the last column */
-  .dashboard-html th:last-child, 
-  .dashboard-html td:last-child {
+  .reservationContainer th:last-child, 
+  .reservationContainer td:last-child {
     border-right: none;
   }
   
-  .dashboard-html .edit-button {
+  .reservationContainer .edit-button {
     box-sizing: border-box;
     display: flex;
     width: 120px;
@@ -187,7 +187,7 @@
     border-color: #585858;
   }
   
-  .dashboard-html .edit-button:hover {
+  .reservationContainer .edit-button:hover {
     color:black;
     background-color: #E3E3E3;
   }
@@ -451,37 +451,6 @@
     flex: 0 0 auto;
   }
   
-  .dashboard-html .frame-2 {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 7.62px 0px 0px;
-    align-self: stretch;
-    width: 100%;
-    flex: 0 0 auto;
-  }
-  
-  .dashboard-html .text-wrapper-4 {
-    position: relative;
-    width: fit-content;
-    font-family: "Inter-SemiBold", Helvetica;
-    font-weight: 600;
-    color: #000000;
-    font-size: 15.2px;
-    text-align: center;
-    letter-spacing: 0.46px;
-    line-height: normal;
-    white-space: nowrap;
-  }
-  
-  .dashboard-html .frame-3 {
-    display: inline-flex;
-    align-items: flex-start;
-    gap: 7.62px;
-    position: relative;
-    flex: 0 0 auto;
-  }
-  
   .dashboard-html .frame-4 {
     display: inline-flex;
     align-items: center;
@@ -560,7 +529,8 @@
   .dashboard-html .classroomArt {
     width: 253px;
     height: 253px;
-    position: absolute;
+    position: relative;
+    margin: auto;
     left: 60px;
     top: 100px;
   }
