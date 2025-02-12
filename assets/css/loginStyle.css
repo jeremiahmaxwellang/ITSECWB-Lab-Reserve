@@ -208,7 +208,14 @@ form {
 }
 
 /*------------------------------------------------------------------- */
-
+.modal-content, 
+.forgot-title, 
+.forgot-text, 
+.static-label, 
+.static-input, 
+.submit-btn{
+    font-family: 'Outfit', sans-serif;
+}
 
 /* General Modal Styling */
 .modal {
@@ -257,13 +264,12 @@ form {
     left: 16px;
 }
 
-/* Close Button - Thicker */
+
 .close {
     position: absolute;
     top: 12px;
     right: 50px;
     font-size: 22px;
-    font-weight: bold;
     cursor: pointer;
     color: #000;
 }
@@ -280,24 +286,21 @@ form {
 .forgot-form-container {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    flex: 1;
-    padding-right: 20px;
+    align-items: center; /* Centers children horizontally */
 }
 
 /* Title */
 .forgot-title {
     font-size: 22px;
     font-weight: bold;
-    margin-top: 40px;
-    margin-bottom: 5px;
+    margin-bottom: 2px;
 }
 
 /* Description Text */
 .forgot-text {
     color: #6C757D;
     font-size: 16px;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
 /* Input Group */
@@ -305,19 +308,19 @@ form {
     position: relative;
     width: 100%;
     max-width: 400px;
-    margin-bottom: 15px;
+    margin-top: 10px;
+    margin-bottom: 25px;
 }
 
 /* Static Label - Always Positioned */
 .static-label {
     position: absolute;
     left: 14px;
-    top: -5px;
+    top: -10px;
     font-size: 14px;
-    color: black;
+    color: #4F4F4F;
     background: white;
     padding: 0 5px;
-    font-weight: bold;
 }
 
 /* Static Input - No Animation */
@@ -336,6 +339,7 @@ form {
 /* Submit Button - White Background with Gray Border */
 .submit-btn {
     width: 100%;
+    margin-bottom: 8px; 
     padding: 10px;
     background: white;
     color: #3C4B5F; /* Dark text color */
@@ -345,6 +349,7 @@ form {
     cursor: pointer;
     text-align: center;
     transition: all 0.3s ease;
+    display: block;
 }
 
 /* Hover Effect */
@@ -355,9 +360,10 @@ form {
 
 /* Back to Login */
 .back-link {
-    margin-top: 10px;
+    display: block;
+    text-align: center; /* Centers the text */
     font-size: 14px;
-    color: #377684;
+    color: #3C4B5F;
     text-decoration: none;
 }
 
@@ -374,7 +380,7 @@ form {
 }
 
 .forgot-img {
-    max-width: 150px;
+    max-width: 250px;
     height: auto;
     flex-shrink: 0;
 }
