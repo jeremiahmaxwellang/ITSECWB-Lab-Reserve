@@ -259,19 +259,6 @@
     color: white;
   }
   
-  .dashboard-html .calendarContainer {
-    display: flex;
-    width: 395px;
-    height: 384px;
-    padding: 20.32px;
-    left: 979px;
-    background-color: var(--colori-neutralibianco-chiaro);
-    border-radius: 20.32px;
-    border: 1.27px solid;
-    border-color: var(--primariogrigio-50);
-    box-shadow: var(--large);
-  }
-  
   .dashboard-html .date-picker-header {
     width: 359.44px;
     align-items: flex-start;
@@ -287,19 +274,6 @@
     gap: 2.54px;
     position: relative;
     flex: 0 0 auto;
-  }
-  
-  .dashboard-html .month {
-    position: relative;
-    width: fit-content;
-    margin-top: -1.27px;
-    font-family: "Inter-Medium", Helvetica;
-    font-weight: 500;
-    color: #0e0e0f;
-    font-size: 16.5px;
-    letter-spacing: 0;
-    line-height: 30.5px;
-    white-space: nowrap;
   }
   
   .dashboard-html .u-angle-down {
@@ -322,16 +296,6 @@
     align-self: stretch;
     width: 100%;
     flex-grow: 1;
-  }
-  
-  .dashboard-html .date-picker-weekdays {
-    align-items: flex-start;
-    flex: 1;
-    align-self: stretch;
-    width: 100%;
-    flex-grow: 1;
-    display: flex;
-    position: relative;
   }
   
   .dashboard-html .content-2 {

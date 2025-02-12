@@ -262,27 +262,6 @@
     font-style: var(--single-line-body-base-font-style);
     color: white;
   }
-  
-  .LabTech-html .calendarContainer {
-    width: 395px;
-    height: 384px;
-    padding: 20px;
-    background-color: var(--colori-neutralibianco-chiaro);
-    border-radius: 20px;
-    border: 1px solid;
-    border-color: var(--primariogrigio-50);
-    box-shadow: var(--large);
-  }
-
-  .LabTech-html .frame-2 {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 7.62px 0px 0px;
-    align-self: stretch;
-    width: 100%;
-    flex: 0 0 auto;
-  }
 
   .LabTech-html .text-wrapper-2 {
     position: absolute;
