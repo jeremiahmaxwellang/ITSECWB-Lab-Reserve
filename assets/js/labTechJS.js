@@ -11,6 +11,7 @@ function createPopup(id) {
   let closeButton = popupNode.querySelector(".closeButton");
 
   function openPopup() {
+    closeAllPopups(); // Ensure only one popup is open at a time
     popupNode.classList.add("active");
   }
 
@@ -25,6 +26,13 @@ function createPopup(id) {
   return { openPopup, closePopup };
 }
 
+// Function to close all popups before opening a new one
+function closeAllPopups() {
+  document.querySelectorAll(".popup.active").forEach(popup => {
+    popup.classList.remove("active");
+  });
+}
+
 // Create popups
 let deletePopUp = createPopup("#deletePopUp");
 let reservationDeletedPopup = createPopup("#reservationDeleted");
@@ -34,21 +42,23 @@ if (deletePopUp) {
   document.querySelectorAll(".deleteButton").forEach(button => {
     button.addEventListener("click", deletePopUp.openPopup);
   });
+}
 
-  // When Confirm is clicked, open reservationDeleted popup WITHOUT closing deletePopUp
+// Click "Confirm" -> Close deletePopUp & Open reservationDeletedPopup
+if (deletePopUp && reservationDeletedPopup) {
   let confirmButton = document.querySelector("#deletePopUp .confirmButton");
-  if (confirmButton && reservationDeletedPopup) {
-    confirmButton.addEventListener("click", reservationDeletedPopup.openPopup);
+  if (confirmButton) {
+    confirmButton.addEventListener("click", () => {
+      deletePopUp.closePopup(); // Close Delete Confirmation popup
+      reservationDeletedPopup.openPopup(); // Open Reservation Deleted popup
+    });
   }
 }
 
-// Close BOTH popups when homeButton is clicked
-if (reservationDeletedPopup && deletePopUp) {
+// Click "Home" -> Close all popups
+if (reservationDeletedPopup) {
   let homeButton = document.querySelector("#reservationDeleted .homeButton");
   if (homeButton) {
-    homeButton.addEventListener("click", () => {
-      reservationDeletedPopup.closePopup();
-      deletePopUp.closePopup();
-    });
+    homeButton.addEventListener("click", closeAllPopups);
   }
 }
