@@ -21,12 +21,14 @@
 
   .register-photo {
     background-image: url('../images/RegisterPhoto.png');
-    min-width: 480px;
-    min-height: 1078px;
+    width: 40%;
+    height: 100%;
+    /* min-width: 480px;
+    min-height: 1078px; */
     border-radius: 23.16;
 
     /* filter: brightness(0.7); */
-    padding-left: 420px;
+    padding-left: 400px;
 
   }
 
@@ -58,8 +60,9 @@
   /* ========= RIGHT SIDE ========= */
 
   .right-side {
-    min-width: 1000px;
+    min-width: 700px;
     min-height: 1078px;
+
 
     background-color: #ffffff;
     border-radius: 30px;
@@ -88,9 +91,9 @@
   .registration-container {
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: 30px;
 
-    min-width: 760px;
+    max-width: 500px;
 
   }
 
@@ -105,7 +108,7 @@
   }
 
   .register-input-field, .short-input-container {
-    width: 760px;
+    width: 500px;
     height: 60px;
 
     top: 339px;
@@ -113,15 +116,15 @@
   }
 
   .short-input-container {
-    width: 365px;
+    width: 240px;
   }
 
   .text-field, .short-text-field{
-    width: 760px;
-    height: 54px;
+    width: 500px;
+    height: 50px;
 
     padding-left: 10px;
-    font-size: 20px;
+    font-size: 15px;
 
     border-radius: 8px;
     border: 1px solid;
@@ -129,7 +132,8 @@
   }
   
   .short-text-field {
-    width: 365px;
+    width: 240px;
+
   }
 
   .label-white-frame {
@@ -147,11 +151,11 @@
   .label {
     position: relative;
     width: fit-content;
-    margin-top: -1.00px;
+    margin-top: 2.00px;
     font-family: "Newsreader-Regular", Helvetica;
     font-weight: 400;
     color: #4f4f4f;
-    font-size: 20px;
+    font-size: 17px;
     letter-spacing: -0.20px;
     line-height: 20px;
     white-space: nowrap;
@@ -162,18 +166,18 @@
     display: flex;
     flex-direction: row;
     
-    gap: 30px;
+    gap: 20px;
   }
 
   .create-button {
     all: unset;
     display: flex;
-    width: 745px;
+    width: 100%;
     height: 47px;
     align-items: center;
     justify-content: center;
-    gap: var(--size-space-200);
-    padding: var(--size-space-200);
+
+    padding: var(--size-space-100);
     position: relative;
 
     background-color: var(--variable-collection-color);
@@ -206,7 +210,7 @@
     font-family: 'Newsreader', serif;
     font-weight: 400;
     color: #4f4f4f;
-    font-size: 20px;
+    font-size: 15px;
     letter-spacing: -0.20px;
     line-height: 20px;
     white-space: nowrap;
@@ -217,7 +221,7 @@
 
     font-family: 'Newsreader', serif;
     color: #377684;
-    font-size: 20px;
+    font-size: 15px;
     letter-spacing: -0.20px;
     line-height: 20px;
     font-weight: 400;
