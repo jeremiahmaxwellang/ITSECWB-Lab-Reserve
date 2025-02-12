@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="assets/css/styleguide.css">
     <link rel="stylesheet" href="assets/css/global.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    
+
 </head>
 <body>
     <div class="container">
@@ -54,38 +54,41 @@
         </div>
     </div>
 
-    <!-- Forgot Password Modal -->
-    <div id="forgot-password-modal" class="modal">
-        <div class="modal-content">
-            <!-- Top Section: Outlined Lock Icon & Close Button -->
-            <div class="modal-header">
-                <i class="fa fa-unlock-alt lock-icon"></i> <!-- Outlined Lock Icon -->
-                <span class="close" id="close-forgot">&times;</span> <!-- Close Button -->
+<!-- Forgot Password Modal -->
+<div id="forgot-password-modal" class="modal">
+    <div class="modal-content">
+        <!-- Top Section: Outlined Lock Icon & Close Button -->
+        <div class="modal-header">
+            <i class="fa fa-unlock-alt lock-icon"></i> <!-- Outlined Lock Icon -->
+            <span class="close" id="close-forgot">&times;</span> <!-- Close Button -->
+        </div>
+
+        <!-- Move Text Above Both Form & Image -->
+        <h2 class="forgot-title">Forgot Password?</h2>
+        <p class="forgot-text">Please enter your email address to reset your password</p>
+
+        <!-- Modal Body -->
+        <div class="modal-body">
+            <!-- Left Section: Form -->
+            <div class="forgot-form-container">
+                <div class="input-group">
+                    <label class="static-label" for="email">DLSU Email</label>
+                    <input type="email" id="email" class="static-input" placeholder="example_name@dlsu.edu.ph">
+                </div>                                                                                                       
+
+                <button id="forgot-submit" class="submit-btn">Submit</button>
+                <a href="#" id="back-to-login" class="back-link">Back to Login</a>
             </div>
 
-            <!-- Modal Body -->
-            <div class="modal-body">
-                <!-- Left Section: Form -->
-                <div class="forgot-form-container">
-                    <h2 class="forgot-title">Forgot Password?</h2>
-                    <p class="forgot-text">Please enter your email address to reset your password</p>
-
-                    <div class="input-group">
-                        <label class="static-label" for="email">DLSU Email</label>
-                        <input type="email" id="email" class="static-input" placeholder="example_name@dlsu.edu.ph">
-                    </div>                                                                                                       
-
-                    <button id="forgot-submit" class="submit-btn">Submit</button>
-                    <a href="#" id="back-to-login" class="back-link">Back to Login</a>
-                </div>
-
-                <!-- Right Section: Image -->
-                <div class="forgot-image-container">
-                    <img src="assets/images/ForgotPassword.png" class="forgot-img">
-                </div>
+            <!-- Right Section: Image -->
+            <div class="forgot-image-container">
+                <img src="assets/images/ForgotPassword.png" class="forgot-img">
             </div>
         </div>
     </div>
+</div>
+
+
 
     <!-- OTP Modal -->
     <div id="otp-modal" class="modal">
@@ -98,7 +101,7 @@
 
             <!-- OTP Input Fields -->
             <div class="modal-body otp-body">
-                <h2 class="forgot-title">One Time Pin</h2>
+                <h2 class="otp-title">One Time Pin</h2>
                 <p class="forgot-text">Please enter the 6-digit code sent to your email.</p>
 
                 <div class="otp-container">
@@ -110,7 +113,7 @@
                     <input type="text" maxlength="1" class="otp-input">
                 </div>
 
-                <button class="submit-btn">Confirm</button>
+                <button class="submit-btn otp-submit-btn">Confirm</button>
             </div>
         </div>
     </div>

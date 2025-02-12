@@ -223,14 +223,12 @@ form {
     display: none;
     position: fixed;
     z-index: 1000;
-    left: 0;
-    top: 0;
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.4);
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center;    
 }
 
 /* Modal Content */
@@ -279,7 +277,6 @@ form {
 .modal-body {
     display: flex;
     justify-content: space-between;
-    align-items: center;
     padding-top: 40px;
 }
 
@@ -287,22 +284,21 @@ form {
 .forgot-form-container {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Centers children horizontally */
 }
 
 /* Title */
 .forgot-title {
     font-size: 22px;
     font-weight: bold;
-    margin-top: 15px;
+    margin-top: 60px;
     margin-bottom: 20px;
+    align-items: left;
 }
 
 /* Description Text */
 .forgot-text {
     color: #6C757D;
     font-size: 16px;
-    margin-bottom: 30px;
 }
 
 /* Input Group */
@@ -311,7 +307,8 @@ form {
     width: 100%;
     max-width: 400px;
     margin-top: 10px;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
+
 }
 
 /* Static Label - Always Positioned */
@@ -327,7 +324,7 @@ form {
 
 /* Static Input - No Animation */
 .static-input {
-    width: 100%;
+    width: 130%;
     font-size: 16px;
     border: 1px solid #898989;
     border-radius: 10px; /* Make all corners rounded */
@@ -340,8 +337,8 @@ form {
 
 /* Submit Button - White Background with Gray Border */
 .submit-btn {
-    width: 100%;
-    margin-bottom: 8px; 
+    width: 130%;
+    margin-bottom: 5px; 
     padding: 10px;
     background: white;
     color: #3C4B5F; /* Dark text color */
@@ -367,6 +364,7 @@ form {
     font-size: 14px;
     color: #3C4B5F;
     text-decoration: none;
+    width: 130%;
 }
 
 .back-link:hover {
@@ -376,13 +374,15 @@ form {
 /* Right Section - Forgot Password Image */
 .forgot-image-container {
     display: flex;
-    align-items: center;
+    align-items: flex-start; /* Moves image slightly higher */
     justify-content: center;
     flex: 1;
+    margin-top: -20px;
 }
 
 .forgot-img {
-    max-width: 250px;
+    margin-left: 70px;
+    max-width: 210px;
     height: auto;
     flex-shrink: 0;
 }
@@ -393,18 +393,54 @@ form {
 .otp-body {
     text-align: center;
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-/* OTP Input Fields */
+/* Key Icon (Left) */
+.otp-header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+}
+
+.otp-header .lock-icon {
+    font-size: 22px;
+    margin-right: 10px;
+}
+
+/* Title (One Time Pin - Left Aligned) */
+.otp-title {
+    
+    font-size: 22px;
+    font-weight: bold;
+    text-align: left;
+    width: 100%;
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+
+/* Description (Centered) */
+.otp-body p {
+    color: #6C757D;
+    font-size: 16px;
+    margin-bottom: 15px;
+    text-align: center;
+    max-width: 400px;
+}
+
+/* OTP Input Fields (Centered) */
 .otp-container {
     display: flex;
     justify-content: center;
     gap: 10px;
-    margin-top: 10px;
+    margin-bottom: 20px;
 }
 
 .otp-input {
-    width: 50px;
+    width: 50px; /* OTP Input Width */
     height: 50px;
     font-size: 24px;
     text-align: center;
@@ -418,13 +454,18 @@ form {
     border: 2px solid #377684;
 }
 
-/* Confirm Button */
-.submit-btn {
-    display: block;
-    width: 100%;
-    text-align: center;
-    margin-top: 20px;
+.otp-submit-btn {
+    width: 55%; /* Overrides only width */
 }
+
+/* Confirm Button Hover Effect */
+.otp-submit-btn:hover {
+    background: #F3F4F6;
+    border-color: #B0B3B8;
+}
+
+
+
 
 
 
