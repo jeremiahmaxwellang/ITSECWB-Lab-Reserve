@@ -106,7 +106,7 @@ form {
     display: flex;
     align-items: center; /* Align elements inside */
     position: relative;
-    margin-bottom: 18px; /* Increased spacing */
+    margin-bottom: 10px; /* Increased spacing */
 }
 
 .input-field {
