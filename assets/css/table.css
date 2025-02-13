@@ -74,6 +74,7 @@
     position: relative;
     color: #000000;
     padding: 10px;
+    border-right: 3px solid black;
   }
 
   .buttonCell {
@@ -87,7 +88,15 @@
   .table1Header:last-child {
     border-right: none;
   }
-
+  
   .tableRow {
     border: 3px solid black;
+  }
+
+  .tableRow:last-child {
+    border-bottom: none;
+  }
+
+  .tableCell:last-child {
+    border-right: none;
   }
