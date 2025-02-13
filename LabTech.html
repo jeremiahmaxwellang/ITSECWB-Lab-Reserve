@@ -5,17 +5,23 @@
     <link rel="stylesheet" href="assets/css/global.css">
     <link rel="stylesheet" href="assets/css/styleguide.css">
     <link rel="stylesheet" href="assets\css\labtechStyle.css">
+
   </head>
 
   <body>
     <div class="LabTech-html">
-        <header class="labTechHeader">
-          <img class="logo" src="assets/images/LabyrinthLogo.png" />
-          <div class="labyrinthHeader">Labyrinth</div>
-          <div class="elementContainer">
-            <span class="element-avatar"></span>
-          </div>
-        </header>
+        <!-- Header -->
+      <div class="labTechHeader">
+        <div class="logo-container">
+            <img class="logo" src="assets\images\LabyrinthLogo.png" onclick="redirectToDashboard()" />
+        </div>
+
+        <!-- Labyrinth Header Name-->
+        <div class="labyrinthHeader">Labyrinth</div>
+
+        <!-- Profile Photo Icon -->
+        <img class="profile-icon" src= uploads/profile_pics/avatar.png alt="Profile" onclick="redirectToProfile()">
+      </div>
 
         <div class="overlap">
           <div class="left-side">

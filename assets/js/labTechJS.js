@@ -62,3 +62,11 @@ if (reservationDeletedPopup) {
     homeButton.addEventListener("click", closeAllPopups);
   }
 }
+
+function redirectToDashboard() {
+  window.location.href = "Dashboard.html";
+}
+
+function redirectToProfile() {
+  window.location.href = "profile.html";
+}

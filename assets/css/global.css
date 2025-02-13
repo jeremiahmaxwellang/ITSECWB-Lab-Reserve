@@ -137,6 +137,37 @@ a {
   right: 20px;
 }
 
+/* Lab Tech Dashboard */
+.labTechHeader {
+  width: 100%;
+  background: #3B6B53;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 5%;
+  color: #F5F5F5;
+  font-size: 1.5rem;
+  font-weight: 500;
+  flex-wrap: wrap;
+}
+
+.labTechHeader .logo-container {
+  display: flex;
+  align-items: center;
+}
+.labTechHeader .logo-container img {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+  cursor: pointer; /* Add cursor pointer to indicate clickable */
+}
+
+.labTechHeader .profile-icon {
+  width: 69px;
+  height: 69px;
+  cursor: pointer;
+}
+
 /* Calendar Styles */
 
 .calendarContainer {
