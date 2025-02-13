@@ -185,7 +185,7 @@
             <img class="logo" src="assets\images\LabyrinthLogo.png" onclick="redirectToDashboard()" />
             <div>Labyrinth</div>
         </div>
-        <img class="profile-icon" src= uploads/profile_pics/avatar.png alt="Profile">
+        <img class="profile-icon" src= uploads/profile_pics/avatar.png alt="Profile" onclick="redirectToProfile()">
     </div>
 
     <!-- Navigation Bar -->
@@ -410,6 +410,10 @@
         // Function to redirect to Dashboard.html
         function redirectToDashboard() {
             window.location.href = "Dashboard.html";
+        }
+
+        function redirectToProfile() {
+            window.location.href = "profile.html";
         }
     </script>
 
