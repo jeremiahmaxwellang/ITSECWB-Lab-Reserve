@@ -7,23 +7,59 @@
     <link rel="stylesheet" href="assets/css/global.css" />
     <link rel="stylesheet" href="assets/css/styleguide.css" />
     <link rel="stylesheet" href="assets/css/profileStyle.css"/>
+    <link rel="stylesheet" href="assets\css\table.css" />
 
         <!-- table.css -->
         <link rel="stylesheet" href="assets/css/table.css"/>
 
 
     <title>Jeremiah Ang's Profile</title>
-</head>
+    <style>
+      /* Header */
+      .header {
+          width: 100%;
+          background: #377684;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 10px 5%;
+          color: #F5F5F5;
+          font-size: 1.5rem;
+          font-weight: 500;
+          flex-wrap: wrap;
+      }
 
+      .logo-container {
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+          float: left;
+      }
+
+      .logo-container img {
+          width: 50px;
+          height: 50px;
+          margin-right: 10px;
+      }
+
+      .profile-icon {
+          width: 40px;
+          height: 40px;
+          cursor: pointer;
+          float: right;
+      }
+  </style>
+</head>
 <body>
-    <div class="profile-container">
-        <header class="labTechHeader">
-            <img class="logo" src="assets/images/LabyrinthLogo.png" />
-            <span class="labyrinthHeader">Labyrinth</span>
-            <div class="elementContainer">
-              <img class="element-avatar" src="uploads/profile_pics/avatar.png" onclick="redirectToProfile()" />
-            </div>
-        </header>
+
+  <!-- Header -->
+  <div class="header">
+      <div class="logo-container">
+          <img class="logo" src="assets\images\LabyrinthLogo.png" onclick="redirectToDashboard()" />
+      </div>
+      <div class= "labyrinthHeader">Labyrinth</div>
+      <img class="profile-icon" src= uploads/profile_pics/avatar.png alt="Profile" onclick="redirectToProfile()">
+  </div>
 
         <!-- PROFILE HEADING -->
         <div class="profile-heading">
@@ -118,12 +154,12 @@
                       <!-- Current Reservations Table -->
                       <div class="reservationContainer">
                       <table>
-                        <tr>
+                        <tr class="tableRow">
                           <th colspan="4" class="reservationHeader">Current Reservations:</th>
                         </tr>
     
                         <!-- Table Header -->
-                        <tr>
+                        <tr class="tableRow">
                           <th class="table1Header">Room Number</th>
                           <th class="table1Header">Seat Number</th>
                           <th class="table1Header">Date and Time of Reservation</th>
@@ -131,7 +167,7 @@
                         </tr>
     
                         <!-- Table Row 1 -->
-                        <tr>
+                        <tr class="tableRow">
                           <td class="tableCell">GK01</td>
                           <td class="tableCell">Seat #01</td>
                           <td class="tableCell">August 5, 2025 - 01:01:01 PM</td>
@@ -141,7 +177,7 @@
                         </tr>
     
                         <!-- Table Row 2 -->
-                        <tr>
+                        <tr class="tableRow">
                           <td class="tableCell">GK01</td>
                           <td class="tableCell">Seat #01</td>
                           <td class="tableCell">August 5, 2025 - 01:01:01 PM</td>
@@ -151,7 +187,7 @@
                         </tr>
     
                         <!-- Table Row 3 -->
-                        <tr>
+                        <tr class="tableRow">
                           <td class="tableCell">GK01</td>
                           <td class="tableCell">Seat #01</td>
                           <td class="tableCell">August 5, 2025 - 01:01:01 PM</td>
@@ -161,7 +197,7 @@
                         </tr>
     
                         <!-- Table Row 4 -->
-                        <tr>
+                        <tr class="tableRow">
                           <td class="tableCell">GK01</td>
                           <td class="tableCell">Seat #01</td>
                           <td class="tableCell">August 5, 2025 - 01:01:01 PM</td>
@@ -171,7 +207,7 @@
                         </tr>
     
                         <!-- Table Row 5 -->
-                        <tr>
+                        <tr class="tableRow">
                           <td class="tableCell">GK01</td>
                           <td class="tableCell">Seat #01</td>
                           <td class="tableCell">August 5, 2025 - 01:01:01 PM</td>
@@ -181,7 +217,7 @@
                         </tr>
     
                         <!-- Table Row 6 -->
-                        <tr>
+                        <tr class="tableRow">
                           <td class="tableCell">GK01</td>
                           <td class="tableCell">Seat #01</td>
                           <td class="tableCell">August 5, 2025 - 01:01:01 PM</td>
@@ -194,12 +230,12 @@
     
                       <!-- Recent Reservations Table -->
                         <table>
-                          <tr>
+                          <tr class="tableRow">
                             <th colspan="4" class="reservationHeader">Recent Reservations:</th>
                           </tr>
     
                           <!-- Table Header -->
-                          <tr>
+                          <tr class="tableRow">
                             <th class="table1Header">Room Number</th>
                             <th class="table1Header">Seat Number</th>
                             <th class="table1Header">Date and Time of Reservation</th>
@@ -207,7 +243,7 @@
                           </tr>
     
                           <!-- Table Row 1 -->
-                          <tr>
+                          <tr class="tableRow">
                             <td class="tableCell">GK01</td>
                             <td class="tableCell">Seat #01</td>
                             <td class="tableCell">August 5, 2025 - 01:01:01 PM</td>
@@ -215,7 +251,7 @@
                           </tr>
     
                           <!-- Table Row 2 -->
-                          <tr>
+                          <tr class="tableRow">
                             <td class="tableCell">GK02</td>
                             <td class="tableCell">Seat #01</td>
                             <td class="tableCell">August 5, 2025 - 01:01:01 PM</td>
@@ -223,7 +259,7 @@
                           </tr>
     
                           <!-- Table Row 3 -->
-                          <tr>
+                          <tr class="tableRow">
                             <td class="tableCell">GK03</td>
                             <td class="tableCell">Seat #01</td>
                             <td class="tableCell">August 5, 2025 - 01:01:01 PM</td>
@@ -231,7 +267,7 @@
                           </tr>
     
                           <!-- Table Row 4 -->
-                          <tr>
+                          <tr class="tableRow">
                             <td class="tableCell">GK04</td>
                             <td class="tableCell">Seat #01</td>
                             <td class="tableCell">August 5, 2025 - 01:01:01 PM</td>
@@ -239,7 +275,7 @@
                           </tr>
     
                           <!-- Table Row 5 -->
-                          <tr>
+                          <tr class="tableRow">
                             <td class="tableCell">GK05</td>
                             <td class="tableCell">Seat #01</td>
                             <td class="tableCell">August 5, 2025 - 01:01:01 PM</td>
@@ -247,7 +283,7 @@
                           </tr>
     
                           <!-- Table Row 6 -->
-                          <tr>
+                          <tr class="tableRow">
                             <td class="tableCell">GK06</td>
                             <td class="tableCell">Seat #01</td>
                             <td class="tableCell">August 5, 2025 - 01:01:01 PM</td>
