@@ -35,19 +35,6 @@
     display: flex;
   }
   
-  .dashboard-html .element-avatar {
-    width: 73px;
-    height: 73px;
-    border-radius: 1823.17px;
-    border: 1.82px solid;
-    border-color: var(--x-backgrounddefault);
-    background-image: "uploads/profile_pics/avatar.png";
-    background-size: cover;
-    background-position: 50% 50%;
-    float: right;
-    padding-right: 50px;
-  }
-  
   .dashboard-html .overlap {
     position: absolute;
     width: 1422px;
