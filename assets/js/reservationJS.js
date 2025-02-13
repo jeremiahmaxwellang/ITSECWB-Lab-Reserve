@@ -143,3 +143,28 @@ function redirectToDashboard() {
 function redirectToProfile() {
     window.location.href = "profile.html";
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    const floorNumbers = document.querySelectorAll(".floor-number");
+    const sliderThumb = document.querySelector(".floor-slider-thumb");
+
+    // Define slider positions for centering the thumb correctly
+    const floorPositions = [0, 60, 110, 160, 229];
+
+    floorNumbers.forEach((floor, index) => {
+        floor.addEventListener("click", function () {
+            // Move the slider thumb to the correct position
+            sliderThumb.style.transform = `translateX(${floorPositions[index]}px)`;
+
+            // Remove previous selected class
+            floorNumbers.forEach(f => f.classList.remove("selected"));
+
+            // Set active class to clicked floor
+            floor.classList.add("selected");
+        });
+    });
+
+    // Set default position to the 1st floor
+    sliderThumb.style.transform = `translateX(${floorPositions[0]}px)`;
+    floorNumbers[0].classList.add("selected"); // Ensure the first floor is selected on load
+});

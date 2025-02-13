@@ -54,26 +54,37 @@
         <img class="profile-icon" src= uploads/profile_pics/avatar.png alt="Profile" onclick="redirectToProfile()">
     </div>
     
-    <!-- Navigation Bar -->
-    <div class="navbar">
-        <div class="dropdown nav-item">
-            <span>Building Location</span>
-            <div class="dropdown-content">
-                <a href="#">Building A</a>
-                <a href="#">Building B</a>
-                <a href="#">Building C</a>
+    <!-- Selection Section -->
+    <div class="selection-container">
+        <!-- Building Location Dropdown -->
+        <div class="dropdown-container">
+            <label for="building-location" class="dropdown-label">Building</label>
+            <div class="custom-dropdown">
+                <select id="building-location" class="dropdown-select">
+                    <option value="" disabled selected>Location</option>
+                    <option value="Building A">Building A</option>
+                    <option value="Building B">Building B</option>
+                    <option value="Building C">Building C</option>
+                </select>
             </div>
         </div>
 
-        <div class="dropdown nav-item">
-            <span>Floor Selection</span>
-            <div class="dropdown-content">
-                <a href="#">Floor 1</a>
-                <a href="#">Floor 2</a>
-                <a href="#">Floor 3</a>
+        <!-- Floor Selection Slider -->
+        <div class="floor-slider-container">
+            <label for="floor-selection" class="slider-label">Floor</label>
+            <div class="floor-slider">
+                <div class="floor-slider-thumb"></div>
+                <div class="floor-numbers">
+                    <span class="floor-number" data-floor="1">1</span>
+                    <span class="floor-number" data-floor="2">2</span>
+                    <span class="floor-number" data-floor="3">3</span>
+                    <span class="floor-number" data-floor="4">4</span>
+                    <span class="floor-number" data-floor="5">5</span>
+                </div>
             </div>
         </div>
     </div>
+        
 
     <!-- Room Reservation Section -->
     <div class="room-container">

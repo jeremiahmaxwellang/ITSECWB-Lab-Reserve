@@ -6,11 +6,11 @@
 }
 
 body {
-    font-family: 'Newsreader', sans-serif;
+    font-family: 'Outfit', sans-serif;
     background: #f0f0f0;
     text-align: center;
     max-width: 100vw;
-    overflow-x: hidden; /* Prevent horizontal scrolling */
+    overflow-x: hidden;
 }
 
 
@@ -24,9 +24,149 @@ body {
     padding: 15px 5%;
     flex-wrap: wrap;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-    gap: 20px;
+    gap: 40px;
 }
 
+/* Selection Container */
+.selection-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 100px;
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+/* Dropdown Section */
+.dropdown-container {
+    display: flex;
+    gap: 15px;
+    margin-top: 2px;
+}
+
+/* Dropdown Label */
+.dropdown-label {
+    font-size: 20px;
+    color: #377684;
+    margin-top: 12px;
+}
+
+/* Custom Dropdown */
+.custom-dropdown {
+    position: relative;
+    width: 220px;
+}
+
+/* Style for the dropdown button */
+.dropdown-select {
+    width: 100%;
+    padding: 12px;
+    color:#898989;  
+    font-size: 16px;
+    font-family: 'Outfit', sans-serif;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: #fff;
+    cursor: pointer;
+    appearance: none;
+    text-align: left;
+}
+
+/* Add a custom dropdown arrow */
+.custom-dropdown::after {
+    content: "▼";
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    font-size: 14px;
+    color: #898989;
+    pointer-events: none;
+}
+
+/* Dropdown Hover & Focus */
+.dropdown-select:focus {
+    border-color: #ccc;
+    outline: none;
+}
+
+/* Floor Slider Container */
+.floor-slider-container {
+    display: flex;
+    gap: 15px;
+}
+
+/* Slider Background */
+.floor-slider {
+    position: relative;
+    font-family: 'Outfit', sans-serif;
+    width: 300px;
+    height: 45px;
+    background: white;
+    border-radius: 25px;
+    border: 1px solid #ccc; 
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    position: relative;
+    padding: 5px;
+}
+
+/* Dropdown Label */
+.slider-label {
+    font-size: 20px;
+    color: #377684;
+    margin-top: 15px;
+}
+
+/* Slider Thumb */
+.floor-slider-thumb {
+    position: absolute;
+    width: 70px;
+    height: 50px;
+    background: #377684;
+    border-radius: 25px;
+    transition: transform 0.2s ease-in-out;
+    left: 0;
+}
+
+/* Floor Numbers */
+.floor-numbers {
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.floor-number {
+    position: relative;
+    z-index: 2;
+    font-size: 18px;
+    color: #898989;
+    cursor: pointer;
+    user-select: none;
+}
+
+/* Ensure selected number is on top */
+.floor-number.selected {
+    color: white;
+    font-weight: bold;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .selection-container {
+        gap: 15px;
+    }
+
+    .floor-slider {
+        width: 220px;
+    }
+}
+
+
+/* Available Rooms Title */
 .available-rooms-title {
     position: static;
     font-family: "Newsreader", Helvetica;
@@ -37,52 +177,7 @@ body {
     line-height: 38.4px;
     white-space: nowrap;
     font-weight: bold;
-    padding: 20;
-}
-
-/* Dropdown Styles */
-.dropdown {
-    position: relative;
-    background: white;
-    padding: 10px 20px;
-    border-radius: 10px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    min-width: 180px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 16px;
-    font-weight: 500;
-    border: 1px solid #ddd;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background: white;
-    min-width: 100%;
-    border-radius: 5px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    z-index: 10;
-}
-
-.dropdown-content a {
-    padding: 10px;
-    display: block;
-    text-decoration: none;
-    color: black;
-    font-size: 14px;
-}
-
-.dropdown-content a:hover {
-    background: #ddd;
-}
-
-.dropdown:hover .dropdown-content {
-    display: block;
+    padding: 20px;
 }
 
 /* Room Container */
@@ -130,13 +225,14 @@ body {
 .room-box .divider {
     width: 100%;
     height: 1px;
-    background: #000;
+    background: #898989;
     margin: 10px 0;
 }
 
 /* Updated Layout for Room Info */
 .room-box .room-info {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
     padding: 10px;
@@ -145,11 +241,12 @@ body {
 .room-box .room-name {
     font-size: 24px;
     font-family: "Newsreader", sans-serif;
+    font-weight: bold;
 }
 
 .room-box .room-details {
     font-size: 16px;
-    text-align: right;
+    text-align: center;
 }
 
 /* Overlay Styles */
@@ -159,7 +256,6 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -233,7 +329,7 @@ body {
 }
 
 .close-button {
-    background-color: #ff4d4d;
+    background-color: #898989;
     color: white;
     margin-left: 10px;
 }
