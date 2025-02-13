@@ -300,7 +300,7 @@ form {
 .overlay-text {
     color: #6C757D;
     font-size: 16px;
-    align-items: center;
+    text-align: center;
 }
 
 /* Input Group */
@@ -452,106 +452,27 @@ form {
 
 /*------------------------------------------------------------------- */
 
-/* Change Password Modal */
-.change-password-modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.4);
-    display: flex;
-    justify-content: center;
-    align-items: center;    
-}
-
-/* Modal Content */
-.change-password-modal .modal-content {
-    background: white;
-    border-radius: 16px;
-    padding: 30px;
-    width: 450px;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    align-items: center;
-}
-
-/* Modal Header */
-.change-password-modal .modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    position: absolute;
-    top: 12px;
-    right: 16px;
-}
-
-/* Lock Icon */
-.change-password-modal .lock-icon {
-    font-size: 24px;
-    color: black;
-    position: absolute;
-    top: 16px;
-    left: 16px;
-}
-
-/* Close Button */
-.close-change-password {
-    position: absolute;
-    top: 12px;
-    right: 50px;
-    font-size: 22px;
-    cursor: pointer;
-    color: #000;
-}
-
-/* Title */
-.change-password-modal .overlay-title {
-    font-size: 22px;
-    font-weight: bold;
-    margin-top: 40px;
-    margin-bottom: 10px;
-    text-align: center;
-}
-
-/* Description Text */
-.change-password-modal .overlay-text {
-    color: #6C757D;
-    font-size: 16px;
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-/* Modal Body (Stacked Layout) */
-.change-password-modal .modal-body {
+/* Change Password Modal Body */
+.change-password-body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
+    width: 70%;
 }
 
-/* Input Fields (Stacked Layout) */
-.change-password-modal .input-group {
+/* Center Only the Input Fields */
+.change-password-body .input-group {
     width: 100%;
-    max-width: 350px;
-    margin-bottom: 15px;
-    text-align: left;
+    max-width: 350px; /* Restricts input width */
+    display: flex;
+    flex-direction: column; /* Stacks label and input */
+    align-items: center; /* Centers input fields */
+    text-align: center; /* Ensures label aligns correctly */
 }
 
-/* Label for Input */
-.change-password-modal .static-label {
-    font-size: 14px;
-    color: #4F4F4F;
-    display: block;
-    margin-bottom: 5px;
-}
-
-/* Input Box Styling */
-.change-password-modal .static-input {
-    width: 100%;
+/* Input Box */
+.change-password-body .static-input {
+    width: 100%; /* Ensures input takes full width of container */
     padding: 12px;
     font-size: 16px;
     border: 1px solid #D1D5DB;
@@ -559,16 +480,14 @@ form {
     background: white;
     outline: none;
     transition: border 0.3s ease;
+    text-align: left; /* Ensures text is aligned correctly inside input */
 }
 
-/* Focus State */
+/* Focus Effect */
 .change-password-modal .static-input:focus {
     border: 1px solid #377684;
 }
 
-.change-submit-btn {
-    width: 70%; /* Overrides only width */
-}
 
 
 

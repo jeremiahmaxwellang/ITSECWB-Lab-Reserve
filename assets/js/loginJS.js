@@ -43,14 +43,16 @@ class ModalHandler {
     }
 }
 
-// Instantiate modal handlers
+// Instantiate modals
 const forgotPasswordModal = new ModalHandler("forgot-password-modal", "close-forgot");
 const otpModal = new ModalHandler("otp-modal", "close-otp");
+const changePasswordModal = new ModalHandler("change-password-modal", "close-change-password");
 
 // Ensure elements exist before adding event listeners
 document.addEventListener("DOMContentLoaded", function () {
     const forgotPasswordLink = document.getElementById("forgot-password-link");
     const forgotSubmitBtn = document.getElementById("forgot-submit");
+    const otpConfirmBtn = document.querySelector(".otp-submit-btn");
     const backToLogin = document.getElementById("back-to-login");
 
     // Open Forgot Password Modal
@@ -78,6 +80,19 @@ document.addEventListener("DOMContentLoaded", function () {
             // Delay to prevent accidental closure
             setTimeout(() => {
                 otpModal.open();
+            }, 200);
+        });
+    }
+
+    // Clicking "Confirm" on OTP Modal closes OTP and opens Change Password Modal
+    if (otpConfirmBtn) {
+        otpConfirmBtn.addEventListener("click", function (event) {
+            event.preventDefault();
+            otpModal.close();
+
+            // Delay to prevent accidental closure
+            setTimeout(() => {
+                changePasswordModal.open();
             }, 200);
         });
     }
