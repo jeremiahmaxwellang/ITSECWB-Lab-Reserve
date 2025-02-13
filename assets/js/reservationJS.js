@@ -1,0 +1,145 @@
+document.addEventListener("DOMContentLoaded", function() {
+    // Room data array
+    const rooms = [
+        { name: "GK101", capacity: 20, projectors: 1, servers: 0 },
+        { name: "GK102", capacity: 20, projectors: 1, servers: 0 },
+        { name: "GK103", capacity: 20, projectors: 1, servers: 0 },
+        { name: "GK104", capacity: 20, projectors: 1, servers: 0 },
+        { name: "GK105", capacity: 20, projectors: 1, servers: 0 },
+        { name: "GK106", capacity: 20, projectors: 1, servers: 0 }
+    ];
+
+    // Get the container where rooms will be inserted
+    const roomContainer = document.getElementById("room-container");
+
+    // Loop through rooms and create HTML dynamically
+    rooms.forEach(room => {
+        const roomDiv = document.createElement("div");
+        roomDiv.classList.add("room-box");
+        roomDiv.innerHTML = `
+            <img src="assets/images/goksdiv.png" alt="Room Image">
+            <div class="divider"></div>
+            <div class="room-info">
+                <div class="room-name">${room.name}</div>
+                <div class="room-details">
+                    Capacity: ${room.capacity} <br>
+                    Projectors: ${room.projectors} <br>
+                    Servers: ${room.servers}
+                </div>
+            </div>
+        `;
+
+        // Click event to select room
+        roomDiv.addEventListener("click", () => {
+            showOverlay(room.name);
+        });
+
+        // Append room box to container
+        roomContainer.appendChild(roomDiv);
+    });
+});
+
+// Function to show overlay with date picker, time picker, and seat selection
+function showOverlay(roomName) {
+    // Create overlay container
+    const overlay = document.createElement("div");
+    overlay.classList.add("overlay");
+
+    // Create overlay content
+    const overlayContent = document.createElement("div");
+    overlayContent.classList.add("overlay-content");
+
+    // Add room name
+    const roomNameElement = document.createElement("h2");
+    roomNameElement.textContent = `Reserve ${roomName}`;
+    overlayContent.appendChild(roomNameElement);
+
+    // Add date picker
+    const datePickerLabel = document.createElement("label");
+    datePickerLabel.textContent = "Select Date:";
+    overlayContent.appendChild(datePickerLabel);
+
+    const datePicker = document.createElement("input");
+    datePicker.type = "date";
+    datePicker.min = new Date().toISOString().split("T")[0]; // Disable past dates
+    overlayContent.appendChild(datePicker);
+
+    // Add time picker
+    const timePickerLabel = document.createElement("label");
+    timePickerLabel.textContent = "Select Time:";
+    overlayContent.appendChild(timePickerLabel);
+
+    const timePicker = document.createElement("select");
+
+    // Generate time options in 30-minute intervals
+    for (let hour = 0; hour < 24; hour++) {
+        for (let minute = 0; minute < 60; minute += 30) {
+            const option = document.createElement("option");
+            option.value = `${String(hour).padStart(2, "0")}:${String(minute).padStart(2, "0")}`;
+            option.textContent = option.value;
+            timePicker.appendChild(option);
+        }
+    }
+    overlayContent.appendChild(timePicker);
+
+    // Seat Selection
+    const seatContainer = document.createElement("div");
+    seatContainer.classList.add("seat-container");
+
+    // Generate seats (5x5 grid)
+    for (let i = 1; i <= 25; i++) {
+        const seat = document.createElement("div");
+        seat.classList.add("seat");
+        seat.classList.add(Math.random() > 0.5 ? "available" : "unavailable");
+        seat.addEventListener("click", () => {
+            if (seat.classList.contains("available")) {
+                seat.classList.toggle("selected");
+            }
+        });
+        seatContainer.appendChild(seat);
+    }
+    overlayContent.appendChild(seatContainer);
+
+    // Reserve button
+    const reserveButton = document.createElement("button");
+    reserveButton.classList.add("reserve-button");
+    reserveButton.textContent = "Reserve";
+    reserveButton.addEventListener("click", () => {
+        const selectedDate = datePicker.value;
+        const selectedTime = timePicker.value;
+        const selectedSeats = document.querySelectorAll(".seat.selected").length;
+
+        if (!selectedDate || !selectedTime || selectedSeats === 0) {
+            alert("Please select a date, time, and at least one seat.");
+        } else {
+            alert(`Reservation confirmed for ${roomName} on ${selectedDate} at ${selectedTime} for ${selectedSeats} seat(s).`);
+            document.body.removeChild(overlay); // Close overlay
+        }
+    });
+    overlayContent.appendChild(reserveButton);
+
+    // Close button
+    const closeButton = document.createElement("button");
+    closeButton.classList.add("close-button");
+    closeButton.textContent = "Close";
+    closeButton.addEventListener("click", () => {
+        document.body.removeChild(overlay); // Close overlay
+    });
+    overlayContent.appendChild(closeButton);
+
+    // Append overlay content to overlay
+    overlay.appendChild(overlayContent);
+
+    // Append overlay to body
+    document.body.appendChild(overlay);
+}
+
+// Function to redirect to Dashboard.html
+function redirectToDashboard() {
+    window.location.href = "Dashboard.html";
+}
+
+// Function to redirect to Profile.html
+function redirectToProfile() {
+    window.location.href = "profile.html";
+}
