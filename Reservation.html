@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room Reservation</title>
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Newsreader', sans-serif;
+            background: #f0f0f0;
+            text-align: center;
+            max-width: 100vw;
+            overflow-x: hidden; /* Prevent horizontal scrolling */
+        }
+
+        /* Header */
+        .header {
+            width: 100%;
+            background: #377684;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 5%;
+            color: #F5F5F5;
+            font-size: 1.5rem;
+            font-weight: 500;
+            flex-wrap: wrap;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-container img {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+        }
+
+        .profile-icon {
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            width: 100%;
+            background: #F5F5F5;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 5%;
+            flex-wrap: wrap;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-item {
+            font-size: 1rem;
+            font-weight: 500;
+            color: black;
+            cursor: pointer;
+            padding: 5px 15px;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background: white;
+            min-width: 160px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+        }
+
+        .dropdown-content a {
+            padding: 10px;
+            display: block;
+            text-decoration: none;
+            color: black;
+        }
+
+        .dropdown-content a:hover {
+            background: #ddd;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Room Container */
+        .room-container {
+            max-width: 1200px;
+            width: 90%;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        /* Room Box Styling */
+        .room-box {
+            width: 100%;
+            max-width: 315px;
+            height: 265px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px #377684 solid;
+            display: inline-block;
+            margin: 10px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            position: relative;
+        }
+
+        .room-box:hover {
+            transform: scale(1.05);
+        }
+
+        .room-box img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            opacity: 0.80;
+            border-radius: 3.60px;
+        }
+
+        .room-box .divider {
+            width: 90%;
+            height: 0;
+            margin: 10px auto;
+            border: 1px solid black;
+        }
+
+        .room-box .room-name {
+            color: black;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .room-box .room-details {
+            color: black;
+            font-size: 1rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header, .navbar {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .nav-item {
+                padding: 5px;
+            }
+
+            .room-box {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header">
+        <div class="logo-container">
+            <img class="logo" src="assets\images\LabyrinthLogo.png" />
+            <div>Labyrinth</div>
+        </div>
+        <img class="profile-icon" src="https://placehold.co/50x50" alt="Profile">
+    </div>
+
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <div class="dropdown nav-item">
+            <span>Building Location</span>
+            <div class="dropdown-content">
+                <a href="#">Building A</a>
+                <a href="#">Building B</a>
+                <a href="#">Building C</a>
+            </div>
+        </div>
+
+        <div class="dropdown nav-item">
+            <span>Floor Selection</span>
+            <div class="dropdown-content">
+                <a href="#">Floor 1</a>
+                <a href="#">Floor 2</a>
+                <a href="#">Floor 3</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Room Reservation Section -->
+    <div class="room-container">
+        <h2>Available Rooms</h2>
+        <div id="room-container"></div>
+    </div>
+
+    <script>
+        // Room data array
+        const rooms = [
+            { name: "GK101", capacity: 20, projectors: 1, servers: 0 },
+            { name: "GK102", capacity: 20, projectors: 1, servers: 0 },
+            { name: "GK103", capacity: 20, projectors: 1, servers: 0 },
+            { name: "GK104", capacity: 20, projectors: 1, servers: 0 },
+            { name: "GK105", capacity: 20, projectors: 1, servers: 0 },
+            { name: "GK106", capacity: 20, projectors: 1, servers: 0 }
+        ];
+
+        // Get the container where rooms will be inserted
+        const roomContainer = document.getElementById("room-container");
+
+        // Loop through rooms and create HTML dynamically
+        rooms.forEach(room => {
+            const roomDiv = document.createElement("div");
+            roomDiv.classList.add("room-box");
+            roomDiv.innerHTML = `
+                <img src="https://placehold.co/273x151" alt="Room Image">
+                <div class="divider"></div>
+                <div class="room-name">${room.name}</div>
+                <div class="room-details">Capacity: ${room.capacity}</div>
+                <div class="room-details">Projectors: ${room.projectors}</div>
+                <div class="room-details">Servers: ${room.servers}</div>
+            `;
+
+            // Click event to select room
+            roomDiv.addEventListener("click", () => {
+                showOverlay(room.name);
+            });
+
+            // Append room box to container
+            roomContainer.appendChild(roomDiv);
+        });
+
+        // Function to show overlay with date picker, time picker, and seat selection
+        function showOverlay(roomName) {
+            // Create overlay container
+            const overlay = document.createElement("div");
+            overlay.style.position = "fixed";
+            overlay.style.top = "0";
+            overlay.style.left = "0";
+            overlay.style.width = "100%";
+            overlay.style.height = "100%";
+            overlay.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
+            overlay.style.display = "flex";
+            overlay.style.justifyContent = "center";
+            overlay.style.alignItems = "center";
+            overlay.style.zIndex = "1000";
+
+            // Create overlay content
+            const overlayContent = document.createElement("div");
+            overlayContent.style.backgroundColor = "white";
+            overlayContent.style.padding = "20px";
+            overlayContent.style.borderRadius = "10px";
+            overlayContent.style.width = "400px";
+            overlayContent.style.textAlign = "center";
+
+            // Add room name
+            const roomNameElement = document.createElement("h2");
+            roomNameElement.textContent = `Reserve ${roomName}`;
+            overlayContent.appendChild(roomNameElement);
+
+            // Add date picker
+            const datePickerLabel = document.createElement("label");
+            datePickerLabel.textContent = "Select Date:";
+            datePickerLabel.style.display = "block";
+            datePickerLabel.style.marginBottom = "10px";
+            overlayContent.appendChild(datePickerLabel);
+
+            const datePicker = document.createElement("input");
+            datePicker.type = "date";
+            datePicker.style.marginBottom = "20px";
+            datePicker.style.width = "100%";
+            datePicker.style.padding = "10px";
+            datePicker.min = new Date().toISOString().split("T")[0]; // Disable previous dates
+            overlayContent.appendChild(datePicker);
+
+            // Add time picker
+            const timePickerLabel = document.createElement("label");
+            timePickerLabel.textContent = "Select Time:";
+            timePickerLabel.style.display = "block";
+            timePickerLabel.style.marginBottom = "10px";
+            overlayContent.appendChild(timePickerLabel);
+
+            const timePicker = document.createElement("select");
+            timePicker.style.width = "100%";
+            timePicker.style.padding = "10px";
+            timePicker.style.marginBottom = "20px";
+
+            // Generate time options with 30-minute intervals
+            for (let hour = 0; hour < 24; hour++) {
+                for (let minute = 0; minute < 60; minute += 30) {
+                    const time = `${String(hour).padStart(2, "0")}:${String(minute).padStart(2, "0")}`;
+                    const option = document.createElement("option");
+                    option.value = time;
+                    option.textContent = time;
+                    timePicker.appendChild(option);
+                }
+            }
+            overlayContent.appendChild(timePicker);
+
+            // Add seat selection
+            const seatSelectionLabel = document.createElement("div");
+            seatSelectionLabel.textContent = "Select Seats (Green: Available, Red: Unavailable):";
+            seatSelectionLabel.style.marginBottom = "10px";
+            overlayContent.appendChild(seatSelectionLabel);
+
+            const seatContainer = document.createElement("div");
+            seatContainer.style.display = "grid";
+            seatContainer.style.gridTemplateColumns = "repeat(5, 1fr)";
+            seatContainer.style.gap = "10px";
+            seatContainer.style.marginBottom = "20px";
+
+            // Generate seats (5x5 grid)
+            for (let i = 1; i <= 25; i++) {
+                const seat = document.createElement("div");
+                seat.style.width = "30px";
+                seat.style.height = "30px";
+                seat.style.backgroundColor = Math.random() > 0.5 ? "green" : "red"; // Randomly assign availability
+                seat.style.cursor = "pointer";
+                seat.style.borderRadius = "5px";
+                seat.addEventListener("click", () => {
+                    if (seat.style.backgroundColor === "green") {
+                        seat.style.backgroundColor = "blue"; // Selected seat
+                    } else if (seat.style.backgroundColor === "blue") {
+                        seat.style.backgroundColor = "green"; // Deselect seat
+                    } else if (seat.style.backgroundColor === "red") {
+                        // Display occupied message
+                        const occupiedMessage = document.createElement("div");
+                        occupiedMessage.style.color = "red";
+                        occupiedMessage.style.fontWeight = "bold";
+                        occupiedMessage.style.marginTop = "10px";
+                        occupiedMessage.textContent = "This seat is occupied by: anonymous";
+                        seatContainer.appendChild(occupiedMessage);
+
+                        // Remove the message after a few seconds
+                        setTimeout(() => {
+                            seatContainer.removeChild(occupiedMessage);
+                        }, 3000);
+                    }
+                });
+                seatContainer.appendChild(seat);
+            }
+            overlayContent.appendChild(seatContainer);
+
+            // Add reserve button
+            const reserveButton = document.createElement("button");
+            reserveButton.textContent = "Reserve";
+            reserveButton.style.padding = "10px 20px";
+            reserveButton.style.backgroundColor = "#377684";
+            reserveButton.style.color = "white";
+            reserveButton.style.border = "none";
+            reserveButton.style.borderRadius = "5px";
+            reserveButton.style.cursor = "pointer";
+            reserveButton.addEventListener("click", () => {
+                const selectedDate = datePicker.value;
+                const selectedTime = timePicker.value;
+                const selectedSeats = Array.from(seatContainer.children).filter(seat => seat.style.backgroundColor === "blue").length;
+
+                if (!selectedDate || !selectedTime || selectedSeats === 0) {
+                    alert("Please select a date, time, and at least one seat.");
+                } else {
+                    alert(`Reservation confirmed for ${roomName} on ${selectedDate} at ${selectedTime} for ${selectedSeats} seat(s).`);
+                    document.body.removeChild(overlay); // Close overlay
+                }
+            });
+            overlayContent.appendChild(reserveButton);
+
+            // Add close button
+            const closeButton = document.createElement("button");
+            closeButton.textContent = "Close";
+            closeButton.style.padding = "10px 20px";
+            closeButton.style.backgroundColor = "#ff4d4d";
+            closeButton.style.color = "white";
+            closeButton.style.border = "none";
+            closeButton.style.borderRadius = "5px";
+            closeButton.style.cursor = "pointer";
+            closeButton.style.marginLeft = "10px";
+            closeButton.addEventListener("click", () => {
+                document.body.removeChild(overlay); // Close overlay
+            });
+            overlayContent.appendChild(closeButton);
+
+            // Append overlay content to overlay
+            overlay.appendChild(overlayContent);
+
+            // Append overlay to body
+            document.body.appendChild(overlay);
+        }
+    </script>
+
+</body>
+</html>
