@@ -4,8 +4,6 @@
     flex-direction: row;
     width: 100%; 
   }
-
-  
   
   .LabTech-html .overlap {
     position: absolute;
@@ -79,17 +77,9 @@
     bottom: 40px;
     border-radius: 4px;
     overflow: visible;
-    border: 3px solid;
     display: flex;
     flex-direction: column;
     padding-bottom: 10px;
-  }
-  
-  .LabTech-html th, 
-  .LabTech-html td {
-    padding: 5px;
-    border-right: 3px solid black;
-    border-left: 3px solid black;
   }
   
   .LabTech-html .reservationHeader {
@@ -98,9 +88,12 @@
     position: relative;
     font-weight: 400;
     color: #000000;
-    border-bottom: 3px solid black;
     padding: 12px;
     text-align: left;
+  }
+
+  .LabTech-html .tableRow {
+    border: 3px solid black;
   }
   
   .LabTech-html .table1Header {
@@ -110,6 +103,7 @@
     color: #000000;
     text-align: left;
     padding: 10px;
+    border-right: 3px solid black;
   }
   
   .LabTech-html .tableCell {
@@ -125,26 +119,17 @@
     display: flex;
     position: relative;
     color: #000000;
-    border-top: 3px solid black;
-    border-left: none;
     padding: 10px;
-  }
-  
-  /* Remove left border for the first column */
-  .LabTech-html th:first-child, 
-  .LabTech-html td:first-child {
-    border-left: none;
-  }
-  
-  /* Remove right border for the last column */
-  .LabTech-html th:last-child, 
-  .LabTech-html td:last-child {
-    border-right: none;
   }
 
   .LabTech-html table {
     border-collapse: collapse;
     width: 100%;
+  }
+
+  /* Remove right border from the last column */
+  .table1Header:last-child {
+    border-right: none;
   }
   
   .LabTech-html .editButton:hover {
