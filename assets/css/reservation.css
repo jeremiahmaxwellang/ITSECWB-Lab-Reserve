@@ -1,0 +1,276 @@
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Newsreader', serif;
+    background: #f0f0f0;
+    text-align: center;
+    max-width: 100vw;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+/* Header */
+.header {
+    width: 100%;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: var(--variable-collection-color);
+    border-bottom: none;
+    box-shadow: 0px 4px 6px #0000001a;
+    position: relative;
+    z-index: 10;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo-container img {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.profile-icon {
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+}
+
+/* Navigation Bar */
+.navbar {
+    width: 100%;
+    background: #F5F5F5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 5%;
+    flex-wrap: wrap;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    gap: 20px;
+}
+
+/* Dropdown Styles */
+.dropdown {
+    position: relative;
+    background: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    min-width: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 16px;
+    font-weight: 500;
+    border: 1px solid #ddd;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    min-width: 100%;
+    border-radius: 5px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+}
+
+.dropdown-content a {
+    padding: 10px;
+    display: block;
+    text-decoration: none;
+    color: black;
+    font-size: 14px;
+}
+
+.dropdown-content a:hover {
+    background: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Room Container */
+.room-container {
+    max-width: 1200px;
+    width: 90%;
+    margin: 20px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Available Rooms Header */
+.room-container h2 {
+    font-family: "Odor Mean Chey", sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+/* Room Box Styling */
+.room-box {
+    width: 320px;
+    height: 330px;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #377684;
+    display: inline-block;
+    margin: 15px;
+    cursor: pointer;
+    transition: transform 0.2s;
+    position: relative;
+    padding: 10px;
+    text-align: center;
+}
+
+.room-box:hover {
+    transform: scale(1.05);
+}
+
+.room-box img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.room-box .divider {
+    width: 90%;
+    height: 0;
+    margin: 10px auto;
+    border: 0.5px solid #898989;
+}
+
+.room-box .room-name {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 10px 0;
+    font-family: "Odor Mean Chey", sans-serif;
+}
+
+.room-box .room-details {
+    font-size: 16px;
+    margin: 2px 0;
+}
+
+/* Overlay Styles */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.overlay-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 400px;
+    text-align: center;
+}
+
+/* Input & Select Styles */
+.overlay-content label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.overlay-content input,
+.overlay-content select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+/* Seat Selection */
+.seat-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.seat {
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.seat.available {
+    background-color: #009951;
+}
+
+.seat.selected {
+    background-color: #898989;
+}
+
+.seat.unavailable {
+    background-color: #900B09;
+    cursor: not-allowed;
+}
+
+/* Buttons */
+.overlay-content button {
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    border: none;
+}
+
+.reserve-button {
+    background-color: #377684;
+    color: white;
+}
+
+.close-button {
+    background-color: #ff4d4d;
+    color: white;
+    margin-left: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .header, .navbar {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .nav-item {
+        padding: 5px;
+    }
+
+    .room-box {
+        max-width: 100%;
+    }
+}
