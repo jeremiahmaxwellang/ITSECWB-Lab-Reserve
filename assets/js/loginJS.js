@@ -54,6 +54,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const forgotSubmitBtn = document.getElementById("forgot-submit");
     const otpConfirmBtn = document.querySelector(".otp-submit-btn");
     const backToLogin = document.getElementById("back-to-login");
+    const closeChangePasswordBtn = document.querySelector(".close-change-password");
+    const changePasswordSubmitBtn = document.querySelector(".change-submit-btn"); // Selects Submit button
 
     // Open Forgot Password Modal
     if (forgotPasswordLink) {
@@ -94,6 +96,23 @@ document.addEventListener("DOMContentLoaded", function () {
             setTimeout(() => {
                 changePasswordModal.open();
             }, 200);
+        });
+    }
+
+    // Close Change Password Modal
+    if (closeChangePasswordBtn) {
+        closeChangePasswordBtn.addEventListener("click", function () {
+            console.log("Closing Change Password Modal");
+            changePasswordModal.close();
+        });
+    }
+
+    // Redirect to dashboard.html when Submit is clicked on Change Password Modal
+    if (changePasswordSubmitBtn) {
+        changePasswordSubmitBtn.addEventListener("click", function (event) {
+            event.preventDefault();
+            console.log("Redirecting to Dashboard...");
+            window.location.href = "dashboard.html"; // Redirects to dashboard.html
         });
     }
 });
