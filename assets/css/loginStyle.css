@@ -457,22 +457,21 @@ form {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 70%;
-}
-
-/* Center Only the Input Fields */
-.change-password-body .input-group {
+    justify-content: center; /* Centers content vertically */
     width: 100%;
-    max-width: 350px; /* Restricts input width */
-    display: flex;
-    flex-direction: column; /* Stacks label and input */
-    align-items: center; /* Centers input fields */
-    text-align: center; /* Ensures label aligns correctly */
 }
 
-/* Input Box */
+/* Center Inputs and Button */
+.change-password-body .input-group,
+.change-password-body .submit-btn {
+    width: 100%;
+    max-width: 350px; /* Ensure a consistent width */
+    text-align: center;
+}
+
+/* Input Fields */
 .change-password-body .static-input {
-    width: 100%; /* Ensures input takes full width of container */
+    width: 100%; /* Ensures inputs are full width of container */
     padding: 12px;
     font-size: 16px;
     border: 1px solid #D1D5DB;
@@ -480,12 +479,26 @@ form {
     background: white;
     outline: none;
     transition: border 0.3s ease;
-    text-align: left; /* Ensures text is aligned correctly inside input */
 }
 
-/* Focus Effect */
-.change-password-modal .static-input:focus {
-    border: 1px solid #377684;
+/* Center Submit Button */
+.change-password-body .submit-btn {
+    width: 100%;
+    max-width: 350px;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #D1D5DB;
+    background: white;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* Button Hover */
+.change-password-body .submit-btn:hover {
+    background: #F3F4F6;
+    border-color: #B0B3B8;
 }
 
 
