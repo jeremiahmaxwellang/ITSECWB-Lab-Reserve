@@ -14,14 +14,6 @@ html, body {
   overflow-x: hidden;
 }
 
-button:focus-visible {
-  outline: 2px solid #4a90e2 !important;
-  outline: -webkit-focus-ring-color auto 5px !important;
-}
-a {
-  text-decoration: none;
-}
-
 /* Top Header Styles */
 
 .header {
@@ -38,17 +30,6 @@ a {
   z-index: 10;
 }
 
-.labTechHeader {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  width: 100%;
-  height: 80px;
-  background: #3B6B53;
-  border-bottom: 1px solid;
-  border-color: #3B6B53;
-}
 
 .logo {
   width: 69px; 
@@ -70,6 +51,21 @@ a {
   white-space: nowrap; 
   margin: auto;
   padding: 10px;
+}
+
+
+.elementContainer .element-avatar {
+  width: 73px;
+  height: 73px;
+  border-radius: 1823.17px;
+  border: 1.82px solid;
+  border-color: var(--x-backgrounddefault);
+  background-image: url('../../uploads/profile_pics/avatar.png');
+  background-size: cover;
+  float: right;
+  background-position: 50% 50%;
+  position: absolute;
+  right: 20px;
 }
 
 .headerButtonContainer {
@@ -113,197 +109,4 @@ a {
 .headerButtonContainer .button-register:hover {
   background-color: black;
   box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
-}
-
-.elementContainer {
-  display: flex;
-  align-items: center;
-  float: right;
-  gap: 10px;
-  position: absolute;
-  right: 20px;
-}
-
-.elementContainer .element-avatar {
-  width: 73px;
-  height: 73px;
-  border-radius: 1823.17px;
-  border: 1.82px solid;
-  border-color: var(--x-backgrounddefault);
-  background-image: url('../../uploads/profile_pics/avatar.png');
-  background-size: cover;
-  background-position: 50% 50%;
-  position: absolute;
-  right: 20px;
-}
-
-/* Lab Tech Dashboard */
-.labTechHeader {
-  width: 100%;
-  background: #3B6B53;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 5%;
-  color: #F5F5F5;
-  font-size: 1.5rem;
-  font-weight: 500;
-  flex-wrap: wrap;
-}
-
-.labTechHeader .logo-container {
-  display: flex;
-  align-items: center;
-}
-.labTechHeader .logo-container img {
-  width: 50px;
-  height: 50px;
-  margin-right: 10px;
-  cursor: pointer; /* Add cursor pointer to indicate clickable */
-}
-
-.labTechHeader .profile-icon {
-  width: 69px;
-  height: 69px;
-  cursor: pointer;
-}
-
-/* Calendar Styles */
-
-.calendarContainer {
-  width: 395px;
-  padding: 20px;
-  background-color: var(--colori-neutralibianco-chiaro);
-  border-radius: 20px;
-  border: 1px solid;
-  border-color: var(--primariogrigio-50);
-  box-shadow: var(--large);
-}
-
-.month {
-  padding: 10px;
-  width: 100%;
-  background-color: #1abc9c;
-  text-align: center;
-  border: 3px black solid;
-}
-
-.month .weekdays th,
-.month .weekdays td {
-  padding: 5px;
-  border-right: 3px solid black;
-  border-left: 3px solid black;
-}
-
-/* Month list */
-.month ul {
-  margin: 0;
-  padding: 0;
-}
-
-.month ul li {
-  color: white;
-  font-size: 20px;
-  text-transform: uppercase;
-  letter-spacing: 3px;
-}
-
-/* Previous button inside month header */
-  .month .prev {
-  float: left;
-  padding-top: 10px;
-}
-
-/* Next button */
-  .month .next {
-  float: right;
-  padding-top: 10px;
-}
-
-/* Weekdays (Mon-Sun) */
-  .weekdays {
-  padding: 5px;
-  background-color:#ddd;
-  width: 100% ;
-}
-
-  .weekdays li {
-  display: inline-block;
-  width: 12%;
-  color: #666;
-  text-align: center;
-}
-
-/* Days (1-31) */
-  .days {
-  padding: 10px 0;
-  background: #eee;
-  margin: 0;
-  text-align: center;
-}
-
-  .days td {
-  margin-bottom: 5px;
-  font-size:12px;
-  color: #777;
-}
-
-.calendarContainer .weekdays th, 
-.calendarContainer .weekdays td {
-  padding: 5px;
-  border-right: 3px solid black;
-  border-left: 3px solid black;
-}
-
-  /* Remove left border for the first column */
-  .calendarContainer .weekdays th:first-child, 
-  .calendarContainer .weekdays td:first-child {
-    border-left: none;
-  }
-  
-  /* Remove right border for the last column */
-  .calendarContainer .weekdays th:last-child, 
-  .calendarContainer .weekdays td:last-child {
-    border-right: none;
-  }
-
-/* Highlight the "current" day */
-  .days td .active {
-    padding: 10px 0;
-    margin: 0;
-    text-align: center;
-    background: #1abc9c;
-    color: black !important
-}
-
-/* System Time Styles */
-.timeFrame {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 7.62px 0px 0px;
-  align-self: stretch;
-  width: 100%;
-  flex: 0 0 auto;
-}
-
-.timeHeader {
-  position: relative;
-  width: fit-content;
-  font-family: "Inter-SemiBold", Helvetica;
-  font-weight: 600;
-  color: #000000;
-  font-size: 15.2px;
-  text-align: center;
-  letter-spacing: 0.46px;
-  line-height: normal;
-  white-space: nowrap;
-}
-
-.timeContainer {
-  display: flex;
-  padding-top: 7px;
-  justify-content: space-between;
-  align-items: center;
-  align-self: stretch;
 }
