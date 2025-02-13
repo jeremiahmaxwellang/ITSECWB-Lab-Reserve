@@ -5,16 +5,52 @@
     <link rel="stylesheet" href="assets/css/global.css" />
     <link rel="stylesheet" href="assets/css/styleguide.css" />
     <link rel="stylesheet" href="assets/css/dashboardStyles.css" />
-  </head>
+    <style>
+      /* Header */
+      .header {
+          width: 100%;
+          background: #377684;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 10px 5%;
+          color: #F5F5F5;
+          font-size: 1.5rem;
+          font-weight: 500;
+          flex-wrap: wrap;
+      }
 
-  <body>
-    <header class="header">
-      <img class="logo" src="assets/images/LabyrinthLogo.png" alt="Labyrinth Logo" />
-      <div class="labyrinthHeader">Labyrinth</div>
-      <div class="elementContainer">
-        <div class="element-avatar">
+      .logo-container {
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+          float: left;
+      }
+
+      .logo-container img {
+          width: 50px;
+          height: 50px;
+          margin-right: 10px;
+      }
+
+      .profile-icon {
+          width: 40px;
+          height: 40px;
+          cursor: pointer;
+          float: right;
+      }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+      <div class="logo-container">
+          <img class="logo" src="assets\images\LabyrinthLogo.png" onclick="redirectToDashboard()" />
       </div>
-    </header>
+      <div class= "labyrinthHeader">Labyrinth</div>
+      <img class="profile-icon" src= uploads/profile_pics/avatar.png alt="Profile" onclick="redirectToProfile()">
+  </div>
 
     <div class="dashboard-html">
         <div class="overlap">
