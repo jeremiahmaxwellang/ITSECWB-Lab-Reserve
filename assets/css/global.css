@@ -115,3 +115,38 @@ html, body {
   background-color: black;
   box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
 }
+
+/* Dropdown Styling */
+.dropdown-menu {
+  position: absolute;
+  top: 70px; /* Adjust based on your header height */
+  right: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  display: none;
+  flex-direction: column;
+  min-width: 150px;
+  z-index: 1000;
+}
+
+/* Show dropdown when active */
+.dropdown-menu.show {
+  display: flex;
+}
+
+/* Dropdown Buttons */
+.dropdown-menu button {
+  background: none;
+  border: none;
+  padding: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+}
+
+/* Hover effect */
+.dropdown-menu button:hover {
+  background: #f3f3f3;
+}
