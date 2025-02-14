@@ -110,6 +110,7 @@ form {
 }
 
 .input-field {
+    font-family: outfit;
     width: 100%;
     padding: 14px 42px;
     font-size: 16px;
