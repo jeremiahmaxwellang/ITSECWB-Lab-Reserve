@@ -54,7 +54,7 @@
                 <div class="subsection-content">I’m a BS-IT Student that cannot think of a good description</div>
             </div>
             <div class="button-container">
-                <button class="blue-button">Edit Profile</button>
+                <button class="blue-button" id="editProfileBtn">Edit Profile</button>
             </div>
         </div>
 
@@ -95,36 +95,32 @@
         </div>
     </div>
 
-    <script>
-        const currentReservations = [
-            { roomNumber: 'GK01', seatNumber: 'Seat #01', dateTime: 'August 5, 2025 - 01:01:01 PM', edit: 'Edit' },
-            { roomNumber: 'GK02', seatNumber: 'Seat #02', dateTime: 'August 5, 2025 - 02:02:02 PM', edit: 'Edit' }
-        ];
+<!-- Edit Profile Modal -->
+<div id="editProfileModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Edit Profile</h2>
         
-        const recentReservations = [
-            { roomNumber: 'GK01', seatNumber: 'Seat #01', dateTime: 'August 5, 2025 - 01:01:01 PM', reservedBy: 'John Reservation' },
-            { roomNumber: 'GK02', seatNumber: 'Seat #02', dateTime: 'August 5, 2025 - 02:02:02 PM', reservedBy: 'Jane Reservation' }
-        ];
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" value="Jeremiah">
         
-        function populateTable(data, tableBodyId) {
-            const tableBody = document.getElementById(tableBodyId);
-            tableBody.innerHTML = '';
-            data.forEach(reservation => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${reservation.roomNumber}</td>
-                    <td>${reservation.seatNumber}</td>
-                    <td>${reservation.dateTime}</td>
-                    <td>${reservation.edit ? `<button class='edit-button'>${reservation.edit}</button>` : reservation.reservedBy}</td>
-                `;
-                tableBody.appendChild(row);
-            });
-        }
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" value="Ang">
+        
+        <label for="profileDesc">Profile Description:</label>
+        <textarea id="profileDesc">I’m a BS-IT Student that cannot think of a good description</textarea>
+        
+        <div class="modal-buttons">
+            <button class="red-button" id="deleteAccountBtn">Delete Account</button>
+            <button class="blue-button" id="changePasswordBtn">Change Password</button>
+            <button class="blue-button" id="saveChanges">Save Changes</button>
+        </div>
+    </div>
+</div>
 
-        populateTable(currentReservations, 'currentReservationsBody');
-        populateTable(recentReservations, 'recentReservationsBody');
-    </script>
-    
+
+    <script src="assets/js/profileJS.js"></script>
     <script src="assets/js/common.js"></script>
+
 </body>
 </html>
