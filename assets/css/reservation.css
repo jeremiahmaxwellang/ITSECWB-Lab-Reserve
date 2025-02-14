@@ -75,7 +75,7 @@ body {
 
 /* Add a custom dropdown arrow */
 .custom-dropdown::after {
-    content: "▼";
+    content: "\25BC"; /* Unicode for downward arrow (▼) */
     position: absolute;
     top: 50%;
     right: 12px;
