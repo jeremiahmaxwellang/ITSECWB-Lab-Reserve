@@ -8,13 +8,24 @@
     <title>Jeremiah Ang's Profile</title>
 </head>
 <body>
-    <div class="header">
-      <div class="logo-container">
-          <img class="logo" src="assets/images/LabyrinthLogo.png" onclick="redirectToDashboard()" />
-      </div>
-      <div class="labyrinthHeader">Labyrinth</div>
-      <img class="profile-icon" src="uploads/profile_pics/avatar.png" alt="Profile" onclick="redirectToProfile()">
+
+<!-- Header -->
+<header class="header">
+    <div class="logo-container">
+        <img src="assets/images/LabyrinthLogo.png" alt="Labyrinth Logo" onclick="redirectToDashboard()">
     </div>
+    
+    <div class="labyrinthHeader">Labyrinth</div>
+  
+    <!-- Profile Picture & Dropdown (Right-Aligned) -->
+    <div class="profile-dropdown">
+        <img class="profile-icon" src="uploads/profile_pics/avatar.png" alt="Profile" id="profileDropdownBtn">
+        <div class="dropdown-menu" id="profileDropdown">
+            <a href="profile.html">Go to Profile</a>
+            <a href="index.html">Logout</a>
+        </div>
+    </div>
+  </header>
 
     <div class="profile-heading">
         <img id="cover-image" src="assets/images/Background.png"/>

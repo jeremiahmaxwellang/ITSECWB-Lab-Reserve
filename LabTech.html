@@ -44,14 +44,24 @@
   </head>
 
   <body>
-    <div class="LabTech-html">
-      <div class="header">
-        <div class="logo-container">
-            <img class="logo" src="assets/images/LabyrinthLogo.png" onclick="redirectToDashboard()" />
-        </div>
-        <div class="labyrinthHeader">Labyrinth</div>
-        <img class="profile-icon" src="uploads/profile_pics/avatar.png" alt="Profile" onclick="redirectToProfile()">
+
+<!-- Header -->
+<header class="header">
+  <div class="logo-container">
+      <img src="assets/images/LabyrinthLogo.png" alt="Labyrinth Logo" onclick="redirectToDashboard()">
+  </div>
+  
+  <div class="labyrinthHeader">Labyrinth</div>
+
+  <!-- Profile Picture & Dropdown (Right-Aligned) -->
+  <div class="profile-dropdown">
+      <img class="profile-icon" src="uploads/profile_pics/avatar.png" alt="Profile" id="profileDropdownBtn">
+      <div class="dropdown-menu" id="profileDropdown">
+          <a href="profile.html">Go to Profile</a>
+          <a href="index.html">Logout</a>
       </div>
+  </div>
+</header>
 
       <div class="overlap">
         <div class="left-side">
@@ -113,5 +123,7 @@
         </div>
       </div>
     </div>
+    
+  <script src="assets/js/common.js"></script>
   </body>
 </html>

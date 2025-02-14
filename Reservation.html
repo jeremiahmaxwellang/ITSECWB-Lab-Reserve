@@ -8,12 +8,22 @@
   </head>
   <body>
   
-  <header class="header">
+<!-- Header -->
+<header class="header">
     <div class="logo-container">
-      <img src="assets/images/LabyrinthLogo.png" alt="Labyrinth Logo">
+        <img src="assets/images/LabyrinthLogo.png" alt="Labyrinth Logo" onclick="redirectToDashboard()">
     </div>
+    
     <div class="labyrinthHeader">Labyrinth</div>
-    <img class="profile-icon" src= uploads/profile_pics/avatar.png alt="Profile" onclick="redirectToProfile()">
+  
+    <!-- Profile Picture & Dropdown (Right-Aligned) -->
+    <div class="profile-dropdown">
+        <img class="profile-icon" src="uploads/profile_pics/avatar.png" alt="Profile" id="profileDropdownBtn">
+        <div class="dropdown-menu" id="profileDropdown">
+            <a href="profile.html">Go to Profile</a>
+            <a href="index.html">Logout</a>
+        </div>
+    </div>
   </header>
     
     <!-- Selection Section -->
@@ -56,6 +66,7 @@
 
     <!-- Link to JavaScript -->
     <script src="assets/js/reservationJS.js"></script>
+    <script src="assets/js/common.js"></script>
 
 </body>
 </html>

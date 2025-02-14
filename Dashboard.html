@@ -8,36 +8,41 @@
     <script>
       // Array representation of the table data
       const currentReservations = [
-        { roomNumber: 'GK01', seatNumber: 'Seat #01', dateTime: 'August 5, 2025 - 01:01:01 PM', edit: 'Edit' },
-        { roomNumber: 'GK01', seatNumber: 'Seat #01', dateTime: 'August 5, 2025 - 01:01:01 PM', edit: 'Edit' },
-        { roomNumber: 'GK01', seatNumber: 'Seat #01', dateTime: 'August 5, 2025 - 01:01:01 PM', edit: 'Edit' },
-        { roomNumber: 'GK01', seatNumber: 'Seat #01', dateTime: 'August 5, 2025 - 01:01:01 PM', edit: 'Edit' },
+        { roomNumber: 'GK01', seatNumber: 'Seat #01', dateTime: 'August 5, 2025 - 01:01:01 PM' },
+        { roomNumber: 'GK02', seatNumber: 'Seat #02', dateTime: 'August 6, 2025 - 02:30:00 PM' },
+        { roomNumber: 'GK03', seatNumber: 'Seat #03', dateTime: 'August 7, 2025 - 10:15:00 AM' },
+        { roomNumber: 'GK04', seatNumber: 'Seat #04', dateTime: 'August 8, 2025 - 04:45:00 PM' },
       ];
-
+    
       const recentReservations = [
-        { roomNumber: 'GK01', seatNumber: 'Seat #01', dateTime: 'August 5, 2025 - 01:01:01 PM', reservedBy: 'John Reservation' },
-        { roomNumber: 'GK02', seatNumber: 'Seat #01', dateTime: 'August 5, 2025 - 01:01:01 PM', reservedBy: 'John Reservation' },
-        { roomNumber: 'GK03', seatNumber: 'Seat #01', dateTime: 'August 5, 2025 - 01:01:01 PM', reservedBy: 'John Reservation' },
-        { roomNumber: 'GK04', seatNumber: 'Seat #01', dateTime: 'August 5, 2025 - 01:01:01 PM', reservedBy: 'John Reservation' },
+        { roomNumber: 'GK01', seatNumber: 'Seat #01', dateTime: 'August 1, 2025 - 12:00:00 PM', reservedBy: 'John Reservation' },
+        { roomNumber: 'GK02', seatNumber: 'Seat #02', dateTime: 'August 2, 2025 - 03:15:00 PM', reservedBy: 'Jane Doe' },
+        { roomNumber: 'GK03', seatNumber: 'Seat #03', dateTime: 'August 3, 2025 - 11:45:00 AM', reservedBy: 'Alice Smith' },
+        { roomNumber: 'GK04', seatNumber: 'Seat #04', dateTime: 'August 4, 2025 - 09:30:00 AM', reservedBy: 'Bob Johnson' },
       ];
-
+    
       // Function to render the table from the array
       function renderTable() {
         const currentTable = document.getElementById('currentReservationsTable');
         const recentTable = document.getElementById('recentReservationsTable');
-
+    
         currentReservations.forEach(reservation => {
           const row = currentTable.insertRow();
           row.insertCell(0).innerText = reservation.roomNumber;
           row.insertCell(1).innerText = reservation.seatNumber;
           row.insertCell(2).innerText = reservation.dateTime;
+    
+          // Create "Edit" button that links to Reservation.html
           const editCell = row.insertCell(3);
           const editButton = document.createElement('button');
           editButton.className = 'edit-button';
-          editButton.innerText = reservation.edit;
+          editButton.innerText = 'Edit';
+          editButton.onclick = function () {
+            window.location.href = 'Reservation.html';  // Redirects to Reservation.html
+          };
           editCell.appendChild(editButton);
         });
-
+    
         recentReservations.forEach(reservation => {
           const row = recentTable.insertRow();
           row.insertCell(0).innerText = reservation.roomNumber;
@@ -46,20 +51,30 @@
           row.insertCell(3).innerText = reservation.reservedBy;
         });
       }
-
+    
       document.addEventListener('DOMContentLoaded', renderTable);
     </script>
+    
 </head>
 <body>
 
-    <!-- Header -->
-    <header class="header">
-      <div class="logo-container">
-          <img src="assets/images/LabyrinthLogo.png" alt="Labyrinth Logo" onclick="redirectToDashboard()">
+<!-- Header -->
+<header class="header">
+  <div class="logo-container">
+      <img src="assets/images/LabyrinthLogo.png" alt="Labyrinth Logo" onclick="redirectToDashboard()">
+  </div>
+  
+  <div class="labyrinthHeader">Labyrinth</div>
+
+  <!-- Profile Picture & Dropdown (Right-Aligned) -->
+  <div class="profile-dropdown">
+      <img class="profile-icon" src="uploads/profile_pics/avatar.png" alt="Profile" id="profileDropdownBtn">
+      <div class="dropdown-menu" id="profileDropdown">
+          <a href="profile.html">Go to Profile</a>
+          <a href="index.html">Logout</a>
       </div>
-      <div class="labyrinthHeader">Labyrinth</div>
-      <img class="profile-icon" src="uploads/profile_pics/avatar.png" alt="Profile" onclick="redirectToProfile()">
-  </header>
+  </div>
+</header>
 
 
   <div class="dashboard-html">
