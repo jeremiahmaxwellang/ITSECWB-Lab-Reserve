@@ -1,143 +1,88 @@
-<!-- 
-    Last updated by: Jeremiah Ang
-    Date: Feb 12, 2025 - 11:55AM
-
-    Notes: 
-    - Added ID text field
-    - Placed Labyrinth logo on the left side
-
-    - TODO: Popup for account creation
--->
-
 <!DOCTYPE html>
-
-<html>
-    <head>
-        <meta charset="utf-8" />
-        <link rel="stylesheet" href="assets/css/global.css" />
-        <link rel="stylesheet" href="assets/css/styleguide.css" />
-
-        <link rel="stylesheet" href="assets/css/registerStyle.css"/>
-        <title>Labyrinth Register Page</title>
-    </head>
-
-
-    <body>
-        <div class="register-page-container">
-            <div class="register-photo">
-                <!-- Labyrinth Logo -->
-                <div class="logo-container">
-                    <img src="assets/images/LabyrinthLogo.png" alt="Labyrinth Logo">
-                    <span class="logo-text">Labyrinth</span>
-                </div>
-
-                <div class="right-side">
-
-                    <!-- Register your account! -->
-                    <p class="register-your-account">
-                        <span class="span">Register your</span>
-                        <span class="blue-text"> Labyrinth </span>
-                        <span class="span">Account</span>
-                    </p>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-                    <!-- Registration Form -->
-                    <div class="registration-container">
+    <title>Labyrinth Register Page</title>
 
-                    <!-- Row 1 -->
+    <link rel="stylesheet" href="assets/css/global.css">
+    <link rel="stylesheet" href="assets/css/styleguide.css">
+    <link rel="stylesheet" href="assets/css/registerStyle.css">
+</head>
+
+<body>
+    <!-- Main Container -->
+    <div class="register-page-container">
+        
+        <!-- Left Side - Image Section -->
+        <div class="register-photo">
+            <div class="logo-container">
+                <img src="assets/images/LabyrinthLogo.png" class="logo-icon">
+                <span class="logo-text">Labyrinth</span>
+            </div>
+            <img src="assets/images/RegisterPhoto.png" alt="Background Image">
+        </div>
+
+        <!-- Right Side - Registration Form -->
+        <div class="right-side">
+            <div class="register-box">
+                <!-- Register Header -->
+                <p class="register-your-account">
+                    Register your <span class="blue-text">Labyrinth</span> Account
+                </p>
+
+                <!-- Registration Form -->
+                <div class="registration-container">
+                    <!-- Row 1: First & Last Name -->
                     <div class="input-row-container">
-    
-                        <!-- First Name -->
-                        <div class="short-input-container">
-                            <div>
-                                <input type="text" class="short-text-field" placeholder="Jimmy">
-                                <div class="label-white-frame"><div class="label">First Name</div></div>
-                                </input>
-                            </div>
+                        <div class="input-group">
+                            <label class="static-label" for="first-name">First Name</label>
+                            <input type="text" id="first-name" class="static-input" placeholder="Jimmy">
                         </div>
-                    
-                        <!-- Last Name -->
-                        <div class="short-input-container">
-                            <div>
-                                <input type="text" class="short-text-field" placeholder="McGill">
-                                <div class="label-white-frame"><div class="label">Last Name</div></div>
-                                </input>
-                            </div>
-                        </div>
-    
-                    </div>
-    
 
-                    <!-- Row 2 -->
+                        <div class="input-group">
+                            <label class="static-label" for="last-name">Last Name</label>
+                            <input type="text" id="last-name" class="static-input" placeholder="McGill">
+                        </div>
+                    </div>
+
+                    <!-- Row 2: DLSU Email & ID Number -->
                     <div class="input-row-container">
-    
-                        <!-- DLSU Email -->
-                        <div class="short-input-container">
-                            <div>
-                                <input type="text" class="short-text-field" placeholder="jimmy_mcgill@dlsu.edu.ph">
-                                <div class="label-white-frame"><div class="label">DLSU Email</div></div>
-                                </input>
-                            </div>
+                        <div class="input-group">
+                            <label class="static-label" for="email">DLSU Email</label>
+                            <input type="email" id="email" class="static-input" placeholder="jimmy_mcgill@dlsu.edu.ph">
                         </div>
-                    
-                        <!-- DLSU ID Number -->
-                        <div class="short-input-container">
-                            <div>
-                                <input type="text" class="short-text-field" placeholder="1220987">
-                                <div class="label-white-frame"><div class="label">DLSU ID Number</div></div>
-                                </input>
-                            </div>
-                        </div>
-    
-                    </div>
-    
-    
-                    <!-- Password -->
-                    <div class="register-input-field">
-                        <div>
-                            <input type="text" class="text-field" placeholder="Password must be at least 15 characters">
-                            <div class="label-white-frame"><div class="label">Enter password</div></div>
-                            </input>
+
+                        <div class="input-group">
+                            <label class="static-label" for="id-number">DLSU ID Number</label>
+                            <input type="text" id="id-number" class="static-input" placeholder="1220987">
                         </div>
                     </div>
-    
-                    <!-- Re-enter Password -->
-                    <div class="register-input-field">
-                        <div>
-                            <input type="text" class="text-field" placeholder="Re-enter Password">
-                            <div class="label-white-frame"><div class="label">Confirm password</div></div>
-                            </input>
-                        </div>
+
+                    <!-- Password Fields -->
+                    <div class="input-group">
+                        <label class="static-label" for="password">Enter password</label>
+                        <input type="password" id="password" class="static-input" placeholder="Password must be at least 15 characters">
                     </div>
-    
-    
+
+                    <div class="input-group">
+                        <label class="static-label" for="confirm-password">Confirm password</label>
+                        <input type="password" id="confirm-password" class="static-input" placeholder="Re-enter Password">
+                    </div>
+
                     <!-- Create Account Button -->
-                    <button class="create-button" onclick="redirectToLogin()">
-                    <div class="create-button-label">Create Account</div>
-                    </button>
+                    <button class="create-button">CREATE ACCOUNT</button>
 
-                    <!-- temp javascript for redirecting to login page -->
-                    <script>
-                        function redirectToLogin(){
-                            window.location.href ='login.html';
-                        }
-                    </script>
-    
-                    <!-- "Already have an account?" section -->
+                    <!-- Already have an account? -->
                     <div class="login-container">
                         <div class="already-account">Already have an account?</div>
                         <a href="login.html"> <div class="login">Login</div> </a>
                     </div>
-
-                    </div>
-                    <!-- End of Registration Form -->
- 
-    
-    
-                </div>
-
+                </div> 
             </div>
-
-            
         </div>
-    </body>
+    </div> <!-- End of Main Container -->
+</body>
 </html>
+    
