@@ -248,6 +248,7 @@ body {
     font-size: 16px;
     text-align: center;
 }
+/*-------------------------------------------------------------*/
 
 /* Overlay Styles */
 .overlay {
@@ -263,11 +264,20 @@ body {
 }
 
 .overlay-content {
-    background-color: white;
-    padding: 20px;
+    background-color: #FFFF;
+    padding: 25px;
     border-radius: 10px;
-    width: 800px;
+    width: 750px;
     text-align: center;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Reserve Room Title */
+.overlay-content h2 {
+    font-size: 24px; /* Increase font size */
+    padding-bottom: 15px; /* Add space below the title */
+    color:#595858;
+    font-weight: bold;
 }
 
 /* Input & Select Styles */
@@ -286,17 +296,61 @@ body {
     border: 1px solid #ccc;
 }
 
+/* Date-Time Container */
+.date-time-container {
+    display: flex;
+    color: #595858;
+    font-size: 12px;
+    font-family: outfit;
+    justify-content: space-between; /* Aligns elements beside each other */
+    align-items: center;
+    gap: 40px; /* Space between elements */
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+/* Individual Input Box */
+.date-picker-container,
+.time-picker-container {
+    display: flex;
+    flex-direction: column;
+    width: 48%; 
+    gap: 10px; 
+}
+
+/* Labels */
+.date-picker-container label,
+.time-picker-container label {
+    margin-bottom: 5px;
+    text-align: left;
+}
+
+/* Inputs and Select */
+.date-picker-container input,
+.time-picker-container select {
+    width: 100%;
+    padding: 10px;
+    font-family: outfit;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 12fpx;
+}
+
 /* Seat Selection */
 .seat-container {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 10px;
-    margin-bottom: 20px;
+    grid-template-columns: repeat(5, 1fr); /* Keep 5x5 grid */
+    gap: 30px; /* Adjust spacing between seats */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    width: fit-content; /* Shrink to fit content */
+    margin: 20px auto; /* Ensure it stays centered */
 }
 
 .seat {
     width: 30px;
     height: 30px;
+    align-items: center;
     border-radius: 5px;
     cursor: pointer;
 }
@@ -306,7 +360,7 @@ body {
 }
 
 .seat.selected {
-    background-color: #898989;
+    background-color: #3580b2;
 }
 
 .seat.unavailable {
@@ -318,7 +372,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 100px;
+    gap: 50px;
     width: 100%;
     max-width: 800px;
     margin: 20px auto;
@@ -326,9 +380,8 @@ body {
 
 /* Buttons */
 .overlay-btn {
-    width: 20%;
-    margin-bottom: 5px; 
-    padding: 8px;
+    width: 30%;
+    padding: 12px;
     background: white;
     color: #3C4B5F; /* Dark text color */
     font-size: 14px;
@@ -342,13 +395,13 @@ body {
 
 /* Confirm Button Hover Effect */
 .overlay-btn:hover {
-    background: #F3F4F6;
+    background: white;
     border-color: #B0B3B8;
 }
 
 /* Close Button */
 .close-button {
-    background: #F3F4F6; /* Gray background for close */
+    background: white; /* Gray background for close */
 }
 
 /* Ensure Close Button hover effect matches */
@@ -359,7 +412,7 @@ body {
 
 /* reserve Button */
 .reserve-button {
-    background: #F3F4F6; /* Gray background for close */
+    background: white; /* Gray background for close */
 }
 
 .reserve-button:hover {

@@ -51,27 +51,30 @@ function showOverlay(roomName) {
 
     // Add room name
     const roomNameElement = document.createElement("h2");
-    roomNameElement.textContent = `Reserve ${roomName}`;
+    roomNameElement.textContent = `${roomName}`;
     overlayContent.appendChild(roomNameElement);
 
-    // Add date picker
+    // Date-Time Selection Container
+    const dateTimeContainer = document.createElement("div");
+    dateTimeContainer.classList.add("date-time-container");
+
+    // Date Picker
+    const datePickerContainer = document.createElement("div");
+    datePickerContainer.classList.add("date-picker-container");
     const datePickerLabel = document.createElement("label");
     datePickerLabel.textContent = "Select Date:";
-    overlayContent.appendChild(datePickerLabel);
-
     const datePicker = document.createElement("input");
     datePicker.type = "date";
     datePicker.min = new Date().toISOString().split("T")[0]; // Disable past dates
-    overlayContent.appendChild(datePicker);
+    datePickerContainer.appendChild(datePickerLabel);
+    datePickerContainer.appendChild(datePicker);
 
-    // Add time picker
+    // Time Picker
+    const timePickerContainer = document.createElement("div");
+    timePickerContainer.classList.add("time-picker-container");
     const timePickerLabel = document.createElement("label");
     timePickerLabel.textContent = "Select Time:";
-    overlayContent.appendChild(timePickerLabel);
-
     const timePicker = document.createElement("select");
-
-    // Generate time options in 30-minute intervals
     for (let hour = 0; hour < 24; hour++) {
         for (let minute = 0; minute < 60; minute += 30) {
             const option = document.createElement("option");
@@ -80,7 +83,14 @@ function showOverlay(roomName) {
             timePicker.appendChild(option);
         }
     }
-    overlayContent.appendChild(timePicker);
+
+    timePickerContainer.appendChild(timePickerLabel);
+    timePickerContainer.appendChild(timePicker);
+
+    // Append both pickers side by side
+    dateTimeContainer.appendChild(datePickerContainer);
+    dateTimeContainer.appendChild(timePickerContainer);
+    overlayContent.appendChild(dateTimeContainer);
 
     // Seat Selection
     const seatContainer = document.createElement("div");
