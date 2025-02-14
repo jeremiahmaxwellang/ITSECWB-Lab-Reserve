@@ -1,18 +1,6 @@
-<!-- 
- 
-CCAPDEV S17 Group Labyrinth Members: 
-Jeremiah Ang    Lianne Balbastro
-Charles Duelas  Kyle de Jesus
-
-Dashboard.html
-- this is the homepage of the user once signed in.
-- reservation page is accessible through here
-
- -->
-
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="assets/css/global.css" />
     <link rel="stylesheet" href="assets/css/styleguide.css" />
@@ -20,313 +8,118 @@ Dashboard.html
 
     <!-- Common js functions for all pages -->
     <script src="assets/js/common.js"></script>
+    <script>
+      // Array representation of the table data
+      const currentReservations = [
+        { roomNumber: 'GK01', seatNumber: 'Seat #01', dateTime: 'August 5, 2025 - 01:01:01 PM', edit: 'Edit' },
+        { roomNumber: 'GK01', seatNumber: 'Seat #01', dateTime: 'August 5, 2025 - 01:01:01 PM', edit: 'Edit' },
+        { roomNumber: 'GK01', seatNumber: 'Seat #01', dateTime: 'August 5, 2025 - 01:01:01 PM', edit: 'Edit' },
+        { roomNumber: 'GK01', seatNumber: 'Seat #01', dateTime: 'August 5, 2025 - 01:01:01 PM', edit: 'Edit' },
+        { roomNumber: 'GK01', seatNumber: 'Seat #01', dateTime: 'August 5, 2025 - 01:01:01 PM', edit: 'Edit' },
+        { roomNumber: 'GK01', seatNumber: 'Seat #01', dateTime: 'August 5, 2025 - 01:01:01 PM', edit: 'Edit' }
+      ];
 
-    <!-- <style>
-      /* Header */
-      .header {
-          width: 100%;
-          background: #377684;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          padding: 10px 5%;
-          color: #F5F5F5;
-          font-size: 1.5rem;
-          font-weight: 500;
-          flex-wrap: wrap;
+      const recentReservations = [
+        { roomNumber: 'GK01', seatNumber: 'Seat #01', dateTime: 'August 5, 2025 - 01:01:01 PM', reservedBy: 'John Reservation' },
+        { roomNumber: 'GK02', seatNumber: 'Seat #01', dateTime: 'August 5, 2025 - 01:01:01 PM', reservedBy: 'John Reservation' },
+        { roomNumber: 'GK03', seatNumber: 'Seat #01', dateTime: 'August 5, 2025 - 01:01:01 PM', reservedBy: 'John Reservation' },
+        { roomNumber: 'GK04', seatNumber: 'Seat #01', dateTime: 'August 5, 2025 - 01:01:01 PM', reservedBy: 'John Reservation' },
+        { roomNumber: 'GK05', seatNumber: 'Seat #01', dateTime: 'August 5, 2025 - 01:01:01 PM', reservedBy: 'John Reservation' },
+        { roomNumber: 'GK06', seatNumber: 'Seat #01', dateTime: 'August 5, 2025 - 01:01:01 PM', reservedBy: 'John Reservation' }
+      ];
+
+      // Function to render the table from the array
+      function renderTable() {
+        const currentTable = document.getElementById('currentReservationsTable');
+        const recentTable = document.getElementById('recentReservationsTable');
+
+        currentReservations.forEach(reservation => {
+          const row = currentTable.insertRow();
+          row.insertCell(0).innerText = reservation.roomNumber;
+          row.insertCell(1).innerText = reservation.seatNumber;
+          row.insertCell(2).innerText = reservation.dateTime;
+          const editCell = row.insertCell(3);
+          const editButton = document.createElement('button');
+          editButton.className = 'edit-button';
+          editButton.innerText = reservation.edit;
+          editCell.appendChild(editButton);
+        });
+
+        recentReservations.forEach(reservation => {
+          const row = recentTable.insertRow();
+          row.insertCell(0).innerText = reservation.roomNumber;
+          row.insertCell(1).innerText = reservation.seatNumber;
+          row.insertCell(2).innerText = reservation.dateTime;
+          row.insertCell(3).innerText = reservation.reservedBy;
+        });
       }
 
-      .logo-container {
-          display: flex;
-          align-items: center;
-          cursor: pointer;
-          float: left;
-      }
-
-      .logo-container img {
-          width: 50px;
-          height: 50px;
-          margin-right: 10px;
-      }
-
-      .profile-icon {
-          width: 40px;
-          height: 40px;
-          cursor: pointer;
-          float: right;
-      }
-  </style> -->
+      document.addEventListener('DOMContentLoaded', renderTable);
+    </script>
 </head>
 <body>
 
   <!-- Header -->
   <div class="header">
-      <div class="logo-container">
-          <img class="logo" src="assets\images\LabyrinthLogo.png" onclick="redirectToDashboard()" />
-      </div>
-      <div class= "labyrinthHeader">Labyrinth</div>
-      <img class="profile-icon" src= uploads/profile_pics/avatar.png alt="Profile" onclick="redirectToProfile()">
+    <div class="logo-container">
+        <img class="logo" src="assets\images\LabyrinthLogo.png" onclick="redirectToDashboard()" />
+    </div>
+    <div class= "labyrinthHeader">Labyrinth</div>
+    <img class="profile-icon" src= uploads/profile_pics/avatar.png alt="Profile" onclick="redirectToProfile()">
   </div>
 
-    <div class="dashboard-html">
-        <div class="overlap">
-          <div class="left-side">
-            <h1 class="welcomeHeader">Welcome, Jeremiah</h1>
-            <p class="sloganHeader">Don’t get lost in scheduling — Book easily!</p>
-            <div class="overlap-group">
-              <div class="reservations">
-                <div class="rectangle">
-                
-                  <!-- Current Reservations Table -->
-                  <div class="reservationContainer">
-                  <table>
-                    <tr>
-                      <th colspan="4" class="reservationHeader">Current Reservations:</th>
-                    </tr>
+  <div class="dashboard-html">
+    <div class="overlap">
+      <div class="left-side">
+        <h1 class="welcomeHeader">Welcome, Jeremiah</h1>
+        <p class="sloganHeader">Don’t get lost in scheduling — Book easily!</p>
+        <div class="overlap-group">
+          <div class="reservations">
+            <div class="rectangle">
+              <!-- Current Reservations Table -->
+              <div class="reservationContainer">
+                <table id="currentReservationsTable">
+                  <tr>
+                    <th colspan="4" class="reservationHeader">Current Reservations:</th>
+                  </tr>
+                  <!-- Table Header -->
+                  <tr>
+                    <th class="table1Header">Room Number</th>
+                    <th class="table1Header">Seat Number</th>
+                    <th class="table1Header">Date and Time of Reservation</th>
+                    <th class="table1Header">Edit your Lab Reservation</th>
+                  </tr>
+                </table>
 
-                    <!-- Table Header -->
-                    <tr>
-                      <th class="table1Header">Room Number</th>
-                      <th class="table1Header">Seat Number</th>
-                      <th class="table1Header">Date and Time of Reservation</th>
-                      <th class="table1Header">Edit your Lab Reservation</th>
-                    </tr>
-
-                    <!-- Table Row 1 -->
-                    <tr>
-                      <td class="tableCell">GK01</td>
-                      <td class="tableCell">Seat #01</td>
-                      <td class="tableCell">August 5, 2025 - 01:01:01 PM</td>
-                      <td class="tableCell">
-                        <button class="edit-button">Edit</button>
-                      </td>
-                    </tr>
-
-                    <!-- Table Row 2 -->
-                    <tr>
-                      <td class="tableCell">GK01</td>
-                      <td class="tableCell">Seat #01</td>
-                      <td class="tableCell">August 5, 2025 - 01:01:01 PM</td>
-                      <td class="tableCell">
-                        <button class="edit-button">Edit</button>
-                      </td>
-                    </tr>
-
-                    <!-- Table Row 3 -->
-                    <tr>
-                      <td class="tableCell">GK01</td>
-                      <td class="tableCell">Seat #01</td>
-                      <td class="tableCell">August 5, 2025 - 01:01:01 PM</td>
-                      <td class="tableCell">
-                        <button class="edit-button">Edit</button>
-                      </td>
-                    </tr>
-
-                    <!-- Table Row 4 -->
-                    <tr>
-                      <td class="tableCell">GK01</td>
-                      <td class="tableCell">Seat #01</td>
-                      <td class="tableCell">August 5, 2025 - 01:01:01 PM</td>
-                      <td class="tableCell">
-                        <button class="edit-button">Edit</button>
-                      </td>
-                    </tr>
-
-                    <!-- Table Row 5 -->
-                    <tr>
-                      <td class="tableCell">GK01</td>
-                      <td class="tableCell">Seat #01</td>
-                      <td class="tableCell">August 5, 2025 - 01:01:01 PM</td>
-                      <td class="tableCell">
-                        <button class="edit-button">Edit</button>
-                      </td>
-                    </tr>
-
-                    <!-- Table Row 6 -->
-                    <tr>
-                      <td class="tableCell">GK01</td>
-                      <td class="tableCell">Seat #01</td>
-                      <td class="tableCell">August 5, 2025 - 01:01:01 PM</td>
-                      <td class="tableCell">
-                        <button class="edit-button">Edit</button>
-                      </td>
-                    </tr>
-                    
-                  </table>
-
-                  <!-- Recent Reservations Table -->
-                    <table>
-                      <tr>
-                        <th colspan="4" class="reservationHeader">Recent Reservations:</th>
-                      </tr>
-
-                      <!-- Table Header -->
-                      <tr>
-                        <th class="table1Header">Room Number</th>
-                        <th class="table1Header">Seat Number</th>
-                        <th class="table1Header">Date and Time of Reservation</th>
-                        <th class="table1Header">Who Reserved?</th>
-                      </tr>
-
-                      <!-- Table Row 1 -->
-                      <tr>
-                        <td class="tableCell">GK01</td>
-                        <td class="tableCell">Seat #01</td>
-                        <td class="tableCell">August 5, 2025 - 01:01:01 PM</td>
-                        <td class="tableCell">John Reservation</td>
-                      </tr>
-
-                      <!-- Table Row 2 -->
-                      <tr>
-                        <td class="tableCell">GK02</td>
-                        <td class="tableCell">Seat #01</td>
-                        <td class="tableCell">August 5, 2025 - 01:01:01 PM</td>
-                        <td class="tableCell">John Reservation</td>
-                      </tr>
-
-                      <!-- Table Row 3 -->
-                      <tr>
-                        <td class="tableCell">GK03</td>
-                        <td class="tableCell">Seat #01</td>
-                        <td class="tableCell">August 5, 2025 - 01:01:01 PM</td>
-                        <td class="tableCell">John Reservation</td>
-                      </tr>
-
-                      <!-- Table Row 4 -->
-                      <tr>
-                        <td class="tableCell">GK04</td>
-                        <td class="tableCell">Seat #01</td>
-                        <td class="tableCell">August 5, 2025 - 01:01:01 PM</td>
-                        <td class="tableCell">John Reservation</td>
-                      </tr>
-
-                      <!-- Table Row 5 -->
-                      <tr>
-                        <td class="tableCell">GK05</td>
-                        <td class="tableCell">Seat #01</td>
-                        <td class="tableCell">August 5, 2025 - 01:01:01 PM</td>
-                        <td class="tableCell">John Reservation</td>
-                      </tr>
-
-                      <!-- Table Row 6 -->
-                      <tr>
-                        <td class="tableCell">GK06</td>
-                        <td class="tableCell">Seat #01</td>
-                        <td class="tableCell">August 5, 2025 - 01:01:01 PM</td>
-                        <td class="tableCell">John Reservation</td>
-                      </tr>
-                      
-                    </table>
-                  </div>
-              </div>
-              </div>
+                <!-- Recent Reservations Table -->
+                <table id="recentReservationsTable">
+                  <tr>
+                    <th colspan="4" class="reservationHeader">Recent Reservations:</th>
+                  </tr>
+                  <!-- Table Header -->
+                  <tr>
+                    <th class="table1Header">Room Number</th>
+                    <th class="table1Header">Seat Number</th>
+                    <th class="table1Header">Date and Time of Reservation</th>
+                    <th class="table1Header">Who Reserved?</th>
+                  </tr>
+                </table>
               </div>
             </div>
           </div>
-
-          <!-- Right Side of the Screen-->
-          <div class="right-side">
-
-            <!-- Reserve Now Section -->
-            <div class="reserveLabSlot">
-              <p class="text-wrapper-2">Reserve your Laboratory Slot now!</p>
-              <button class="reserveButton">Reserve Now!</button>
-              
-              <img class="classroomArt" src="assets\images\IndexPhoto.png" />
-            </div>
-
-            <!-- System Calendar and Time -->
-            <div class="calendarContainer">
-              <div class="month">
-                <ul>
-                  <li class="prev">&#10094;</li>
-                  <li class="next">&#10095;</li>
-                  <li>
-                    February
-                    <br>
-                    <span style="font-size:18px">2025</span>
-                  </li>
-                </ul>
-              </div>
-              <table class="weekdays">
-                    <thead>
-                        <tr>
-                          <th class="days">SUN</th>
-                          <th class="days">MON</th>
-                          <th class="days">TUES</th>
-                          <th class="days">WED</th>
-                          <th class="days">THURS</th>
-                          <th class="days">FRI</th>
-                          <th class="days">SAT</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td class="days">1</td>
-                            <td class="days">2</td>
-                        </tr>
-                        <tr>
-                            <td class="days">3</td>
-                            <td class="days">4</td>
-                            <td class="days">5</td>
-                            <td class="days">6</td>
-                            <td class="days">7</td>
-                            <td class="days">8</td>
-                            <td class="days">9</td>
-                        </tr>
-                        <tr>
-                            <td class="days">10</td>
-                            <td class="days">11</td>
-                            <td class="days">12</td>
-                            <td class="days">13</td>
-                            <td class="days">14</td>
-                            <td class="days">15</td>
-                            <td class="days">16</td>
-                        </tr>
-                        <tr>
-                          <td class="days">17</td>
-                          <td class="days">18</td>
-                          <td class="days">19</td>
-                          <td class="days">20</td>
-                          <td class="days">21</td>
-                          <td class="days">22</td>
-                          <td class="days">23</td>
-                      </tr>
-                      <tr>
-                        <td class="days">24</td>
-                        <td class="days">25</td>
-                        <td class="days">26</td>
-                        <td class="days">27</td>
-                        <td class="days">28</td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                    </tbody>
-                </table>
-
-            <!-- System Time -->
-            <div class="timeFrame">
-              <div class="timeHeader">Time</div>
-              <div class="timeContainer">
-                <div class="frame-4">
-                  <div class="text-wrapper-5">9:31</div>
-                </div>
-                <div class="AM-PM-selector">
-                  <div class="AM-wrapper"><div class="AM">Am</div></div>
-                  <div class="PM">Pm</div>
-                </div>
-              </div>
-            </div>
-
-            </div>
-            
         </div>
       </div>
-  </body>
-<!-- PUSHHHH  -->
+
+      <!-- Right Side of the Screen-->
+      <div class="right-side">
+        <!-- Reserve Now Section -->
+        <div class="reserveLabSlot">
+          <p class="text-wrapper-2">Reserve your Laboratory Slot now!</p>
+          <img class="classroomArt" src="assets/images/IndexPhoto.png" />
+          <button class="reserveButton">Reserve Now!</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
 </html>
