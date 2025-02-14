@@ -1,5 +1,5 @@
 # Labyrinth: Lab Reservation System
-This web application is developed as a requirement of CCAPDEV
+This web application is developed as part of our CCAPDEV Major Course Output
 
 # Project Overview:
 This lab reservation system allows students to reserve seats in a desired computer laboratory.
@@ -11,6 +11,9 @@ by selecting a lab from on a specific floor. Once the lab is selected, they must
 enter the timeslot of when they will reserve the slots. A table will display which
 slots are available (green) during the selected time. Unavailable red slots cannot
 be reserved.
+
+Lab technicians are able to reserve slots for walk-in students via an admin dashboard.
+They are also able to edit existing reservations of other students.
 
 
 ## Authors
