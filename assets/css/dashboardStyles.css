@@ -25,19 +25,19 @@
 }
 
 .dashboard-html .welcomeHeader {
-  font-family: "Odor Mean Chey-Regular", Helvetica;
+  font-family: "Odor Mean Chey";
   font-weight: 400;
-  color: #333;
+  color: #377684;
   font-size: 48px;
-  letter-spacing: -0.96px;
+  padding-left: 2%;
 }
 
 .dashboard-html .sloganHeader {
-  font-family: "Newsreader-Regular", Helvetica;
+  font-family: "Newsreader";
   font-weight: 400;
-  color: #555;
+  color: #377684;
   font-size: 24px;
-  letter-spacing: -0.48px;
+  padding-left: 2%;
 }
 
 .dashboard-html .reservations {
@@ -90,6 +90,7 @@
 
 /* Right Side Calendar */
 .dashboard-html .right-side {
+  height: 50%;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -97,7 +98,14 @@
   background: #377684;
   border-radius: 24px;
   padding: 20px;
+  gap: 20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 20px;
 }
 
 .dashboard-html .calendar {
@@ -139,7 +147,7 @@
 }
 
 .reserveLabSlot .text-wrapper-2 {
-  font-family: "Newsreader-Regular", Helvetica;
+  font-family: Newsreader;
   font-weight: 400;
   color: #ffffff;
   font-size: 24px;
@@ -148,14 +156,13 @@
 }
 
 .reserveLabSlot .classroomArt {
-  max-width: 100%;
+  max-width: 60%;
   height: auto;
   border-radius: 10px;
-  margin-bottom: 20px;
 }
 
 .reserveButton {
-  padding: 10px 20px;
+  padding: 10px 120px;
   border-radius: 5px;
   background-color: #2d2d2d;
   color: #ffffff;

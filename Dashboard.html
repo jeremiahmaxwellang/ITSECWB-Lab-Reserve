@@ -12,8 +12,6 @@
         { roomNumber: 'GK01', seatNumber: 'Seat #01', dateTime: 'August 5, 2025 - 01:01:01 PM', edit: 'Edit' },
         { roomNumber: 'GK01', seatNumber: 'Seat #01', dateTime: 'August 5, 2025 - 01:01:01 PM', edit: 'Edit' },
         { roomNumber: 'GK01', seatNumber: 'Seat #01', dateTime: 'August 5, 2025 - 01:01:01 PM', edit: 'Edit' },
-        { roomNumber: 'GK01', seatNumber: 'Seat #01', dateTime: 'August 5, 2025 - 01:01:01 PM', edit: 'Edit' },
-        { roomNumber: 'GK01', seatNumber: 'Seat #01', dateTime: 'August 5, 2025 - 01:01:01 PM', edit: 'Edit' }
       ];
 
       const recentReservations = [
@@ -21,8 +19,6 @@
         { roomNumber: 'GK02', seatNumber: 'Seat #01', dateTime: 'August 5, 2025 - 01:01:01 PM', reservedBy: 'John Reservation' },
         { roomNumber: 'GK03', seatNumber: 'Seat #01', dateTime: 'August 5, 2025 - 01:01:01 PM', reservedBy: 'John Reservation' },
         { roomNumber: 'GK04', seatNumber: 'Seat #01', dateTime: 'August 5, 2025 - 01:01:01 PM', reservedBy: 'John Reservation' },
-        { roomNumber: 'GK05', seatNumber: 'Seat #01', dateTime: 'August 5, 2025 - 01:01:01 PM', reservedBy: 'John Reservation' },
-        { roomNumber: 'GK06', seatNumber: 'Seat #01', dateTime: 'August 5, 2025 - 01:01:01 PM', reservedBy: 'John Reservation' }
       ];
 
       // Function to render the table from the array
@@ -56,14 +52,15 @@
 </head>
 <body>
 
-  <!-- Header -->
-  <div class="header">
-    <div class="logo-container">
-        <img class="logo" src="assets/images/LabyrinthLogo.png" onclick="redirectToDashboard()" />
-    </div>
-    <div class="labyrinthHeader">Labyrinth</div>
-    <img class="profile-icon" src="uploads/profile_pics/avatar.png" alt="Profile" onclick="redirectToProfile()">
-  </div>
+    <!-- Header -->
+    <header class="header">
+      <div class="logo-container">
+          <img src="assets/images/LabyrinthLogo.png" alt="Labyrinth Logo" onclick="redirectToDashboard()">
+      </div>
+      <div class="labyrinthHeader">Labyrinth</div>
+      <img class="profile-icon" src="uploads/profile_pics/avatar.png" alt="Profile" onclick="redirectToProfile()">
+  </header>
+
 
   <div class="dashboard-html">
     <div class="overlap">
@@ -107,15 +104,20 @@
         </div>
       </div>
 
-      <!-- Right Side of the Screen-->
-      <div class="right-side">
+      <div class="right-side reserve-container">
+        <!-- Calendar Container -->
+        <div class="calendar-container">
+            <!-- Empty for now -->
+        </div>
+    
         <!-- Reserve Now Section -->
         <div class="reserveLabSlot">
-          <p class="text-wrapper-2">Reserve your Laboratory Slot now!</p>
-          <img class="classroomArt" src="assets/images/IndexPhoto.png" />
-          <button class="reserveButton" onclick="window.location.href='Reservation.html'">Reserve Now!</button>
+            <p class="text-wrapper-2">Reserve your Laboratory Slot now!</p>
+            <img class="classroomArt" src="assets/images/IndexPhoto.png" />
+            <button class="reserveButton" onclick="window.location.href='Reservation.html'">Reserve Now!</button>
         </div>
-      </div>
+    </div>
+            
     </div>
   </div>
 
