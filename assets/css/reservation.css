@@ -266,7 +266,7 @@ body {
     background-color: white;
     padding: 20px;
     border-radius: 10px;
-    width: 400px;
+    width: 800px;
     text-align: center;
 }
 
@@ -302,7 +302,7 @@ body {
 }
 
 .seat.available {
-    background-color: #009951;
+    background-color: #1d5b3e;
 }
 
 .seat.selected {
@@ -314,24 +314,57 @@ body {
     cursor: not-allowed;
 }
 
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 100px;
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto;
+}
+
 /* Buttons */
-.overlay-content button {
-    padding: 10px 20px;
-    border-radius: 5px;
+.overlay-btn {
+    width: 20%;
+    margin-bottom: 5px; 
+    padding: 8px;
+    background: white;
+    color: #3C4B5F; /* Dark text color */
+    font-size: 14px;
+    border: 1px solid #D1D5DB; /* Light gray border */
+    border-radius: 10px; /* Rounded corners */
     cursor: pointer;
-    font-size: 1rem;
-    border: none;
+    text-align: center;
+    transition: all 0.3s ease;
+    display: block;
 }
 
-.reserve-button {
-    background-color: #377684;
-    color: white;
+/* Confirm Button Hover Effect */
+.overlay-btn:hover {
+    background: #F3F4F6;
+    border-color: #B0B3B8;
 }
 
+/* Close Button */
 .close-button {
-    background-color: #898989;
+    background: #F3F4F6; /* Gray background for close */
+}
+
+/* Ensure Close Button hover effect matches */
+.close-button:hover {
+    background: #900B09; /* Darker gray on hover */
     color: white;
-    margin-left: 10px;
+}
+
+/* reserve Button */
+.reserve-button {
+    background: #F3F4F6; /* Gray background for close */
+}
+
+.reserve-button:hover {
+    background: #1d5b3e; /* Darker gray on hover */
+    color: white;
 }
 
 /* Responsive Design */

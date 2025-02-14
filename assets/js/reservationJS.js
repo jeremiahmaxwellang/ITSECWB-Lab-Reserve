@@ -100,9 +100,13 @@ function showOverlay(roomName) {
     }
     overlayContent.appendChild(seatContainer);
 
+    // Button Container
+    const buttonContainer = document.createElement("div");
+    buttonContainer.classList.add("button-container");
+
     // Reserve button
     const reserveButton = document.createElement("button");
-    reserveButton.classList.add("reserve-button");
+    reserveButton.classList.add("overlay-btn", "reserve-button");
     reserveButton.textContent = "Reserve";
     reserveButton.addEventListener("click", () => {
         const selectedDate = datePicker.value;
@@ -116,16 +120,19 @@ function showOverlay(roomName) {
             document.body.removeChild(overlay); // Close overlay
         }
     });
-    overlayContent.appendChild(reserveButton);
+    buttonContainer.appendChild(reserveButton);
 
     // Close button
     const closeButton = document.createElement("button");
-    closeButton.classList.add("close-button");
+    closeButton.classList.add("overlay-btn", "close-button");
     closeButton.textContent = "Close";
     closeButton.addEventListener("click", () => {
         document.body.removeChild(overlay); // Close overlay
     });
-    overlayContent.appendChild(closeButton);
+    buttonContainer.appendChild(closeButton);
+
+    // Append buttons below the seat selection
+    overlayContent.appendChild(buttonContainer);
 
     // Append overlay content to overlay
     overlay.appendChild(overlayContent);
@@ -144,6 +151,7 @@ function redirectToProfile() {
     window.location.href = "profile.html";
 }
 
+// Floor slider logic
 document.addEventListener("DOMContentLoaded", function () {
     const floorNumbers = document.querySelectorAll(".floor-number");
     const sliderThumb = document.querySelector(".floor-slider-thumb");
