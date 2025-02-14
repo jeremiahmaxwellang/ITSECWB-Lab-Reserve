@@ -7,7 +7,6 @@
   box-sizing: border-box;
 }
 html, body {
-  margin: 0;
   padding: 0;
   width: 100%;
   height: 100%;
@@ -17,30 +16,27 @@ html, body {
 /* Top Header Styles */
 
 .header {
-  width: 100%;
-  /* background: #377684; */
-  background-color: var(--variable-collection-color);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 20px;
-  color: #F5F5F5;
-  font-size: 1.5rem;
-  font-weight: 500;
-  flex-wrap: wrap;
+    width: 100%;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    padding: 20px; /* Adjusts spacing on the sides */
+    background-color: var(--variable-collection-color);
+    border-bottom: none;
+    box-shadow: 0px 4px 6px #0000001a;
+    position: relative;
+    z-index: 10;
 }
 
 .logo-container {
   display: flex;
   align-items: center;
   cursor: pointer;
-  float: left;
 }
 
 .logo-container img {
-  width: 50px;
-  height: 50px;
-  margin-right: 10px;
+  width: 60px; /* Adjust size if necessary */
+  height: auto;
 }
 
 .profile-icon {
@@ -50,44 +46,18 @@ html, body {
   float: right;
 }
 
-/* .header {
-  width: 100%;
-  height: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  background-color: var(--variable-collection-color);
-  border-bottom: none;
-  box-shadow: 0px 4px 6px #0000001a;
-  position: relative;
-  z-index: 10;
-}
-
-
-.logo {
-  width: 69px; 
-  height: 69px;
-  display: flex;
-  float: left;
-  gap: 10px;
-  position: absolute;
-  left: 20px;
-}
-*/
-
 .labyrinthHeader {
   font-family: "Odor Mean Chey", Helvetica, sans-serif;
   font-size: 32px;
   color: #ffffff;
   text-align: center;
-  flex-grow: 0; 
-  /* position: absolute; */
-  white-space: nowrap; 
-  margin: auto;
-  padding: 10px;
+  flex: 1; 
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 } 
-
 
 .elementContainer .element-avatar {
   width: 73px;
