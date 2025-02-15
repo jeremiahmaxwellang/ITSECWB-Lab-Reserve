@@ -189,6 +189,22 @@ form {
     text-align: center;
 }
 
+ .TempButton{
+        width: 100%;
+    max-width: 350px; 
+    padding: 14px;
+    background: #898989;
+    font-family: 'Newsreader', serif;
+    border: none;
+    border-radius: 15px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 15px;
+    text-align: center;
+    
+ }
+
 .login-button:hover {
     background: #2a5a5f;
 }
