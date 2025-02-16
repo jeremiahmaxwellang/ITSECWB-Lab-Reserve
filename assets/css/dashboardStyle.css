@@ -74,70 +74,55 @@
 }
 
 .reservationContainer .edit-button {
-  padding: 10px;
+  display: block;  
+  margin: auto;  
+  padding: 10px 60px;
+  font-family: "Newsreader", serif; 
+  font-size: 16px;
+  text-align: center;
   border-radius: 5px;
-  background-color: #377684;
+  background-color: #2D2D2D;
   color: white;
   border: none;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .reservationContainer .edit-button:hover {
-  background-color: #E3E3E3;
-  color: black;
+  background-color: white;
+  color: #2D2D2D;
+  border: 1px solid #2D2D2D; 
 }
 
-/* Right Side Calendar */
-.dashboard-html .right-side {
-  height: 50%;
-  flex: 1;
+/* Right Side - Stack Content Vertically */
+.right-side {
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* Ensures stacked layout */
   align-items: center;
+  gap: 15px; 
+}
+
+/* Calendar Container */
+.calendarContainer {
+  width: 100%;
+  max-width: 400px;
+  height: 360px;
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Reserve Now Container */
+.reserveContainer {
+  width: 100%;
+  max-width: 400px;
+  height: 360px;
   background: #377684;
   border-radius: 24px;
   padding: 20px;
-  gap: 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  gap: 20px;
-}
-
-.dashboard-html .calendar {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 10px;
   text-align: center;
-  width: 100%;
-}
-
-.dashboard-html .calendar div {
-  padding: 15px;
-  border-radius: 5px;
-  background: #f0f0f0;
-  font-weight: bold;
-}
-
-.dashboard-html .calendar .day {
-  background: #ffffff;
-  border: 1px solid #ddd;
-  transition: background 0.3s;
-  cursor: pointer;
-}
-
-.dashboard-html .calendar .day:hover {
-  background: #ddd;
-}
-
-.dashboard-html .calendar .today {
-  background: #4295fd;
-  color: white;
-  font-weight: bold;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 /* Reserve Button */
@@ -156,24 +141,43 @@
 }
 
 .reserveLabSlot .classroomArt {
-  max-width: 55%;
+  max-width: 65%;
   height: auto;
   border-radius: 10px;
 }
 
 .reserveButton {
+  font-family: Newsreader;
   padding: 10px 120px;
   border-radius: 5px;
-  background-color: #2d2d2d;
+  background-color: #2D2D2D;
   color: #ffffff;
   border: none;
   cursor: pointer;
   transition: background 0.3s ease;
   position: relative;
-  margin-top: 20px;
 }
 
 .reserveButton:hover {
   background-color: #cccccc;
   color: black;
+}
+
+/* Default Style */
+.reserveContainer {
+  width: 100%;
+  max-width: 400px;
+  height: 360px;
+  background: #377684;
+  border-radius: 24px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.1s ease-in-out; /* Smooth transition */
+}
+
+/* Pop Effect on Hover */
+.reserveContainer:hover {
+  transform: scale(1.02); /* Slightly enlarges */
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); /* Adds depth */
 }
