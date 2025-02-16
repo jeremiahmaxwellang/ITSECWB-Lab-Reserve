@@ -1,10 +1,16 @@
 .LabTech-html {
   background-color: #f5f5f5;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   width: 100%;
   min-height: 100vh;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  position: relative;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.header{
+  background-color: #3B6B53; 
 }
 
 .overlap {
@@ -22,32 +28,24 @@
 }
 
 .welcomeHeader {
-  font-weight: 600;
-  color: #333;
-  font-size: 36px;
-  letter-spacing: -0.72px;
+  font-family: "Odor Mean Chey";
+  font-weight: 400;
+  color: #377684;
+  font-size: 48px;
 }
 
 .sloganHeader {
+  font-family: "Newsreader";
   font-weight: 400;
-  color: #555;
-  font-size: 18px;
-  letter-spacing: -0.36px;
+  color: #377684;
+  font-size: 24px;
 }
 
 .reservations {
-  display: flex;
-  flex-direction: column;
   background: #ffffff;
-  border-radius: 12px;
+  border-radius: 24px;
   padding: 20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  overflow-x: auto;
-}
-
-.reservationContainer {
-  display: flex;
-  flex-direction: column;
   overflow-x: auto;
 }
 
@@ -64,26 +62,30 @@
 }
 
 .reservationContainer th {
-  background-color: var(--variable-collection-admin-side);
+  background-color: #377684;
   color: white;
 }
 
-.reservationContainer .editButton, .reservationContainer .deleteButton {
-  padding: 8px 16px;
-  border-radius: 5px;
-  background-color: var(--variable-collection-admin-side);
-  color: white;
-  border: none;
-  cursor: pointer;
-  transition: background 0.3s ease;
-  margin: 2px;
+.right-side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
 }
 
-.reservationContainer .editButton:hover, .reservationContainer .deleteButton:hover {
-  background-color: #163511;
+/* Calendar Container */
+.calendarContainer {
+  width: 100%;
+  max-width: 400px;
+  height: 360px;
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.LabtechContainer{
+/* Reserve Now Container */
+.reserveContainer {
   width: 100%;
   max-width: 400px;
   height: 360px;
@@ -92,90 +94,59 @@
   padding: 20px;
   text-align: center;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.1s ease-in-out; /* Smooth transition */
+  transition: transform 0.1s ease-in-out;
 }
 
-.reserveLabSlot {
-  position: relative;
+/* Pop Effect on Hover */
+.reserveContainer:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+
+
+/* Style for Edit and Delete Buttons */
+.editButton, .deleteButton {
+
+  padding: 10px 60px;
+  font-family: "Newsreader", serif; 
+  font-size: 16px;
   text-align: center;
-}
-
-.reserveLabSlot .text-wrapper-2 {
-  font-weight: 600;
-  color: #ffffff;
-  font-size: 32px;
-  letter-spacing: -0.36px;
-  margin-bottom: 20px;
-}
-
-.reserveLabSlot .classroomArt {
-  max-width: 100%;
-  height: auto;
-  border-radius: 10px;
-  margin-bottom: 20px;
-}
-
-.reserveButton {
-  padding: 10px 20px;
   border-radius: 5px;
-  background-color: white;
-  color: #3B6B53;
-  border: none;
-  cursor: pointer;
-  transition: background 0.3s ease;
-  margin-top: 20px;
-}
-
-.reserveButton:hover {
-  background-color: #a5a5a5;
-}
-
-.popup {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  justify-content: center;
-  align-items: center;
-}
-
-.popup .overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-}
-
-.popup .popUpContent {
-  position: relative;
-  background: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  text-align: center;
-  z-index: 10;
-}
-
-.popup .controls {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 20px;
-}
-
-.popup .cancelButton, .popup .confirmButton, .popup .homeButton {
-  padding: 10px 20px;
-  border-radius: 5px;
-  background-color: var(--variable-collection-admin-side);
+  background-color: #2D2D2D;
   color: white;
   border: none;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: all 0.3s ease;
 }
 
-.popup .cancelButton:hover, .popup .confirmButton:hover, .popup .homeButton:hover {
-  background-color: var(--variable-collection-admin-side);
+/* Edit Button */
+.editButton {
+  background-color: #2D2D2D;
+  color: white;
 }
+
+.editButton:hover {
+  background-color: white;
+  color: #2D2D2D;
+  border: 1px solid #2D2D2D;
+}
+
+/* Delete Button */
+.deleteButton {
+  background-color: #900B09;
+  color: white;
+}
+
+.deleteButton:hover {
+  background-color: white;
+  color: #900B09;
+  border: 1px solid #900B09;
+}
+
+.classroomArt {
+  max-width: 65%;
+  height: auto;
+  border-radius: 10px;
+}
+

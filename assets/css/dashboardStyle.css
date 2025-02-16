@@ -24,7 +24,7 @@
   gap: 20px;
 }
 
-.dashboard-html .welcomeHeader {
+.welcomeHeader {
   font-family: "Odor Mean Chey";
   font-weight: 400;
   color: #377684;
@@ -32,7 +32,7 @@
   padding-left: 2%;
 }
 
-.dashboard-html .sloganHeader {
+.sloganHeader {
   font-family: "Newsreader";
   font-weight: 400;
   color: #377684;

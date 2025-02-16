@@ -7,7 +7,7 @@
     
     <link rel="stylesheet" href="assets/css/global.css">
     <link rel="stylesheet" href="assets/css/styleguide.css">
-    <link rel="stylesheet" href="assets/css/labtechStyle.css">
+    <link rel="stylesheet" href="assets/css/labTechStyle.css">
 </head>
 
 <body>
@@ -31,11 +31,12 @@
 </header>
 
 <!-- Main Dashboard Content -->
-<div class="overlap">
-    <div class="left-side">
-        <h1 class="welcomeHeader">Welcome to the Admin Dashboard</h1>
-        <p class="sloganHeader">Don’t get lost in scheduling — Book easily!</p>
-        <div class="overlap-group">
+<div class="LabTech-html">
+    <div class="overlap">
+        <div class="left-side">
+            <h1 class="welcomeHeader">Welcome to the Lab Tech Dashboard</h1>
+            <p class="sloganHeader">Manage reservations easily!</p>
+
             <div class="reservations">
                 <div class="rectangle">
                     <div class="reservationContainer">
@@ -48,23 +49,29 @@
                                     <th class="table1Header">Room Number</th>
                                     <th class="table1Header">Seat Number</th>
                                     <th class="table1Header">Date and Time of Reservation</th>
-                                    <th class="table1Header">Edit your Lab Reservation</th>
+                                    <th class="table1Header">Actions</th>
                                 </tr>
                             </thead>
-                            <tbody></tbody> <!-- Populated by JS -->
+                            <tbody></tbody> <!-- Populated by JavaScript -->
                         </table>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Right Side -->
-    <div class="LabtechContainer">
-        <div class="reserveLabSlot">
-            <p class="text-wrapper-2">Reserve your Laboratory Slot now!</p>
-            <img class="classroomArt" src="assets/images/IndexPhoto.png" />
-            <button class="reserveButton">Reserve Now!</button>
+        <!-- Right Side -->
+        <div class="right-side">
+            <div class="calendarContainer">
+                <!-- Calendar Placeholder --> 
+            </div>
+
+            <div class="reserveContainer">
+                <div class="reserveLabSlot">
+                    <p class="text-wrapper-2">Reserve your Laboratory Slot now!</p>
+                    <img class="classroomArt" src="assets/images/IndexPhoto.png" />
+                    <button class="reserveButton">Reserve Now!</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>

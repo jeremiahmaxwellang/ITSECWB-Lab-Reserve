@@ -33,8 +33,6 @@ document.addEventListener('DOMContentLoaded', function () {
           deleteButton.onclick = () => showDeleteConfirmation(index);
           editCell.appendChild(deleteButton);
       });
-
-      attachDeleteEventListeners();
   }
 
   function showOverlay(roomNumber) {
@@ -56,12 +54,6 @@ document.addEventListener('DOMContentLoaded', function () {
               reservationDeletedPopup.openPopup();
           };
       }
-  }
-
-  function attachDeleteEventListeners() {
-      document.querySelectorAll(".deleteButton").forEach(button => {
-          button.addEventListener("click", deletePopUp.openPopup);
-      });
   }
 
   // Popup System
