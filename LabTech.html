@@ -1,129 +1,105 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab Tech Dashboard</title>
+    
     <link rel="stylesheet" href="assets/css/global.css">
     <link rel="stylesheet" href="assets/css/styleguide.css">
     <link rel="stylesheet" href="assets/css/labtechStyle.css">
-    <script src="assets/js/labTechJS.js"></script>
-    <script>
-      const reservations = [
-        { roomNumber: 'GK01', seatNumber: 'Seat #01', dateTime: 'August 5, 2025 - 01:01:01 PM' },
-        { roomNumber: 'GK01', seatNumber: 'Seat #01', dateTime: 'August 5, 2025 - 01:01:01 PM' },
-        { roomNumber: 'GK01', seatNumber: 'Seat #01', dateTime: 'August 5, 2025 - 01:01:01 PM' },
-        { roomNumber: 'GK01', seatNumber: 'Seat #01', dateTime: 'August 5, 2025 - 01:01:01 PM' },
-        { roomNumber: 'GK01', seatNumber: 'Seat #01', dateTime: 'August 5, 2025 - 01:01:01 PM' },
-        { roomNumber: 'GK01', seatNumber: 'Seat #01', dateTime: 'August 5, 2025 - 01:01:01 PM' }
-      ];
+</head>
 
-      function renderTable() {
-        const table = document.getElementById('reservationsTable');
-
-        reservations.forEach(reservation => {
-          const row = table.insertRow();
-          row.insertCell(0).innerText = reservation.roomNumber;
-          row.insertCell(1).innerText = reservation.seatNumber;
-          row.insertCell(2).innerText = reservation.dateTime;
-          const buttonCell = row.insertCell(3);
-          const editButton = document.createElement('button');
-          editButton.className = 'editButton';
-          editButton.innerText = 'Edit';
-          editButton.onclick = () => showOverlay(reservation.roomNumber);
-          buttonCell.appendChild(editButton);
-
-          const deleteButton = document.createElement('button');
-          deleteButton.className = 'deleteButton';
-          deleteButton.innerText = 'Delete';
-          deleteButton.onclick = () => showDeleteConfirmation(reservation.roomNumber);
-          buttonCell.appendChild(deleteButton);
-        });
-      }
-
-      document.addEventListener('DOMContentLoaded', renderTable);
-    </script>
-  </head>
-
-  <body>
+<body>
 
 <!-- Header -->
 <header class="header">
-  <div class="logo-container">
-      <img src="assets/images/LabyrinthLogo.png" alt="Labyrinth Logo" onclick="redirectToDashboard()">
-  </div>
-  
-  <div class="labyrinthHeader">Labyrinth</div>
+    <div class="logo-container">
+        <img src="assets/images/LabyrinthLogo.png" alt="Labyrinth Logo" onclick="redirectToDashboard()">
+    </div>
 
-  <!-- Profile Picture & Dropdown (Right-Aligned) -->
-  <div class="profile-dropdown">
-      <img class="profile-icon" src="uploads/profile_pics/avatar.png" alt="Profile" id="profileDropdownBtn">
-      <div class="dropdown-menu" id="profileDropdown">
-          <a href="profile.html">Go to Profile</a>
-          <a href="index.html">Logout</a>
-      </div>
-  </div>
+    <div class="labyrinthHeader">Labyrinth</div>
+
+    <!-- Profile Picture & Dropdown (Right-Aligned) -->
+    <div class="profile-dropdown">
+        <img class="profile-icon" src="uploads/profile_pics/avatar.png" alt="Profile" id="profileDropdownBtn">
+        <div class="dropdown-menu" id="profileDropdown">
+            <a href="profile.html">Go to Profile</a>
+            <a href="index.html">Logout</a>
+        </div>
+    </div>
 </header>
 
-      <div class="overlap">
-        <div class="left-side">
-          <h1 class="welcomeHeader">Welcome to the Admin Dashboard</h1>
-          <p class="sloganHeader">Don’t get lost in scheduling — Book easily!</p>
-          <div class="overlap-group">
+<!-- Main Dashboard Content -->
+<div class="overlap">
+    <div class="left-side">
+        <h1 class="welcomeHeader">Welcome to the Admin Dashboard</h1>
+        <p class="sloganHeader">Don’t get lost in scheduling — Book easily!</p>
+        <div class="overlap-group">
             <div class="reservations">
-              <div class="rectangle">
-                <div class="reservationContainer">
-                  <table id="reservationsTable">
-                    <tr class="tableRow">
-                      <th colspan="4" class="reservationHeader">Current Reservations:</th>
-                    </tr>
-                    <tr class="tableRow">
-                      <th class="table1Header">Room Number</th>
-                      <th class="table1Header">Seat Number</th>
-                      <th class="table1Header">Date and Time of Reservation</th>
-                      <th class="table1Header">Edit your Lab Reservation</th>
-                    </tr>
-                  </table>
+                <div class="rectangle">
+                    <div class="reservationContainer">
+                        <table id="reservationsTable">
+                            <thead>
+                                <tr class="tableRow">
+                                    <th colspan="4" class="reservationHeader">Current Reservations</th>
+                                </tr>
+                                <tr class="tableRow">
+                                    <th class="table1Header">Room Number</th>
+                                    <th class="table1Header">Seat Number</th>
+                                    <th class="table1Header">Date and Time of Reservation</th>
+                                    <th class="table1Header">Edit your Lab Reservation</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody> <!-- Populated by JS -->
+                        </table>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
         </div>
+    </div>
 
-        <div class="right-side">
-          <div class="reserveLabSlot">
+    <!-- Right Side -->
+    <div class="LabtechContainer">
+        <div class="reserveLabSlot">
             <p class="text-wrapper-2">Reserve your Laboratory Slot now!</p>
             <img class="classroomArt" src="assets/images/IndexPhoto.png" />
             <button class="reserveButton">Reserve Now!</button>
-          </div>
         </div>
-      </div>
     </div>
+</div>
 
-    <div class="popup" id="deletePopUp">
-      <div class="overlay"></div>
-      <div class="popUpContent">
+<!-- Delete Confirmation Popup -->
+<div class="popup" id="deletePopUp">
+    <div class="overlay"></div>
+    <div class="popUpContent">
         <img src="assets/images/trashIcon.png">
         <h2>Are you sure you want to delete this Reservation?</h2>
         <p>This action is permanent.</p>
         <p>You will need to create a new reservation once this is deleted.</p>
         <div class="controls">
-          <button class="cancelButton">Cancel</button>
-          <button class="confirmButton">Confirm</button>
+            <button class="cancelButton">Cancel</button>
+            <button class="confirmButton">Confirm</button>
         </div>
-      </div>
     </div>
+</div>
 
-    <div class="popup" id="reservationDeleted">
-      <div class="overlay"></div>
-      <div class="popUpContent">
+<!-- Deletion Confirmation Popup -->
+<div class="popup" id="reservationDeleted">
+    <div class="overlay"></div>
+    <div class="popUpContent">
         <img src="assets/images/trashIcon.png">
         <h2>The Reservation has been Deleted</h2>
         <p>Thank you for using Labyrinth!</p>
         <div class="controls">
-          <button class="homeButton">Go Back to Home Page</button>
+            <button class="homeButton">Go Back to Home Page</button>
         </div>
-      </div>
     </div>
-    
-  <script src="assets/js/common.js"></script>
-  </body>
+</div>
+
+<!-- JavaScript -->
+<script src="assets/js/common.js"></script>
+<script src="assets/js/labTechJS.js"></script>
+
+</body>
 </html>
