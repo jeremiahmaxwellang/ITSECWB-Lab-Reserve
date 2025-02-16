@@ -30,14 +30,14 @@
 .welcomeHeader {
   font-family: "Odor Mean Chey";
   font-weight: 400;
-  color: #377684;
+  color: #3B6B53;
   font-size: 48px;
 }
 
 .sloganHeader {
   font-family: "Newsreader";
   font-weight: 400;
-  color: #377684;
+  color: #3B6B53;
   font-size: 24px;
 }
 
@@ -61,8 +61,13 @@
   border: 1px solid #ddd;
 }
 
+.reservationContainer td:last-child {
+  text-align: center;
+  vertical-align: middle;
+}
+
 .reservationContainer th {
-  background-color: #377684;
+  background-color: #3B6B53;
   color: white;
 }
 
@@ -77,7 +82,7 @@
 .calendarContainer {
   width: 100%;
   max-width: 400px;
-  height: 360px;
+  height: 120px;
   background: #ffffff;
   border-radius: 24px;
   padding: 20px;
@@ -89,12 +94,44 @@
   width: 100%;
   max-width: 400px;
   height: 360px;
-  background: #377684;
+  background: #3B6B53;
   border-radius: 24px;
   padding: 20px;
   text-align: center;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.1s ease-in-out;
+}
+
+/* Reserve Button */
+.reserveLabSlot {
+  position: relative;
+  text-align: center;
+}
+
+.reserveLabSlot .text-wrapper-2 {
+  font-family: Newsreader;
+  font-weight: 400;
+  color: #ffffff;
+  font-size: 24px;
+  letter-spacing: -0.48px;
+  margin-bottom: 20px;
+}
+
+.reserveLabSlot .classroomArt {
+  max-width: 65%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.reserveButton {
+  font-family: Newsreader;
+  padding: 10px 120px;
+  border-radius: 5px;
+  background-color: #2D2D2D;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  position: relative;
 }
 
 /* Pop Effect on Hover */
@@ -103,7 +140,12 @@
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
 }
 
-
+/* Button Container */
+.button-container {
+  display: flex;
+  justify-content: center; /* Centers buttons horizontally */
+  gap: 10px; /* Adds space between buttons */
+}
 
 /* Style for Edit and Delete Buttons */
 .editButton, .deleteButton {
