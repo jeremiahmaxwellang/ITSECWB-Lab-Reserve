@@ -32,6 +32,7 @@
   font-weight: 400;
   color: #3B6B53;
   font-size: 48px;
+  padding-left: 2%;
 }
 
 .sloganHeader {
@@ -39,6 +40,7 @@
   font-weight: 400;
   color: #3B6B53;
   font-size: 24px;
+  padding-left: 2%;
 }
 
 .reservations {
@@ -200,63 +202,42 @@
 
 /*----------------------------------------------------------------*/
 
-/* Fullscreen overlay */
-.popup {
-  display: none;
+/* Delete Modal Overlay */
+.delete-modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.6); /* Darker background for better focus */
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  visibility: hidden;
+  opacity: 0;
 }
 
-/* Show overlay when active */
-.popup.active {
-  display: flex;
+/* Active state */
+.delete-modal-overlay.active {
+  visibility: visible;
+  opacity: 1;
 }
 
-/* Overlay Content */
-.popUpContent {
-  background: #fff;
-  padding: 20px;
-  border-radius: 10px;
+/* Delete Modal */
+.delete-modal {
+  background: white;
+  width: 500px;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   text-align: center;
-  width: 450px;
-  max-width: 90%;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  font-family: "Outfit", sans-serif;
   position: relative;
-  animation: fadeIn 0.3s ease-in-out;
 }
 
-/* Fade-in animation */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Close Button */
-.close-overlay {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  cursor: pointer;
-  font-size: 24px;
-  font-weight: bold;
-  color: #333;
-}
-
-/* Overlay Header */
-.overlay-header {
+/* Header with Trash Icon */
+.delete-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -264,47 +245,82 @@
   border-bottom: 1px solid #ddd;
 }
 
-.overlay-header h2 {
-  color: #900B09;
+.delete-icon {
+  width: 30px;
+  height: auto;
+}
+
+.close-button {
+  background: none;
+  border: none;
   font-size: 22px;
-  margin: 0;
+  cursor: pointer;
 }
 
-/* Overlay Body */
-.overlay-body {
-  padding: 15px 0;
-  font-size: 16px;
-  color: #444;
+/* Modal Title */
+.delete-modal h2 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #900B09;
+  margin-top: 10px;
+  text-align: Left;
 }
 
-/* Buttons */
-.overlay-controls {
+/* Delete Details */
+.delete-details {
+  text-align: left;
+  margin-top: 10px;
+}
+
+.delete-warning {
+  font-weight: 500;
+  color: #900B09;
+}
+
+/* Button Styling */
+.delete-buttons {
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
 }
 
-/* Cancel and Confirm Buttons */
-.cancelButton, .confirmButton {
-  padding: 12px 20px;
-  font-size: 16px;
-  border-radius: 5px;
-  cursor: pointer;
+.cancel-button {
+  font-family: outfit;
   width: 45%;
+  margin-bottom: 5px; 
+  padding: 10px;
+  background: white;
+  color: #3C4B5F; /* Dark text color */
+  font-size: 16px;
+  border: 1px solid #D1D5DB; /* Light gray border */
+  border-radius: 10px; /* Rounded corners */
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.3s ease;
+  display: block;
 }
 
-.cancelButton {
-  background: #ddd;
-  color: black;
-  border: none;
+.cancel-button:hover {
+  background: #f5f5f5;
 }
 
-.confirmButton {
-  background: #900B09;
+.confirm-button {
+  font-family: outfit;
+  width: 45%;
+  margin-bottom: 5px; 
+  padding: 10px;
+  background: white;
+  color: #3C4B5F; /* Dark text color */
+  font-size: 16px;
+  border: 1px solid #D1D5DB; /* Light gray border */
+  border-radius: 10px; /* Rounded corners */
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.3s ease;
+  display: block;
+}
+
+.confirm-button:hover {
+  background-color: #900B09;
   color: white;
-  border: none;
-}
-
-.confirmButton:hover {
-  background: darkred;
 }
