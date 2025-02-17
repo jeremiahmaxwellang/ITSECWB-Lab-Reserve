@@ -67,7 +67,7 @@
 
             <div class="reserveContainer">
                 <div class="reserveLabSlot">
-                    <p class="text-wrapper-2">Reserve your Laboratory Slot now!</p>
+                    <p class="ContainerText">For Student Walk-ins</p>
                     <img class="classroomArt" src="assets/images/IndexPhoto.png" />
                     <button class="reserveButton">Reserve Now!</button>
                 </div>
@@ -76,20 +76,27 @@
     </div>
 </div>
 
-<!-- Delete Confirmation Popup -->
+<!-- Delete Confirmation Overlay -->
 <div class="popup" id="deletePopUp">
-    <div class="overlay"></div>
     <div class="popUpContent">
-        <img src="assets/images/trashIcon.png">
-        <h2>Are you sure you want to delete this Reservation?</h2>
-        <p>This action is permanent.</p>
-        <p>You will need to create a new reservation once this is deleted.</p>
-        <div class="controls">
+        <span class="close-overlay">&times;</span>
+        <div class="overlay-header">
+            <h2>Are you sure you want to delete this Reservation?</h2>
+        </div>
+        <div class="overlay-body">
+            <p><strong>Room:</strong> <span id="deleteRoom"></span></p>
+            <p><strong>Seat:</strong> <span id="deleteSeat"></span></p>
+            <p><strong>Date:</strong> <span id="deleteDate"></span></p>
+            <p>This action is permanent.</p>
+            <p>You will need to create a new reservation once this is deleted.</p>
+        </div>
+        <div class="overlay-controls">
             <button class="cancelButton">Cancel</button>
             <button class="confirmButton">Confirm</button>
         </div>
     </div>
 </div>
+
 
 <!-- Deletion Confirmation Popup -->
 <div class="popup" id="reservationDeleted">

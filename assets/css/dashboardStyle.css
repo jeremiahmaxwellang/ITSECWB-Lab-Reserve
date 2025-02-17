@@ -131,7 +131,7 @@
   text-align: center;
 }
 
-.reserveLabSlot .text-wrapper-2 {
+.reserveLabSlot .ContainerText{
   font-family: Newsreader;
   font-weight: 400;
   color: #ffffff;
