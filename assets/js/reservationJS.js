@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function() {
-    // Room data array
     const rooms = [
         { name: "GK101", capacity: 20, projectors: 1, servers: 0 },
         { name: "GK102", capacity: 20, projectors: 1, servers: 0 },
@@ -9,10 +8,8 @@ document.addEventListener("DOMContentLoaded", function() {
         { name: "GK106", capacity: 20, projectors: 1, servers: 0 }
     ];
 
-    // Get the container where rooms will be inserted
     const roomContainer = document.getElementById("room-container");
 
-    // Loop through rooms and create HTML dynamically
     rooms.forEach(room => {
         const roomDiv = document.createElement("div");
         roomDiv.classList.add("room-box");
@@ -29,29 +26,41 @@ document.addEventListener("DOMContentLoaded", function() {
             </div>
         `;
 
-        // Click event to select room
         roomDiv.addEventListener("click", () => {
             showOverlay(room.name);
         });
 
-        // Append room box to container
         roomContainer.appendChild(roomDiv);
     });
+
+    // Floor Slider Logic
+    const floorNumbers = document.querySelectorAll(".floor-number");
+    const sliderThumb = document.querySelector(".floor-slider-thumb");
+
+    const floorPositions = [0, 60, 110, 160, 229]; // Positions for slider
+
+    floorNumbers.forEach((floor, index) => {
+        floor.addEventListener("click", function() {
+            sliderThumb.style.transform = `translateX(${floorPositions[index]}px)`;
+
+            floorNumbers.forEach(f => f.classList.remove("selected"));
+            floor.classList.add("selected");
+        });
+    });
+
+    sliderThumb.style.transform = `translateX(${floorPositions[0]}px)`; 
+    floorNumbers[0].classList.add("selected"); 
 });
 
-// Function to show overlay with date picker, time picker, and seat selection
 function showOverlay(roomName) {
-    // Create overlay container
     const overlay = document.createElement("div");
     overlay.classList.add("overlay");
 
-    // Create overlay content
     const overlayContent = document.createElement("div");
     overlayContent.classList.add("overlay-content");
 
-    // Add room name
     const roomNameElement = document.createElement("h2");
-    roomNameElement.textContent = `${roomName}`;
+    roomNameElement.textContent = ` ${roomName}`;
     overlayContent.appendChild(roomNameElement);
 
     // Date-Time Selection Container
@@ -65,7 +74,7 @@ function showOverlay(roomName) {
     datePickerLabel.textContent = "Select Date:";
     const datePicker = document.createElement("input");
     datePicker.type = "date";
-    datePicker.min = new Date().toISOString().split("T")[0]; // Disable past dates
+    datePicker.min = new Date().toISOString().split("T")[0];
     datePickerContainer.appendChild(datePickerLabel);
     datePickerContainer.appendChild(datePicker);
 
@@ -75,10 +84,10 @@ function showOverlay(roomName) {
     const timePickerLabel = document.createElement("label");
     timePickerLabel.textContent = "Select Time:";
     const timePicker = document.createElement("select");
-    for (let hour = 0; hour < 24; hour++) {
-        for (let minute = 0; minute < 60; minute += 30) {
+    for (let hour = 8; hour <= 20; hour++) { 
+        for (let minute of ["00", "30"]) {
             const option = document.createElement("option");
-            option.value = `${String(hour).padStart(2, "0")}:${String(minute).padStart(2, "0")}`;
+            option.value = `${String(hour).padStart(2, "0")}:${minute}`;
             option.textContent = option.value;
             timePicker.appendChild(option);
         }
@@ -87,102 +96,135 @@ function showOverlay(roomName) {
     timePickerContainer.appendChild(timePickerLabel);
     timePickerContainer.appendChild(timePicker);
 
-    // Append both pickers side by side
     dateTimeContainer.appendChild(datePickerContainer);
     dateTimeContainer.appendChild(timePickerContainer);
     overlayContent.appendChild(dateTimeContainer);
 
-    // Seat Selection
+    // Seat Layout
+    const seatLayout = document.createElement("div");
+    seatLayout.classList.add("seat-layout");
+
+    function createDivider() {
+        const divider = document.createElement("div");
+        divider.classList.add("divider-bar");
+        return divider;
+    }
+
     const seatContainer = document.createElement("div");
     seatContainer.classList.add("seat-container");
 
-    // Generate seats (5x5 grid)
-    for (let i = 1; i <= 25; i++) {
-        const seat = document.createElement("div");
-        seat.classList.add("seat");
-        seat.classList.add(Math.random() > 0.5 ? "available" : "unavailable");
-        seat.addEventListener("click", () => {
-            if (seat.classList.contains("available")) {
-                seat.classList.toggle("selected");
-            }
-        });
-        seatContainer.appendChild(seat);
-    }
-    overlayContent.appendChild(seatContainer);
+    const seatPositions = [
+        ["R", "A", "R", "R", "R"],
+        ["D"],
+        ["R", "R", "R", "A", "R"],
+        ["R", "R", "A", "R", "R"],
+        ["D"],
+        ["R", "A", "R", "A", "R"]
+    ];
 
-    // Button Container
+    seatPositions.forEach(row => {
+        if (row[0] === "D") {
+            seatContainer.appendChild(createDivider()); 
+        } else {
+            const seatRow = document.createElement("div");
+            seatRow.classList.add("seat-row");
+
+            row.forEach(type => {
+                const seat = document.createElement("img");
+                seat.classList.add("seat-svg");
+
+                if (type === "A") {
+                    seat.src = "assets/images/GreenSeat.svg"; 
+                    seat.classList.add("available");
+                } else if (type === "R") {
+                    seat.src = "assets/images/RedSeat.svg"; 
+                    seat.classList.add("reserved");
+                }
+
+                seat.addEventListener("click", () => {
+                    if (seat.classList.contains("available")) {
+                        if (seat.src.includes("GreenSeat.svg")) {
+                            seat.src = "assets/images/BlueSeat.svg"; 
+                            seat.classList.add("selected");
+                        } else {
+                            seat.src = "assets/images/GreenSeat.svg"; 
+                            seat.classList.remove("selected");
+                        }
+                    }
+                });
+
+                seatRow.appendChild(seat);
+            });
+
+            seatContainer.appendChild(seatRow);
+        }
+    });
+
+    seatLayout.appendChild(seatContainer);
+
+    const frontLabel = document.createElement("div");
+    frontLabel.classList.add("front-label");
+    frontLabel.textContent = "Front";
+    seatLayout.appendChild(frontLabel);
+
+    overlayContent.appendChild(seatLayout);
+
+    // Legend Container
+    const legendContainer = document.createElement("div");
+    legendContainer.classList.add("legend-container");
+
+    function createLegendItem(color, text) {
+        const legendItem = document.createElement("div");
+        legendItem.classList.add("legend-item");
+
+        const dot = document.createElement("span");
+        dot.classList.add("legend-dot");
+        dot.style.backgroundColor = color;
+
+        const labelText = document.createElement("span");
+        labelText.textContent = text;
+
+        legendItem.appendChild(dot);
+        legendItem.appendChild(labelText);
+
+        return legendItem;
+    }
+
+    legendContainer.appendChild(createLegendItem("#900B09", "Reserved"));
+    legendContainer.appendChild(createLegendItem("#1d5b3e", "Available"));
+    legendContainer.appendChild(createLegendItem("#3580b2", "Selected"));
+
+    overlayContent.appendChild(legendContainer);
+
+    // Buttons
     const buttonContainer = document.createElement("div");
     buttonContainer.classList.add("button-container");
 
-    // Reserve button
     const reserveButton = document.createElement("button");
     reserveButton.classList.add("overlay-btn", "reserve-button");
     reserveButton.textContent = "Reserve";
     reserveButton.addEventListener("click", () => {
-        const selectedDate = datePicker.value;
-        const selectedTime = timePicker.value;
-        const selectedSeats = document.querySelectorAll(".seat.selected").length;
-
-        if (!selectedDate || !selectedTime || selectedSeats === 0) {
+        const selectedSeats = document.querySelectorAll(".seat-svg.selected").length;
+        if (!datePicker.value || !timePicker.value || selectedSeats === 0) {
             alert("Please select a date, time, and at least one seat.");
         } else {
-            alert(`Reservation confirmed for ${roomName} on ${selectedDate} at ${selectedTime} for ${selectedSeats} seat(s).`);
-            document.body.removeChild(overlay); // Close overlay
+            alert(`Reservation confirmed for ${roomName} on ${datePicker.value} at ${timePicker.value} with ${selectedSeats} seat(s).`);
+            document.body.removeChild(overlay);
         }
     });
+
     buttonContainer.appendChild(reserveButton);
 
-    // Close button
     const closeButton = document.createElement("button");
     closeButton.classList.add("overlay-btn", "close-button");
     closeButton.textContent = "Close";
     closeButton.addEventListener("click", () => {
-        document.body.removeChild(overlay); // Close overlay
+        document.body.removeChild(overlay);
     });
-    buttonContainer.appendChild(closeButton);
 
-    // Append buttons below the seat selection
+    buttonContainer.appendChild(closeButton);
     overlayContent.appendChild(buttonContainer);
 
-    // Append overlay content to overlay
     overlay.appendChild(overlayContent);
-
-    // Append overlay to body
     document.body.appendChild(overlay);
 }
-
-// Function to redirect to Dashboard.html
-function redirectToDashboard() {
-    window.location.href = "Dashboard.html";
-}
-
-// Function to redirect to Profile.html
-function redirectToProfile() {
-    window.location.href = "profile.html";
-}
-
-// Floor slider logic
-document.addEventListener("DOMContentLoaded", function () {
-    const floorNumbers = document.querySelectorAll(".floor-number");
-    const sliderThumb = document.querySelector(".floor-slider-thumb");
-
-    // Define slider positions for centering the thumb correctly
-    const floorPositions = [0, 60, 110, 160, 229];
-
-    floorNumbers.forEach((floor, index) => {
-        floor.addEventListener("click", function () {
-            // Move the slider thumb to the correct position
-            sliderThumb.style.transform = `translateX(${floorPositions[index]}px)`;
-
-            // Remove previous selected class
-            floorNumbers.forEach(f => f.classList.remove("selected"));
-
-            // Set active class to clicked floor
-            floor.classList.add("selected");
-        });
-    });
-
-    // Set default position to the 1st floor
-    sliderThumb.style.transform = `translateX(${floorPositions[0]}px)`;
-    floorNumbers[0].classList.add("selected"); // Ensure the first floor is selected on load
-});

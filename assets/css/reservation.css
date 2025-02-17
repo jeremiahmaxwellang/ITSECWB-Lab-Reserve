@@ -336,36 +336,89 @@ body {
     font-size: 12fpx;
 }
 
-/* Seat Selection */
-.seat-container {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr); /* Keep 5x5 grid */
-    gap: 30px; /* Adjust spacing between seats */
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
-    width: fit-content; /* Shrink to fit content */
-    margin: 20px auto; /* Ensure it stays centered */
-}
-
-.seat {
-    width: 30px;
-    height: 30px;
+/* Seat Layout */
+.seat-layout {
+    display: flex;
     align-items: center;
-    border-radius: 5px;
+    justify-content: center;
+    position: relative;
+}
+
+/* Seat Grid */
+.seat-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Seat Row */
+.seat-row {
+    display: flex;
+    gap: 15px;
+}
+
+/* Seat SVG */
+.seat-svg {
+    width: 40px;
+    height: 40px;
     cursor: pointer;
+    transition: transform 0.2s;
 }
 
-.seat.available {
-    background-color: #1d5b3e;
+.seat-svg:hover {
+    transform: scale(1.1);
 }
 
-.seat.selected {
-    background-color: #3580b2;
-}
-
-.seat.unavailable {
-    background-color: #900B09;
+.seat-svg.unavailable {
     cursor: not-allowed;
+}
+/* Hover Effect */
+.seat.available:hover {
+    transform: scale(1.1);
+}
+
+/* Divider Bar */
+.divider-bar {
+    width: 100%;
+    height: 10px;
+    background: #D1D5DB;
+    border-radius: 5px;
+    margin: 5px 0;
+}
+
+/* Front Label */
+.front-label {
+    font-family: Outfit;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-size: 16px;
+    color: #333;
+    background: #D1D5DB;
+    padding: 25px 5px;
+    border-radius: 5px;
+    margin-left: 20px;
+}
+
+/* Legend */
+.legend-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
 }
 
 .button-container {
