@@ -263,18 +263,33 @@ body {
     z-index: 1000;
 }
 
+/* Main Overlay Container */
 .overlay-content {
-    background-color: #FFFF;
-    padding: 25px;
+    background: white;
     border-radius: 10px;
-    width: 750px;
+    width: 750px; /* Adjusted width */
+    max-width: 90%;
+    padding: 20px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.3);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers content */
+}
+
+/* Title Styling */
+.overlay-title {
+    font-size: 24px;
+    font-weight: bold;
     text-align: center;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    margin-bottom: 15px;
 }
 
 /* Reserve Room Title */
 .overlay-content h2 {
     font-size: 24px; /* Increase font size */
+    font-family: outfit;
     padding-bottom: 15px; /* Add space below the title */
     color:#595858;
     font-weight: bold;
@@ -306,7 +321,6 @@ body {
     align-items: center;
     gap: 40px; /* Space between elements */
     width: 100%;
-    margin-bottom: 20px;
 }
 
 /* Individual Input Box */
@@ -314,7 +328,7 @@ body {
 .time-picker-container {
     display: flex;
     flex-direction: column;
-    width: 48%; 
+    width: 100%; 
     gap: 10px; 
 }
 
@@ -431,37 +445,16 @@ body {
     margin: 20px auto;
 }
 
-/* Buttons */
-.overlay-btn {
-    width: 30%;
-    padding: 12px;
-    background: white;
-    color: #3C4B5F; /* Dark text color */
-    font-size: 14px;
-    border: 1px solid #D1D5DB; /* Light gray border */
-    border-radius: 10px; /* Rounded corners */
-    cursor: pointer;
-    text-align: center;
-    transition: all 0.3s ease;
-    display: block;
-}
-
-/* Confirm Button Hover Effect */
-.overlay-btn:hover {
-    background: white;
-    border-color: #B0B3B8;
-}
-
-/* Close Button */
 .close-button {
-    background: white; /* Gray background for close */
+    position: absolute;
+    right: 25px;
+    top: 15px;
+    background: none;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
 }
 
-/* Ensure Close Button hover effect matches */
-.close-button:hover {
-    background: #900B09; /* Darker gray on hover */
-    color: white;
-}
 
 /* reserve Button */
 .reserve-button {
@@ -488,3 +481,107 @@ body {
         max-width: 100%;
     }
 }
+
+/* Seat Info Overlay */
+.seat-info-overlay {
+    display: block;
+    background: white;
+    padding: 12px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* "This Seat Is Available" Text */
+.available-text {
+    font-family: "Outfit", sans-serif;
+    color: #1d5b3e;
+    font-size: 17px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+/* Checkbox and Label Container */
+.anonymous-container {
+    display: inline-flex;
+    align-items: left;
+    justify-content: left;
+    white-space: nowrap;
+    gap: 5px;
+}
+
+/* Checkbox Styling */
+.anonymous-checkbox {
+    display: block;
+    accent-color: #1d5b3e;
+    cursor: pointer;
+    align-items: left;
+    margin: 0%;
+}
+
+.anonymous-label {
+    display: block;
+    font-family: "Outfit";
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+    align-items: left;
+}
+
+/* Confirm Button */
+.confirm-btn {
+    font-family: "Outfit", sans-serif;
+    width: 55%;
+    margin-bottom: 5px; 
+    padding: 3px;
+    background: white;
+    color: #3C4B5F; /* Dark text color */
+    font-size: 14px;
+    border: 1px solid #D1D5DB; /* Light gray border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.2s ease;
+    display: block;
+}
+
+.confirm-btn:hover {
+    background: #14432b;
+    color: white;
+}
+
+
+.confirm-btn:hover {
+    background: #14432b;
+    color: white;
+}
+
+.occupied-text {
+    font-family: "Outfit";
+    color: #900B09;
+    font-size: 17px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+/*-------------------------------------------------------------*/
+
+/* Main container for seat layout and seat info */
+.main-overlay-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    gap: 20px;
+}
+
+/* Reservation Details Container */
+.reservation-details {
+    border-radius: 10px;
+    padding: 15px;
+    width: 100%;
+    max-width: px;
+    font-size: 14px;
+}
+
+
+

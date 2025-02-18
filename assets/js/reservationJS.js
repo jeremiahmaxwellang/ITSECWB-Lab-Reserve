@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     const rooms = [
         { name: "GK101", capacity: 20, projectors: 1, servers: 0 },
         { name: "GK102", capacity: 20, projectors: 1, servers: 0 },
@@ -33,14 +33,14 @@ document.addEventListener("DOMContentLoaded", function() {
         roomContainer.appendChild(roomDiv);
     });
 
-    // Floor Slider Logic
+    // 📌 Restore Floor Slider Logic
     const floorNumbers = document.querySelectorAll(".floor-number");
     const sliderThumb = document.querySelector(".floor-slider-thumb");
 
     const floorPositions = [0, 60, 110, 160, 229]; // Positions for slider
 
     floorNumbers.forEach((floor, index) => {
-        floor.addEventListener("click", function() {
+        floor.addEventListener("click", function () {
             sliderThumb.style.transform = `translateX(${floorPositions[index]}px)`;
 
             floorNumbers.forEach(f => f.classList.remove("selected"));
@@ -48,8 +48,8 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
-    sliderThumb.style.transform = `translateX(${floorPositions[0]}px)`; 
-    floorNumbers[0].classList.add("selected"); 
+    sliderThumb.style.transform = `translateX(${floorPositions[0]}px)`;
+    floorNumbers[0].classList.add("selected");
 });
 
 function showOverlay(roomName) {
@@ -59,11 +59,21 @@ function showOverlay(roomName) {
     const overlayContent = document.createElement("div");
     overlayContent.classList.add("overlay-content");
 
-    const roomNameElement = document.createElement("h2");
-    roomNameElement.textContent = ` ${roomName}`;
-    overlayContent.appendChild(roomNameElement);
+    // 📌 Main Overlay Container
+    const mainOverlayContainer = document.createElement("div");
+    mainOverlayContainer.classList.add("main-overlay-container");
 
-    // Date-Time Selection Container
+    
+    // 📌 LEFT SIDE - Reservation Details
+    const reservationDetails = document.createElement("div");
+    reservationDetails.classList.add("reservation-details");
+
+    // Room Name Title
+    const roomNameElement = document.createElement("h2");
+    roomNameElement.textContent = `${roomName}`;
+    reservationDetails.appendChild(roomNameElement);
+
+    // Date-Time Selection
     const dateTimeContainer = document.createElement("div");
     dateTimeContainer.classList.add("date-time-container");
 
@@ -84,7 +94,7 @@ function showOverlay(roomName) {
     const timePickerLabel = document.createElement("label");
     timePickerLabel.textContent = "Select Time:";
     const timePicker = document.createElement("select");
-    for (let hour = 8; hour <= 20; hour++) { 
+    for (let hour = 8; hour <= 20; hour++) {
         for (let minute of ["00", "30"]) {
             const option = document.createElement("option");
             option.value = `${String(hour).padStart(2, "0")}:${minute}`;
@@ -95,21 +105,21 @@ function showOverlay(roomName) {
 
     timePickerContainer.appendChild(timePickerLabel);
     timePickerContainer.appendChild(timePicker);
-
     dateTimeContainer.appendChild(datePickerContainer);
     dateTimeContainer.appendChild(timePickerContainer);
-    overlayContent.appendChild(dateTimeContainer);
+    reservationDetails.appendChild(dateTimeContainer);
 
-    // Seat Layout
+    // Seat Info Overlay (Dynamically Updated)
+    const seatInfoOverlay = document.createElement("div");
+    seatInfoOverlay.classList.add("seat-info-overlay");
+    seatInfoOverlay.innerHTML = `<p>Select a seat to see details.</p>`;
+    reservationDetails.appendChild(seatInfoOverlay);
+
+    // 📌 RIGHT SIDE - Seat Layout
     const seatLayout = document.createElement("div");
     seatLayout.classList.add("seat-layout");
 
-    function createDivider() {
-        const divider = document.createElement("div");
-        divider.classList.add("divider-bar");
-        return divider;
-    }
-
+    // Seat Container
     const seatContainer = document.createElement("div");
     seatContainer.classList.add("seat-container");
 
@@ -122,9 +132,13 @@ function showOverlay(roomName) {
         ["R", "A", "R", "A", "R"]
     ];
 
+    let selectedSeat = null;
+
     seatPositions.forEach(row => {
         if (row[0] === "D") {
-            seatContainer.appendChild(createDivider()); 
+            const divider = document.createElement("div");
+            divider.classList.add("divider-bar");
+            seatContainer.appendChild(divider);
         } else {
             const seatRow = document.createElement("div");
             seatRow.classList.add("seat-row");
@@ -134,22 +148,37 @@ function showOverlay(roomName) {
                 seat.classList.add("seat-svg");
 
                 if (type === "A") {
-                    seat.src = "assets/images/GreenSeat.svg"; 
+                    seat.src = "assets/images/GreenSeat.svg";
                     seat.classList.add("available");
                 } else if (type === "R") {
-                    seat.src = "assets/images/RedSeat.svg"; 
+                    seat.src = "assets/images/RedSeat.svg";
                     seat.classList.add("reserved");
                 }
 
                 seat.addEventListener("click", () => {
                     if (seat.classList.contains("available")) {
-                        if (seat.src.includes("GreenSeat.svg")) {
-                            seat.src = "assets/images/BlueSeat.svg"; 
-                            seat.classList.add("selected");
-                        } else {
-                            seat.src = "assets/images/GreenSeat.svg"; 
-                            seat.classList.remove("selected");
+                        if (selectedSeat) {
+                            selectedSeat.src = "assets/images/GreenSeat.svg";
+                            selectedSeat.classList.remove("selected");
                         }
+                        selectedSeat = seat;
+                        seat.src = "assets/images/BlueSeat.svg";
+                        seat.classList.add("selected");
+
+                        seatInfoOverlay.innerHTML = `
+                        <p class="available-text">This Seat Is Available</p>
+                        <div class="anonymous-container">
+                            <input type="checkbox" id="anonymousCheckbox" class="anonymous-checkbox">
+                            <label for="anonymousCheckbox" class="anonymous-label">Anonymous</label>
+                        </div>
+                        <button class="confirm-btn">Confirm</button>
+                    `;
+                    
+                    } else if (seat.classList.contains("reserved")) {
+                        seatInfoOverlay.innerHTML = `
+                            <p class="occupied-text">This seat is Occupied by:</p>
+                            <p class="occupied-email">kyle_dejesus@dlsu.edu.ph</p>
+                        `;
                     }
                 });
 
@@ -162,69 +191,25 @@ function showOverlay(roomName) {
 
     seatLayout.appendChild(seatContainer);
 
+    // 📌 Add "Front" label
     const frontLabel = document.createElement("div");
     frontLabel.classList.add("front-label");
     frontLabel.textContent = "Front";
     seatLayout.appendChild(frontLabel);
 
-    overlayContent.appendChild(seatLayout);
+    mainOverlayContainer.appendChild(reservationDetails);
+    mainOverlayContainer.appendChild(seatLayout);
+    overlayContent.appendChild(mainOverlayContainer);
 
-    // Legend Container
-    const legendContainer = document.createElement("div");
-    legendContainer.classList.add("legend-container");
+// 📌 Create Close Button (Top Right)
+const closeButton = document.createElement("button");
+closeButton.classList.add("close-button");
+closeButton.innerHTML = '<i class="fas fa-times"></i>'; // Font Awesome X icon
+closeButton.addEventListener("click", () => {
+    document.body.removeChild(overlay);
+});
 
-    function createLegendItem(color, text) {
-        const legendItem = document.createElement("div");
-        legendItem.classList.add("legend-item");
-
-        const dot = document.createElement("span");
-        dot.classList.add("legend-dot");
-        dot.style.backgroundColor = color;
-
-        const labelText = document.createElement("span");
-        labelText.textContent = text;
-
-        legendItem.appendChild(dot);
-        legendItem.appendChild(labelText);
-
-        return legendItem;
-    }
-
-    legendContainer.appendChild(createLegendItem("#900B09", "Reserved"));
-    legendContainer.appendChild(createLegendItem("#1d5b3e", "Available"));
-    legendContainer.appendChild(createLegendItem("#3580b2", "Selected"));
-
-    overlayContent.appendChild(legendContainer);
-
-    // Buttons
-    const buttonContainer = document.createElement("div");
-    buttonContainer.classList.add("button-container");
-
-    const reserveButton = document.createElement("button");
-    reserveButton.classList.add("overlay-btn", "reserve-button");
-    reserveButton.textContent = "Reserve";
-    reserveButton.addEventListener("click", () => {
-        const selectedSeats = document.querySelectorAll(".seat-svg.selected").length;
-        if (!datePicker.value || !timePicker.value || selectedSeats === 0) {
-            alert("Please select a date, time, and at least one seat.");
-        } else {
-            alert(`Reservation confirmed for ${roomName} on ${datePicker.value} at ${timePicker.value} with ${selectedSeats} seat(s).`);
-            document.body.removeChild(overlay);
-        }
-    });
-
-    buttonContainer.appendChild(reserveButton);
-
-    const closeButton = document.createElement("button");
-    closeButton.classList.add("overlay-btn", "close-button");
-    closeButton.textContent = "Close";
-    closeButton.addEventListener("click", () => {
-        document.body.removeChild(overlay);
-    });
-
-    buttonContainer.appendChild(closeButton);
-    overlayContent.appendChild(buttonContainer);
-
+    overlayContent.appendChild(closeButton);
     overlay.appendChild(overlayContent);
     document.body.appendChild(overlay);
 }
