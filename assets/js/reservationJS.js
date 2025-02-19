@@ -33,7 +33,6 @@ document.addEventListener("DOMContentLoaded", function () {
         roomContainer.appendChild(roomDiv);
     });
 
-    // 📌 Restore Floor Slider Logic
     const floorNumbers = document.querySelectorAll(".floor-number");
     const sliderThumb = document.querySelector(".floor-slider-thumb");
 
@@ -59,12 +58,11 @@ function showOverlay(roomName) {
     const overlayContent = document.createElement("div");
     overlayContent.classList.add("overlay-content");
 
-    // 📌 Main Overlay Container
+
     const mainOverlayContainer = document.createElement("div");
     mainOverlayContainer.classList.add("main-overlay-container");
 
     
-    // 📌 LEFT SIDE - Reservation Details
     const reservationDetails = document.createElement("div");
     reservationDetails.classList.add("reservation-details");
 
@@ -91,18 +89,35 @@ function showOverlay(roomName) {
     // Time Picker
     const timePickerContainer = document.createElement("div");
     timePickerContainer.classList.add("time-picker-container");
+    
     const timePickerLabel = document.createElement("label");
     timePickerLabel.textContent = "Select Time:";
+    
     const timePicker = document.createElement("select");
-    for (let hour = 8; hour <= 20; hour++) {
-        for (let minute of ["00", "30"]) {
+    
+    for (let hour = 8; hour <= 19; hour++) { // Ends at 19:30
+        for (let minute of [0, 30]) {
+            let startHour = String(hour).padStart(2, "0");
+            let startMinute = String(minute).padStart(2, "0");
+    
+            let endHour = hour;
+            let endMinute = minute + 30;
+            if (endMinute >= 60) {
+                endMinute -= 60;
+                endHour += 1;
+            }
+            let formattedEndHour = String(endHour).padStart(2, "0");
+            let formattedEndMinute = String(endMinute).padStart(2, "0");
+    
+            let optionText = `${startHour}:${startMinute} - ${formattedEndHour}:${formattedEndMinute}`;
+    
             const option = document.createElement("option");
-            option.value = `${String(hour).padStart(2, "0")}:${minute}`;
-            option.textContent = option.value;
+            option.value = `${startHour}:${startMinute}`;
+            option.textContent = optionText;
             timePicker.appendChild(option);
         }
     }
-
+    
     timePickerContainer.appendChild(timePickerLabel);
     timePickerContainer.appendChild(timePicker);
     dateTimeContainer.appendChild(datePickerContainer);
@@ -115,7 +130,6 @@ function showOverlay(roomName) {
     seatInfoOverlay.innerHTML = `<p>Select a seat to see details.</p>`;
     reservationDetails.appendChild(seatInfoOverlay);
 
-    // 📌 RIGHT SIDE - Seat Layout
     const seatLayout = document.createElement("div");
     seatLayout.classList.add("seat-layout");
 
@@ -142,11 +156,11 @@ function showOverlay(roomName) {
         } else {
             const seatRow = document.createElement("div");
             seatRow.classList.add("seat-row");
-
+    
             row.forEach(type => {
                 const seat = document.createElement("img");
                 seat.classList.add("seat-svg");
-
+    
                 if (type === "A") {
                     seat.src = "assets/images/GreenSeat.svg";
                     seat.classList.add("available");
@@ -154,44 +168,59 @@ function showOverlay(roomName) {
                     seat.src = "assets/images/RedSeat.svg";
                     seat.classList.add("reserved");
                 }
-
+    
                 seat.addEventListener("click", () => {
-                    if (seat.classList.contains("available")) {
+                    if (seat.classList.contains("available") || seat.classList.contains("reserved")) {
+                        // If another seat is already selected, reset it back to original color
                         if (selectedSeat) {
-                            selectedSeat.src = "assets/images/GreenSeat.svg";
+                            if (selectedSeat.classList.contains("available")) {
+                                selectedSeat.src = "assets/images/GreenSeat.svg";
+                            } else if (selectedSeat.classList.contains("reserved")) {
+                                selectedSeat.src = "assets/images/RedSeat.svg";
+                            }
                             selectedSeat.classList.remove("selected");
                         }
+    
+                        // Set new selected seat
                         selectedSeat = seat;
                         seat.src = "assets/images/BlueSeat.svg";
                         seat.classList.add("selected");
-
-                        seatInfoOverlay.innerHTML = `
-                        <p class="available-text">This Seat Is Available</p>
-                        <div class="anonymous-container">
-                            <input type="checkbox" id="anonymousCheckbox" class="anonymous-checkbox">
-                            <label for="anonymousCheckbox" class="anonymous-label">Anonymous</label>
-                        </div>
-                        <button class="confirm-btn">Confirm</button>
-                    `;
-                    
-                    } else if (seat.classList.contains("reserved")) {
-                        seatInfoOverlay.innerHTML = `
-                            <p class="occupied-text">This seat is Occupied by:</p>
-                            <p class="occupied-email">kyle_dejesus@dlsu.edu.ph</p>
-                        `;
+    
+                        // Update seat info overlay
+                        if (seat.classList.contains("available")) {
+                            seatInfoOverlay.innerHTML = `
+                                <p class="available-text">This Seat Is Available</p>
+                                <div class="anonymous-container">
+                                    <input type="checkbox" id="anonymousCheckbox" class="anonymous-checkbox">
+                                    <label for="anonymousCheckbox" class="anonymous-label">Anonymous</label>
+                                </div>
+                                <button class="confirm-btn">Confirm</button>
+                            `;
+                        } else if (seat.classList.contains("reserved")) {
+                            seatInfoOverlay.innerHTML = `
+                                <p class="occupied-text">This seat is Occupied by:</p>
+                                <p class="occupied-email">kyle_dejesus@dlsu.edu.ph</p>
+                            `;
+                        }
+    
+                        document.querySelector(".confirm-btn")?.addEventListener("click", () => {
+                            showConfirmationOverlay(roomName, datePicker.value, timePicker.value, selectedSeat);
+                        });
                     }
                 });
-
+    
                 seatRow.appendChild(seat);
             });
-
+    
             seatContainer.appendChild(seatRow);
         }
     });
-
+    
+    
+    
+    
     seatLayout.appendChild(seatContainer);
 
-    // 📌 Add "Front" label
     const frontLabel = document.createElement("div");
     frontLabel.classList.add("front-label");
     frontLabel.textContent = "Front";
@@ -201,7 +230,6 @@ function showOverlay(roomName) {
     mainOverlayContainer.appendChild(seatLayout);
     overlayContent.appendChild(mainOverlayContainer);
 
-// 📌 Create Close Button (Top Right)
 const closeButton = document.createElement("button");
 closeButton.classList.add("close-button");
 closeButton.innerHTML = '<i class="fas fa-times"></i>'; // Font Awesome X icon
@@ -213,3 +241,49 @@ closeButton.addEventListener("click", () => {
     overlay.appendChild(overlayContent);
     document.body.appendChild(overlay);
 }
+
+function showConfirmationOverlay(roomName, date, time, seatNumber) {
+    const confirmationOverlay = document.createElement("div");
+    confirmationOverlay.classList.add("overlay");
+
+    const confirmationContent = document.createElement("div");
+    confirmationContent.classList.add("confirmation-content");
+
+    confirmationContent.innerHTML = `
+        <div class="confirmation-header">
+            <i class="fas fa-check-circle"></i>
+            <h2>Your Reservation is <span class="confirmed-text">Confirmed</span></h2>
+        </div>
+        <hr>
+        <p class="confirmation-message">Hi, Jeremiah</p>
+        <p class="confirmation-subtext">
+            You have successfully reserved a room and slot, please review your reservation details below
+        </p>
+        
+        <div class="confirmation-container">
+            <img class="room-image" src="assets/images/goksdiv.png" alt="Room Image">
+            <div class="confirmation-details">
+                <h1 class="reservation-date">31</h1>
+                <p class="reservation-month">February</p>
+                <p class="reservation-time">${time} - ${time}</p>
+                <hr>
+                <p class="reservation-reference">Reference #: 12205931</p>
+                <p class="reservation-building">Building: Gokongwei Hall</p>
+                <p class="reservation-room">Room: ${roomName}</p>
+            </div>
+        </div>
+
+        <button class="home-btn" onclick="window.location.href='dashboard.html'">Go Back to Home Page</button>
+
+
+        </button>
+    `;
+
+    confirmationOverlay.appendChild(confirmationContent);
+    document.body.appendChild(confirmationOverlay);
+}
+
+function closeConfirmation() {
+    document.querySelector(".overlay").remove();
+}
+
