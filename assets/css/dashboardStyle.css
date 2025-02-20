@@ -63,6 +63,7 @@
 }
 
 .reservationContainer th, .reservationContainer td {
+  font-family: outfit;
   padding: 12px;
   text-align: left;
   border: 1px solid #ddd;

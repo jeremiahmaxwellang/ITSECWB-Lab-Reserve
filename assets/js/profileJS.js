@@ -10,47 +10,163 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (!modal || !btn || !closeBtn || !saveChangesBtn || !deleteAccountBtn || !changePasswordBtn) {
         console.error("One or more modal elements were not found in the DOM.");
+    } else {
+        modal.style.display = "none";
+
+        btn.addEventListener("click", function () {
+            console.log("Edit Profile button clicked");
+            modal.style.display = "flex";
+        });
+
+        closeBtn.addEventListener("click", function () {
+            console.log("Close button clicked");
+            modal.style.display = "none";
+        });
+
+        window.addEventListener("click", function (event) {
+            if (event.target === modal) {
+                console.log("Clicked outside modal, closing...");
+                modal.style.display = "none";
+            }
+        });
+
+        saveChangesBtn.addEventListener("click", function () {
+            console.log("Save Changes button clicked");
+            modal.style.display = "none";
+        });
+
+        deleteAccountBtn.addEventListener("click", function () {
+            console.log("Delete Account button clicked");
+            window.location.href = "login.html";
+        });
+
+        changePasswordBtn.addEventListener("click", function () {
+            console.log("Change Password button clicked");
+            window.location.href = "login.html";
+        });
+    }
+
+    // ========== Reservation Table Population ==========
+    const currentTableBody = document.querySelector('#currentReservationsTable tbody');
+    const recentTableBody = document.querySelector('#recentReservationsTable tbody');
+
+    if (!currentTableBody || !recentTableBody) {
+        console.error("Table body elements not found in DOM.");
         return;
     }
 
-    // Ensure modal starts as hidden
-    modal.style.display = "none";
+    // Function to generate time slots in 30-minute intervals
+    function generateTimeSlots(startTime, endTime) {
+        let slots = [];
+        let current = new Date();
+        current.setHours(startTime, 0, 0, 0); // Set start time
+        let end = new Date();
+        end.setHours(endTime, 0, 0, 0); // Set end time
 
-    // Open Modal when clicking "Edit Profile"
+        while (current < end) {
+            let next = new Date(current);
+            next.setMinutes(current.getMinutes() + 30);
+
+            let startTimeStr = formatTime(current);
+            let endTimeStr = formatTime(next);
+            slots.push(`${startTimeStr} - ${endTimeStr}`);
+
+            current = next;
+        }
+        return slots;
+    }
+
+    // Helper function to format time (8:00 AM - 8:30 AM)
+    function formatTime(date) {
+        let hours = date.getHours();
+        let minutes = date.getMinutes();
+        let ampm = hours >= 12 ? "PM" : "AM";
+        hours = hours % 12 || 12;
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        return `${hours}:${minutes} ${ampm}`;
+    }
+
+    const currentReservations = [
+        { roomNumber: 'GK01', seatNumber: 'Seat #01', date: 'August 5, 2025', timeSlot: '8:00 AM - 8:30 AM' },
+        { roomNumber: 'GK02', seatNumber: 'Seat #02', date: 'August 6, 2025', timeSlot: '9:30 AM - 10:00 AM' },
+        { roomNumber: 'GK03', seatNumber: 'Seat #03', date: 'August 7, 2025', timeSlot: '11:00 AM - 11:30 AM' },
+        { roomNumber: 'GK04', seatNumber: 'Seat #04', date: 'August 8, 2025', timeSlot: '2:30 PM - 3:00 PM' }
+    ];
+
+    const recentReservations = [
+        { roomNumber: 'GK01', seatNumber: 'Seat #01', date: 'August 1, 2025', timeSlot: '8:30 AM - 9:00 AM', reservedBy: 'John Reservation' },
+        { roomNumber: 'GK02', seatNumber: 'Seat #02', date: 'August 2, 2025', timeSlot: '10:30 AM - 11:00 AM', reservedBy: 'Jane Doe' },
+        { roomNumber: 'GK03', seatNumber: 'Seat #03', date: 'August 3, 2025', timeSlot: '1:00 PM - 1:30 PM', reservedBy: 'Alice Smith' },
+        { roomNumber: 'GK04', seatNumber: 'Seat #04', date: 'August 4, 2025', timeSlot: '4:00 PM - 4:30 PM', reservedBy: 'Bob Johnson' }
+    ];
+
+    function populateTable(data, tableBody, isCurrent) {
+        tableBody.innerHTML = '';
+
+        data.forEach(reservation => {
+            const row = tableBody.insertRow();
+            row.insertCell(0).innerText = reservation.roomNumber;
+            row.insertCell(1).innerText = reservation.seatNumber;
+            row.insertCell(2).innerText = reservation.date;
+            row.insertCell(3).innerText = reservation.timeSlot;
+
+            if (isCurrent) {
+                const editCell = row.insertCell(4);
+                const editButton = document.createElement('button');
+                editButton.className = 'edit-button';
+                editButton.innerText = 'Edit';
+                editButton.onclick = function () {
+                    window.location.href = 'Reservation.html';
+                };
+                editCell.appendChild(editButton);
+            } else {
+                row.insertCell(4).innerText = reservation.reservedBy;
+            }
+        });
+    }
+
+    // Populate tables dynamically
+    populateTable(currentReservations, currentTableBody, true);
+    populateTable(recentReservations, recentTableBody, false);
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    console.log("Script Loaded Successfully");
+
+    var modal = document.getElementById("editProfileModal");
+    var btn = document.getElementById("editProfileBtn");
+    var closeBtn = document.getElementById("saveChanges"); // Save button will close modal
+    var deleteAccountBtn = document.getElementById("deleteAccountBtn");
+    var changePasswordBtn = document.getElementById("changePasswordBtn");
+
+    if (!modal || !btn || !closeBtn || !deleteAccountBtn || !changePasswordBtn) {
+        console.error("One or more modal elements were not found in the DOM.");
+        return;
+    }
+
+    // Show Modal
     btn.addEventListener("click", function () {
-        console.log("Edit Profile button clicked");
-        modal.style.display = "flex"; // Make modal visible & centered
+        modal.style.display = "flex";
     });
 
-    // Close Modal when 'X' is clicked
+    // Close Modal on Save Changes
     closeBtn.addEventListener("click", function () {
-        console.log("Close button clicked");
         modal.style.display = "none";
     });
 
-    // Close Modal when clicking outside the modal-content
+    // Close Modal if Clicking Outside the Box
     window.addEventListener("click", function (event) {
         if (event.target === modal) {
-            console.log("Clicked outside modal, closing...");
             modal.style.display = "none";
         }
     });
 
-    // Save Changes button should close the modal
-    saveChangesBtn.addEventListener("click", function () {
-        console.log("Save Changes button clicked");
-        modal.style.display = "none"; // Closes modal
-    });
-
-    // Delete Account button redirects to login
+    // Redirects for Delete and Password Change
     deleteAccountBtn.addEventListener("click", function () {
-        console.log("Delete Account button clicked");
-        window.location.href = "login.html"; // Redirect to login page
+        window.location.href = "login.html";
     });
 
-    // Change Password button redirects to login
     changePasswordBtn.addEventListener("click", function () {
-        console.log("Change Password button clicked");
-        window.location.href = "login.html"; // Redirect to login page
+        window.location.href = "login.html";
     });
 });

@@ -41,14 +41,14 @@ body {
 }
 
 #cover-image {
-  width: 100%; /* Ensures full width */
-  height: 150px; /* Adjust this value for desired cropping */
-  object-fit: cover; /* Ensures cropping instead of stretching */
-  object-position: center; /* Keeps the focus centered */
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  object-position: center;
 }
 
 .cover-content-container {
-  padding: 0px 32px;
+  padding: 0px 40px;
   display: flex;
 }
 
@@ -62,10 +62,10 @@ body {
 }
 
 .profile-picture {
-  width: 120px;
-  height: 120px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
-  border: 1.5px solid #2D2D2D;
+  border: 2px solid #2D2D2D;
 }
 
 .text-container {
@@ -162,7 +162,6 @@ body {
   background-color: #28585F;
 }
 
-
 /* ======= RESERVATIONS TABLE ======= */
 .reservations {
   margin-top: 20px;
@@ -170,53 +169,66 @@ body {
 
 .reservationContainer {
   width: 100%;
-  height: 300px;
+  max-height: 500px; /* Controls overall height */
   background: white;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+  overflow-y: auto; /* Enables scrolling inside the container */
 }
 
 .reservationHeader {
   text-align: left;
   font-size: 18px;
-  font-weight: bold;
   padding: 10px;
-  border-bottom: 2px solid #377684;
-}
-
-.table1Header {
-  background: #377684;
+  background: #2F6E77;
   color: white;
-  padding: 10px;
-  text-align: left;
+  border-radius: 5px 5px 0 0;
 }
 
 #currentReservationsTable,
 #recentReservationsTable {
   width: 100%;
   border-collapse: collapse;
+  table-layout: fixed; /* Ensures uniform column width */
+}
+
+#currentReservationsTable th, 
+#currentReservationsTable td,
+#recentReservationsTable th, 
+#recentReservationsTable td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+  white-space: nowrap; /* Prevents text from wrapping */
 }
 
 #currentReservationsTable th,
-#currentReservationsTable td,
-#recentReservationsTable th,
-#recentReservationsTable td {
+#recentReservationsTable th {
+  background: #377684;
+  color: white;
   padding: 10px;
-  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+#currentReservationsTable tbody tr:nth-child(even),
+#recentReservationsTable tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
 }
 
 .edit-button {
-  background-color: #377684;
+  background-color: #2F6E77;
   color: white;
-  padding: 8px 30px;
-  border: none;
+  padding: 6px 30px;
   border-radius: 5px;
+  border: none;
   cursor: pointer;
+  font-size: 14px;
+  transition: 0.3s;
 }
 
 .edit-button:hover {
-  background-color: #28585F;
+  background-color: #1B4D5B;
 }
 
 /* CALENDAR */
@@ -290,6 +302,444 @@ body {
   font-weight: bold;
 }
 
-  .modal-content {
-      width: 90%;
-  }
+.modal-content {
+  width: 90%;
+}
+
+/* ===== MODAL STYLES ===== */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: white;
+  width: 650px;
+  border-radius: 16px;
+  padding: 30px;
+  text-align: center;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+.edit-profile-title {
+  font-size: 22px;
+  font-weight: bold;
+  color: #1E3A4D;
+  margin-bottom: 10px;
+}
+
+/* ===== HEADER STYLING ===== */
+.edit-profile-header {
+  position: relative;
+  width: 100%;
+  height: 150px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.edit-cover-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.7);
+}
+
+.edit-avatar-container {
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 80px;
+}
+
+.edit-profile-picture {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+/* ===== PROFILE INFO ===== */
+.edit-profile-container {
+  margin-top: 50px;
+}
+
+.profile-name {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.profile-type {
+  color: #667085;
+  font-size: 14px;
+}
+
+.change-photo-btn {
+  background-color: #377684;
+  color: white;
+  padding: 6px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.change-photo-btn:hover {
+  background-color: #28585F;
+}
+
+/* ===== FORM STYLING ===== */
+.edit-form-container {
+  margin-top: 20px;
+  text-align: left;
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.input-group {
+  margin-bottom: 15px;
+}
+
+.input-group label {
+  display: block;
+  font-size: 14px;
+  color: #4F4F4F;
+  margin-bottom: 5px;
+}
+
+.input-group input, 
+.input-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #D1D1D1;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+textarea {
+  resize: none;
+  height: 80px;
+}
+
+/* ===== BUTTONS ===== */
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.delete-btn {
+  background-color: #C0392B;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+.password-btn {
+  background-color: #E5E7EB;
+  color: #333;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+.save-btn {
+  background-color: #377684;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+.save-btn:hover {
+  background-color: #28585F;
+}
+
+/* ===== INPUT FIELD STYLING ===== */
+.input-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #4F4F4F;
+    margin-bottom: 5px;
+}
+
+.input-group input, 
+.input-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #D1D1D1;
+    border-radius: 8px;
+    font-size: 14px;
+    background: white;
+    outline: none;
+    transition: 0.3s;
+}
+
+.input-group input:focus, 
+.input-group textarea:focus {
+    border-color: #377684;
+    box-shadow: 0px 0px 5px rgba(55, 118, 132, 0.5);
+}
+
+textarea {
+    resize: none;
+    height: 80px;
+}
+
+/* ===== INPUT ROWS FOR FIRST & LAST NAME ===== */
+.input-row {
+    display: flex;
+    gap: 15px;
+}
+
+.input-row .input-group {
+    flex: 1;
+}
+
+/* ===== INPUT FIELD STYLING ===== */
+.input-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #4F4F4F;
+    margin-bottom: 5px;
+}
+
+.input-group input, 
+.input-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #D1D1D1;
+    border-radius: 8px;
+    font-size: 14px;
+    background: white;
+    outline: none;
+    transition: 0.3s;
+}
+
+/* Modal Overlay */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Modal Content */
+.modal-content {
+  background: white;
+  border-radius: 16px;
+  padding: 30px;
+  width: 600px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+/* Close Button */
+.close {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Profile Header (Cover + Profile Picture) */
+.modal-header {
+  position: relative;
+  width: 100%;
+  padding: 0;
+}
+
+/* Cover Image (Full Width) */
+.modal-cover {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;                                                
+}
+
+/* Profile Information Section */
+.profile-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 10px 20px;
+  margin-top: -40px; /* Adjust profile picture positioning */
+}
+
+/* Profile Picture */
+.modal-profile-picture {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 3px solid white;
+}
+
+/* Name & Role */
+.profile-text h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.profile-text p {
+  margin: 0;
+  color: gray;
+  font-size: 14px;
+}
+
+/* Change Profile Photo Button */
+.change-photo-btn {
+  display: block;
+  margin: 10px auto;
+  padding: 8px 16px;
+  font-size: 14px;
+  background: #377684;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.change-photo-btn:hover {
+  background: #28585F;
+}
+
+/* Modal Body - Personal Information */
+.modal-body {
+  padding: 20px;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* Input Row for First & Last Name */
+.input-row {
+  display: flex;
+  gap: 15px;
+  justify-content: space-between;
+}
+
+/* Input Group */
+.input-group {
+  width: 100%;
+  font-size: 14px;
+}
+
+.input-group label {
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+/* Input Fields */
+input, textarea {
+  width: 100%;
+  font-size: 14px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+textarea {
+  resize: none;
+  height: 80px;
+}
+
+/* Divider */
+.divider {
+  width: 100%;
+  height: 1px;
+  background: #EAECF0;
+  margin: 20px 0;
+}
+
+/* Modal Footer (Buttons) */
+.modal-footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+/* Buttons */
+.delete-btn {
+  background: #D9534F;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.delete-btn:hover {
+  background: #C9302C;
+}
+
+.password-btn {
+  background: #ccc;
+  color: black;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.password-btn:hover {
+  background: #bbb;
+}
+
+.save-btn {
+  background: #377684;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.save-btn:hover {
+  background: #28585F;
+}
+

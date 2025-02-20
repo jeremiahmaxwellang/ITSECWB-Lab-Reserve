@@ -79,61 +79,124 @@
         </div>
 
         <!-- Right Side: Reservations Table -->
-                <div class="reservationContainer">
-                    <!-- Current Reservations -->
-                    <table id="currentReservationsTable">
-                        <thead>
-                            <tr>
-                                <th colspan="4" class="reservationHeader">Current Reservations:</th>
-                            </tr>
-                            <tr>
-                                <th>Room Number</th>
-                                <th>Seat Number</th>
-                                <th>Date and Time of Reservation</th>
-                                <th>Edit</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>GK01</td>
-                                <td>Seat #01</td>
-                                <td>August 5, 2025 - 01:01 PM</td>
-                                <td><button class="edit-button">Edit</button></td>
-                            </tr>
-                            <tr>
-                                <td>GK02</td>
-                                <td>Seat #02</td>
-                                <td>August 6, 2025 - 02:30 PM</td>
-                                <td><button class="edit-button">Edit</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
+        <div class="reservationContainer">
+            <!-- Current Reservations -->
+            <table id="currentReservationsTable">
+                <thead>
+                    <tr>
+                        <th colspan="5" class="reservationHeader">Current Reservations:</th>
+                    </tr>
+                    <tr>
+                        <th>Room Number</th>
+                        <th>Seat Number</th>
+                        <th>Date</th>
+                        <th>Time Slot</th>
+                        <th>Edit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>GK01</td>
+                        <td>Seat #01</td>
+                        <td>August 5, 2025</td>
+                        <td>8:00 AM - 8:30 AM</td>
+                        <td><button class="edit-button">Edit</button></td>
+                    </tr>
+                    <tr>
+                        <td>GK02</td>
+                        <td>Seat #02</td>
+                        <td>August 6, 2025</td>
+                        <td>9:30 AM - 10:00 AM</td>
+                        <td><button class="edit-button">Edit</button></td>
+                    </tr>
+                    <tr>
+                        <td>GK03</td>
+                        <td>Seat #03</td>
+                        <td>August 7, 2025</td>
+                        <td>11:00 AM - 11:30 AM</td>
+                        <td><button class="edit-button">Edit</button></td>
+                    </tr>
+                    <tr>
+                        <td>GK04</td>
+                        <td>Seat #04</td>
+                        <td>August 8, 2025</td>
+                        <td>2:30 PM - 3:00 PM</td>
+                        <td><button class="edit-button">Edit</button></td>
+                    </tr>
+                </tbody>
+            </table>
 
-                    <!-- Recent Reservations -->
-                    <table id="recentReservationsTable">
-                        <thead>
-                            <tr>
-                                <th colspan="4" class="reservationHeader">Recent Reservations:</th>
-                            </tr>
-                            <tr>
-                                <th>Room Number</th>
-                                <th>Seat Number</th>
-                                <th>Date and Time of Reservation</th>
-                                <th>Who Reserved?</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>GK01</td>
-                                <td>Seat #01</td>
-                                <td>August 1, 2025 - 12:00 PM</td>
-                                <td>John Reservation</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            <!-- Recent Reservations -->
+            <table id="recentReservationsTable">
+                <thead>
+                    <tr>
+                        <th colspan="5" class="reservationHeader">Recent Reservations:</th>
+                    </tr>
+                    <tr>
+                        <th>Room Number</th>
+                        <th>Seat Number</th>
+                        <th>Date</th>
+                        <th>Time Slot</th>
+                        <th>Who Reserved?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>GK01</td>
+                        <td>Seat #01</td>
+                        <td>August 1, 2025</td>
+                        <td>8:30 AM - 9:00 AM</td>
+                        <td>John Reservation</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
+
+<!-- Edit Profile Modal (Hidden by Default) -->
+<div id="editProfileModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Edit Profile</h2>
+            <span class="close">&times;</span>
+        </div>
+
+        <div class="profile-header">
+            <img id="modalCoverImage" src="assets/images/Background.png" alt="Cover Image" class="modal-cover">
+            <div class="modal-avatar-container">
+                <img id="modalProfilePic" src="uploads/profile_pics/avatar.png" alt="Profile Picture" class="modal-profile-picture">
+                <button class="change-photo-btn">Change Profile Photo</button>
+            </div>
+            <h3 class="modal-profile-name">Jeremiah Ang</h3>
+            <p class="modal-profile-type">Student</p>
+        </div>
+
+        <div class="modal-body">
+            <h3>Personal Information</h3>
+
+            <div class="input-group">
+                <label>First Name</label>
+                <input type="text" placeholder="First Name">
+                <label>Last Name</label>
+                <input type="text" placeholder="Last Name">
+            </div>
+
+            <label>Profile Description</label>
+            <textarea placeholder="Describe Yourself"></textarea>
+        </div>
+
+        <div class="modal-footer">
+            <button id="deleteAccountBtn" class="danger-btn">Delete Account</button>
+            <button id="changePasswordBtn" class="secondary-btn">Change Password</button>
+            <button id="saveChanges" class="primary-btn">Save Changes</button>
+        </div>
+    </div>
+</div>
+
+
+
+
 
 <!-- JavaScript -->
 <script src="assets/js/common.js"></script>
