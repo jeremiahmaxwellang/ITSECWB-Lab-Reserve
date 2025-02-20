@@ -1,11 +1,13 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <link rel="stylesheet" href="assets/css/global.css" />
-    <link rel="stylesheet" href="assets/css/styleguide.css" />
-    <link rel="stylesheet" href="assets/css/profileStyle.css"/>
-    <link rel="stylesheet" href="assets/css/table.css"/>
-    
-    <title>Jeremiah Ang's Profile</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Jeremiah Ang</title>
+
+    <link rel="stylesheet" href="assets/css/global.css">
+    <link rel="stylesheet" href="assets/css/styleguide.css">
+    <link rel="stylesheet" href="assets/css/profileStyle.css">
 </head>
 <body>
 
@@ -14,10 +16,9 @@
     <div class="logo-container">
         <img src="assets/images/LabyrinthLogo.png" alt="Labyrinth Logo" onclick="redirectToDashboard()">
     </div>
-    
+
     <div class="labyrinthHeader">Labyrinth</div>
-  
-    <!-- Profile Picture & Dropdown (Right-Aligned) -->
+
     <div class="profile-dropdown">
         <img class="profile-icon" src="uploads/profile_pics/avatar.png" alt="Profile" id="profileDropdownBtn">
         <div class="dropdown-menu" id="profileDropdown">
@@ -25,54 +26,58 @@
             <a href="index.html">Logout</a>
         </div>
     </div>
-  </header>
+</header>
 
-    <div class="profile-heading">
-        <img id="cover-image" src="assets/images/Background.png"/>
-        <div class="cover-content-container">
-            <div class="content-container">
-                <div class="avatar-container">
-                    <img class="profile-picture" src="uploads/profile_pics/avatar.png"/>
-                </div>
-                <div class="text-container">
-                    <div class="profilename-container">
-                        <div class="profile-name">Jeremiah Ang</div>
-                    </div>
-                    <div class="profile-type">Student</div>
-                </div>
-            </div>
+<!-- Profile Heading -->
+<div class="profile-heading">
+    <img id="cover-image" src="assets/images/Background.png" alt="Cover Image">
+    <div class="cover-content-container">
+        <div class="avatar-container">
+            <img class="profile-picture" src="uploads/profile_pics/avatar.png" alt="Profile Picture">
+        </div>
+        <div class="text-container">
+            <div class="profile-name">Jeremiah Ang</div>
+            <div class="profile-type">Student</div>
         </div>
     </div>
+</div>
 
-    <div class="main-container">
-        <div class="details-container">
-            <div class="subsection-container">
-                <div class="section-title">Profile Details</div>
+<!-- Main Content -->
+<div class="dashboard-html">
+    <div class="overlap">
+        <!-- Left Side: Profile Details -->
+        <div class="left-side">
+            <div class="profile-details">
+                <h2 class="section-title">Profile Details</h2>
                 <div class="divider"><div class="bar"></div></div>
-            </div>
-            <div class="subsection-container">
-                <div class="subsection-title">Email</div>
-                <div class="subsection-content">jeremiah_ang@dlsu.edu.ph</div>
-                <div class="divider"><div class="bar"></div></div>
-            </div>
-            <div class="subsection-container">
-                <div class="subsection-title">ID Number</div>
-                <div class="subsection-content">12203653</div>
-                <div class="divider"><div class="bar"></div></div>
-            </div>
-            <div class="subsection-container">
-                <div class="subsection-title">Description</div>
-                <div class="subsection-content">I’m a BS-IT Student that cannot think of a good description</div>
-            </div>
-            <div class="button-container">
-                <button class="blue-button" id="editProfileBtn">Edit Profile</button>
+
+                <div class="subsection-container">
+                    <div class="subsection-title"><strong>Email</strong></div>
+                    <div class="subsection-content">jeremiah_ang@dlsu.edu.ph</div>
+                </div>
+
+                <div class="subsection-container">
+                    <div class="subsection-title"><strong>ID Number</strong></div>
+                    <div class="subsection-content">12203653</div>
+                </div>
+
+                <div class="subsection-container">
+                    <div class="subsection-title"><strong>Description</strong></div>
+                    <div class="subsection-content">I’m a BS-IT Student that cannot think of a good description</div>
+                </div>
+
+                <div class="button-container">
+                    <button class="blue-button" id="editProfileBtn">Edit Profile</button>
+                </div>
             </div>
         </div>
 
-        <div class="right-container">
+        <!-- Right Side: Reservations Table -->
+        <div class="right-side">
             <div class="reservations">
                 <div class="reservationContainer">
-                    <table>
+                    <!-- Current Reservations -->
+                    <table id="currentReservationsTable">
                         <thead>
                             <tr>
                                 <th colspan="4" class="reservationHeader">Current Reservations:</th>
@@ -80,14 +85,28 @@
                             <tr>
                                 <th>Room Number</th>
                                 <th>Seat Number</th>
-                                <th>Date and Time</th>
+                                <th>Date and Time of Reservation</th>
                                 <th>Edit</th>
                             </tr>
                         </thead>
-                        <tbody id="currentReservationsBody"></tbody>
+                        <tbody>
+                            <tr>
+                                <td>GK01</td>
+                                <td>Seat #01</td>
+                                <td>August 5, 2025 - 01:01 PM</td>
+                                <td><button class="edit-button">Edit</button></td>
+                            </tr>
+                            <tr>
+                                <td>GK02</td>
+                                <td>Seat #02</td>
+                                <td>August 6, 2025 - 02:30 PM</td>
+                                <td><button class="edit-button">Edit</button></td>
+                            </tr>
+                        </tbody>
                     </table>
-                    
-                    <table>
+
+                    <!-- Recent Reservations -->
+                    <table id="recentReservationsTable">
                         <thead>
                             <tr>
                                 <th colspan="4" class="reservationHeader">Recent Reservations:</th>
@@ -95,43 +114,28 @@
                             <tr>
                                 <th>Room Number</th>
                                 <th>Seat Number</th>
-                                <th>Date and Time</th>
-                                <th>Reserved By</th>
+                                <th>Date and Time of Reservation</th>
+                                <th>Who Reserved?</th>
                             </tr>
                         </thead>
-                        <tbody id="recentReservationsBody"></tbody>
+                        <tbody>
+                            <tr>
+                                <td>GK01</td>
+                                <td>Seat #01</td>
+                                <td>August 1, 2025 - 12:00 PM</td>
+                                <td>John Reservation</td>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
-
-<!-- Edit Profile Modal -->
-<div id="editProfileModal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2>Edit Profile</h2>
-        
-        <label for="firstName">First Name:</label>
-        <input type="text" id="firstName" value="Jeremiah">
-        
-        <label for="lastName">Last Name:</label>
-        <input type="text" id="lastName" value="Ang">
-        
-        <label for="profileDesc">Profile Description:</label>
-        <textarea id="profileDesc">I’m a BS-IT Student that cannot think of a good description</textarea>
-        
-        <div class="modal-buttons">
-            <button class="red-button" id="deleteAccountBtn">Delete Account</button>
-            <button class="blue-button" id="changePasswordBtn">Change Password</button>
-            <button class="blue-button" id="saveChanges">Save Changes</button>
-        </div>
-    </div>
 </div>
 
-
-    <script src="assets/js/profileJS.js"></script>
-    <script src="assets/js/common.js"></script>
+<!-- JavaScript -->
+<script src="assets/js/common.js"></script>
+<script src="assets/js/profileJS.js"></script>
 
 </body>
 </html>

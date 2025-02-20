@@ -80,12 +80,14 @@ html, body {
 
 /* Dropdown Menu Items */
 .dropdown-menu a {
+  font-family: outfit;
   display: block;
   padding: 10px;
   text-decoration: none;
   color: black;
   font-size: 14px;
   transition: background 0.3s;
+  text-align: left;
 }
 
 .dropdown-menu a:hover {
