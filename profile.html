@@ -196,6 +196,58 @@
 
 
 
+<!-- Edit Profile Modal (Overlay) -->
+<div id="editProfileModal" class="modal">
+    <div class="modal-content">
+        <!-- Close Button -->
+        <span class="close">&times;</span>
+
+        <!-- Profile Header Container -->
+        <div class="modal-header">
+            <img id="modalCoverImage" src="assets/images/Background.png" alt="Cover Image" class="modal-cover">
+            <div class="profile-info">
+                <img id="modalProfilePic" src="uploads/profile_pics/avatar.png" alt="Profile Picture" class="modal-profile-picture">
+                <div class="profile-text">
+                    <h3 class="modal-profile-name">Jeremiah Ang</h3>
+                    <p class="modal-profile-type">Student</p>
+                </div>
+            </div>
+            <button class="change-photo-btn">Change Profile Photo</button>
+        </div>
+
+        <!-- Personal Information Container -->
+        <div class="modal-body">
+            <h3 class="section-title">Personal Information</h3>
+
+            <div class="input-row">
+                <div class="input-group">
+                    <label for="firstName">First Name</label>
+                    <input type="text" id="firstName" placeholder="First Name">
+                </div>
+
+                <div class="input-group">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" id="lastName" placeholder="Last Name">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="profileDescription">Profile Description</label>
+                <textarea id="profileDescription" placeholder="Describe Yourself"></textarea>
+            </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="divider"></div>
+
+        <!-- Modal Buttons -->
+        <div class="modal-footer">
+            <button id="deleteAccountBtn" class="delete-btn">Delete Account</button>
+            <button id="changePasswordBtn" class="password-btn">Change Password</button>
+            <button id="saveChanges" class="save-btn">Save Changes</button>
+        </div>
+    </div>
+</div>
 
 
 <!-- JavaScript -->
