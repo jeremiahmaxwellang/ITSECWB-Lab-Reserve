@@ -1,34 +1,25 @@
-// How to run the NodeJS Server:
-//  1. Make sure you installed NodeJS
+// Commands for installing NodeJS Packages
+// npm init -y
+// npm install express hbs path express-fileupload mongoose
 
-//  2. On the command prompt, change directory to this project folder
+const express = require('express');
+const hbs = require('hbs');   //Handlebar variable
+const path = require('path'); //Path variable
+const fileUpload = require('express-fileupload')
 
-//  3. To install Express package, enter:
-//  npm install express
+// Mongoose Library
+const mongoose = require('mongoose')
+mongoose.connect('mongodb://localhost/labyrinthDB')
 
-//  4. To install Handlebar package, enter:
-//  npm install hbs
-
-//  5. To run the server, enter the command "node <filename>.js"
-//     node index.js
-
-//  6. On your browser, go to localhost:3000/
-//     You will see the server responds with a message
-
-//  7. To close the server on the command prompt, do CTRL+C
-
-
-var express = require('express');
-var hbs = require('hbs');   //Handlebar variable
-var path = require('path'); //Path variable
-
-
-var app = express();
+const app = express();
 
 app.set('view engine', 'hbs');
 
-// TODO: Add all user details variables
-// User Details
+app.use(express.json()) // use json
+app.use(express.urlencoded( {extended: true})); // files consist of more than strings
+app.use(express.static('assets')) // static directory named "assets"
+
+// TODO: Hardcode lab technician accounts
 var user = {
     firstName: "",
     lastName: ""
@@ -38,7 +29,7 @@ var bodyParser = require('body-parser');
 app.use( bodyParser.urlencoded({extended: false}) );
 
 // Route to INDEX.HTML
-// TODO: css should be visible when entering localhost:3000/
+// DONE: css is visible now when entering localhost:3000/ (accomplished with express.static('assets'))
 app.get('/', function(req,res){
     res.sendFile(__dirname + '\\' + 'index.html');
 });
