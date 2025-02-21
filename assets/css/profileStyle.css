@@ -148,6 +148,7 @@ body {
 }
 
 .edit-profile-button {
+  font-family: Newsreader;
   background-color: #377684;
   color: white;
   padding: 8px 30px;
@@ -547,7 +548,7 @@ body {
 /* Confirmation Modal Styling */
 .unsaved-changes {
   background: white;
-  padding: 30px;
+  padding: 40px;
   border-radius: 12px;
   width: 400px;
   text-align: center;
@@ -582,33 +583,48 @@ body {
 /* Buttons */
 .button-group {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   gap: 10px;
 }
 
-.cancel-btn {
-  background: white;
-  border: 1px solid #ccc;
-  padding: 10px 30px;
+.cancel-btn, .go-home-btn {
+  width: 100%;
+  font-family: Newsreader;
+  padding: 8px 15px;
   border-radius: 5px;
+  border: 1px solid #D1D5DB;
+  background: white;
+  text-align: center;
   cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.go-home-btn{
+  margin-top: 20px;
+}
+
+.cancel-btn, .go-home-btn:hover {
+  background-color: #2D2D2D;
+  color: white;
+  border: 1px solid white;
 }
 
 .leave-btn {
+  width: 100%;
+  font-family: Newsreader;
   background: #900B09;
   color: white;
   border: none;
-  padding: 10px 30px;
+  padding: 8px 15px;
   border-radius: 5px;
   cursor: pointer;
-}
-
-.cancel-btn:hover {
-  background: #f1f1f1;
+  transition: all 0.3s ease;
 }
 
 .leave-btn:hover {
-  background: #800000;
+  background-color: white;
+  color: #900B09;
+  border: 1px solid #900B09;
 }
 
 /* Close Button */
@@ -620,4 +636,117 @@ body {
   cursor: pointer;
 }
 
+/* ============ DELETE PASSWORD? MODAL ============ */
 
+/* Confirmation Modal Styling */
+.delete-account {
+  background: white;
+  padding: 40px;
+  border-radius: 12px;
+  width: 400px;
+  text-align: center;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+.delete-account h2 {
+  color: #900B09;
+  text-align: left;
+  font-size: 22px;
+  font-weight: bold;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+/* Message */
+.delete-account p {
+  text-align: left;
+  font-size: 16px;
+  color: #656565;
+  margin: 10px 0 30px;
+}
+
+.confirm-btn{
+  width: 100%;
+  font-family: Newsreader;
+  background: #900B09;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.confirm-btn:hover {
+  background-color: white;
+  color: #900B09;
+  border: 1px solid #900B09;
+}
+
+/* Delete Icon */
+.delete-icon {
+  font-size: 24px;
+  color: #900B09;
+  position: absolute;
+  top: 16px;
+  left: 16px;
+}
+
+/* ======= Change Password ======= */
+
+/* Confirmation Modal Styling */
+.change-password {
+  background: white;
+  padding: 40px;
+  border-radius: 12px;
+  width: 500px;
+  text-align: center;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+.change-password h2 {
+  color:#2D2D2D;
+  text-align: left;
+  font-size: 22px;
+  font-weight: bold;
+  margin-top: 20px;
+  margin-bottom: 15px;
+}
+
+/* Message */
+.change-password p {
+  text-align: left;
+  font-size: 16px;
+  color: #656565;
+  margin: 10px 0 30px;
+}
+
+.lock-icon {
+  font-size: 24px;
+  color: #2D2D2D;
+  position: absolute;
+  top: 16px;
+  left: 25px;
+  margin-bottom: 10px;
+}
+
+/* Submit Button */
+.submit-btn {
+  width: 100%;
+  font-family: Newsreader;
+  padding: 8px 15px;
+  border-radius: 5px;
+  border: 1px solid #D1D5DB;
+  background: white;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.submit-btn:hover {
+  background-color: #2D2D2D;
+  color: white;
+  border: 1px solid white;
+}

@@ -1,50 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-    console.log("Script Loaded Successfully");
-
-    var modal = document.getElementById("editProfileModal");
-    var btn = document.getElementById("editProfileBtn");
-    var closeBtn = modal ? modal.querySelector(".close") : null;
-    var saveChangesBtn = document.getElementById("saveChanges");
-    var deleteAccountBtn = document.getElementById("deleteAccountBtn");
-    var changePasswordBtn = document.getElementById("changePasswordBtn");
-
-    if (!modal || !btn || !closeBtn || !saveChangesBtn || !deleteAccountBtn || !changePasswordBtn) {
-        console.error("One or more modal elements were not found in the DOM.");
-    } else {
-        modal.style.display = "none";
-
-        btn.addEventListener("click", function () {
-            console.log("Edit Profile button clicked");
-            modal.style.display = "flex";
-        });
-
-        closeBtn.addEventListener("click", function () {
-            console.log("Close button clicked");
-            modal.style.display = "none";
-        });
-
-        window.addEventListener("click", function (event) {
-            if (event.target === modal) {
-                console.log("Clicked outside modal, closing...");
-                modal.style.display = "none";
-            }
-        });
-
-        saveChangesBtn.addEventListener("click", function () {
-            console.log("Save Changes button clicked");
-            modal.style.display = "none";
-        });
-
-        deleteAccountBtn.addEventListener("click", function () {
-            console.log("Delete Account button clicked");
-            window.location.href = "login.html";
-        });
-
-        changePasswordBtn.addEventListener("click", function () {
-            console.log("Change Password button clicked");
-            window.location.href = "login.html";
-        });
-    }
 
     // ========== Reservation Table Population ==========
     const currentTableBody = document.querySelector('#currentReservationsTable tbody');
@@ -133,61 +87,127 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener("DOMContentLoaded", function () {
     console.log("Script Loaded Successfully");
 
-    // Get modal elements
+    // ====== MODAL ELEMENTS ======
     var editProfileModal = document.getElementById("editProfileModal");
     var editProfileBtn = document.getElementById("editProfileBtn");
-    var closeBtn = document.querySelector("#editProfileModal .close");
-    
-    var saveChangesModal = document.getElementById("saveChangesModal"); // Unsaved Changes Modal
+    var closeEditProfileBtn = document.querySelector("#editProfileModal .close");
+
+    var saveChangesModal = document.getElementById("saveChangesModal");
     var closeConfirmBtn = document.querySelector("#saveChangesModal .close-confirm");
-    var cancelBtn = document.getElementById("cancelBtn"); // "Cancel" button
-    var leaveBtn = document.getElementById("leaveBtn"); // "Leave" button
+    var cancelBtn = document.getElementById("cancelBtn");
+    var leaveBtn = document.getElementById("leaveBtn");
+
+    var deleteAccountModal = document.getElementById("deleteAccountModal");
+    var deleteAccountBtn = document.getElementById("deleteAccountBtn");
+    var closeDeleteConfirmBtn = document.querySelector("#deleteAccountModal .close-confirm");
+    var cancelDeleteBtn = document.getElementById("cancelDeleteBtn");
+    var confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
+
+    var accountDeletedModal = document.getElementById("accountDeletedModal");
+    var goBackHomeBtn = document.getElementById("goBackHomeBtn");
+
+    var changePasswordModal = document.getElementById("changePasswordModal");
+    var changePasswordBtn = document.getElementById("changePasswordBtn");
+    var closeChangePasswordBtn = document.querySelector("#changePasswordModal .close-change-password");
+    var submitPasswordBtn = document.querySelector(".change-submit-btn");
 
     // Ensure all elements exist before proceeding
-    if (!editProfileModal || !editProfileBtn || !closeBtn || !saveChangesModal || !closeConfirmBtn || !cancelBtn || !leaveBtn) {
+    if (!editProfileModal || !editProfileBtn || !closeEditProfileBtn ||
+        !saveChangesModal || !closeConfirmBtn || !cancelBtn || !leaveBtn ||
+        !deleteAccountModal || !deleteAccountBtn || !closeDeleteConfirmBtn || !cancelDeleteBtn || !confirmDeleteBtn ||
+        !accountDeletedModal || !goBackHomeBtn || !changePasswordModal || !changePasswordBtn || !closeChangePasswordBtn || !submitPasswordBtn) {
         console.error("One or more modal elements were not found in the DOM.");
         return;
     }
 
-    // Initially hide the modals
+    // Initially hide all modals
     editProfileModal.style.display = "none";
     saveChangesModal.style.display = "none";
+    deleteAccountModal.style.display = "none";
+    accountDeletedModal.style.display = "none";
+    changePasswordModal.style.display = "none";
 
-    // Open Edit Profile Modal
+    // ====== Open & Close Edit Profile Modal ======
     editProfileBtn.addEventListener("click", function () {
         editProfileModal.style.display = "flex";
     });
 
-    closeBtn.addEventListener("click", function () {
+    closeEditProfileBtn.addEventListener("click", function () {
         editProfileModal.style.display = "none"; // Hide Edit Profile Modal
-        saveChangesModal.style.display = "flex"; // Show Unsaved Changes Modal
+        saveChangesModal.style.display = "flex"; // Show Unsaved C  hanges Modal
     });
 
+    // ====== Open & Close Unsaved Changes Modal ======
     closeConfirmBtn.addEventListener("click", function () {
         saveChangesModal.style.display = "none";
     });
 
-    // Clicking "Cancel" -> Go back to Edit Profile Modal
     cancelBtn.addEventListener("click", function () {
         saveChangesModal.style.display = "none"; // Hide Unsaved Changes Modal
         editProfileModal.style.display = "flex"; // Reopen Edit Profile Modal
     });
 
-    // Clicking "Leave" -> Hide everything
     leaveBtn.addEventListener("click", function () {
         saveChangesModal.style.display = "none"; // Hide Unsaved Changes Modal
     });
 
-    // Close Edit Profile Modal when clicking outside of it, but show Unsaved Changes Modal instead
+    // ====== Open & Close Delete Account Modal ======
+    deleteAccountBtn.addEventListener("click", function () {
+        deleteAccountModal.style.display = "flex";
+    });
+
+    closeDeleteConfirmBtn.addEventListener("click", function () {
+        deleteAccountModal.style.display = "none";
+    });
+
+    cancelDeleteBtn.addEventListener("click", function () {
+        deleteAccountModal.style.display = "none";
+    });
+
+    confirmDeleteBtn.addEventListener("click", function () {
+        deleteAccountModal.style.display = "none"; // Hide Delete Account Modal
+        accountDeletedModal.style.display = "flex"; // Show Account Deleted Modal
+    });
+
+    goBackHomeBtn.addEventListener("click", function () {
+        window.location.href = "index.html";
+    });
+
+    // ====== Open & Close Change Password Modal ======
+    changePasswordBtn.addEventListener("click", function () {
+        console.log("Change Password button clicked");
+        changePasswordModal.style.display = "flex"; // Open Change Password Modal
+    });
+
+    closeChangePasswordBtn.addEventListener("click", function () {
+        console.log("Closing Change Password modal...");
+        changePasswordModal.style.display = "none"; // Close Change Password Modal
+    });
+
+    submitPasswordBtn.addEventListener("click", function () {
+        console.log("Password changed successfully!");
+        changePasswordModal.style.display = "none"; // Close modal on successful submission
+    });
+
+    // Close modals when clicking outside of them
     window.addEventListener("click", function (event) {
         if (event.target === editProfileModal) {
             editProfileModal.style.display = "none";
             saveChangesModal.style.display = "flex";
         } else if (event.target === saveChangesModal) {
             saveChangesModal.style.display = "none";
+        } else if (event.target === deleteAccountModal) {
+            deleteAccountModal.style.display = "none";
+        } else if (event.target === accountDeletedModal) {
+            accountDeletedModal.style.display = "none";
+        } else if (event.target === changePasswordModal) {
+            changePasswordModal.style.display = "none";
         }
     });
 });
+
+
+
 
 
 
