@@ -112,8 +112,7 @@ body {
 }
 
 .profile-details {
-  background: white;
-  padding: 20px;
+  background: white;  
   border-radius: 10px;
 }
 
@@ -269,6 +268,17 @@ body {
 }
 
 /* ============ MODAL OVERLAY ============ */
+
+/* Hide modal initially */
+#editProfileModal, #saveChangesModal {
+  display: none; /* Hide modal on page load */
+}
+
+/* Ensure modal appears when active */
+.modal.show {
+  display: flex !important;
+}
+
 .modal {
   display: none; /* Hide by default */
   position: fixed;
@@ -535,7 +545,7 @@ body {
 /* ============ Unsaved Changes Modal ============ */
 
 /* Confirmation Modal Styling */
-.confirmation-modal {
+.unsaved-changes {
   background: white;
   padding: 30px;
   border-radius: 12px;
@@ -547,25 +557,26 @@ body {
 
 /* Save Icon Styling */
 .save-icon {
-  margin: 10px auto;
-}
-
-.save-icon svg {
+  font-size: 24px;
   color: black;
+  position: absolute;
+  top: 16px;
+  left: 16px;
 }
 
 /* Title */
-.confirmation-modal h2 {
+.unsaved-changes h2 {
+  text-align: left;
   font-size: 22px;
   font-weight: bold;
-  margin-top: 10px;
+  margin-top: 15px;
 }
 
 /* Message */
-.confirmation-modal p {
+.unsaved-changes p {
   font-size: 16px;
   color: #656565;
-  margin: 10px 0 20px;
+  margin: 10px 0 30px;
 }
 
 /* Buttons */
@@ -578,16 +589,16 @@ body {
 .cancel-btn {
   background: white;
   border: 1px solid #ccc;
-  padding: 10px 20px;
+  padding: 10px 30px;
   border-radius: 5px;
   cursor: pointer;
 }
 
 .leave-btn {
-  background: #9b1c1c;
+  background: #900B09;
   color: white;
   border: none;
-  padding: 10px 20px;
+  padding: 10px 30px;
   border-radius: 5px;
   cursor: pointer;
 }
@@ -607,16 +618,6 @@ body {
   right: 15px;
   font-size: 20px;
   cursor: pointer;
-}
-
-/* Hide modal initially */
-#editProfileModal, #saveChangesModal {
-  display: none; /* Hide modal on page load */
-}
-
-/* Ensure modal appears when active */
-.modal.show {
-  display: flex !important;
 }
 
 

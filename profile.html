@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="assets/css/global.css">
     <link rel="stylesheet" href="assets/css/styleguide.css">
     <link rel="stylesheet" href="assets/css/profileStyle.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
 </head>
 <body>
 
@@ -283,15 +285,12 @@
 
 <!-- Save Changes Confirmation Modal -->
 <div id="saveChangesModal" class="modal">
-    <div class="modal-content confirmation-modal">
+    <div class="modal-content unsaved-changes">
         <span class="close-confirm">&times;</span>
         
         <!-- Save Icon -->
         <div class="save-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" viewBox="0 0 16 16">
-                <path d="M7 14.5a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H7z"/>
-                <path d="M3 2v10h10V2H3zM2 0h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zM3 12V3h10v9H3z"/>
-            </svg>
+            <i class="fa-solid fa-floppy-disk icon"></i>
         </div>
 
         <!-- Title & Message -->

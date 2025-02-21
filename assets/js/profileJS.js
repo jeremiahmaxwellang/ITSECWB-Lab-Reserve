@@ -137,36 +137,58 @@ document.addEventListener("DOMContentLoaded", function () {
     var editProfileModal = document.getElementById("editProfileModal");
     var editProfileBtn = document.getElementById("editProfileBtn");
     var closeBtn = document.querySelector("#editProfileModal .close");
+    
+    var saveChangesModal = document.getElementById("saveChangesModal"); // Unsaved Changes Modal
+    var closeConfirmBtn = document.querySelector("#saveChangesModal .close-confirm");
+    var cancelBtn = document.getElementById("cancelBtn"); // "Cancel" button
+    var leaveBtn = document.getElementById("leaveBtn"); // "Leave" button
 
-    // Ensure modal exists before attaching event listeners
-    if (!editProfileModal || !editProfileBtn || !closeBtn) {
+    // Ensure all elements exist before proceeding
+    if (!editProfileModal || !editProfileBtn || !closeBtn || !saveChangesModal || !closeConfirmBtn || !cancelBtn || !leaveBtn) {
         console.error("One or more modal elements were not found in the DOM.");
         return;
     }
 
-    // Initially hide the modal
+    // Initially hide the modals
     editProfileModal.style.display = "none";
+    saveChangesModal.style.display = "none";
 
-    // Open modal when clicking the button
+    // Open Edit Profile Modal
     editProfileBtn.addEventListener("click", function () {
-        console.log("Opening Edit Profile Modal...");
         editProfileModal.style.display = "flex";
     });
 
-    // Close modal when clicking the "X" button
     closeBtn.addEventListener("click", function () {
-        console.log("Closing Edit Profile Modal...");
-        editProfileModal.style.display = "none";
+        editProfileModal.style.display = "none"; // Hide Edit Profile Modal
+        saveChangesModal.style.display = "flex"; // Show Unsaved Changes Modal
     });
 
-    // Close modal when clicking outside of it
+    closeConfirmBtn.addEventListener("click", function () {
+        saveChangesModal.style.display = "none";
+    });
+
+    // Clicking "Cancel" -> Go back to Edit Profile Modal
+    cancelBtn.addEventListener("click", function () {
+        saveChangesModal.style.display = "none"; // Hide Unsaved Changes Modal
+        editProfileModal.style.display = "flex"; // Reopen Edit Profile Modal
+    });
+
+    // Clicking "Leave" -> Hide everything
+    leaveBtn.addEventListener("click", function () {
+        saveChangesModal.style.display = "none"; // Hide Unsaved Changes Modal
+    });
+
+    // Close Edit Profile Modal when clicking outside of it, but show Unsaved Changes Modal instead
     window.addEventListener("click", function (event) {
         if (event.target === editProfileModal) {
-            console.log("Clicked outside modal, closing...");
             editProfileModal.style.display = "none";
+            saveChangesModal.style.display = "flex";
+        } else if (event.target === saveChangesModal) {
+            saveChangesModal.style.display = "none";
         }
     });
 });
+
 
 
 
