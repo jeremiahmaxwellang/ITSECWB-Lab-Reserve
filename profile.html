@@ -154,43 +154,70 @@
     </div>
 </div>
 
-<!-- Edit Profile Modal (Hidden by Default) -->
+<!-- Edit Profile Modal -->
 <div id="editProfileModal" class="modal">
+    <div class="modal-content">
+        
+        <!-- Close Button -->
+        <span class="close">&times;</span>
+
+        <!-- Modal Header Section -->
         <div class="modal-header">
-            <h2>Edit Profile</h2>
-            <span class="close">&times;</span>
-        </div>
+            <img src="assets/images/Background.png" class="modal-cover" alt="Cover Image">
 
-        <div class="profile-header">
-            <img id="modalCoverImage" src="assets/images/Background.png" alt="Cover Image" class="modal-cover">
-            <div class="modal-avatar-container">
-                <img id="modalProfilePic" src="uploads/profile_pics/avatar.png" alt="Profile Picture" class="modal-profile-picture">
-                <button class="change-photo-btn">Change Profile Photo</button>
+            <!-- Profile Information -->
+            <div class="profile-info">
+                <!-- Profile Picture + Button (Stacked) -->
+                <div class="modal-profile-container">
+                    <img class="modal-profile-picture" src="uploads/profile_pics/avatar.png" alt="Profile Picture">
+                    <button class="change-photo-btn">Change Profile Photo</button>
+                </div>
+
+                <!-- Name & Role -->
+                <div class="profile-text">
+                    <h3>Jeremiah Ang</h3>
+                    <p>Student</p>
+                </div>
             </div>
-            <h3 class="modal-profile-name">Jeremiah Ang</h3>
-            <p class="modal-profile-type">Student</p>
         </div>
 
+        <div class="curved-divider"></div>
+        
+        <!-- Modal Body -->
         <div class="modal-body">
-            <h3>Personal Information</h3>
+            <h3 class="section-title">Personal Information</h3>
 
-            <div class="input-group">
-                <label>First Name</label>
-                <input type="text" placeholder="First Name">
-                <label>Last Name</label>
-                <input type="text" placeholder="Last Name">
+            <!-- First Name & Last Name Row -->
+            <div class="input-row">
+                <div class="input-group">
+                    <label class="static-label" for="firstName">First Name</label>
+                    <input type="text" id="firstName" class="static-input" placeholder="Enter First Name">
+                </div>
+
+                <div class="input-group">
+                    <label class="static-label" for="lastName">Last Name</label>
+                    <input type="text" id="lastName" class="static-input" placeholder="Enter Last Name">
+                </div>
             </div>
 
-            <label>Profile Description</label>
-            <textarea placeholder="Describe Yourself"></textarea>
+            <!-- Profile Description -->
+            <div class="input-group">
+                <textarea id="profileDescription" class="static-input" placeholder=" "></textarea>
+                <label class="static-label" for="profileDescription">Profile Description</label>
+            </div>
         </div>
+
+        <!-- Divider -->
+        <div class="divider"></div>
 
         <div class="modal-footer">
-            <button id="deleteAccountBtn" class="danger-btn">Delete Account</button>
-            <button id="changePasswordBtn" class="secondary-btn">Change Password</button>
-            <button id="saveChanges" class="primary-btn">Save Changes</button>
+            <button id="deleteAccountBtn" class="delete-btn">Delete Account</button>
+            <button id="changePasswordBtn" class="password-btn">Change Password</button>
+            <button id="saveChanges" class="save-btn">Save Changes</button>
         </div>
     </div>
+</div>
+
 
 <!-- Edit Profile Modal -->
 <div id="editProfileModal" class="modal">
@@ -253,6 +280,32 @@
         </div>
     </div>
 </div>
+
+<!-- Save Changes Confirmation Modal -->
+<div id="saveChangesModal" class="modal">
+    <div class="modal-content confirmation-modal">
+        <span class="close-confirm">&times;</span>
+        
+        <!-- Save Icon -->
+        <div class="save-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M7 14.5a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H7z"/>
+                <path d="M3 2v10h10V2H3zM2 0h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zM3 12V3h10v9H3z"/>
+            </svg>
+        </div>
+
+        <!-- Title & Message -->
+        <h2>Save Changes?</h2>
+        <p>Changes that you have made may not be saved.</p>
+
+        <!-- Buttons -->
+        <div class="button-group">
+            <button id="cancelBtn" class="cancel-btn">Cancel</button>
+            <button id="leaveBtn" class="leave-btn">Leave</button>
+        </div>
+    </div>
+</div>
+
 
 
 <!-- JavaScript -->

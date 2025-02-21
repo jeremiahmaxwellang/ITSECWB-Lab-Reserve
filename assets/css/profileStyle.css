@@ -126,7 +126,7 @@ body {
 .subsection-title {
   font-size: 16px;
   color: #2D2D2D;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 
 .subsection-content {
@@ -270,7 +270,7 @@ body {
 
 /* ============ MODAL OVERLAY ============ */
 .modal {
-  display: none;
+  display: none; /* Hide by default */
   position: fixed;
   z-index: 1000;
   left: 0;
@@ -285,28 +285,31 @@ body {
 
 /* ============ MODAL CONTENT ============ */
 .modal-content {
+  width: 50%;
   background: white;
-  border-radius: 16px;
-  width: 700px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
   position: relative;
+  text-align: center;
+  padding-bottom: 10px;
 }
 
 /* ============ CLOSE BUTTON ============ */
 .close {
   position: absolute;
-  top: 15px;
-  right: 20px;
+  top: 10px; /* Adjust to position inside the modal */
+  right: 15px;
   font-size: 24px;
-  font-weight: bold;
   cursor: pointer;
+  z-index: 2; /* Higher than the cover image */
+  padding: 5px 10px;
+  border-radius: 50%;
 }
 
 /* ============ HEADER STYLES ============ */
 .modal-header {
   position: relative;
   width: 100%;
-  height: 240px;
+  height: 250px;
 }
 
 /* Cover Image */
@@ -316,6 +319,8 @@ body {
   object-fit: cover;
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
+  position: relative; /* Ensures it stays behind other elements */
+  z-index: 0; /* Lower than the close button */
 }
 
 /* Profile Information Section */
@@ -324,7 +329,7 @@ body {
   align-items: center;
   padding: 0px 40px;
   position: relative;
-  top: -50px;
+  top: -40px;
 }
 
 .modal-profile-container {
@@ -350,7 +355,7 @@ body {
 }
 
 .profile-text h3 {
-  margin: 5px 0 0 0;
+  margin: 10px 0 0 0;
   font-size: 20px;
   font-weight: bold;
   color: #2D2D2D;
@@ -385,7 +390,7 @@ body {
 
 /* ============ MODAL BODY - PERSONAL INFORMATION ============ */
 .modal-body {
-  padding: 65px 60px;
+  padding: 30px 65px;
 }
 
 /* Section Title */
@@ -449,26 +454,27 @@ body {
 .curved-divider {
   position: relative;
   width: 100%;
-  height: 40px; /* Adjusted height for a better curve */
+  height: 40px; /* Adjusted height for better curvature */
   background: #f5f5f5; /* Light gray to match modal background */
-  border-bottom-left-radius: -50px;
-  border-bottom-right-radius: -50px;
-  margin-bottom: -55px; /* Ensures smoother transition */
+  margin-bottom: -30px; /* Ensures smoother transition */
   overflow: hidden;
 }
 
-/* Add a second layer for the bottom curve */
+/* Adding the curve */
 .curved-divider::after {
   content: "";
   position: absolute;
-  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 15px;
   width: 100%;
   height: 40px;
-  background: white; /* Adjusted to match the section background */
-  border-top-left-radius: 50px;
-  border-top-right-radius: 50px;
+  background: white;
+  border-top-left-radius: 40px;
+  border-top-right-radius: 40px;
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.05);
 }
+
 
 
 /* ============ MODAL FOOTER - BUTTONS ============ */
@@ -525,3 +531,92 @@ body {
   color: #2D2D2D;
   border: 1px solid #2D2D2D;
 }
+
+/* ============ Unsaved Changes Modal ============ */
+
+/* Confirmation Modal Styling */
+.confirmation-modal {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  width: 400px;
+  text-align: center;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+/* Save Icon Styling */
+.save-icon {
+  margin: 10px auto;
+}
+
+.save-icon svg {
+  color: black;
+}
+
+/* Title */
+.confirmation-modal h2 {
+  font-size: 22px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+/* Message */
+.confirmation-modal p {
+  font-size: 16px;
+  color: #656565;
+  margin: 10px 0 20px;
+}
+
+/* Buttons */
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.cancel-btn {
+  background: white;
+  border: 1px solid #ccc;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.leave-btn {
+  background: #9b1c1c;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.cancel-btn:hover {
+  background: #f1f1f1;
+}
+
+.leave-btn:hover {
+  background: #800000;
+}
+
+/* Close Button */
+.close-confirm {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* Hide modal initially */
+#editProfileModal, #saveChangesModal {
+  display: none; /* Hide modal on page load */
+}
+
+/* Ensure modal appears when active */
+.modal.show {
+  display: flex !important;
+}
+
+

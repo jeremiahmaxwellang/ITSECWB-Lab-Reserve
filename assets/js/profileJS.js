@@ -133,40 +133,44 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener("DOMContentLoaded", function () {
     console.log("Script Loaded Successfully");
 
-    var modal = document.getElementById("editProfileModal");
-    var btn = document.getElementById("editProfileBtn");
-    var closeBtn = document.getElementById("saveChanges"); // Save button will close modal
-    var deleteAccountBtn = document.getElementById("deleteAccountBtn");
-    var changePasswordBtn = document.getElementById("changePasswordBtn");
+    // Get modal elements
+    var editProfileModal = document.getElementById("editProfileModal");
+    var editProfileBtn = document.getElementById("editProfileBtn");
+    var closeBtn = document.querySelector("#editProfileModal .close");
 
-    if (!modal || !btn || !closeBtn || !deleteAccountBtn || !changePasswordBtn) {
+    // Ensure modal exists before attaching event listeners
+    if (!editProfileModal || !editProfileBtn || !closeBtn) {
         console.error("One or more modal elements were not found in the DOM.");
         return;
     }
 
-    // Show Modal
-    btn.addEventListener("click", function () {
-        modal.style.display = "flex";
+    // Initially hide the modal
+    editProfileModal.style.display = "none";
+
+    // Open modal when clicking the button
+    editProfileBtn.addEventListener("click", function () {
+        console.log("Opening Edit Profile Modal...");
+        editProfileModal.style.display = "flex";
     });
 
-    // Close Modal on Save Changes
+    // Close modal when clicking the "X" button
     closeBtn.addEventListener("click", function () {
-        modal.style.display = "none";
+        console.log("Closing Edit Profile Modal...");
+        editProfileModal.style.display = "none";
     });
 
-    // Close Modal if Clicking Outside the Box
+    // Close modal when clicking outside of it
     window.addEventListener("click", function (event) {
-        if (event.target === modal) {
-            modal.style.display = "none";
+        if (event.target === editProfileModal) {
+            console.log("Clicked outside modal, closing...");
+            editProfileModal.style.display = "none";
         }
     });
-
-    // Redirects for Delete and Password Change
-    deleteAccountBtn.addEventListener("click", function () {
-        window.location.href = "login.html";
-    });
-
-    changePasswordBtn.addEventListener("click", function () {
-        window.location.href = "login.html";
-    });
 });
+
+
+
+    
+
+
+
