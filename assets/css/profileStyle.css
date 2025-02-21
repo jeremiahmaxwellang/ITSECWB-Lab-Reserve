@@ -268,102 +268,7 @@ body {
   background-color: #28585F;
 }
 
-/* ======= MODAL STYLES ======= */
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 1000;
-  left: 0;
-  top: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  justify-content: center;
-  align-items: center;
-}
-
-/* Close button */
-.close {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  font-size: 24px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-/* ===== INPUT FIELD STYLING ===== */
-.input-group {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 15px;
-}
-
-.input-group label {
-    font-size: 14px;
-    font-weight: bold;
-    color: #4F4F4F;
-    margin-bottom: 5px;
-}
-
-.input-group input, 
-.input-group textarea {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #D1D1D1;
-    border-radius: 8px;
-    font-size: 14px;
-    background: white;
-    outline: none;
-    transition: 0.3s;
-}
-
-.input-group input:focus, 
-.input-group textarea:focus {
-    border-color: #377684;
-    box-shadow: 0px 0px 5px rgba(55, 118, 132, 0.5);
-}
-
-textarea {
-    resize: none;
-    height: 80px;
-}
-
-/* ===== INPUT ROWS FOR FIRST & LAST NAME ===== */
-.input-row {
-    display: flex;
-    gap: 15px;
-}
-
-.input-row .input-group {
-    flex: 1;
-}
-
-/* ===== INPUT FIELD STYLING ===== */
-.input-group {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 15px;
-}
-
-.input-group label {
-    font-size: 14px;
-    font-weight: bold;
-    color: #4F4F4F;
-    margin-bottom: 5px;
-}
-
-.input-group input, 
-.input-group textarea {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #D1D1D1;
-    border-radius: 8px;
-    font-size: 14px;
-    background: white;
-    outline: none;
-    transition: 0.3s;
-}
-
-/* Modal Overlay */
+/* ============ MODAL OVERLAY ============ */
 .modal {
   display: none;
   position: fixed;
@@ -378,16 +283,16 @@ textarea {
   align-items: center;
 }
 
-/* Modal Content */
-.modal-content {  
+/* ============ MODAL CONTENT ============ */
+.modal-content {
   background: white;
   border-radius: 16px;
-  width: 600px;
+  width: 700px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   position: relative;
 }
 
-/* Close Button */
+/* ============ CLOSE BUTTON ============ */
 .close {
   position: absolute;
   top: 15px;
@@ -397,14 +302,14 @@ textarea {
   cursor: pointer;
 }
 
-/* Profile Header (Cover + Profile Picture) */
+/* ============ HEADER STYLES ============ */
 .modal-header {
   position: relative;
   width: 100%;
-  padding: 0;
+  height: 240px;
 }
 
-/* Cover Image (Full Width) */
+/* Cover Image */
 .modal-cover {
   width: 100%;
   height: 150px;
@@ -417,24 +322,38 @@ textarea {
 .profile-info {
   display: flex;
   align-items: center;
-  gap: 15px;
-  padding: 10px 20px;
-  margin-top: -40px; /* Adjust profile picture positioning */
+  padding: 0px 40px;
+  position: relative;
+  top: -50px;
 }
 
-/* Profile Picture */
+.modal-profile-container {
+  display: flex;
+  flex-direction: column; /* Stack elements vertically */
+  align-items: center; /* Center-align the items */
+  justify-content: center;
+  margin-right: 10px; /* Space between profile and text */
+}
+
 .modal-profile-picture {
-  width: 80px;
-  height: 80px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
   border: 3px solid white;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Name & Role */
+/* Name and Role */
+.profile-text {
+  margin-left: 15px; /* Moves name and role closer to the profile picture */
+  text-align: left;
+}
+
 .profile-text h3 {
-  margin: 0;
-  font-size: 18px;
+  margin: 5px 0 0 0;
+  font-size: 20px;
   font-weight: bold;
+  color: #2D2D2D;
 }
 
 .profile-text p {
@@ -445,63 +364,78 @@ textarea {
 
 /* Change Profile Photo Button */
 .change-photo-btn {
+  font-family: Newsreader;
   display: block;
-  margin: 10px auto;
-  padding: 8px 16px;
-  font-size: 14px;
+  margin-top: 10px;  /* Reduced margin */
+  padding: 5px 15px;
+  font-size: 10px;
   background: #377684;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  transition: background 0.3s ease;
+  width: 100%; /* Ensure button width is auto-fit */
+  text-align: center;
 }
 
 .change-photo-btn:hover {
   background: #28585F;
 }
 
-/* Modal Body - Personal Information */
+/* ============ MODAL BODY - PERSONAL INFORMATION ============ */
 .modal-body {
-  padding: 20px;
+  padding: 65px 60px;
 }
 
+/* Section Title */
 .section-title {
+  font-family: "Odor Mean Chey", Helvetica, sans-serif;
   font-size: 18px;
-  font-weight: bold;
+  text-align: left;
+  margin-bottom: 50px;
+  color:#2D2D2D;
 }
 
 /* Input Row for First & Last Name */
 .input-row {
   display: flex;
-  gap: 15px;
+  gap: 20px;
   justify-content: space-between;
+  margin-bottom: 20px; 
 }
 
 /* Input Group */
 .input-group {
+  position: relative;
+  width: 100%;
+  font-family: outfit;
+  font-size: 14px;
+}
+
+/* Static Label */
+.static-label {
+  position: absolute;
+  left: 14px;
+  top: -10px;
+  font-size: 14px;
+  color: #4F4F4F;
+  background: white;
+  padding: 0 5px;
+}
+
+/* Static Input */
+.static-input {
+  font-family: outfit;
   width: 100%;
   font-size: 14px;
-}
-
-.input-group label {
-  display: block;
-  font-size: 14px;
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
-/* Input Fields */
-input, textarea {
-  width: 100%;
-  font-size: 14px;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-textarea {
-  resize: none;
-  height: 80px;
+  border: 1px solid #898989;
+  border-radius: 10px;
+  outline: none;
+  height: 50px;
+  background: white;
+  padding-left: 15px;
+  margin-bottom: 10px;
 }
 
 /* Divider */
@@ -512,49 +446,82 @@ textarea {
   margin: 20px 0;
 }
 
-/* Modal Footer (Buttons) */
-.modal-footer {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px;
+.curved-divider {
+  position: relative;
+  width: 100%;
+  height: 40px; /* Adjusted height for a better curve */
+  background: #f5f5f5; /* Light gray to match modal background */
+  border-bottom-left-radius: -50px;
+  border-bottom-right-radius: -50px;
+  margin-bottom: -55px; /* Ensures smoother transition */
+  overflow: hidden;
 }
 
+/* Add a second layer for the bottom curve */
+.curved-divider::after {
+  content: "";
+  position: absolute;
+  bottom: -15px;
+  width: 100%;
+  height: 40px;
+  background: white; /* Adjusted to match the section background */
+  border-top-left-radius: 50px;
+  border-top-right-radius: 50px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.05);
+}
+
+
+/* ============ MODAL FOOTER - BUTTONS ============ */
 /* Buttons */
 .delete-btn {
-  background: #D9534F;
+  font-family: Newsreader;
+  background: #900B09;
   color: white;
   border: none;
-  padding: 10px 15px;
+  padding: 8px 15px;
   border-radius: 5px;
   cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .delete-btn:hover {
-  background: #C9302C;
+  background-color: white;
+  color: #900B09;
+  border: 1px solid #900B09;
 }
 
 .password-btn {
-  background: #ccc;
-  color: black;
-  border: none;
-  padding: 10px 15px;
+  font-family: Newsreader;
+  padding: 8px 15px;
   border-radius: 5px;
+  border: 1px solid #D1D5DB;
+  background: white;
+  text-align: center;
   cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .password-btn:hover {
-  background: #bbb;
+  background-color: #2D2D2D;
+  color: white;
+  border: 1px solid white;
 }
 
 .save-btn {
-  background: #377684;
-  color: white;
-  border: none;
-  padding: 10px 15px;
+  font-family: Newsreader;
+  padding: 8px 15px;
   border-radius: 5px;
+  background-color: #2D2D2D;
+  color: #ffffff;
+  border: none;
   cursor: pointer;
+  transition: background 0.3s ease;
+  position: relative;
+  margin-left: 37%;
 }
 
 .save-btn:hover {
-  background: #28585F;
+  background-color: white;
+  color: #2D2D2D;
+  border: 1px solid #2D2D2D;
 }

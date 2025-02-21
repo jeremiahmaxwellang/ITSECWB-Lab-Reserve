@@ -192,54 +192,61 @@
         </div>
     </div>
 
-
-
-<!-- Edit Profile Modal (Overlay) -->
+<!-- Edit Profile Modal -->
 <div id="editProfileModal" class="modal">
     <div class="modal-content">
+        
         <!-- Close Button -->
         <span class="close">&times;</span>
 
-        <!-- Profile Header Container -->
+        <!-- Modal Header Section -->
         <div class="modal-header">
-            <img id="modalCoverImage" src="assets/images/Background.png" alt="Cover Image" class="modal-cover">
+            <img src="assets/images/Background.png" class="modal-cover" alt="Cover Image">
+
+            <!-- Profile Information -->
             <div class="profile-info">
-                <img id="modalProfilePic" src="uploads/profile_pics/avatar.png" alt="Profile Picture" class="modal-profile-picture">
+                <!-- Profile Picture + Button (Stacked) -->
+                <div class="modal-profile-container">
+                    <img class="modal-profile-picture" src="uploads/profile_pics/avatar.png" alt="Profile Picture">
+                    <button class="change-photo-btn">Change Profile Photo</button>
+                </div>
+
+                <!-- Name & Role -->
                 <div class="profile-text">
-                    <h3 class="modal-profile-name">Jeremiah Ang</h3>
-                    <p class="modal-profile-type">Student</p>
+                    <h3>Jeremiah Ang</h3>
+                    <p>Student</p>
                 </div>
             </div>
-            <button class="change-photo-btn">Change Profile Photo</button>
         </div>
 
-        <!-- Personal Information Container -->
+        <div class="curved-divider"></div>
+        
+        <!-- Modal Body -->
         <div class="modal-body">
             <h3 class="section-title">Personal Information</h3>
 
-            <div class="input-row">
-                <div class="input-group">
-                    <label for="firstName">First Name</label>
-                    <input type="text" id="firstName" placeholder="First Name">
-                </div>
-
-                <div class="input-group">
-                    <label for="lastName">Last Name</label>
-                    <input type="text" id="lastName" placeholder="Last Name">
-                </div>
+        <!-- First Name & Last Name Row -->
+        <div class="input-row">
+            <div class="input-group">
+                <label class="static-label" for="firstName">First Name</label>
+                <input type="text" id="firstName" class="static-input" placeholder="Enter First Name">
             </div>
 
             <div class="input-group">
-                <label for="profileDescription">Profile Description</label>
-                <textarea id="profileDescription" placeholder="Describe Yourself"></textarea>
+                <label class="static-label" for="lastName">Last Name</label>
+                <input type="text" id="lastName" class="static-input" placeholder="Enter Last Name">
             </div>
         </div>
 
+        <!-- Profile Description -->
+        <div class="input-group">
+            <textarea id="profileDescription" class="static-input" placeholder=" "></textarea>
+            <label class="static-label" for="profileDescription">Profile Description</label>
+        </div>
+        
         <!-- Divider -->
         <div class="divider"></div>
 
-        <!-- Modal Buttons -->
-        <div class="modal-footer">
             <button id="deleteAccountBtn" class="delete-btn">Delete Account</button>
             <button id="changePasswordBtn" class="password-btn">Change Password</button>
             <button id="saveChanges" class="save-btn">Save Changes</button>
