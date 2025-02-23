@@ -52,6 +52,7 @@
 }
 
 .reservationContainer table {
+  font-family: "Outfit";
   width: 100%;
   border-collapse: collapse;
   background: #fff;

@@ -42,14 +42,16 @@
                     <div class="reservationContainer">
                         <table id="reservationsTable">
                             <thead>
-                                <tr class="tableRow">
-                                    <th colspan="4" class="reservationHeader">All Recent Reservations</th>
+                                <tr>
+                                    <th colspan="6" class="reservationHeader">All Recent Reservations</th>
                                 </tr>
-                                <tr class="tableRow">
-                                    <th class="table1Header">Room Number</th>
-                                    <th class="table1Header">Seat Number</th>
-                                    <th class="table1Header">Date and Time of Reservation</th>
-                                    <th class="table1Header">Actions</th>
+                                <tr>
+                                    <th>Room Number</th>
+                                    <th>Seat Number</th>
+                                    <th>Date</th>
+                                    <th>Time Slot</th>
+                                    <th>Reserved By</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody></tbody>
@@ -87,7 +89,10 @@
         <div class="delete-details">
             <p><strong>Room:</strong> <span id="deleteRoom"></span></p>
             <p><strong>Seat:</strong> <span id="deleteSeat"></span></p>
-            <p><strong>Date:</strong> <span id="deleteDate"></span></p><br>
+            <p><strong>Date:</strong> <span id="deleteDate"></span></p>
+            <p><strong>Time Slot:</strong> <span id="deleteTime"></span></p>
+            <p><strong>Reserved By:</strong> <span id="deleteReservedBy"></span></p>
+            <br>
             <p class="delete-warning">This action is permanent.</p>
             <p>You will need to create a new reservation once this is deleted.</p>
         </div>

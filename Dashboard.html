@@ -44,13 +44,14 @@
                             <table id="currentReservationsTable">
                                 <thead>
                                     <tr>
-                                        <th colspan="4" class="reservationHeader">Current Reservations</th>
+                                        <th colspan="5" class="reservationHeader">Current Reservations</th>
                                     </tr>
                                     <tr>
-                                        <th class="table1Header">Room Number</th>
-                                        <th class="table1Header">Seat Number</th>
-                                        <th class="table1Header">Date and Time of Reservation</th>
-                                        <th class="table1Header">Edit your Lab Reservation</th>
+                                        <th>Room Number</th>
+                                        <th>Seat Number</th>
+                                        <th>Date</th>
+                                        <th>Time Slot</th>
+                                        <th>Edit</th>
                                     </tr>
                                 </thead>
                                 <tbody></tbody>
@@ -60,13 +61,14 @@
                             <table id="recentReservationsTable">
                                 <thead>
                                     <tr>
-                                        <th colspan="4" class="reservationHeader">Recent Reservations</th>
+                                        <th colspan="5" class="reservationHeader">Recent Reservations</th>
                                     </tr>
                                     <tr>
-                                        <th class="table1Header">Room Number</th>
-                                        <th class="table1Header">Seat Number</th>
-                                        <th class="table1Header">Date and Time of Reservation</th>
-                                        <th class="table1Header">Who Reserved?</th>
+                                        <th>Room Number</th>
+                                        <th>Seat Number</th>
+                                        <th>Date</th>
+                                        <th>Time Slot</th>
+                                        <th>Who Reserved?</th>
                                     </tr>
                                 </thead>
                                 <tbody></tbody>
@@ -77,29 +79,26 @@
             </div>
         </div>
 
+        <!-- Right Side Content -->
+        <div class="right-side">
+            <!-- Calendar Container -->
+            <div class="calendarContainer">
+                <!-- Calendar goes here -->
+            </div>
 
-                <!-- Right Side Content (Stacked Layout) -->
-                <div class="right-side">
-
-                    <!-- Calendar Container -->
-                    <div class="calendarContainer">
-                        <!-- Calendar goes here -->
-                    </div>
-
-                    <!-- Reserve Now Section -->
-                    <div class="reserveContainer">
-                        <div class="reserveLabSlot">
-                            <p class="ContainerText">Reserve your Laboratory Slot now!</p>
-                            <img class="classroomArt" src="assets/images/IndexPhoto.png">
-                            <button class="reserveButton" onclick="window.location.href='Reservation.html'">Reserve Now!</button>
-                        </div>
-                    </div>
-
+            <!-- Reserve Now Section -->
+            <div class="reserveContainer">
+                <div class="reserveLabSlot">
+                    <p class="ContainerText">Reserve your Laboratory Slot now!</p>
+                    <img class="classroomArt" src="assets/images/IndexPhoto.png">
+                    <button class="reserveButton" onclick="window.location.href='Reservation.html'">Reserve Now!</button>
                 </div>
+            </div>
+        </div>
     </div>
 </div>
 
-<!-- Load JavaScript -->
+<!-- JavaScript -->
 <script src="assets/js/common.js"></script>
 <script src="assets/js/dashboardJS.js"></script>
 </body>
