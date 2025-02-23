@@ -288,6 +288,8 @@
             <i class="fa fa-lock lock-icon"></i>
         </div>
 
+        <span class="close">&times;</span>
+
         <!-- Title & Description -->
         <h2>Create New Password</h2>
         <p>Please enter and confirm your new password.</p>
@@ -307,6 +309,26 @@
             <button class="submit-btn change-submit-btn">Submit</button>
     </div>
 </div>
+
+<!-- Success Changes Modal -->
+<div id="successChangesModal" class="modal">
+    <div class="success-changes">
+        <div class="success-icon">
+            <i class="fa fa-check-circle"></i>
+        </div>
+
+        <!-- Close Button -->
+        <span class="close close-success-changes">&times;</span>
+
+        <!-- Title & Message -->
+        <h2>Changes Successfully Changed</h2>
+        <p>Thank you for using <span style="color: #377684; font-weight: bold;">Labyrinth</span>!</p>
+
+        <!-- Button to go back to profile -->
+        <button id="goBackProfileBtn" class="go-back-profile-btn">Go Back to Profile</button>
+    </div>
+</div>
+
 
 <!-- JavaScript -->
 <script src="assets/js/common.js"></script>
