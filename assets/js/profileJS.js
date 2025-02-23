@@ -137,16 +137,18 @@ document.addEventListener("DOMContentLoaded", function () {
     var deleteAccountModal = document.getElementById("deleteAccountModal");
     var accountDeletedModal = document.getElementById("accountDeletedModal");
     var changePasswordModal = document.getElementById("changePasswordModal");
-    var successChangesModal = document.getElementById("successChangesModal"); // New success message modal
+    var successChangesModal = document.getElementById("successChangesModal");
 
     var editProfileBtn = document.getElementById("editProfileBtn");
     var deleteAccountBtn = document.getElementById("deleteAccountBtn");
     var changePasswordBtn = document.getElementById("changePasswordBtn");
-    var saveChangesBtn = document.getElementById("saveChanges"); // Save Changes button
+    var saveChangesBtn = document.getElementById("saveChanges");
 
     var closeEditProfile = document.querySelector("#editProfileModal .close");
-    var closeSaveChanges = document.querySelector("#saveChangesModal .close-confirm");
-    var closeDeleteAccount = document.querySelector("#deleteAccountModal .close-confirm");
+    var closeSaveChanges = document.querySelector("#saveChangesModal .close");
+    var closeDeleteAccount = document.querySelector("#deleteAccountModal .close");
+    var closeChangePasswordBtn = document.querySelector("#changePasswordModal .close");
+    var closeSuccessChangesBtn = document.querySelector("#successChangesModal .close");
 
     var cancelBtn = document.getElementById("cancelBtn");
     var leaveBtn = document.getElementById("leaveBtn");
@@ -154,12 +156,9 @@ document.addEventListener("DOMContentLoaded", function () {
     var confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
     var cancelDeleteBtn = document.getElementById("cancelDeleteBtn");
     var goBackHomeBtn = document.getElementById("goBackHomeBtn");
-
-    var closeChangePasswordBtn = document.querySelector("#changePasswordModal .close-change-password");
     var submitPasswordBtn = document.querySelector(".change-submit-btn");
 
-    var closeSuccessChangesBtn = document.querySelector("#successChangesModal .close-success-changes"); // Close Success Changes Modal
-    var goBackProfileBtn = document.querySelector("#goBackProfileBtn"); // Button to go back to profile from success modal
+    var goBackProfileBtn = document.getElementById("goBackProfileBtn");
 
     // ========== HIDE ALL MODALS ON PAGE LOAD ==========
     var modals = [
@@ -168,7 +167,7 @@ document.addEventListener("DOMContentLoaded", function () {
         deleteAccountModal,
         accountDeletedModal,
         changePasswordModal,
-        successChangesModal // New success modal
+        successChangesModal
     ];
 
     modals.forEach(function (modal) {
@@ -179,101 +178,121 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // ========== SHOW & HIDE FUNCTIONS ==========
     function showModal(modal) {
-        modal.style.display = "flex";
+        if (modal) modal.style.display = "flex";
     }
 
     function hideModal(modal) {
-        modal.style.display = "none";
+        if (modal) modal.style.display = "none";
     }
 
     // ========== OPEN MODALS ==========
-    editProfileBtn.addEventListener("click", function () {
-        showModal(editProfileModal);
-    });
+    if (editProfileBtn) {
+        editProfileBtn.addEventListener("click", function () {
+            showModal(editProfileModal);
+        });
+    }
 
-    deleteAccountBtn.addEventListener("click", function () {
-        showModal(deleteAccountModal);
-    });
+    if (deleteAccountBtn) {
+        deleteAccountBtn.addEventListener("click", function () {
+            showModal(deleteAccountModal);
+        });
+    }
 
-    changePasswordBtn.addEventListener("click", function () {
-        showModal(changePasswordModal);
-    });
+    if (changePasswordBtn) {
+        changePasswordBtn.addEventListener("click", function () {
+            showModal(changePasswordModal);
+        });
+    }
 
-    saveChangesBtn.addEventListener("click", function () {
-        hideModal(editProfileModal);
-        showModal(successChangesModal); // Open success message modal
-    });
+    if (saveChangesBtn) {
+        saveChangesBtn.addEventListener("click", function () {
+            hideModal(editProfileModal);
+            showModal(successChangesModal);
+        });
+    }
 
     // ========== CLOSE MODALS ==========
-    closeEditProfile.addEventListener("click", function () {
-        showModal(saveChangesModal);
-    });
+    if (closeEditProfile) {
+        closeEditProfile.addEventListener("click", function () {
+            showModal(saveChangesModal);
+        });
+    }
 
-    closeSaveChanges.addEventListener("click", function () {
-        hideModal(saveChangesModal);
-    });
+    if (closeSaveChanges) {
+        closeSaveChanges.addEventListener("click", function () {
+            hideModal(saveChangesModal);
+        });
+    }
 
-    closeDeleteAccount.addEventListener("click", function () {
-        hideModal(deleteAccountModal);
-    });
+    if (closeDeleteAccount) {
+        closeDeleteAccount.addEventListener("click", function () {
+            hideModal(deleteAccountModal);
+        });
+    }
 
-    cancelBtn.addEventListener("click", function () {
-        hideModal(saveChangesModal);
-    });
+    if (cancelBtn) {
+        cancelBtn.addEventListener("click", function () {
+            hideModal(saveChangesModal);
+        });
+    }
 
-    leaveBtn.addEventListener("click", function () {
-        hideModal(editProfileModal);
-        hideModal(saveChangesModal);
-    });
+    if (leaveBtn) {
+        leaveBtn.addEventListener("click", function () {
+            hideModal(editProfileModal);
+            hideModal(saveChangesModal);
+        });
+    }
 
-    cancelDeleteBtn.addEventListener("click", function () {
-        hideModal(deleteAccountModal);
-    });
+    if (cancelDeleteBtn) {
+        cancelDeleteBtn.addEventListener("click", function () {
+            hideModal(deleteAccountModal);
+        });
+    }
 
-    confirmDeleteBtn.addEventListener("click", function () {
-        hideModal(deleteAccountModal);
-        showModal(accountDeletedModal);
-    });
+    if (confirmDeleteBtn) {
+        confirmDeleteBtn.addEventListener("click", function () {
+            hideModal(deleteAccountModal);
+            showModal(accountDeletedModal);
+        });
+    }
 
-    goBackHomeBtn.addEventListener("click", function () {
-        hideModal(accountDeletedModal);
-        window.location.href = "index.html"; // Redirect to homepage
-    });
+    if (goBackHomeBtn) {
+        goBackHomeBtn.addEventListener("click", function () {
+            hideModal(accountDeletedModal);
+            window.location.href = "index.html"; // Redirect to homepage
+        });
+    }
 
-    closeChangePasswordBtn.addEventListener("click", function () {
-        hideModal(changePasswordModal); // Close Change Password, KEEP Edit Profile open
-    });
+    if (closeChangePasswordBtn) {
+        closeChangePasswordBtn.addEventListener("click", function () {
+            hideModal(changePasswordModal); // Close only Change Password modal
+        });
+    }
 
-    submitPasswordBtn.addEventListener("click", function () {
-        console.log("Password changed successfully!");
-        hideModal(changePasswordModal); // Close Change Password
-        showModal(editProfileModal); // Return to Edit Profile
-    });
+    if (submitPasswordBtn) {
+        submitPasswordBtn.addEventListener("click", function () {
+            console.log("Password changed successfully!");
+            hideModal(changePasswordModal); // Close Change Password
+            showModal(editProfileModal); // Return to Edit Profile
+        });
+    }
 
-    closeSuccessChangesBtn.addEventListener("click", function () {
-        hideModal(successChangesModal);
-        showModal(editProfileModal); // Return to profile
-    });
+    if (closeSuccessChangesBtn) {
+        closeSuccessChangesBtn.addEventListener("click", function () {
+            hideModal(successChangesModal);
+            showModal(editProfileModal);
+        });
+    }
 
-    goBackProfileBtn.addEventListener("click", function () {
-        hideModal(successChangesModal);
-        showModal(editProfileModal); // Return to profile
-    });
+    if (goBackProfileBtn) {
+        goBackProfileBtn.addEventListener("click", function () {
+            hideModal(successChangesModal);
+            showModal(editProfileModal);
+        });
+    }
 
     // ========== CLOSE MODAL WHEN CLICKING OUTSIDE ==========
     window.addEventListener("click", function (event) {
-        if (event.target === editProfileModal) {
-            showModal(saveChangesModal);
-        }
-        if (event.target === saveChangesModal) {
-            hideModal(saveChangesModal);
-        }
-        if (event.target === deleteAccountModal) {
-            hideModal(deleteAccountModal);
-        }
-        if (event.target === accountDeletedModal) {
-            hideModal(accountDeletedModal);
-        }
         if (event.target === changePasswordModal) {
             hideModal(changePasswordModal);
         }
@@ -283,6 +302,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 });
+
 
 
 

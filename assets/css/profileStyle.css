@@ -643,10 +643,27 @@ body {
   background: white;
   padding: 40px;
   border-radius: 12px;
-  width: 400px;
+  width: 500px;
   text-align: center;
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
   position: relative;
+}
+
+.account-deleted h2 {
+  color: #900B09;
+  text-align: left;
+  font-size: 22px;
+  font-weight: bold;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+/* Message */
+.account-deleted p {
+  text-align: left;
+  font-size: 16px;
+  color: #656565;
+  margin: 10px 0 30px;
 }
 
 /* Confirmation Modal Styling */
@@ -654,7 +671,7 @@ body {
   background: white;
   padding: 40px;
   border-radius: 12px;
-  width: 400px;
+  width: 450px;
   text-align: center;
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
   position: relative;
@@ -663,7 +680,7 @@ body {
 .delete-account h2 {
   color: #900B09;
   text-align: left;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: bold;
   margin-top: 15px;
   margin-bottom: 15px;
@@ -728,7 +745,7 @@ body {
 
 /* Message */
 .change-password p {
-  text-align: left;
+  text-align: center;
   font-size: 16px;
   color: #656565;
   margin: 10px 0 30px;
@@ -738,7 +755,7 @@ body {
   font-size: 24px;
   color: #2D2D2D;
   position: absolute;
-  top: 10px;
+  top: 15px;
   left: 20px;
   margin-bottom: 10px;
 }
@@ -757,6 +774,63 @@ body {
 }
 
 .submit-btn:hover {
+  background-color: #2D2D2D;
+  color: white;
+  border: 1px solid white;
+}
+
+/* ======= Changes Successfully Saved ======= */
+
+.successfully-changed {
+  background: white;
+  padding: 40px;
+  border-radius: 12px;
+  width: 500px;
+  text-align: center;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+.successfully-changed h2 {
+  color: #3B6B53;
+  text-align: left;
+  font-size: 22px;
+  font-weight: bold;
+  margin-top: 20px;
+  margin-bottom: 15px;
+}
+
+/* Message */
+.successfully-changed p {
+  text-align: left;
+  font-size: 16px;
+  color: #656565;
+  margin: 10px 0 30px;
+}
+
+.check-icon {
+  font-size: 24px;
+  color: #3B6B53;
+  position: absolute;
+  top: 15px;
+  left: 20px;
+  margin-bottom: 10px;
+}
+
+/* Submit Button */
+.back-btn {
+  width: 100%;
+  font-family: Newsreader;
+  padding: 8px 15px;
+  border-radius: 5px;
+  border: 1px solid #D1D5DB;
+  background: white;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.back-btn:hover {
   background-color: #2D2D2D;
   color: white;
   border: 1px solid white;

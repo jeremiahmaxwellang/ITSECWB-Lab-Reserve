@@ -245,7 +245,6 @@
 <!-- Delete Account Confirmation Modal -->
 <div id="deleteAccountModal" class="modal">
     <div class="delete-account">
-        <span class="close-confirm">&times;</span>
 
         <!-- Delete Icon -->
         <div class="delete-icon">
@@ -277,7 +276,7 @@
         <p>Thank you for using <span style="color: #377684; font-weight: bold;">Labyrinth</span>!</p>
 
         <!-- Button to go back to home page -->
-        <button id="goBackHomeBtn" class="go-home-btn">Go Back to Home Page</button>
+        <button id="goBackHomeBtn" class="back-btn">Go Back to Home Page</button>
     </div>
 </div>
 
@@ -285,35 +284,37 @@
 <div id="changePasswordModal" class="modal">
     <div class="change-password">
         <div class="lock-icon">
-            <i class="fa fa-lock lock-icon"></i>
+            <i class="fa fa-lock"></i>
         </div>
 
+        <!-- Close Button (Make sure it has class "close") -->
         <span class="close">&times;</span>
 
         <!-- Title & Description -->
         <h2>Create New Password</h2>
         <p>Please enter and confirm your new password.</p>
 
-            <!-- Input Fields -->
-            <div class="input-group">
-                <label class="static-label" for="new-password">New Password:</label>
-                <input type="password" id="new-password" class="static-input">
-            </div> 
-            
-            <div class="input-group">
-                <label class="static-label" for="confirm-password">Confirm Password:</label>
-                <input type="password" id="confirm-password" class="static-input">
-            </div>   
+        <!-- Input Fields -->
+        <div class="input-group">
+            <label class="static-label" for="new-password">New Password:</label>
+            <input type="password" id="new-password" class="static-input">
+        </div> 
+        
+        <div class="input-group">
+            <label class="static-label" for="confirm-password">Confirm Password:</label>
+            <input type="password" id="confirm-password" class="static-input">
+        </div>   
 
-            <!-- Submit Button -->
-            <button class="submit-btn change-submit-btn">Submit</button>
+        <!-- Submit Button -->
+        <button class="submit-btn change-submit-btn">Submit</button>
     </div>
 </div>
 
+
 <!-- Success Changes Modal -->
 <div id="successChangesModal" class="modal">
-    <div class="success-changes">
-        <div class="success-icon">
+    <div class="successfully-changed">
+        <div class="check-icon">
             <i class="fa fa-check-circle"></i>
         </div>
 
@@ -321,11 +322,11 @@
         <span class="close close-success-changes">&times;</span>
 
         <!-- Title & Message -->
-        <h2>Changes Successfully Changed</h2>
+        <h2>Changes Successfully Saved</h2>
         <p>Thank you for using <span style="color: #377684; font-weight: bold;">Labyrinth</span>!</p>
 
         <!-- Button to go back to profile -->
-        <button id="goBackProfileBtn" class="go-back-profile-btn">Go Back to Profile</button>
+        <button id="goBackProfileBtn" class="back-btn">Go Back to Profile</button>
     </div>
 </div>
 
