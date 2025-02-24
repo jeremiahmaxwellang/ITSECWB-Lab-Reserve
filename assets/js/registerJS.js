@@ -51,16 +51,19 @@ document.addEventListener("DOMContentLoaded", function () {
     const createAccountButton = document.querySelector(".create-button");
     const getStartedButton = document.getElementById("getStartedButton");
 
+    // Open modal when "Create Account" is clicked
     if (createAccountButton) {
-        createAccountButton.addEventListener("click", function () {
-            successModal.open();
+        createAccountButton.addEventListener("click", function (event) {
+            event.preventDefault();   // Prevent any default form submission
+            successModal.open();      // Only opens the modal
         });
     }
 
+    // "Get Started" closes the modal and redirects to /login
     if (getStartedButton) {
         getStartedButton.addEventListener("click", function () {
-            successModal.close();
-                window.location.href = "/login"; // Redirect to login page
+            successModal.close();     // Close the modal first
+                window.location.href = "/login"; // Then redirect   
         });
     }
 });
