@@ -1,9 +1,9 @@
 <html>
 <head>
     <title>Room Reservation</title>
-    <link rel="stylesheet" href="assets/css/reservation.css">
-    <link rel="stylesheet" href="assets/css/global.css">
-    <link rel="stylesheet" href="assets/css/styleguide.css">
+    <link rel="stylesheet" href="css/reservation.css">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/styleguide.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
   </head>
@@ -12,17 +12,19 @@
 <!-- Header -->
 <header class="header">
     <div class="logo-container">
-        <img src="assets/images/LabyrinthLogo.png" alt="Labyrinth Logo" onclick="redirectToDashboard()">
+        <img src="images/LabyrinthLogo.png" alt="Labyrinth Logo" onclick="redirectToDashboard()">
     </div>
     
     <div class="labyrinthHeader">Labyrinth</div>
   
     <!-- Profile Picture & Dropdown (Right-Aligned) -->
     <div class="profile-dropdown">
-        <img class="profile-icon" src="uploads/profile_pics/avatar.png" alt="Profile" id="profileDropdownBtn">
+        <img class="profile-icon" src="profile_pics/avatar.png" alt="Profile" id="profileDropdownBtn">
         <div class="dropdown-menu" id="profileDropdown">
-            <a href="profile.html">Go to Profile</a>
-            <a href="index.html">Logout</a>
+            
+            <a href="/profile">Go to Profile</a>
+            <!-- redirects to index.html -->
+            <a href="/">Logout</a> 
         </div>
     </div>
   </header>
@@ -66,8 +68,8 @@
     </div>
 
     <!-- Link to JavaScript -->
-    <script src="assets/js/reservationJS.js"></script>
-    <script src="assets/js/common.js"></script>
+    <script src="js/reservationJS.js"></script>
+    <script src="js/common.js"></script>
 
 </body>
 </html>

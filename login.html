@@ -1,9 +1,9 @@
 <html>
 <head>
     <title>Login Page</title>
-    <link rel="stylesheet" href="assets/css/loginStyle.css">
-    <link rel="stylesheet" href="assets/css/styleguide.css">
-    <link rel="stylesheet" href="assets/css/global.css">
+    <link rel="stylesheet" href="css/loginStyle.css">
+    <link rel="stylesheet" href="css/styleguide.css">
+    <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
 </head>
@@ -12,9 +12,9 @@
         <!-- Left Image Section -->
         <div class="image-section">
             <div class="overlay"></div>
-            <img src="assets/images/LoginPhoto.jpg" alt="Background Image">
+            <img src="images/LoginPhoto.jpg" alt="Background Image">
             <div class="logo-container">
-                <img src="assets/images/LabyrinthLogo.png" alt="Labyrinth Logo">
+                <img src="images/LabyrinthLogo.png" alt="Labyrinth Logo">
                 <span class="logo-text">Labyrinth</span>
             </div>
         </div>
@@ -26,7 +26,7 @@
             </div>
             <p class="text-section details">Kindly Enter your Details Below</p>
 
-            <form action="Dashboard.html">
+            <form action="/dashboard">
                 <div class="input-container">
                     <i class="fa-solid fa-user icon"></i>
                     <input type="text" placeholder="Username" class="input-field">
@@ -47,9 +47,9 @@
                 <button type="submit" class="login-button">LOGIN</button>
                 
                 <!-- Temporary LabTech Button -->
-                <button type="button" class="TempButton" onclick="window.location.href='labTech.html'">Temp LabTech Button</button> 
+                <button type="button" class="TempButton" onclick="window.location.href='/labtech'">Temp LabTech Button</button> 
 
-                <p class="sign-up">Don’t have an account? <a href="register.html">Sign up here</a></p>
+                <p class="sign-up">Don’t have an account? <a href="/register">Sign up here</a></p>
             </form>
         </div>
     </div>
@@ -85,7 +85,7 @@
 
             <!-- Right Section: Image -->
             <div class="forgot-image-container">
-                <img src="assets/images/ForgotPassword.png" class="forgot-img">
+                <img src="images/ForgotPassword.png" class="forgot-img">
             </div>
         </div>
     </div>
@@ -154,6 +154,6 @@
         </div>
     </div>
 </div>
-    <script src="assets/js/loginJS.js"></script>
+    <script src="js/loginJS.js"></script>
 </body>
 </html>

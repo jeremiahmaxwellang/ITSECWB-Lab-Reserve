@@ -1,9 +1,9 @@
 function redirectToDashboard() {
-  window.location.href = "Dashboard.html";
+  window.location.href = "/dashboard";
 }
 
 function redirectToProfile() {
-  window.location.href = "profile.html";
+  window.location.href = "/profile";
 }
 
 // Profile Dropdown Toggle

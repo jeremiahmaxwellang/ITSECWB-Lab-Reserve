@@ -2,9 +2,9 @@
 <head>
     <title>Labyrinth Register Page</title>
 
-    <link rel="stylesheet" href="assets/css/global.css">
-    <link rel="stylesheet" href="assets/css/styleguide.css">
-    <link rel="stylesheet" href="assets/css/registerStyle.css">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/styleguide.css">
+    <link rel="stylesheet" href="css/registerStyle.css">
 </head>
 
 <body>
@@ -14,13 +14,14 @@
         <!-- Left Side - Image Section -->
         <div class="register-photo">
             <div class="logo-container">
-                <img src="assets/images/LabyrinthLogo.png" class="logo-icon">
+                <img src="images/LabyrinthLogo.png" class="logo-icon">
                 <span class="logo-text">Labyrinth</span>
             </div>
-            <img src="assets/images/RegisterPhoto.png" alt="Background Image">
+            <img src="images/RegisterPhoto.png" alt="Background Image">
         </div>
 
         <!-- Right Side - Registration Form -->
+
         <div class="right-side">
             <div class="register-box">
                 <!-- Register Header -->
@@ -29,16 +30,22 @@
                 </p>
 
                 <!-- Registration Form -->
+
+                
+                <form action="/login" method="post" 
+                enctype="multipart/form-data">
+
                 <div class="registration-container">
+
                     <!-- Row 1: First & Last Name -->
                     <div class="input-row-container">
                         <div class="input-group">
-                            <label class="static-label" for="first-name">First Name</label>
+                            <label class="static-label" for="first_name">First Name</label>
                             <input type="text" id="first-name" class="static-input" placeholder="Jimmy">
                         </div>
 
                         <div class="input-group">
-                            <label class="static-label" for="last-name">Last Name</label>
+                            <label class="static-label" for="last_name">Last Name</label>
                             <input type="text" id="last-name" class="static-input" placeholder="McGill">
                         </div>
                     </div>
@@ -51,8 +58,8 @@
                         </div>
 
                         <div class="input-group">
-                            <label class="static-label" for="id-number">DLSU ID Number</label>
-                            <input type="text" id="id-number" class="static-input" placeholder="1220987">
+                            <label class="static-label" for="user_id">DLSU ID Number</label>
+                            <input type="text" id="user_id" class="static-input" placeholder="1220987">
                         </div>
                     </div>
 
@@ -68,13 +75,21 @@
                     </div>
 
                     <!-- Create Account Button -->
-                    <button class="create-button">CREATE ACCOUNT</button>
+                     <!-- PROBLEM: Create Account button automatically redirects to next page, but we have a pop-up afterwards -->
+                    <input type="submit" class="create-button" value="CREATE ACCOUNT"/>
+
+                    
+                    
 
                     <!-- Already have an account? -->
                     <div class="login-container">
                         <div class="already-account">Already have an account?</div>
-                        <a href="login.html"> <div class="login">Login</div> </a>
+                        <a href="/login"> <div class="login">Login</div> </a>
                     </div>
+
+                </form>
+                <!-- End of form -->
+                 
                 </div> 
             </div>
         </div>
@@ -93,12 +108,12 @@
             <button id="getStartedButton" class="get-started-button">Get Started</button>
 
             <!-- Image Section -->
-            <img src="assets/images/AccountCreated.webp" alt="Success Image" class="success-image">
+            <img src="images/AccountCreated.webp" alt="Success Image" class="success-image">
         </div>
     </div>
 </div>
 
-    <script src="assets/js/registerJS.js"></script>
+    <script src="js/registerJS.js"></script>
 </body>
 </html>
     

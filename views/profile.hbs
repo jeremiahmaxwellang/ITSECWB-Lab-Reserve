@@ -1,14 +1,340 @@
-{{!-- This is the profile page template --}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{user.first_name}} {{user.last_name}}'s profile</title>
 
-{{!-- Temp html code --}}
-<html>
-    <head>
-        <title>{{user.firstName}} {{user.firstName}} profile</title>
-    </head>
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/styleguide.css">
+    <link rel="stylesheet" href="css/profileStyle.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
-    <body>
-        <h1>{{user.firstName}} {{user.lastName}}</h1>
-        <p> Student </p>
-        <p> Email: </p>
-    </body>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+    <div class="logo-container">
+        <img src="images/LabyrinthLogo.png" alt="Labyrinth Logo" onclick="redirectToDashboard()">
+    </div>
+
+    <div class="labyrinthHeader">Labyrinth</div>
+
+    <div class="profile-dropdown">
+        <img class="profile-icon" src="uploads/profile_pics/avatar.png" alt="Profile" id="profileDropdownBtn">
+        <div class="dropdown-menu" id="profileDropdown">
+            {{!-- Profile redirection (idk if this route is correct) --}}
+            <a href="profile">Go to Profile</a>
+            <a href="/">Logout</a>
+        </div>
+    </div>
+</header>
+
+<!-- Profile Heading -->
+<div class="profile-heading">
+    <img id="cover-image" src="images/Background.png" alt="Cover Image">
+    <div class="cover-content-container">
+        <div class="avatar-container">
+            <img class="profile-picture" src="uploads/profile_pics/avatar.png" alt="Profile Picture">
+        </div>
+        <div class="text-container">
+            <div class="profile-name">{{user.first_name}} {{user.last_name}}</div>
+            <div class="profile-type">Student</div>
+        </div>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="dashboard-html">
+    <div class="overlap">
+        <!-- User Details Section -->
+        <div class="user-details">
+            <div class="profile-details">
+                <h2 class="section-title">Profile Details</h2>
+                <div class="divider"><div class="bar"></div></div>
+
+                <div class="subsection-container">
+                    <div class="subsection-title">Email</div>
+                    <div class="subsection-content">jeremiah_ang@dlsu.edu.ph</div>
+                </div>
+
+                <div class="divider"><div class="bar"></div></div>
+
+                <div class="subsection-container">
+                    <div class="subsection-title">ID Number</div>
+                    <div class="subsection-content">12203653</div>
+                </div>
+
+                <div class="divider"><div class="bar"></div></div>
+
+                <div class="subsection-container">
+                    <div class="subsection-title">Description</div>
+                    <div class="subsection-content">I’m a BS-IT Student that cannot think of a good description</div>
+                </div>
+
+                <div class="divider"><div class="bar"></div></div>
+
+                <div class="button-container">
+                    <button class="edit-profile-button" id="editProfileBtn">Edit Profile</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Side: Reservations Table -->
+        <div class="reservationContainer">
+            <!-- Current Reservations -->
+            <table id="currentReservationsTable">
+                <thead>
+                    <tr>
+                        <th colspan="5" class="reservationHeader">Current Reservations:</th>
+                    </tr>
+                    <tr>
+                        <th>Room Number</th>
+                        <th>Seat Number</th>
+                        <th>Date</th>
+                        <th>Time Slot</th>
+                        <th>Edit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>GK01</td>
+                        <td>Seat #01</td>
+                        <td>August 5, 2025</td>
+                        <td>8:00 AM - 8:30 AM</td>
+                        <td><button class="edit-button">Edit</button></td>
+                    </tr>
+                    <tr>
+                        <td>GK02</td>
+                        <td>Seat #02</td>
+                        <td>August 6, 2025</td>
+                        <td>9:30 AM - 10:00 AM</td>
+                        <td><button class="edit-button">Edit</button></td>
+                    </tr>
+                    <tr>
+                        <td>GK03</td>
+                        <td>Seat #03</td>
+                        <td>August 7, 2025</td>
+                        <td>11:00 AM - 11:30 AM</td>
+                        <td><button class="edit-button">Edit</button></td>
+                    </tr>
+                    <tr>
+                        <td>GK04</td>
+                        <td>Seat #04</td>
+                        <td>August 8, 2025</td>
+                        <td>2:30 PM - 3:00 PM</td>
+                        <td><button class="edit-button">Edit</button></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Recent Reservations -->
+            <table id="recentReservationsTable">
+                <thead>
+                    <tr>
+                        <th colspan="5" class="reservationHeader">Recent Reservations:</th>
+                    </tr>
+                    <tr>
+                        <th>Room Number</th>
+                        <th>Seat Number</th>
+                        <th>Date</th>
+                        <th>Time Slot</th>
+                        <th>Who Reserved?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>GK01</td>
+                        <td>Seat #01</td>
+                        <td>August 1, 2025</td>
+                        <td>8:30 AM - 9:00 AM</td>
+                        <td>John Reservation</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Profile Modal -->
+<div id="editProfileModal" class="modal">
+    <div class="modal-content">
+        
+        <!-- Close Button -->
+        <span class="close">&times;</span>
+
+        <!-- Modal Header Section -->
+        <div class="modal-header">
+            <img src="images/Background.png" class="modal-cover" alt="Cover Image">
+
+            <!-- Profile Information -->
+            <div class="profile-info">
+                <!-- Profile Picture + Button (Stacked) -->
+                <div class="modal-profile-container">
+                    <img class="modal-profile-picture" src="uploads/profile_pics/avatar.png" alt="Profile Picture">
+                    <button class="change-photo-btn">Change Profile Photo</button>
+                </div>
+
+                <!-- Name & Role -->
+                <div class="profile-text">
+                    <h3>Jeremiah Ang</h3>
+                    <p>Student</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="curved-divider"></div>
+        
+        <!-- Modal Body -->
+        <div class="modal-body">
+            <h3 class="section-title">Personal Information</h3>
+
+            <!-- First Name & Last Name Row -->
+            <div class="input-row">
+                <div class="input-group">
+                    <label class="static-label" for="firstName">First Name</label>
+                    <input type="text" id="firstName" class="static-input" placeholder="Enter First Name">
+                </div>
+
+                <div class="input-group">
+                    <label class="static-label" for="lastName">Last Name</label>
+                    <input type="text" id="lastName" class="static-input" placeholder="Enter Last Name">
+                </div>
+            </div>
+
+            <!-- Profile Description -->
+            <div class="input-group">
+                <textarea id="profileDescription" class="static-input" placeholder=" "></textarea>
+                <label class="static-label" for="profileDescription">Profile Description</label>
+            </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="divider"></div>
+
+        <div class="modal-footer">
+            <button id="deleteAccountBtn" class="delete-btn">Delete Account</button>
+            <button id="changePasswordBtn" class="password-btn">Change Password</button>
+            <button id="saveChanges" class="save-btn">Save Changes</button>
+        </div>
+    </div>
+</div>
+
+<!-- Save Changes Confirmation Modal -->
+<div id="saveChangesModal" class="modal">
+    <div class="modal-content unsaved-changes">
+        <span class="close-confirm">&times;</span>
+        
+        <!-- Save Icon -->
+        <div class="save-icon">
+            <i class="fa-solid fa-floppy-disk icon"></i>
+        </div>
+
+        <!-- Title & Message -->
+        <h2>Save Changes?</h2>
+        <p>Changes that you have made may not be saved.</p>
+
+        <!-- Buttons -->
+        <div class="button-group">
+            <button id="cancelBtn" class="cancel-btn">Cancel</button>
+            <button id="leaveBtn" class="leave-btn">Leave</button>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Account Confirmation Modal -->
+<div id="deleteAccountModal" class="modal">
+    <div class="delete-account">
+
+        <!-- Delete Icon -->
+        <div class="delete-icon">
+            <i class="fa-solid fa-trash-can"></i>
+        </div>
+
+        <!-- Title & Message -->
+        <h2>Are you sure you want to delete your account?</h2>
+        <p>This action is permanent.<br><br>You will need to register a new account to reserve lab slots.</p>
+
+        <!-- Buttons -->
+        <div class="button-group">
+            <button id="cancelDeleteBtn" class="cancel-btn">Cancel</button>
+            <button id="confirmDeleteBtn" class="confirm-btn">Confirm</button>
+        </div>
+    </div>
+</div>
+
+<!-- Account Successfully Deleted Modal -->
+<div id="accountDeletedModal" class="modal">
+    <div class="account-deleted">
+        <!-- Delete Icon -->
+        <div class="delete-icon">
+            <i class="fa-solid fa-trash-can"></i>
+        </div>
+
+        <!-- Title & Message -->
+        <h2>Account Successfully Deleted</h2>
+        <p>Thank you for using <span style="color: #377684; font-weight: bold;">Labyrinth</span>!</p>
+
+        <!-- Button to go back to home page -->
+        <button id="goBackHomeBtn" class="back-btn">Go Back to Home Page</button>
+    </div>
+</div>
+
+<!-- Change Password Modal -->
+<div id="changePasswordModal" class="modal">
+    <div class="change-password">
+        <div class="lock-icon">
+            <i class="fa fa-lock"></i>
+        </div>
+
+        <!-- Close Button (Make sure it has class "close") -->
+        <span class="close">&times;</span>
+
+        <!-- Title & Description -->
+        <h2>Create New Password</h2>
+        <p>Please enter and confirm your new password.</p>
+
+        <!-- Input Fields -->
+        <div class="input-group">
+            <label class="static-label" for="new-password">New Password:</label>
+            <input type="password" id="new-password" class="static-input">
+        </div> 
+        
+        <div class="input-group">
+            <label class="static-label" for="confirm-password">Confirm Password:</label>
+            <input type="password" id="confirm-password" class="static-input">
+        </div>   
+
+        <!-- Submit Button -->
+        <button class="submit-btn change-submit-btn">Submit</button>
+    </div>
+</div>
+
+
+<!-- Success Changes Modal -->
+<div id="successChangesModal" class="modal">
+    <div class="successfully-changed">
+        <div class="check-icon">
+            <i class="fa fa-check-circle"></i>
+        </div>
+
+        <!-- Close Button -->
+        <span class="close close-success-changes">&times;</span>
+
+        <!-- Title & Message -->
+        <h2>Changes Successfully Saved</h2>
+        <p>Thank you for using <span style="color: #377684; font-weight: bold;">Labyrinth</span>!</p>
+
+        <!-- Button to go back to profile -->
+        <button id="goBackProfileBtn" class="back-btn">Go Back to Profile</button>
+    </div>
+</div>
+
+
+<!-- JavaScript -->
+<script src="js/common.js"></script>
+<script src="js/profileJS.js"></script>
+
+</body>
 </html>
