@@ -7,9 +7,10 @@ const hbs = require('hbs')
 const path = require('path')
 const fileUpload = require('express-fileupload')
 const session = require('express-session') //please download this new library
-
-// Mongoose Library
 const mongoose = require('mongoose')
+const crypto = require('crypto') //no need to install crypto, it's built-in already
+
+// DB CONNECTION
 mongoose.connect('mongodb://localhost/labyrinthDB')
 
 const app = express()
@@ -41,8 +42,6 @@ const isAuthenticated = (req, res, next) => {
     else res.redirect("/login")
 }
 
-
-
 // TODO: Hardcode lab technician accounts
 // MCO3 TODO: Hash the password
 var admin1 = {
@@ -50,9 +49,11 @@ var admin1 = {
     last_name: "Eladio",
     first_name: "Don",
     email: "don_eladio@dlsu.edu.ph",
-    password: "adminpassword1234", 
+    password: "749f09bade8aca755660eeb17792da880218d4fbdc4e25fbec279d7fe9f65d70", 
     account_type: "Lab Technician",
 }
+
+// actual admin password: "adminpassword1234"
 
 var student1 = {
     user_id: 1220123,
@@ -61,6 +62,21 @@ var student1 = {
     email: "jeremiah_ang@dlsu.edu.ph",
     password: "studentpassword", 
     account_type: "Student",
+}
+
+/*
+    SHA256 hash generation
+    Reference: https://www.techiedelight.com/generate-sha-256-hash-javascript/
+*/
+function sha256(password) {
+    // Create a hash object
+    const hash = crypto.createHash('sha256');
+ 
+    // Pass the input data to the hash object
+    hash.update(password);
+ 
+    // Get the output in hexadecimal format
+    return hash.digest('hex');
 }
 
 var bodyParser = require('body-parser')
@@ -81,9 +97,13 @@ app.get('/register', function(req,res){
 // Route to login.html
 // localhost:3000/login
 app.get('/login', function(req,res){
-    const { email, password } = req.body
+    if(req.session.user){
+        res.redirect('/dashboard');
+    }
 
-    res.sendFile(__dirname + '\\' + 'login.html')
+    else{
+        res.sendFile(__dirname + '/login.html')
+    }
 })
 
 // SUBMIT LOGIN CREDENTIALS ROUTE
@@ -91,25 +111,28 @@ app.post("/login", express.urlencoded({extended: true}), (req,res) => {
     const{email, password} = req.body
 
     console.log("Email: ", email)
-    console.log("Pass: ", password)
+    console.log("Pass: ", sha256(password))
 
-    // routes for hardcoded users
-    if(email === admin1.email && password === admin1.password){
+    // route for students
+    // TODO: Change this so it checks the DB if email exists
+    if(email === student1.email && password === student1.password){
+        console.log("signed in")
+        req.session.user = student1
+        res.cookie("sessionId",req.sessionID)
+
+        res.redirect('/dashboard')
+    }
+
+    // route for admin
+    else if(email === admin1.email && sha256(password) === admin1.password){
         req.session.user = admin1
         res.cookie("sessionId",req.sessionID)
 
         res.redirect("/labtech")
     }
 
-    else if(email === student1.email && password === student1.email){
-        req.session.user = student1
-        res.cookie("sessionId",req.sessionID)
-
-        res.redirect("/profile")
-    }
-
     else{
-        res.send("Invalid credentials. <a href='login>Please try again</a>")
+        res.status(401).send("Invalid credentials. <a href='login>Please try again</a>")
     }
 })
 
@@ -152,12 +175,15 @@ app.get('/dashboard', async(req,res) => {
 
 
 // LOGOUT (destroy the session)
-// app.get("/logout", (req,res) => {
-//     req.session.destroy() => {
-//         res.clearCookie("sessionId")
-//         res.redirect("/login")
-//     }
-// })
+app.get('/logout', (req, res) => {
+    req.session.destroy((err) => {
+        if(err)
+            return res.status(500).send("Error logging out")
+
+        res.clearCookie('sessionId')
+        res.redirect('/login')
+    })
+})
 
 // Server listens on port 3000
 var server = app.listen(3000, function(){

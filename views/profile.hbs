@@ -26,7 +26,7 @@
         <div class="dropdown-menu" id="profileDropdown">
             {{!-- Profile redirection (idk if this route is correct) --}}
             <a href="profile">Go to Profile</a>
-            <a href="/">Logout</a>
+            <a href="/logout">Logout</a>
         </div>
     </div>
 </header>
@@ -40,7 +40,7 @@
         </div>
         <div class="text-container">
             <div class="profile-name">{{user.first_name}} {{user.last_name}}</div>
-            <div class="profile-type">Student</div>
+            <div class="profile-type">{{account_type}}</div>
         </div>
     </div>
 </div>
@@ -56,14 +56,14 @@
 
                 <div class="subsection-container">
                     <div class="subsection-title">Email</div>
-                    <div class="subsection-content">jeremiah_ang@dlsu.edu.ph</div>
+                    <div class="subsection-content">{{email}}</div>
                 </div>
 
                 <div class="divider"><div class="bar"></div></div>
 
                 <div class="subsection-container">
                     <div class="subsection-title">ID Number</div>
-                    <div class="subsection-content">12203653</div>
+                    <div class="subsection-content">{{user_id}}</div>
                 </div>
 
                 <div class="divider"><div class="bar"></div></div>
