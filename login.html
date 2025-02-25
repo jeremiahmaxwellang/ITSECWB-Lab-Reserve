@@ -5,7 +5,6 @@
     <link rel="stylesheet" href="css/styleguide.css">
     <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-
 </head>
 <body>
     <div class="container">
@@ -26,15 +25,17 @@
             </div>
             <p class="text-section details">Kindly Enter your Details Below</p>
 
-            <form action="/dashboard">
+
+
+            <form action="/login" method="post">
                 <div class="input-container">
                     <i class="fa-solid fa-user icon"></i>
-                    <input type="text" placeholder="Username" class="input-field">
+                    <input id="email" type="text" placeholder="DLSU Email" class="input-field">
                 </div>
                 
                 <div class="input-container">
                     <i class="fa-solid fa-lock icon"></i>
-                    <input type="password" placeholder="Password" class="input-field">
+                    <input id="password" type="password" placeholder="Password" class="input-field">
                 </div>
 
                 <div class="remember-forgot">
