@@ -4,7 +4,7 @@
 
 const express = require('express')
 const hbs = require('hbs') 
-const path = require('path')
+
 const fileUpload = require('express-fileupload')
 const session = require('express-session') //please download this new library
 const mongoose = require('mongoose')
@@ -12,6 +12,11 @@ const crypto = require('crypto') //no need to install crypto, it's built-in alre
 
 // DB CONNECTION
 mongoose.connect('mongodb://localhost/labyrinthDB')
+
+/* Initialize User path */
+const User = require("./database/models/User")
+const path = require('path')
+
 
 const app = express()
 
@@ -53,6 +58,9 @@ var admin1 = {
     account_type: "Lab Technician",
 }
 
+
+
+
 // actual admin password: "adminpassword1234"
 
 var student1 = {
@@ -87,14 +95,37 @@ app.use( bodyParser.urlencoded({extended: false}) )
 // Route to INDEX.HTML
 // localhost:3000/
 app.get('/', function(req,res){
+    // TEST DB QUERY, PLEASE UNCOMMENT WHEN YOU SEE THE TEST ACCOUNT IN MONGODBCOMPASS
+    User.create({
+        user_id: 1220123,
+        last_name: "LAng",
+        first_name: "test",
+        email: "test@dlsu.edu.ph", 
+        password: "68eaeeaef51a40035b5d3705c4e0ffd68036b6b821361765145f410b0f996e11",
+        account_type: "Student",
+    });
+
     res.sendFile(__dirname + '\\' + 'index.html')
 })
 
 // Route to register.html
 // localhost:3000/register
 app.get('/register', function(req,res){
+
     res.sendFile(__dirname + '\\' + 'register.html')
 })
+
+// app.post('/register', function(req, res) {
+
+//         User.create({
+//         ...req.body,
+
+//         });
+
+//         res.redirect('/');
+        
+// })
+
 
 // Route to login.html
 // localhost:3000/login

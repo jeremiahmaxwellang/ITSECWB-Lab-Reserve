@@ -1,16 +1,7 @@
 const mongoose = require('mongoose')
 
 const UserSchema = new mongoose.Schema({
-    user_id: { 
-        type: Number, 
-        required: true,
-        validate: {
-            validator: function(v) {
-                return /^\d{8}$/.test(v);
-            },
-            message: props => `${props.value} is not a valid 8-digit number!`
-        }
-    },
+    user_id: { type: Number, required: true },
 
     last_name: { type: String, required: true },
     first_name: { type: String, required: true },
