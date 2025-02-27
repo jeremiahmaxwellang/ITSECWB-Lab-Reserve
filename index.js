@@ -49,7 +49,7 @@ var admin1 = {
     last_name: "Eladio",
     first_name: "Don",
     email: "don_eladio@dlsu.edu.ph",
-    password: "749f09bade8aca755660eeb17792da880218d4fbdc4e25fbec279d7fe9f65d70", 
+    password: "9478bb58c888759b01f502aec75dabd4ea5ba64b45442127ca337ceb280f4f57", 
     account_type: "Lab Technician",
 }
 
@@ -59,10 +59,12 @@ var student1 = {
     user_id: 1220123,
     last_name: "Ang",
     first_name: "Jeremiah",
-    email: "jeremiah_ang@dlsu.edu.ph",
-    password: "studentpassword", 
+    email: "jeremiah_ang@dlsu.edu.ph", 
+    password: "68eaeeaef51a40035b5d3705c4e0ffd68036b6b821361765145f410b0f996e11",
     account_type: "Student",
 }
+
+// actual student password: "studentpassword"
 
 /*
     SHA256 hash generation
@@ -115,7 +117,7 @@ app.post("/login", express.urlencoded({extended: true}), (req,res) => {
 
     // route for students
     // TODO: Change this so it checks the DB if email exists
-    if(email === student1.email && password === student1.password){
+    if(email === student1.email && sha256(password) === student1.password){
         console.log("signed in")
         req.session.user = student1
         res.cookie("sessionId",req.sessionID)
