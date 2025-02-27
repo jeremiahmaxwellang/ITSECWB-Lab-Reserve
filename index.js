@@ -47,6 +47,8 @@ const isAuthenticated = (req, res, next) => {
     else res.redirect("/login")
 }
 
+
+
 // TODO: Hardcode lab technician accounts
 // MCO3 TODO: Hash the password
 var admin1 = {
@@ -95,15 +97,8 @@ app.use( bodyParser.urlencoded({extended: false}) )
 // Route to INDEX.HTML
 // localhost:3000/
 app.get('/', function(req,res){
-    // TEST DB QUERY, PLEASE UNCOMMENT WHEN YOU SEE THE TEST ACCOUNT IN MONGODBCOMPASS
-    User.create({
-        user_id: 1220123,
-        last_name: "LAng",
-        first_name: "test",
-        email: "test@dlsu.edu.ph", 
-        password: "68eaeeaef51a40035b5d3705c4e0ffd68036b6b821361765145f410b0f996e11",
-        account_type: "Student",
-    });
+
+
 
     res.sendFile(__dirname + '\\' + 'index.html')
 })
@@ -220,5 +215,16 @@ app.get('/logout', (req, res) => {
 
 // Server listens on port 3000
 var server = app.listen(3000, function(){
+
+            // TEST DB QUERY, PLEASE COMMENT OUT WHEN YOU SEE THE TEST ACCOUNT IN MONGODBCOMPASS
+            User.create({
+                user_id: 1230124,
+                last_name: "second test",
+                first_name: "test 2",
+                email: "test2@dlsu.edu.ph", 
+                password: "68eaeeaef51a40035b5d3705c4e0ffd68036b6b821361765145f410b0f996e11",
+                account_type: "Student",
+            });
+
     console.log("Labyrinth Node Server is listening on port 3000...")
 })
