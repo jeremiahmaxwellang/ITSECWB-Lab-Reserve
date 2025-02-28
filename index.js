@@ -192,7 +192,7 @@ app.get('/labtech', isAuthenticated, (req,res) => {
 
 
 // Route to reservation handlebar (MUST DEPEND ON USER SESSION)
-app.get('/reserve', async(req,res) => {
+app.get('/reserve', isAuthenticated, async(req,res) => {
 
     res.render('reserve')
 })
@@ -216,7 +216,7 @@ app.get('/logout', (req, res) => {
             return res.status(500).send("Error logging out")
 
         res.clearCookie('sessionId')
-        res.redirect('/login')
+        res.redirect('/')
     })
 })
 
