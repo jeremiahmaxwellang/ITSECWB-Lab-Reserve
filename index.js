@@ -10,8 +10,15 @@ const session = require('express-session') //please download this new library
 const mongoose = require('mongoose')
 const crypto = require('crypto') //no need to install crypto, it's built-in already
 
-// DB CONNECTION
-mongoose.connect('mongodb://localhost/labyrinthDB')
+// DB CONNECTION 
+// FEB 28 EDIT: Changed the connection string (copied from ccapdev sample activity)
+mongoose.connect('mongodb://127.0.0.1:27017/labyrinthDB', { 
+    useNewUrlParser: true, 
+    useUnifiedTopology: true 
+}).then(() => console.log('Connected to MongoDB'))
+.catch(err => console.error('MongoDB connection error:', err));
+
+// mongoose.connect('mongodb://localhost/labyrinthDB')
 
 /* Initialize User path */
 const User = require("./database/models/User")
@@ -217,14 +224,14 @@ app.get('/logout', (req, res) => {
 var server = app.listen(3000, function(){
 
             // TEST DB QUERY, PLEASE COMMENT OUT WHEN YOU SEE THE TEST ACCOUNT IN MONGODBCOMPASS
-            User.create({
-                user_id: 1230124,
-                last_name: "second test",
-                first_name: "test 2",
-                email: "test2@dlsu.edu.ph", 
-                password: "68eaeeaef51a40035b5d3705c4e0ffd68036b6b821361765145f410b0f996e11",
-                account_type: "Student",
-            });
+            // User.create({
+            //     user_id: 1230124,
+            //     last_name: "second test",
+            //     first_name: "test 2",
+            //     email: "test2@dlsu.edu.ph", 
+            //     password: "68eaeeaef51a40035b5d3705c4e0ffd68036b6b821361765145f410b0f996e11",
+            //     account_type: "Student",
+            // });
 
     console.log("Labyrinth Node Server is listening on port 3000...")
 })
