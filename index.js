@@ -22,6 +22,10 @@ mongoose.connect('mongodb://127.0.0.1:27017/labyrinthDB', {
 
 /* Initialize User path */
 const User = require("./database/models/User")
+const Seat = require("./database/models/Seat")
+const Building = require("./database/models/Building.js")
+const Room = require("./database/models/Room")
+const Reservation = require("./database/models/Reservation")
 const path = require('path')
 
 
@@ -63,25 +67,181 @@ var admin1 = {
     last_name: "Eladio",
     first_name: "Don",
     email: "don_eladio@dlsu.edu.ph",
-    password: "9478bb58c888759b01f502aec75dabd4ea5ba64b45442127ca337ceb280f4f57", 
+    password: "9478bb58c888759b01f502aec75dabd4ea5ba64b45442127ca337ceb280f4f57", // actual admin password: "adminpassword1234"
     account_type: "Lab Technician",
 }
-
-
-
-
-// actual admin password: "adminpassword1234"
 
 var student1 = {
     user_id: 1220123,
     last_name: "Ang",
     first_name: "Jeremiah",
     email: "jeremiah_ang@dlsu.edu.ph", 
-    password: "68eaeeaef51a40035b5d3705c4e0ffd68036b6b821361765145f410b0f996e11",
+    password: "68eaeeaef51a40035b5d3705c4e0ffd68036b6b821361765145f410b0f996e11", // actual student password: "studentpassword"
     account_type: "Student",
 }
 
-// actual student password: "studentpassword"
+//hard coded of building values
+async function insertBuildings() {
+    try {
+        // Connect to MongoDB
+        await mongoose.connect('mongodb://127.0.0.1:27017/labyrinthDB', {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        });
+
+        // Define buildings
+        const buildings = [
+            { building_id: 1, building_name: "Science Hall" },
+            { building_id: 2, building_name: "Engineering Complex" },
+            { building_id: 3, building_name: "Library" }
+        ];
+
+        // Insert buildings if they don't exist
+        for (const building of buildings) {
+            await Building.findOneAndUpdate(
+                { building_id: building.building_id }, // Search condition
+                building, // Data to insert/update
+                { upsert: true, new: true, setDefaultsOnInsert: true } // Upsert options
+            );
+        }
+
+        console.log("✅ Buildings inserted (if not duplicates)");
+        mongoose.connection.close();
+    } catch (err) {
+        console.error("⚠️ Error inserting buildings:", err);
+    }
+}
+
+// Run the function
+insertBuildings();
+
+
+
+async function insertRooms() {
+    try {
+        // Connect to MongoDB
+        await mongoose.connect('mongodb://127.0.0.1:27017/labyrinthDB', {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        });
+
+        // Define rooms
+        const rooms = [
+            { building_id: 1, room_num: "101", floor_num: 1 },
+            { building_id: 1, room_num: "102", floor_num: 1 },
+            { building_id: 2, room_num: "201", floor_num: 2 }
+        ];
+
+        // Insert rooms if they don't exist
+        for (const room of rooms) {
+            await Room.findOneAndUpdate(
+                { building_id: room.building_id, room_num: room.room_num }, // Search condition
+                room, // Data to insert/update
+                { upsert: true, new: true, setDefaultsOnInsert: true } // Upsert options
+            );
+        }
+
+        console.log("✅ Rooms inserted (if not duplicates)");
+        mongoose.connection.close();
+    } catch (err) {
+        console.error("⚠️ Error inserting rooms:", err);
+    }
+}
+
+// Run the function
+insertRooms();
+
+
+async function insertSeats() {
+    try {
+        // Connect to MongoDB
+        await mongoose.connect('mongodb://127.0.0.1:27017/labyrinthDB', {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        });
+
+        // Define seats
+        const seats = [
+            { room_num: "101", seat_num: 1 },
+            { room_num: "101", seat_num: 2 },
+            { room_num: "102", seat_num: 1 }
+        ];
+
+        // Insert seats if they don't exist
+        for (const seat of seats) {
+            await Seat.findOneAndUpdate(
+                { room_num: seat.room_num, seat_num: seat.seat_num }, // Search condition (unique key)
+                seat, // Data to insert/update
+                { upsert: true, new: true, setDefaultsOnInsert: true } // Upsert options
+            );
+        }
+
+        console.log("✅ Seats inserted (if not duplicates)");
+        mongoose.connection.close();
+    } catch (err) {
+        console.error("⚠️ Error inserting seats:", err);
+    }
+}
+
+// Run the function
+insertSeats();
+
+
+async function insertReservations() {
+    try {
+        // Connect to MongoDB
+        await mongoose.connect('mongodb://127.0.0.1:27017/labyrinthDB', {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        });
+
+        console.log("Connected to MongoDB");
+
+        // Define reservations
+        const reservations = [
+            {
+                user_id: 1220123,
+                request_date: new Date("2025-03-01T10:00:00Z"),
+                reserved_date: new Date("2025-03-02T14:00:00Z"),
+                room_num: "101",
+                seat_num: 1,
+                anonymous: "N",
+                reserved_for_id: null
+            },
+            {
+                user_id: 1220456,
+                request_date: new Date("2025-03-05T11:30:00Z"),
+                reserved_date: new Date("2025-03-06T09:00:00Z"),
+                room_num: "102",
+                seat_num: 1,
+                anonymous: "Y",
+                reserved_for_id: 1220123 // Reserved for student1
+            }
+        ];
+
+        // Insert reservations if they don't exist
+        for (const reservation of reservations) {
+            await Reservation.findOneAndUpdate(
+                {
+                    user_id: reservation.user_id,
+                    room_num: reservation.room_num,
+                    seat_num: reservation.seat_num,
+                    reserved_date: reservation.reserved_date
+                }, // Search condition to avoid duplicate reservations
+                reservation, // Data to insert/update
+                { upsert: true, new: true, setDefaultsOnInsert: true } // Upsert options
+            );
+        }
+
+        console.log("✅ Reservations inserted (if not duplicates)");
+        mongoose.connection.close();
+    } catch (err) {
+        console.error("⚠️ Error inserting reservations:", err);
+    }
+}
+
+// Run the function
+insertReservations();
 
 /*
     SHA256 hash generation
@@ -232,6 +392,8 @@ var server = app.listen(3000, function(){
             //     password: "68eaeeaef51a40035b5d3705c4e0ffd68036b6b821361765145f410b0f996e11",
             //     account_type: "Student",
             // });
+
+
 
     console.log("Labyrinth Node Server is listening on port 3000...")
 })
