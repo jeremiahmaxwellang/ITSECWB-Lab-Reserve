@@ -63,7 +63,7 @@ const isAuthenticated = (req, res, next) => {
 // TODO: Hardcode lab technician accounts
 // MCO3 TODO: Hash the password
 var admin1 = {
-    user_id: 1181234,
+    user_id: new mongoose.Types.ObjectId(), // Generate ObjectId for user_id
     last_name: "Eladio",
     first_name: "Don",
     email: "don_eladio@dlsu.edu.ph",
@@ -72,59 +72,49 @@ var admin1 = {
 }
 
 var student1 = {
-    user_id: 1220123,
+    user_id: new mongoose.Types.ObjectId(), // Generate ObjectId for user_id
     last_name: "Ang",
     first_name: "Jeremiah",
-    email: "jeremiah_ang@dlsu.edu.ph", 
+    email: "jeremiah_ang@dlsu.edu.ph",
     password: "68eaeeaef51a40035b5d3705c4e0ffd68036b6b821361765145f410b0f996e11", // actual student password: "studentpassword"
     account_type: "Student",
+};
+
+// Function to Insert Hardcoded Users
+async function insertUsers() {
+    try {
+        await User.findOneAndUpdate({ email: admin1.email }, admin1, { upsert: true, new: true });
+        await User.findOneAndUpdate({ email: student1.email }, student1, { upsert: true, new: true });
+        console.log("✅ Users inserted or updated");
+    } catch (err) {
+        console.error("⚠️ Error inserting users:", err);
+    }
 }
 
 //hard coded of building values
 async function insertBuildings() {
     try {
-        // Connect to MongoDB
-        await mongoose.connect('mongodb://127.0.0.1:27017/labyrinthDB', {
-            useNewUrlParser: true,
-            useUnifiedTopology: true
-        });
-
-        // Define buildings
         const buildings = [
             { building_id: 1, building_name: "Science Hall" },
             { building_id: 2, building_name: "Engineering Complex" },
             { building_id: 3, building_name: "Library" }
         ];
 
-        // Insert buildings if they don't exist
         for (const building of buildings) {
             await Building.findOneAndUpdate(
                 { building_id: building.building_id }, // Search condition
                 building, // Data to insert/update
-                { upsert: true, new: true, setDefaultsOnInsert: true } // Upsert options
+                { upsert: true, new: true, setDefaultsOnInsert: true }
             );
         }
-
-        console.log("✅ Buildings inserted (if not duplicates)");
-        mongoose.connection.close();
+        console.log("✅ Buildings inserted or updated");
     } catch (err) {
         console.error("⚠️ Error inserting buildings:", err);
     }
 }
 
-// Run the function
-insertBuildings();
-
-
-
 async function insertRooms() {
     try {
-        // Connect to MongoDB
-        await mongoose.connect('mongodb://127.0.0.1:27017/labyrinthDB', {
-            useNewUrlParser: true,
-            useUnifiedTopology: true
-        });
-
         // Define rooms
         const rooms = [
             { building_id: 1, room_num: "101", floor_num: 1 },
@@ -142,24 +132,13 @@ async function insertRooms() {
         }
 
         console.log("✅ Rooms inserted (if not duplicates)");
-        mongoose.connection.close();
     } catch (err) {
         console.error("⚠️ Error inserting rooms:", err);
     }
 }
 
-// Run the function
-insertRooms();
-
-
 async function insertSeats() {
     try {
-        // Connect to MongoDB
-        await mongoose.connect('mongodb://127.0.0.1:27017/labyrinthDB', {
-            useNewUrlParser: true,
-            useUnifiedTopology: true
-        });
-
         // Define seats
         const seats = [
             { room_num: "101", seat_num: 1 },
@@ -177,30 +156,26 @@ async function insertSeats() {
         }
 
         console.log("✅ Seats inserted (if not duplicates)");
-        mongoose.connection.close();
     } catch (err) {
         console.error("⚠️ Error inserting seats:", err);
     }
 }
 
-// Run the function
-insertSeats();
-
-
 async function insertReservations() {
     try {
-        // Connect to MongoDB
-        await mongoose.connect('mongodb://127.0.0.1:27017/labyrinthDB', {
-            useNewUrlParser: true,
-            useUnifiedTopology: true
-        });
+        // Find users to get their `user_id`
+        const student = await User.findOne({ email: "jeremiah_ang@dlsu.edu.ph" });
+        const admin = await User.findOne({ email: "don_eladio@dlsu.edu.ph" });
 
-        console.log("Connected to MongoDB");
+        if (!student || !admin) {
+            console.error("⚠️ Users not found. Cannot create reservations.");
+            return;
+        }
 
-        // Define reservations
+        // Hardcoded Reservations with assigned user_id
         const reservations = [
             {
-                user_id: 1220123,
+                user_id: admin.user_id, // Assign admin's user_id
                 request_date: new Date("2025-03-01T10:00:00Z"),
                 reserved_date: new Date("2025-03-02T14:00:00Z"),
                 room_num: "101",
@@ -209,17 +184,16 @@ async function insertReservations() {
                 reserved_for_id: null
             },
             {
-                user_id: 1220456,
+                user_id: student.user_id, // Assign student's user_id
                 request_date: new Date("2025-03-05T11:30:00Z"),
                 reserved_date: new Date("2025-03-06T09:00:00Z"),
                 room_num: "102",
                 seat_num: 1,
                 anonymous: "Y",
-                reserved_for_id: 1220123 // Reserved for student1
             }
         ];
 
-        // Insert reservations if they don't exist
+        // Insert Reservations if they don't exist
         for (const reservation of reservations) {
             await Reservation.findOneAndUpdate(
                 {
@@ -227,21 +201,27 @@ async function insertReservations() {
                     room_num: reservation.room_num,
                     seat_num: reservation.seat_num,
                     reserved_date: reservation.reserved_date
-                }, // Search condition to avoid duplicate reservations
-                reservation, // Data to insert/update
-                { upsert: true, new: true, setDefaultsOnInsert: true } // Upsert options
+                },
+                reservation,
+                { upsert: true, new: true, setDefaultsOnInsert: true }
             );
         }
 
         console.log("✅ Reservations inserted (if not duplicates)");
-        mongoose.connection.close();
     } catch (err) {
         console.error("⚠️ Error inserting reservations:", err);
     }
 }
 
-// Run the function
-insertReservations();
+// Run all insert functions sequentially
+async function runInserts() {
+    await insertUsers();
+    await insertReservations();
+    await insertBuildings();
+    await insertRooms();
+    await insertSeats();
+}
+runInserts();
 
 /*
     SHA256 hash generation
