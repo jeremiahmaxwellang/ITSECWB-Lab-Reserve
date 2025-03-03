@@ -94,6 +94,7 @@ async function insertUsers() {
 //hard coded of building values
 async function insertBuildings() {
     try {
+        // Define building data
         const buildings = [
             { building_id: 1, building_name: "Science Hall" },
             { building_id: 2, building_name: "Engineering Complex" },
@@ -101,49 +102,78 @@ async function insertBuildings() {
         ];
 
         for (const building of buildings) {
-            await Building.findOneAndUpdate(
-                { building_id: building.building_id }, // Search condition
-                building, // Data to insert/update
-                { upsert: true, new: true, setDefaultsOnInsert: true }
-            );
+            const existingBuilding = await Building.findOne({ building_id: building.building_id });
+
+            if (!existingBuilding) {
+                // Explicitly create the document using `new Building()` before saving
+                const newBuilding = new Building(building);
+                await newBuilding.save();
+                console.log(`✅ Building '${building.building_name}' (ID: ${building.building_id}) added.`);
+            } else {
+                console.warn(`⚠️ Building '${building.building_name}' already exists. Skipping...`);
+            }
         }
-        console.log("✅ Buildings inserted or updated");
+
+        console.log("✅ Building insertion process completed.");
     } catch (err) {
         console.error("⚠️ Error inserting buildings:", err);
     }
 }
 
+//hardcoded room values
 async function insertRooms() {
     try {
-        // Define rooms
+        // Validate that buildings exist before adding rooms
+        const existingBuildings = await Building.find();
+        if (existingBuildings.length === 0) {
+            console.error("⚠️ No buildings found. Cannot insert rooms.");
+            return;
+        }
+
+        // Define rooms with foreign key `building_id`
         const rooms = [
             { building_id: 1, room_num: "101", floor_num: 1 },
             { building_id: 1, room_num: "102", floor_num: 1 },
-            { building_id: 2, room_num: "201", floor_num: 2 }
+            { building_id: 2, room_num: "201", floor_num: 2 },
+            { building_id: 2, room_num: "202", floor_num: 2 },
+            { building_id: 3, room_num: "301", floor_num: 3 }
         ];
 
-        // Insert rooms if they don't exist
         for (const room of rooms) {
-            await Room.findOneAndUpdate(
-                { building_id: room.building_id, room_num: room.room_num }, // Search condition
-                room, // Data to insert/update
-                { upsert: true, new: true, setDefaultsOnInsert: true } // Upsert options
-            );
+            // Check if the referenced building exists
+            const buildingExists = existingBuildings.some(b => b.building_id === room.building_id);
+
+            if (!buildingExists) {
+                console.warn(`⚠️ Skipping Room ${room.room_num}: Building ID ${room.building_id} not found.`);
+                continue;
+            }
+
+            // Check if the room already exists before inserting
+            const existingRoom = await Room.findOne({ room_num: room.room_num });
+
+            if (!existingRoom) {
+                await Room.create(room);
+                console.log(`✅ Room ${room.room_num} added in Building ID ${room.building_id}.`);
+            } else {
+                console.warn(`⚠️ Room ${room.room_num} already exists. Skipping...`);
+            }
         }
 
-        console.log("✅ Rooms inserted (if not duplicates)");
+        console.log("✅ Room insertion process completed.");
     } catch (err) {
         console.error("⚠️ Error inserting rooms:", err);
     }
 }
 
+//hardcoded seat values
 async function insertSeats() {
     try {
-        // Define seats
+        // Define seats (Updated hardcoded values)
         const seats = [
             { room_num: "101", seat_num: 1 },
-            { room_num: "101", seat_num: 2 },
-            { room_num: "102", seat_num: 1 }
+            { room_num: "102", seat_num: 1 },
+            { room_num: "103", seat_num: 1 },        
+            { room_num: "103", seat_num: 2 },
         ];
 
         // Insert seats if they don't exist
@@ -163,19 +193,19 @@ async function insertSeats() {
 
 async function insertReservations() {
     try {
-        // Find users to get their `user_id`
+        // Fetch user IDs dynamically instead of hardcoding emails
         const student = await User.findOne({ email: "jeremiah_ang@dlsu.edu.ph" });
         const admin = await User.findOne({ email: "don_eladio@dlsu.edu.ph" });
 
         if (!student || !admin) {
-            console.error("⚠️ Users not found. Cannot create reservations.");
+            console.error("⚠️ Error: User(s) not found. Cannot create reservations.");
             return;
         }
 
-        // Hardcoded Reservations with assigned user_id
+        // Define hardcoded reservations
         const reservations = [
             {
-                user_id: admin.user_id, // Assign admin's user_id
+                user_id: admin.user_id,
                 request_date: new Date("2025-03-01T10:00:00Z"),
                 reserved_date: new Date("2025-03-02T14:00:00Z"),
                 room_num: "101",
@@ -184,30 +214,33 @@ async function insertReservations() {
                 reserved_for_id: null
             },
             {
-                user_id: student.user_id, // Assign student's user_id
+                user_id: student.user_id,
                 request_date: new Date("2025-03-05T11:30:00Z"),
                 reserved_date: new Date("2025-03-06T09:00:00Z"),
                 room_num: "102",
                 seat_num: 1,
                 anonymous: "Y",
+                reserved_for_id: null
             }
         ];
 
-        // Insert Reservations if they don't exist
+        // Iterate and insert reservations only if the seat is available
         for (const reservation of reservations) {
-            await Reservation.findOneAndUpdate(
-                {
-                    user_id: reservation.user_id,
-                    room_num: reservation.room_num,
-                    seat_num: reservation.seat_num,
-                    reserved_date: reservation.reserved_date
-                },
-                reservation,
-                { upsert: true, new: true, setDefaultsOnInsert: true }
-            );
+            const existingReservation = await Reservation.findOne({
+                room_num: reservation.room_num,
+                seat_num: reservation.seat_num,
+                reserved_date: reservation.reserved_date
+            });
+
+            if (!existingReservation) {
+                await Reservation.create(reservation);
+                console.log(`✅ Reservation added for Room ${reservation.room_num}, Seat ${reservation.seat_num}`);
+            } else {
+                console.warn(`⚠️ Seat ${reservation.seat_num} in Room ${reservation.room_num} is already reserved.`);
+            }
         }
 
-        console.log("✅ Reservations inserted (if not duplicates)");
+        console.log("✅ Reservation process completed.");
     } catch (err) {
         console.error("⚠️ Error inserting reservations:", err);
     }
@@ -216,7 +249,7 @@ async function insertReservations() {
 // Run all insert functions sequentially
 async function runInserts() {
     await insertUsers();
-    await insertReservations();
+    await insertReservations(student1.user_id, admin1.user_id);
     await insertBuildings();
     await insertRooms();
     await insertSeats();
