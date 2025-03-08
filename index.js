@@ -44,7 +44,10 @@ app.use(express.static('uploads')) // static directory for "uploads" folder
 // TODO: Remember me for 3 weeks
 app.use(session({
     secret: 'some secret',
-    cookie: { maxAge: 30000 },
+
+    // cookie expires in approx 3 weeks
+    cookie: { maxAge: 1814400000 },
+
     resave: false,
     saveUninitialized: false
 
@@ -62,7 +65,6 @@ const isAuthenticated = (req, res, next) => {
 
 
 // TODO: Hardcode lab technician accounts
-// MCO3 TODO: Hash the password
 var admin1 = {
     user_id: new mongoose.Types.ObjectId(), // Generate ObjectId for user_id
     last_name: "Eladio",
@@ -70,6 +72,7 @@ var admin1 = {
     email: "don_eladio@dlsu.edu.ph",
     password: "9478bb58c888759b01f502aec75dabd4ea5ba64b45442127ca337ceb280f4f57", // actual admin password: "adminpassword1234"
     account_type: "Lab Technician",
+    profile_picture: "profile_pics/default_avatar.jpg",
 }
 
 var student1 = {
@@ -79,7 +82,8 @@ var student1 = {
     email: "jeremiah_ang@dlsu.edu.ph",
     password: "68eaeeaef51a40035b5d3705c4e0ffd68036b6b821361765145f410b0f996e11", // actual student password: "studentpassword"
     account_type: "Student",
-};
+    profile_picture: "profile_pics/avatar.png",
+}
 
 // Function to Insert Hardcoded Users
 async function insertUsers() {
@@ -305,6 +309,7 @@ app.post('/register', async(req,res) => {
             email: req.body.email, 
             password: sha256(req.body.password),
             account_type: "Student",
+            profile_picture: "profile_pics/default_avatar.jpg",
         });
 
         const users = await User.find()
@@ -333,31 +338,32 @@ app.get('/login', function(req,res){
 })
 
 // SUBMIT LOGIN CREDENTIALS ROUTE
-app.post("/login", express.urlencoded({extended: true}), (req,res) => {
+// DONE: Change this so it checks the DB if email exists (MAR 8, 2025)
+app.post("/login", express.urlencoded({extended: true}), async(req,res) => {
     const{email, password} = req.body
 
     console.log("Email: ", email)
     console.log("Pass: ", sha256(password))
 
-    // route for students
-    // TODO: Change this so it checks the DB if email exists
-    if(email === student1.email && sha256(password) === student1.password){
-        console.log("signed in")
-        req.session.user = student1
-        res.cookie("sessionId",req.sessionID)
+    try{
+        // Check if user email is registered in database
+        const existingUser = await User.findOne({email: email})
 
-        res.redirect('/dashboard')
-    }
+        // Compare with the stored hashed password
+        if(existingUser.password === sha256(password)){
+            console.log("signed in")
+            req.session.user = existingUser
+            res.cookie("sessionId",req.sessionID)
 
-    // route for admin
-    else if(email === admin1.email && sha256(password) === admin1.password){
-        req.session.user = admin1
-        res.cookie("sessionId",req.sessionID)
+            // Student Route
+            if(existingUser.account_type == "Student")
+            res.redirect('/dashboard')
 
-        res.redirect("/labtech")
-    }
-
-    else{
+            // Lab Technician Route
+            else res.redirect("/labtech")
+        }
+        else res.send("Wrong password")
+    } catch {
         res.status(401).send("Invalid credentials. <a href='login>Please try again</a>")
     }
 })
@@ -384,14 +390,18 @@ app.get('/labtech', isAuthenticated, (req,res) => {
 
 // Route to reservation handlebar (MUST DEPEND ON USER SESSION)
 app.get('/reserve', isAuthenticated, async(req,res) => {
+    const userData = req.session.user
+    console.log(userData)
 
-    res.render('reserve')
+    res.render('reserve', {userData})
 })
 
 // Route to dashboard handlebar (MUST DEPEND ON USER SESSION)
-app.get('/dashboard', async(req,res) => {
+app.get('/dashboard', isAuthenticated, async(req,res) => {
+    const userData = req.session.user
+    console.log(userData)
 
-    res.render('dashboard')
+    res.render('dashboard', {userData})
 })
 
 

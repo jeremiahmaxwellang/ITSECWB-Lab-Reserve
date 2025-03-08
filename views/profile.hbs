@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{user.first_name}} {{user.last_name}}'s profile</title>
+    <title>{{userData.first_name}} {{userData.last_name}}'s profile</title>
 
     <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/styleguide.css">
@@ -22,7 +22,7 @@
     <div class="labyrinthHeader">Labyrinth</div>
 
     <div class="profile-dropdown">
-        <img class="profile-icon" src="uploads/profile_pics/avatar.png" alt="Profile" id="profileDropdownBtn">
+        <img class="profile-icon" src="{{userData.profile_picture}}" alt="Profile" id="profileDropdownBtn">
         <div class="dropdown-menu" id="profileDropdown">
             {{!-- Profile redirection (idk if this route is correct) --}}
             <a href="profile">Go to Profile</a>
@@ -36,11 +36,11 @@
     <img id="cover-image" src="images/Background.png" alt="Cover Image">
     <div class="cover-content-container">
         <div class="avatar-container">
-            <img class="profile-picture" src="uploads/profile_pics/avatar.png" alt="Profile Picture">
+            <img class="profile-picture" src="{{userData.profile_picture}}" alt="Profile Picture">
         </div>
         <div class="text-container">
-            <div class="profile-name">{{user.first_name}} {{user.last_name}}</div>
-            <div class="profile-type">{{account_type}}</div>
+            <div class="profile-name">{{userData.first_name}} {{userData.last_name}}</div>
+            <div class="profile-type">{{userData.account_type}}</div>
         </div>
     </div>
 </div>
@@ -56,21 +56,21 @@
 
                 <div class="subsection-container">
                     <div class="subsection-title">Email</div>
-                    <div class="subsection-content">{{email}}</div>
+                    <div class="subsection-content">{{userData.email}}</div>
                 </div>
 
                 <div class="divider"><div class="bar"></div></div>
 
                 <div class="subsection-container">
                     <div class="subsection-title">ID Number</div>
-                    <div class="subsection-content">{{user_id}}</div>
+                    <div class="subsection-content">{{userData.user_id}}</div>
                 </div>
 
                 <div class="divider"><div class="bar"></div></div>
 
                 <div class="subsection-container">
                     <div class="subsection-title">Description</div>
-                    <div class="subsection-content">I’m a BS-IT Student that cannot think of a good description</div>
+                    <div class="subsection-content">{{userData.description}}</div>
                 </div>
 
                 <div class="divider"><div class="bar"></div></div>
@@ -172,7 +172,7 @@
             <div class="profile-info">
                 <!-- Profile Picture + Button (Stacked) -->
                 <div class="modal-profile-container">
-                    <img class="modal-profile-picture" src="uploads/profile_pics/avatar.png" alt="Profile Picture">
+                    <img class="modal-profile-picture" src="{{userData.profile_picture}}" alt="Profile Picture">
                     <button class="change-photo-btn">Change Profile Photo</button>
                 </div>
 
@@ -194,12 +194,12 @@
             <div class="input-row">
                 <div class="input-group">
                     <label class="static-label" for="firstName">First Name</label>
-                    <input type="text" id="firstName" class="static-input" placeholder="Enter First Name">
+                    <input type="text" id="firstName" class="static-input" placeholder="{{userData.first_name}}">
                 </div>
 
                 <div class="input-group">
                     <label class="static-label" for="lastName">Last Name</label>
-                    <input type="text" id="lastName" class="static-input" placeholder="Enter Last Name">
+                    <input type="text" id="lastName" class="static-input" placeholder="{{userData.last_name}}">
                 </div>
             </div>
 

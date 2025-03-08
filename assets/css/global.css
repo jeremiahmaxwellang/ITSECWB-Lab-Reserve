@@ -44,6 +44,10 @@ html, body {
     height: 40px;
     cursor: pointer;
     margin-left: auto;
+
+    /* made the profile icon circular */
+    border-radius: 100%; 
+    overflow: hidden;
 }
 
 .labyrinthHeader {
@@ -63,6 +67,7 @@ html, body {
 .profile-dropdown {
   position: relative;
   display: inline-block;
+
 }
 
 /* Hidden Dropdown Menu */
