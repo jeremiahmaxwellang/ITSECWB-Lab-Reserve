@@ -5,6 +5,7 @@
 const express = require('express')
 const hbs = require('hbs') 
 
+
 const fileUpload = require('express-fileupload')
 const session = require('express-session') //please download this new library
 const mongoose = require('mongoose')
@@ -34,7 +35,7 @@ const app = express()
 app.set('view engine', 'hbs')
 
 app.use(express.json()) // use json
-app.use(express.urlencoded( {extended: true})) // files consist of more than strings
+app.use(express.urlencoded( {extended: false})) // files consist of more than strings
 app.use(express.static('assets')) // static directory for "assets" folder
 app.use(express.static('uploads')) // static directory for "uploads" folder
 
@@ -278,8 +279,6 @@ app.use( bodyParser.urlencoded({extended: false}) )
 // localhost:3000/
 app.get('/', function(req,res){
 
-
-
     res.sendFile(__dirname + '\\' + 'index.html')
 })
 
@@ -290,16 +289,35 @@ app.get('/register', function(req,res){
     res.sendFile(__dirname + '\\' + 'register.html')
 })
 
-// app.post('/register', function(req, res) {
+// REGISTER USER CREATION: Assigned to kyle
+// TODO: User must be created in database
+// TODO: Do not allow duplicates of the same Email
+app.post('/register', async(req,res) => {
 
-//         User.create({
-//         ...req.body,
+    try {
+        // const user_data={ user_id, last_name, first_name, email, password } = req.body
 
-//         });
+        // this is not inserting for some reason
+        User.create({
+            user_id: req.body.user_id,
+            last_name: req.body.last_name,
+            first_name: req.body.first_name,
+            email: req.body.email, 
+            password: sha256(req.body.password),
+            account_type: "Student",
+        });
 
-//         res.redirect('/');
-        
-// })
+        const users = await User.find()
+        console.log(users)
+
+        res.send("/login")
+    } catch(err){
+        res.status(500).send('Error creating user')
+    }
+
+
+
+})
 
 
 // Route to login.html
@@ -396,15 +414,15 @@ app.get('/logout', (req, res) => {
 // Server listens on port 3000
 var server = app.listen(3000, function(){
 
-            // TEST DB QUERY, PLEASE COMMENT OUT WHEN YOU SEE THE TEST ACCOUNT IN MONGODBCOMPASS
-            // User.create({
-            //     user_id: 1230124,
-            //     last_name: "second test",
-            //     first_name: "test 2",
-            //     email: "test2@dlsu.edu.ph", 
-            //     password: "68eaeeaef51a40035b5d3705c4e0ffd68036b6b821361765145f410b0f996e11",
-            //     account_type: "Student",
-            // });
+        // TEST DB QUERY, PLEASE COMMENT OUT WHEN YOU SEE THE TEST ACCOUNT IN MONGODBCOMPASS
+        // User.create({
+        //     user_id: 1230124,
+        //     last_name: "second test",
+        //     first_name: "test 2",
+        //     email: "test2@dlsu.edu.ph", 
+        //     password: "68eaeeaef51a40035b5d3705c4e0ffd68036b6b821361765145f410b0f996e11",
+        //     account_type: "Student",
+        // });
 
 
 
