@@ -65,7 +65,7 @@ const isAuthenticated = (req, res, next) => {
 
 
 
-// TODO: Hardcode lab technician accounts
+// Hardcoded Lab Technician Accounts
 var admin1 = {
     user_id: new mongoose.Types.ObjectId(), // Generate ObjectId for user_id
     last_name: "Eladio",
@@ -76,6 +76,17 @@ var admin1 = {
     profile_picture: "profile_pics/default_avatar.jpg",
 }
 
+var admin2 = {
+    user_id: new mongoose.Types.ObjectId(), // Generate ObjectId for user_id
+    last_name: "Fazbear",
+    first_name: "John",
+    email: "john_fazbear@dlsu.edu.ph",
+    password: "4b8f353889d9a05d17946e26d014efe99407cba8bd9d0102d4aab10ce6229043", // actual admin password: "password01"
+    account_type: "Lab Technician",
+    profile_picture: "profile_pics/default_avatar.jpg",
+};
+
+// Hardcoded Student Accounts
 var student1 = {
     user_id: new mongoose.Types.ObjectId(), // Generate ObjectId for user_id
     last_name: "Ang",
@@ -86,11 +97,34 @@ var student1 = {
     profile_picture: "profile_pics/avatar.png",
 }
 
+var student2 = {
+    user_id: new mongoose.Types.ObjectId(), // Generate ObjectId for user_id
+    last_name: "Duelas",
+    first_name: "Charles Kevin",
+    email: "charles_duelas@dlsu.edu.ph",
+    password: "af0d81ce666749c1e154a461a8c4f1117010dc058a4b08a45987328730e19d20", // actual student password: "quackerson"
+    account_type: "Student",
+    profile_picture: "profile_pics/avatar.png",
+}
+
+var student3 = {
+    user_id: new mongoose.Types.ObjectId(), // Generate ObjectId for user_id
+    last_name: "Doe",
+    first_name: "John",
+    email: "john_doe@dlsu.edu.ph",
+    password: "ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f", // actual student password: "password123"
+    account_type: "Student",
+    profile_picture: "profile_pics/avatar.png",
+}
+
 // Function to Insert Hardcoded Users
 async function insertUsers() {
     try {
         await User.findOneAndUpdate({ email: admin1.email }, admin1, { upsert: true, new: true });
+        await User.findOneAndUpdate({ email: admin2.email }, admin2, { upsert: true, new: true });
         await User.findOneAndUpdate({ email: student1.email }, student1, { upsert: true, new: true });
+        await User.findOneAndUpdate({ email: student2.email }, student2, { upsert: true, new: true });
+        await User.findOneAndUpdate({ email: student3.email }, student3, { upsert: true, new: true });
         console.log("✅ Users inserted or updated");
     } catch (err) {
         console.error("⚠️ Error inserting users:", err);
