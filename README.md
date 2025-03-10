@@ -1,23 +1,55 @@
 # Labyrinth: Lab Reservation System
-This web application is developed as part of our CCAPDEV Major Course Output
+This application allows students to reserve seats in a desired computer laboratory.
 
-# Project Overview:
-This lab reservation system allows students to reserve seats in a desired computer laboratory.
-Upon entering the homepage, the user must either register their DLSU account or login a
-pre-existing account, before they can reserve lab slots. 
+## Description
+Labyrinth is a lab reservation web application where students can view availability of lab slots and reserve them. Lab technicians are also able to reserve for walk-in students and modify any reservations.
 
-Once signed in, the student is redirected to the dashboard, where they can reserve slots
-by selecting a lab from on a specific floor. Once the lab is selected, they must
-enter the timeslot of when they will reserve the slots. A table will display which
-slots are available (green) during the selected time. Unavailable red slots cannot
-be reserved.
+## Getting Started
 
-Lab technicians are able to reserve slots for walk-in students via an admin dashboard.
-They are also able to edit existing reservations of other students.
+### Dependencies
 
+* NodeJS
+* MongoDB
+
+### Installation
+
+* Download ZIP of main branch on GitHub
+* Extract to desired folder (ex: C:\Users\Me\Downloads)
+* On cmd, go to the folder's directory, then use the package manager [npm] to initialize the folder as a NodeJS project.
+
+```
+npm init -y
+```
+
+* Use [npm] to install the required Node libraries
+```
+npm install express hbs path express-fileupload express-session mongoose
+```
+
+### Executing program
+
+* Go to command prompt
+* Change directory to the path of the project folder. Example command below:
+```
+cd Downloads/CCAPDEV_MCO-main
+```
+
+* Run the Node server locally using the command:
+```
+node index.js
+```
+* On your browser, enter the URL "localhost:3000" to access the Labyrinth homepage
+
+## Help
+
+Ensure port 3000 is free on your device before running the server
 
 ## Authors
 - Jeremiah Maxwell Ang
 - Lianne Maxene Balbastro
 - Charles Kevin Duelas
 - Kyle de Jesus
+
+## Acknowledgments
+
+* [techie delight](https://www.techiedelight.com/generate-sha-256-hash-javascript/)
