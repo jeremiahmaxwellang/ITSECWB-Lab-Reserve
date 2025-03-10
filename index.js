@@ -109,9 +109,9 @@ var student2 = {
 
 var student3 = {
     user_id: new mongoose.Types.ObjectId(), // Generate ObjectId for user_id
-    last_name: "Doe",
-    first_name: "John",
-    email: "john_doe@dlsu.edu.ph",
+    last_name: "Woo",
+    first_name: "Sung Jin",
+    email: "sung_woo@dlsu.edu.ph",
     password: "ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f", // actual student password: "password123"
     account_type: "Student",
     profile_picture: "profile_pics/avatar.png",
@@ -233,38 +233,80 @@ async function insertSeats() {
 
 async function insertReservations() {
     try {
-        // Fetch user IDs dynamically instead of hardcoding emails
-        const student = await User.findOne({ email: "jeremiah_ang@dlsu.edu.ph" });
+        // Fetch user IDs dynamically instead of hardcoding them
         const admin = await User.findOne({ email: "don_eladio@dlsu.edu.ph" });
+        const admin2 = await User.findOne({ email: "john_fazbear@dlsu.edu.ph" });
+        const student1 = await User.findOne({ email: "jeremiah_ang@dlsu.edu.ph" });
+        const student2 = await User.findOne({ email: "charles_duelas@dlsu.edu.ph" });
+        const student3 = await User.findOne({ email: "sung_woo@dlsu.edu.ph" });
 
-        if (!student || !admin) {
-            console.error("⚠️ Error: User(s) not found. Cannot create reservations.");
+        // Validate that all required users exist
+        if (!admin || !admin2 || !student1 || !student2 || !student3) {
+            console.error("❌ Error: One or more required users not found. Cannot create reservations.");
             return;
         }
 
-        // Define hardcoded reservations
+        // Define hardcoded reservations with dynamically fetched user IDs
         const reservations = [
             {
-                user_id: admin.user_id,
+                user_id: admin1.user_id,
                 request_date: new Date("2025-03-01T10:00:00Z"),
                 reserved_date: new Date("2025-03-02T14:00:00Z"),
                 room_num: "101",
                 seat_num: 1,
                 anonymous: "N",
-                reserved_for_id: null
+                reserved_for_id: student1._id // Assigned to a student
             },
             {
-                user_id: student.user_id,
+                user_id: admin2.user_id,
+                request_date: new Date("2025-03-12T08:30:00Z"),
+                reserved_date: new Date("2025-03-13T13:30:00Z"),
+                room_num: "104",
+                seat_num: 3,
+                anonymous: "N",
+                reserved_for_id: student3._id // Assigned to a student
+            },
+            {
+                user_id: student1.user_id,
                 request_date: new Date("2025-03-05T11:30:00Z"),
                 reserved_date: new Date("2025-03-06T09:00:00Z"),
                 room_num: "102",
                 seat_num: 1,
                 anonymous: "Y",
+                reserved_for_id: null // Anonymous reservation
+            },
+            {
+                user_id: student2.user_id,
+                request_date: new Date("2025-03-10T14:45:00Z"),
+                reserved_date: new Date("2025-03-11T16:00:00Z"),
+                room_num: "103",
+                seat_num: 2,
+                anonymous: "N",
+                reserved_for_id: student2._id
+            },
+            // 🔹 New Anonymous Reservation
+            {
+                user_id: student3.user_id,
+                request_date: new Date("2025-03-15T12:00:00Z"),
+                reserved_date: new Date("2025-03-16T10:30:00Z"),
+                room_num: "105",
+                seat_num: 4,
+                anonymous: "Y", // ✅ Anonymous reservation
                 reserved_for_id: null
+            },
+            // 🔹 New Non-Anonymous Reservation
+            {
+                user_id: admin1.user_id,
+                request_date: new Date("2025-03-18T09:15:00Z"),
+                reserved_date: new Date("2025-03-19T15:45:00Z"),
+                room_num: "106",
+                seat_num: 1,
+                anonymous: "N", // ✅ Non-anonymous reservation
+                reserved_for_id: student1._id
             }
-        ];
+        ];        
 
-        // Iterate and insert reservations only if the seat is available
+        // Insert reservations only if they don't exist
         for (const reservation of reservations) {
             const existingReservation = await Reservation.findOne({
                 room_num: reservation.room_num,
@@ -286,6 +328,7 @@ async function insertReservations() {
     }
 }
 
+
 // Run all insert functions sequentially
 async function runInserts() {
     await insertUsers();
@@ -295,6 +338,47 @@ async function runInserts() {
     await insertSeats();
 }
 runInserts();
+
+// Middleware to check if the user is a Lab Technician
+const isLabTech = (req, res, next) => {
+    if (req.session.user && req.session.user.account_type === "Lab Technician") {
+        next();
+    } else {
+        res.status(403).json({ message: "Access denied. Only Lab Technicians can perform this action." });
+    }
+};
+
+app.get("/reservations", isLabTech, async (req, res) => {
+    try {
+        const reservations = await Reservation.find()
+            .populate("user_id", "first_name last_name") // Ensure we fetch the reserver's name
+            .lean(); // Convert Mongoose objects to plain JSON
+
+        // 🔍 Debugging Log: Check Raw Data from Database
+        console.log("🔍 Raw Reservations Data (Before Formatting):", JSON.stringify(reservations, null, 2));
+
+        const formattedReservations = reservations.map(reservation => ({
+            id: reservation._id,
+            roomNumber: reservation.room_num || "N/A",
+            seatNumber: reservation.seat_num ? `Seat #${reservation.seat_num}` : "N/A",
+            date: reservation.reserved_date ? reservation.reserved_date.toISOString().split("T")[0] : "N/A",
+            time: reservation.reserved_date ? reservation.reserved_date.toISOString().split("T")[1].slice(0,5) : "N/A",
+            reservedBy: reservation.anonymous === "Y"
+                ? "Anonymous"
+                : (reservation.user_id && reservation.user_id.first_name
+                    ? `${reservation.user_id.first_name} ${reservation.user_id.last_name}`
+                    : "Unknown")
+        }));
+
+        // 🔍 Debugging Log: Check Final API Response
+        console.log("✅ API Response (Formatted Reservations):", JSON.stringify(formattedReservations, null, 2));
+
+        res.json(formattedReservations);
+    } catch (err) {
+        res.status(500).json({ message: "Error fetching reservations", error: err.message });
+    }
+});
+
 
 /*
     SHA256 hash generation

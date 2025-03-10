@@ -1,12 +1,25 @@
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', async function () {
     console.log("Lab Tech Dashboard Loaded");
 
-    const reservations = [
-        { roomNumber: 'GK01', seatNumber: 'Seat #01', date: '2025-08-05', time: '13:01', reservedBy: 'John Doe' },
-        { roomNumber: 'GK02', seatNumber: 'Seat #02', date: '2025-08-06', time: '14:30', reservedBy: 'Jane Smith' },
-        { roomNumber: 'GK03', seatNumber: 'Seat #03', date: '2025-08-07', time: '10:15', reservedBy: 'Alice Brown' },
-        { roomNumber: 'GK04', seatNumber: 'Seat #04', date: '2025-08-08', time: '16:45', reservedBy: 'Bob Johnson' }
-    ];
+    let reservations = [];
+
+    // Fetch reservations from the backend
+    async function fetchReservations() {
+        try {
+            const response = await fetch("/reservations");
+            reservations = await response.json();
+            console.log("Fetched Reservations:", reservations); // ✅ Log the data
+    
+            if (!Array.isArray(reservations) || reservations.length === 0) {
+                console.warn("No reservations available.");
+                return;
+            }
+    
+            renderTable();
+        } catch (error) {
+            console.error("Error fetching reservations:", error);
+        }
+    }    
 
     function formatDate(dateString) {
         const date = new Date(dateString);
@@ -43,39 +56,33 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function renderTable() {
-        const tableBody = document.querySelector('#reservationsTable tbody');
-        tableBody.innerHTML = ""; // Clear existing content
-
+        const tableBody = document.querySelector("#reservationsTable tbody");
+        if (!tableBody) {
+            console.error("Table body not found!");
+            return;
+        }
+    
+        tableBody.innerHTML = ""; // ✅ Clear previous content
+    
         reservations.forEach((reservation, index) => {
-            const row = tableBody.insertRow();
-            row.insertCell(0).innerText = reservation.roomNumber;
-            row.insertCell(1).innerText = reservation.seatNumber;
-            row.insertCell(2).innerText = formatDate(reservation.date);
-            row.insertCell(3).innerText = generateTimeSlot(reservation.time);
-            row.insertCell(4).innerText = reservation.reservedBy; // Reserved By column
-
-            // Create Edit & Delete Button Container
-            const actionCell = row.insertCell(5);
-            const buttonContainer = document.createElement("div");
-            buttonContainer.classList.add("button-container");
-
-            // Create Edit Button
-            const editButton = document.createElement("button");
-            editButton.className = "editButton";
-            editButton.innerText = "Edit";
-            buttonContainer.appendChild(editButton);
-
-            // Create Delete Button
-            const deleteButton = document.createElement("button");
-            deleteButton.className = "deleteButton";
-            deleteButton.innerText = "Delete";
-            deleteButton.onclick = () => showDeleteConfirmation(index);
-            buttonContainer.appendChild(deleteButton);
-
-            // Append button container inside the cell
-            actionCell.appendChild(buttonContainer);
+            const row = document.createElement("tr");
+    
+            row.innerHTML = `
+                <td>${reservation.roomNumber}</td>
+                <td>${reservation.seatNumber}</td>
+                <td>${formatDate(reservation.date)}</td>
+                <td>${generateTimeSlot(reservation.time)}</td>
+                <td>${reservation.reservedBy !== "Unknown" ? reservation.reservedBy : "No Name"}</td> <!-- ✅ Fixes "Unknown" display -->
+                <td class="button-container">
+                    <button class="editButton">Edit</button>
+                    <button class="deleteButton" onclick="showDeleteConfirmation(${index})">Delete</button>
+                </td>
+            `;
+    
+            tableBody.appendChild(row);
         });
     }
+    
 
     function showDeleteConfirmation(index) {
         const deleteModal = document.getElementById("deleteModal");
@@ -94,11 +101,23 @@ document.addEventListener('DOMContentLoaded', function () {
         deleteModal.classList.add("active");
 
         // Confirm Delete
-        document.querySelector(".confirm-button").onclick = function () {
-            reservations.splice(index, 1);
-            renderTable();
+        document.querySelector(".confirm-button").onclick = async function () {
+            await deleteReservation(reservations[index].id);
+            fetchReservations(); // Refresh table
             deleteModal.classList.remove("active");
         };
+    }
+
+    async function deleteReservation(reservationId) {
+        try {
+            const response = await fetch(`/reservations/${reservationId}`, { method: "DELETE" });
+            if (!response.ok) {
+                throw new Error("Failed to delete reservation");
+            }
+            console.log("Reservation deleted successfully");
+        } catch (error) {
+            console.error("Error deleting reservation:", error);
+        }
     }
 
     // Close modal on cancel or overlay click
@@ -110,5 +129,5 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById("deleteModal").classList.remove("active");
     });
 
-    renderTable(); // Initial render
+    fetchReservations(); // Fetch data from database on page load
 });
