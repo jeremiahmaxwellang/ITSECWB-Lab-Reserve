@@ -1,15 +1,16 @@
 // Commands for installing NodeJS Packages
 // npm init -y
-// npm install express hbs path express-fileupload express-session mongoose
+// npm install express hbs path express-fileupload express-session mongoose cookie-parser
 
 const express = require('express')
 const hbs = require('hbs') 
 
 
 const fileUpload = require('express-fileupload')
-const session = require('express-session') //please download this new library
+const session = require('express-session')
 const mongoose = require('mongoose')
 const crypto = require('crypto') //no need to install crypto, it's built-in already
+const cookieParser = require("cookie-parser") //TODO: NEW LIBRARY PLS DOWNLOAD HEHE
 
 // DB CONNECTION 
 // FEB 28 EDIT: Changed the connection string (copied from ccapdev sample activity)
@@ -53,7 +54,7 @@ app.use(session({
 
 }))
 
-// app.use(cookieParser())
+app.use(cookieParser())
 
 const isAuthenticated = (req, res, next) => {
     if(req.session.user)
