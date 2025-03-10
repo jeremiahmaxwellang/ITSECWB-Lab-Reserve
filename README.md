@@ -15,7 +15,12 @@ Labyrinth is a lab reservation web application where students can view availabil
 
 * Download ZIP of main branch on GitHub
 * Extract to desired folder (ex: C:\Users\Me\Downloads)
-* On cmd, go to the folder's directory, then use the package manager [npm] to initialize the folder as a NodeJS project.
+* On command prompt, change directory to the path of the project folder. Example command below:
+```
+cd Downloads/CCAPDEV_MCO-main
+``` 
+
+* Use the package manager [npm] to initialize the folder as a NodeJS project.
 
 ```
 npm init -y
@@ -34,7 +39,7 @@ npm install express hbs path express-fileupload express-session mongoose
 cd Downloads/CCAPDEV_MCO-main
 ```
 
-* Run the Node server locally using the command:
+* Run the Node.js server locally using the command:
 ```
 node index.js
 ```
@@ -45,10 +50,17 @@ node index.js
 Ensure port 3000 is free on your device before running the server
 
 ## Authors
-- Jeremiah Maxwell Ang
-- Lianne Maxene Balbastro
-- Charles Kevin Duelas
-- Kyle de Jesus
+Jeremiah Maxwell Ang
+[@jeremiahmaxwellang](https://github.com/jeremiahmaxwellang)
+
+Lianne Maxene Balbastro
+[@LianneMax](https://github.com/LianneMax)
+
+Charles Kevin Duelas
+[@Duelly01](https://github.com/Duelly01)
+
+Kyle de Jesus
+[@ikyledj](https://github.com/ikyledj)
 
 ## Acknowledgments
 
