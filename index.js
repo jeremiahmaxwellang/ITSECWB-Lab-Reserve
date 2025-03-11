@@ -69,9 +69,9 @@ const isAuthenticated = (req, res, next) => {
 
 // Hardcoded Lab Technician Accounts
 var admin1 = {
-    last_name: "Eladio",
-    first_name: "Don",
-    email: "don_eladio@dlsu.edu.ph",
+    last_name: "Carunongan",
+    first_name: "Arturo",
+    email: "art@dlsu.edu.ph",
     password: "9478bb58c888759b01f502aec75dabd4ea5ba64b45442127ca337ceb280f4f57", // actual admin password: "adminpassword1234"
     account_type: "Lab Technician",
     profile_picture: "profile_pics/default_avatar.jpg",
@@ -228,10 +228,11 @@ async function insertSeats() {
     }
 }
 
+//hardcoded reservations
 async function insertReservations() {
     try {
         // Fetch user IDs dynamically instead of hardcoding them
-        const admin = await User.findOne({ email: "don_eladio@dlsu.edu.ph" });
+        const admin = await User.findOne({ email: "art@dlsu.edu.ph" });
         const admin2 = await User.findOne({ email: "john_fazbear@dlsu.edu.ph" });
         const student1 = await User.findOne({ email: "jeremiah_ang@dlsu.edu.ph" });
         const student2 = await User.findOne({ email: "charles_duelas@dlsu.edu.ph" });
@@ -255,7 +256,7 @@ async function insertReservations() {
                 reserved_for_id: student1.email // Assigned to a student
             },
             {
-
+                email: student3.email,
                 request_date: new Date("2025-03-12T08:30:00Z"),
                 reserved_date: new Date("2025-03-13T13:30:00Z"),
                 room_num: "104",
@@ -347,52 +348,31 @@ const isLabTech = (req, res, next) => {
 
 app.get("/reservations", isLabTech, async (req, res) => {
     try {
-        const reservations = await Reservation.find()
-        .populate({
-            path: "user_id",
-            select: "email first_name last_name" // Populate with email instead of user_id
-        })
-        .lean(); // Convert to plain JSON
+        const reservations = await Reservation.find().populate("user_id", "first_name last_name").lean();
 
-        // 🔍 Debugging Log: Check Raw Data from Database
-        console.log("🔍 Raw Reservations Data (Before Formatting):", JSON.stringify(reservations, null, 2));
+        if (!reservations || reservations.length === 0) {
+            console.warn("⚠️ No reservations found in the database.");
+            return res.json([]);
+        }
 
-        const formattedReservations = reservations.map(reservation => {
-            let reservedBy;
-        
-            // Ensure reservation.user_id exists and matches a valid User
-            if (reservation.anonymous === "Y") {
-                reservedBy = "Anonymous";
-            } else if (
-                reservation.user_id && 
-                reservation.user_id.email // Ensure email exists
-            ) {
-                // Match reservation with user email
-                reservedBy = reservation.user_id.first_name && reservation.user_id.last_name
-                    ? `${reservation.user_id.first_name} ${reservation.user_id.last_name}`
-                    : "⚠️ Missing Name";
-            } else {
-                console.error(`❌ Error: Reservation with ID ${reservation._id} has an invalid or missing email.`);
-                reservedBy = ""; // Leave blank instead of "Unknown"
-            }
-        
-            return {
-                id: reservation._id,
-                email: reservation.user_id ? reservation.user_id.email : "Unknown", // Ensure email is passed
-                roomNumber: reservation.room_num || "N/A",
-                seatNumber: reservation.seat_num ? `Seat #${reservation.seat_num}` : "N/A",
-                date: reservation.reserved_date ? reservation.reserved_date.toISOString().split("T")[0] : "N/A",
-                time: reservation.reserved_date ? reservation.reserved_date.toISOString().split("T")[1].slice(0,5) : "N/A",
-                reservedBy
-            };
-        });             
+        const formattedReservations = reservations.map(reservation => ({
+            id: reservation._id,
+            roomNumber: reservation.room_num || "N/A",
+            seatNumber: `Seat #${reservation.seat_num}` || "N/A",
+            date: reservation.reserved_date ? reservation.reserved_date.toISOString().split("T")[0] : "N/A",
+            time: reservation.reserved_date ? reservation.reserved_date.toISOString().split("T")[1].slice(0,5) : "N/A",
+            reservedBy: reservation.anonymous === "Y"
+                ? "Anonymous"
+                : reservation.user_id
+                ? `${reservation.user_id.first_name} ${reservation.user_id.last_name}`
+                : "⚠️ Unknown"
+        }));
 
-        // 🔍 Debugging Log: Check Final API Response
-        console.log("✅ API Response (Formatted Reservations):", JSON.stringify(formattedReservations, null, 2));
-
+        console.log("✅ Sending Reservations:", formattedReservations);
         res.json(formattedReservations);
 
     } catch (err) {
+        console.error("⚠️ Error fetching reservations:", err);
         res.status(500).json({ message: "Error fetching reservations", error: err.message });
     }
 });
