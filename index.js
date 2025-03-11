@@ -257,7 +257,7 @@ async function insertReservations() {
                 room_num: "101",
                 seat_num: 1,
                 anonymous: "N",
-                reserved_for_id: student1._id // Assigned to a student
+                reserved_for_id: student1.user_id // Assigned to a student
             },
             {
                 user_id: admin2.user_id,
@@ -266,7 +266,7 @@ async function insertReservations() {
                 room_num: "104",
                 seat_num: 3,
                 anonymous: "N",
-                reserved_for_id: student3._id // Assigned to a student
+                reserved_for_id: student3.user_id // Assigned to a student
             },
             {
                 user_id: student1.user_id,
@@ -284,7 +284,7 @@ async function insertReservations() {
                 room_num: "103",
                 seat_num: 2,
                 anonymous: "N",
-                reserved_for_id: student2._id
+                reserved_for_id: student2.user_id
             },
             // 🔹 New Anonymous Reservation
             {
@@ -304,7 +304,7 @@ async function insertReservations() {
                 room_num: "106",
                 seat_num: 1,
                 anonymous: "N", // ✅ Non-anonymous reservation
-                reserved_for_id: student1._id
+                reserved_for_id: student1.user_id
             }
         ];        
 
@@ -353,29 +353,50 @@ const isLabTech = (req, res, next) => {
 app.get("/reservations", isLabTech, async (req, res) => {
     try {
         const reservations = await Reservation.find()
-            .populate("user_id", "first_name last_name") // Ensure we fetch the reserver's name
-            .lean(); // Convert Mongoose objects to plain JSON
+        .populate({
+            path: "user_id",
+            select: "user_id first_name last_name"
+        })
+        .lean(); // Convert to plain JSON
 
         // 🔍 Debugging Log: Check Raw Data from Database
         console.log("🔍 Raw Reservations Data (Before Formatting):", JSON.stringify(reservations, null, 2));
 
-        const formattedReservations = reservations.map(reservation => ({
-            id: reservation._id,
-            roomNumber: reservation.room_num || "N/A",
-            seatNumber: reservation.seat_num ? `Seat #${reservation.seat_num}` : "N/A",
-            date: reservation.reserved_date ? reservation.reserved_date.toISOString().split("T")[0] : "N/A",
-            time: reservation.reserved_date ? reservation.reserved_date.toISOString().split("T")[1].slice(0,5) : "N/A",
-            reservedBy: reservation.anonymous === "Y"
-                ? "Anonymous"
-                : (reservation.user_id && reservation.user_id.first_name
+        const formattedReservations = reservations.map(reservation => {
+            let reservedBy;
+        
+            // Ensure reservation.user_id exists and matches a valid User
+            if (reservation.anonymous === "Y") {
+                reservedBy = "Anonymous";
+            } else if (
+                reservation.user_id && 
+                reservation.user_id.user_id // Ensure user_id exists
+            ) {
+                // Match reservation.user_id with user.user_id
+                reservedBy = reservation.user_id.first_name && reservation.user_id.last_name
                     ? `${reservation.user_id.first_name} ${reservation.user_id.last_name}`
-                    : "Unknown")
-        }));
+                    : "⚠️ Missing Name";
+            } else {
+                console.error(`❌ Error: Reservation with ID ${reservation._id} has an invalid or missing user_id.`);
+                reservedBy = ""; // Leave blank instead of "Unknown"
+            }
+        
+            return {
+                id: reservation._id,
+                userId: reservation.user_id ? reservation.user_id.user_id : "Unknown", // Ensure user_id is passed
+                roomNumber: reservation.room_num || "N/A",
+                seatNumber: reservation.seat_num ? `Seat #${reservation.seat_num}` : "N/A",
+                date: reservation.reserved_date ? reservation.reserved_date.toISOString().split("T")[0] : "N/A",
+                time: reservation.reserved_date ? reservation.reserved_date.toISOString().split("T")[1].slice(0,5) : "N/A",
+                reservedBy
+            };
+        });             
 
         // 🔍 Debugging Log: Check Final API Response
         console.log("✅ API Response (Formatted Reservations):", JSON.stringify(formattedReservations, null, 2));
 
         res.json(formattedReservations);
+
     } catch (err) {
         res.status(500).json({ message: "Error fetching reservations", error: err.message });
     }
