@@ -472,46 +472,64 @@ app.post('/register', async (req, res) => {
 
 // Route to login.html
 // localhost:3000/login
-app.get('/login', function(req,res){
-    if(req.session.user){
+app.get('/login', async function(req, res) {
+    if (req.session.user) {
         res.redirect('/dashboard');
+    } else if (req.cookies.rememberMe) {
+        try {
+            const user = await User.findById(req.cookies.rememberMe);
+            if (user) {
+                req.session.user = user;
+                res.redirect('/dashboard');
+            } else {
+                res.sendFile(__dirname + '/login.html');
+            }
+        } catch (err) {
+            console.error("⚠️ Error checking rememberMe cookie:", err);
+            res.sendFile(__dirname + '/login.html');
+        }
+    } else {
+        res.sendFile(__dirname + '/login.html');
     }
-
-    else{
-        res.sendFile(__dirname + '/login.html')
-    }
-})
+});
 
 // SUBMIT LOGIN CREDENTIALS ROUTE
 // DONE: Change this so it checks the DB if email exists (MAR 8, 2025)
 app.post("/login", express.urlencoded({extended: true}), async(req,res) => {
-    const{email, password} = req.body
+    const { email, password, rememberMe } = req.body;
 
-    console.log("Email: ", email)
-    console.log("Pass: ", sha256(password))
+    console.log("Email: ", email);
+    console.log("Pass: ", sha256(password));
 
-    try{
+    try {
         // Check if user email is registered in database
-        const existingUser = await User.findOne({email: email})
+        const existingUser = await User.findOne({ email: email });
 
         // Compare with the stored hashed password
-        if(existingUser.password === sha256(password)){
-            console.log("signed in")
-            req.session.user = existingUser
-            res.cookie("sessionId",req.sessionID)
+        if (existingUser.password === sha256(password)) {
+            console.log("signed in");
+            req.session.user = existingUser;
+
+            // Set a long-lived cookie if "Remember Me" is checked
+            if (rememberMe) {
+                res.cookie("rememberMe", existingUser._id.toString(), { maxAge: 1814400000, httpOnly: true }); // 3 weeks
+            }
+
+            res.cookie("sessionId", req.sessionID);
 
             // Student Route
-            if(existingUser.account_type == "Student")
-            res.redirect('/dashboard')
-
+            if (existingUser.account_type == "Student")
+                res.redirect('/dashboard');
             // Lab Technician Route
-            else res.redirect("/labtech")
+            else
+                res.redirect("/labtech");
+        } else {
+            res.send("Wrong password");
         }
-        else res.send("Wrong password")
-    } catch {
-        res.status(401).send("Invalid credentials. <a href='login>Please try again</a>")
+    } catch (err) {
+        res.status(401).send("Invalid credentials. <a href='login'>Please try again</a>");
     }
-})
+});
 
 // TODO: Profile page must load the user's details from the DB - JER
 app.get('/profile', isAuthenticated, (req,res) => {
@@ -593,6 +611,7 @@ app.get('/logout', (req, res) => {
             return res.status(500).send("Error logging out")
 
         res.clearCookie('sessionId')
+        res.clearCookie('rememberMe')
         res.redirect('\\')
     })
 })
