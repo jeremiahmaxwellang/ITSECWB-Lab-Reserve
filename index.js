@@ -413,7 +413,7 @@ app.get('/register', function(req,res){
 })
 
 // REGISTER USER CREATION: Assigned to kyle
-// TODO: User must be created in database
+// DONE: User must be created in database
 // TODO: Do not allow duplicates of the same Email
 // USER REGISTRATION
 app.post('/register', async (req, res) => {
@@ -499,13 +499,15 @@ app.post("/login", express.urlencoded({extended: true}), async(req,res) => {
 })
 
 // TODO: Profile page must load the user's details from the DB - JER
-// Route to profile handlebar (MUST DEPEND ON USER SESSION)
-// isAuthenticated required to make sure there is a session
 app.get('/profile', isAuthenticated, (req,res) => {
     const userData = req.session.user
     console.log(userData)
 
     res.render('profile', {userData})
+})
+
+app.post('/profile', async (req, res) => {
+    
 })
 
 // TODO: Top right Profile icon must be user's icon
