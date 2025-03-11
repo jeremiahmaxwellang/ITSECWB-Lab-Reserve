@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const roomDiv = document.createElement("div");
         roomDiv.classList.add("room-box");
         roomDiv.innerHTML = `
-            <img src="assets/images/goksdiv.png" alt="Room Image">
+            <img src="images/goksdiv.png" alt="Room Image">
             <div class="divider"></div>
             <div class="room-info">
                 <div class="room-name">${room.name}</div>
@@ -162,10 +162,10 @@ function showOverlay(roomName) {
                 seat.classList.add("seat-svg");
     
                 if (type === "A") {
-                    seat.src = "assets/images/GreenSeat.svg";
+                    seat.src = "images/GreenSeat.svg";
                     seat.classList.add("available");
                 } else if (type === "R") {
-                    seat.src = "assets/images/RedSeat.svg";
+                    seat.src = "images/RedSeat.svg";
                     seat.classList.add("reserved");
                 }
     
@@ -174,16 +174,16 @@ function showOverlay(roomName) {
                         // If another seat is already selected, reset it back to original color
                         if (selectedSeat) {
                             if (selectedSeat.classList.contains("available")) {
-                                selectedSeat.src = "assets/images/GreenSeat.svg";
+                                selectedSeat.src = "images/GreenSeat.svg";
                             } else if (selectedSeat.classList.contains("reserved")) {
-                                selectedSeat.src = "assets/images/RedSeat.svg";
+                                selectedSeat.src = "images/RedSeat.svg";
                             }
                             selectedSeat.classList.remove("selected");
                         }
     
                         // Set new selected seat
                         selectedSeat = seat;
-                        seat.src = "assets/images/BlueSeat.svg";
+                        seat.src = "images/BlueSeat.svg";
                         seat.classList.add("selected");
     
                         // Update seat info overlay
@@ -261,7 +261,7 @@ function showConfirmationOverlay(roomName, date, time, seatNumber) {
         </p>
         
         <div class="confirmation-container">
-            <img class="room-image" src="assets/images/goksdiv.png" alt="Room Image">
+            <img class="room-image" src="images/goksdiv.png" alt="Room Image">
             <div class="confirmation-details">
                 <h1 class="reservation-date">31</h1>
                 <p class="reservation-month">February</p>
@@ -273,7 +273,7 @@ function showConfirmationOverlay(roomName, date, time, seatNumber) {
             </div>
         </div>
 
-        <button class="home-btn" onclick="window.location.href='dashboard.html'">Go Back to Home Page</button>
+        <button class="home-btn" onclick="window.location.href='/dashboard'">Go Back to Home Page</button>
 
 
         </button>

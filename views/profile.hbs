@@ -166,10 +166,17 @@
             <!-- Profile Information -->
             <div class="profile-info">
                 <!-- Profile Picture + Button (Stacked) -->
+                <form action="/profile" method="post" enctype="multipart/form-data">
+
                 <div class="modal-profile-container">
                     <img class="modal-profile-picture" src="{{userData.profile_picture}}" alt="Profile Picture">
-                    <button class="change-photo-btn">Change Profile Photo</button>
+
+                    <button type="submit" class="change-photo-btn">Change Profile Photo</button>
+                    <input type="file" name="profile_picture" class="change-photo-btn">
+
                 </div>
+
+                </form>
 
                 <!-- Name & Role -->
                 <div class="profile-text">
@@ -182,7 +189,7 @@
         <div class="curved-divider"></div>
         
         <!-- Modal Body -->
-        <form method="get">
+        <form action="/submit-profile-info" method="get" enctype="multipart/form-data">
         <div class="modal-body">
             <h3 class="section-title">Personal Information</h3>
 
