@@ -246,25 +246,25 @@ async function insertReservations() {
         // Define hardcoded reservations with dynamically fetched user IDs
         const reservations = [
             {
-                user_id: admin1.user_id,
+                email: student1.email,
                 request_date: new Date("2025-03-01T10:00:00Z"),
                 reserved_date: new Date("2025-03-02T14:00:00Z"),
                 room_num: "101",
                 seat_num: 1,
                 anonymous: "N",
-                reserved_for_id: student1.user_id // Assigned to a student
+                reserved_for_id: student1.email // Assigned to a student
             },
             {
-                user_id: admin2.user_id,
+
                 request_date: new Date("2025-03-12T08:30:00Z"),
                 reserved_date: new Date("2025-03-13T13:30:00Z"),
                 room_num: "104",
                 seat_num: 3,
                 anonymous: "N",
-                reserved_for_id: student3.user_id // Assigned to a student
+                reserved_for_id: student3.email // Assigned to a student
             },
             {
-                user_id: student1.user_id,
+                email: student3.email,
                 request_date: new Date("2025-03-05T11:30:00Z"),
                 reserved_date: new Date("2025-03-06T09:00:00Z"),
                 room_num: "102",
@@ -273,17 +273,17 @@ async function insertReservations() {
                 reserved_for_id: null // Anonymous reservation
             },
             {
-                user_id: student2.user_id,
+                email: student2.email,
                 request_date: new Date("2025-03-10T14:45:00Z"),
                 reserved_date: new Date("2025-03-11T16:00:00Z"),
                 room_num: "103",
                 seat_num: 2,
                 anonymous: "N",
-                reserved_for_id: student2.user_id
+                reserved_for_id: student2.email
             },
             // 🔹 New Anonymous Reservation
             {
-                user_id: student3.user_id,
+                email: student3.email,
                 request_date: new Date("2025-03-15T12:00:00Z"),
                 reserved_date: new Date("2025-03-16T10:30:00Z"),
                 room_num: "105",
@@ -293,13 +293,13 @@ async function insertReservations() {
             },
             // 🔹 New Non-Anonymous Reservation
             {
-                user_id: admin1.user_id,
+                email: admin1.email,
                 request_date: new Date("2025-03-18T09:15:00Z"),
                 reserved_date: new Date("2025-03-19T15:45:00Z"),
                 room_num: "106",
                 seat_num: 1,
                 anonymous: "N", // ✅ Non-anonymous reservation
-                reserved_for_id: student1.user_id
+                reserved_for_id: student1.email
             }
         ];        
 
@@ -329,7 +329,7 @@ async function insertReservations() {
 // Run all insert functions sequentially
 async function runInserts() {
     await insertUsers();
-    await insertReservations(student1.user_id, admin1.user_id);
+    await insertReservations();
     await insertBuildings();
     await insertRooms();
     await insertSeats();
@@ -350,7 +350,7 @@ app.get("/reservations", isLabTech, async (req, res) => {
         const reservations = await Reservation.find()
         .populate({
             path: "user_id",
-            select: "user_id first_name last_name"
+            select: "email first_name last_name" // Populate with email instead of user_id
         })
         .lean(); // Convert to plain JSON
 
@@ -365,20 +365,20 @@ app.get("/reservations", isLabTech, async (req, res) => {
                 reservedBy = "Anonymous";
             } else if (
                 reservation.user_id && 
-                reservation.user_id.user_id // Ensure user_id exists
+                reservation.user_id.email // Ensure email exists
             ) {
-                // Match reservation.user_id with user.user_id
+                // Match reservation with user email
                 reservedBy = reservation.user_id.first_name && reservation.user_id.last_name
                     ? `${reservation.user_id.first_name} ${reservation.user_id.last_name}`
                     : "⚠️ Missing Name";
             } else {
-                console.error(`❌ Error: Reservation with ID ${reservation._id} has an invalid or missing user_id.`);
+                console.error(`❌ Error: Reservation with ID ${reservation._id} has an invalid or missing email.`);
                 reservedBy = ""; // Leave blank instead of "Unknown"
             }
         
             return {
                 id: reservation._id,
-                userId: reservation.user_id ? reservation.user_id.user_id : "Unknown", // Ensure user_id is passed
+                email: reservation.user_id ? reservation.user_id.email : "Unknown", // Ensure email is passed
                 roomNumber: reservation.room_num || "N/A",
                 seatNumber: reservation.seat_num ? `Seat #${reservation.seat_num}` : "N/A",
                 date: reservation.reserved_date ? reservation.reserved_date.toISOString().split("T")[0] : "N/A",
