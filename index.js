@@ -56,13 +56,15 @@ app.use(session({
 
 app.use(cookieParser())
 
+var bodyParser = require('body-parser')
+app.use( bodyParser.urlencoded({extended: false}) )
+
 const isAuthenticated = (req, res, next) => {
     if(req.session.user)
         next()
 
     else res.redirect("/login")
 }
-
 
 
 // Hardcoded Lab Technician Accounts
@@ -395,9 +397,6 @@ function sha256(password) {
     return hash.digest('hex');
 }
 
-var bodyParser = require('body-parser')
-app.use( bodyParser.urlencoded({extended: false}) )
-
 // Route to INDEX.HTML
 // localhost:3000/
 app.get('\\', function(req,res){
@@ -442,7 +441,7 @@ app.post('/register', async (req, res) => {
             email,
             password: hashedPassword,
             account_type,
-            profile_picture: "profile_pics/avatar.png"
+            profile_picture: "profile_pics/default_avatar.jpg"
         });
 
         await newUser.save();
@@ -584,18 +583,5 @@ app.get('/logout', (req, res) => {
 
 // Server listens on port 3000
 var server = app.listen(3000, function(){
-
-        // TEST DB QUERY, PLEASE COMMENT OUT WHEN YOU SEE THE TEST ACCOUNT IN MONGODBCOMPASS
-        // User.create({
-        //     user_id: 1230124,
-        //     last_name: "second test",
-        //     first_name: "test 2",
-        //     email: "test2@dlsu.edu.ph", 
-        //     password: "68eaeeaef51a40035b5d3705c4e0ffd68036b6b821361765145f410b0f996e11",
-        //     account_type: "Student",
-        // });
-
-
-
     console.log("Labyrinth Node Server is listening on port 3000...")
 })
