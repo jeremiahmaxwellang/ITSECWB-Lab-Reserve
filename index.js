@@ -69,7 +69,6 @@ const isAuthenticated = (req, res, next) => {
 
 // Hardcoded Lab Technician Accounts
 var admin1 = {
-    user_id: new mongoose.Types.ObjectId(), // Generate ObjectId for user_id
     last_name: "Eladio",
     first_name: "Don",
     email: "don_eladio@dlsu.edu.ph",
@@ -456,10 +455,10 @@ app.post('/register', async (req, res) => {
 
         // Create new user
         const newUser = new User({
-            user_id: new mongoose.Types.ObjectId(),
+            email,
             first_name,
             last_name,
-            email,
+            
             password: hashedPassword,
             account_type,
             profile_picture: "profile_pics/default_avatar.jpg"
