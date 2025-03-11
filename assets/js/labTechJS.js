@@ -8,18 +8,20 @@ document.addEventListener('DOMContentLoaded', async function () {
         try {
             const response = await fetch("/reservations");
             reservations = await response.json();
-            console.log("Fetched Reservations:", reservations); // ✅ Log the data
+            console.log("🔍 Reservations Data:", reservations); // Debugging Log
     
             if (!Array.isArray(reservations) || reservations.length === 0) {
-                console.warn("No reservations available.");
+                console.warn("⚠️ No reservations available.");
+                document.querySelector("#reservationsTable tbody").innerHTML =
+                    `<tr><td colspan="6" style="text-align:center;">No reservations found.</td></tr>`;
                 return;
             }
     
             renderTable();
         } catch (error) {
-            console.error("Error fetching reservations:", error);
+            console.error("⚠️ Error fetching reservations:", error);
         }
-    }    
+    }
 
     function formatDate(dateString) {
         const date = new Date(dateString);
@@ -58,21 +60,20 @@ document.addEventListener('DOMContentLoaded', async function () {
     function renderTable() {
         const tableBody = document.querySelector("#reservationsTable tbody");
         if (!tableBody) {
-            console.error("Table body not found!");
+            console.error("❌ Table body not found!");
             return;
         }
     
-        tableBody.innerHTML = ""; // ✅ Clear previous content
+        tableBody.innerHTML = ""; // ✅ Clear old table data
     
         reservations.forEach((reservation, index) => {
             const row = document.createElement("tr");
-    
             row.innerHTML = `
                 <td>${reservation.roomNumber}</td>
                 <td>${reservation.seatNumber}</td>
                 <td>${formatDate(reservation.date)}</td>
                 <td>${generateTimeSlot(reservation.time)}</td>
-                <td>${reservation.reservedBy !== "Unknown" ? reservation.reservedBy : "No Name"}</td> <!-- ✅ Fixes "Unknown" display -->
+                <td>${reservation.reservedBy || "⚠️ Unknown"}</td>
                 <td class="button-container">
                     <button class="editButton">Edit</button>
                     <button class="deleteButton" onclick="showDeleteConfirmation(${index})">Delete</button>

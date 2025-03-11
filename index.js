@@ -300,7 +300,7 @@ async function insertReservations() {
                 room_num: "106",
                 seat_num: 1,
                 anonymous: "N", // ✅ Non-anonymous reservation
-                reserved_for_id: student1.email
+                reserved_for_id: admin1.email
             }
         ]        
 
@@ -348,13 +348,24 @@ const isLabTech = (req, res, next) => {
 
 app.get("/reservations", isLabTech, async (req, res) => {
     try {
-        const reservations = await Reservation.find().populate("user_id", "first_name last_name").lean()
+        const reservations = await Reservation.find().populate("user_id", "first_name last_name").lean();
 
         if (!reservations || reservations.length === 0) {
-            console.warn("⚠️ No reservations found in the database.")
-            return res.json([])
+            console.warn("⚠️ No reservations found in the database.");
+            return res.json([]);
         }
 
+        // Fetch user details manually
+        const userEmails = reservations.map(res => res.email);
+        const users = await User.find({ email: { $in: userEmails } }, "first_name last_name email").lean();
+
+        // Create a map for quick lookup
+        const userMap = {};
+        users.forEach(user => {
+            userMap[user.email] = `${user.first_name} ${user.last_name}`;
+        });
+
+        // Format the reservations with user data
         const formattedReservations = reservations.map(reservation => ({
             id: reservation._id,
             roomNumber: reservation.room_num || "N/A",
@@ -366,7 +377,7 @@ app.get("/reservations", isLabTech, async (req, res) => {
                 : reservation.user_id
                 ? `${reservation.user_id.first_name} ${reservation.user_id.last_name}`
                 : "⚠️ Unknown"
-        }))
+        }));
 
         console.log("✅ Sending Reservations:", formattedReservations)
         res.json(formattedReservations)
@@ -375,7 +386,7 @@ app.get("/reservations", isLabTech, async (req, res) => {
         console.error("⚠️ Error fetching reservations:", err)
         res.status(500).json({ message: "Error fetching reservations", error: err.message })
     }
-})
+});
 
 
 /*
