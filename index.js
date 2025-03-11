@@ -400,7 +400,7 @@ app.use( bodyParser.urlencoded({extended: false}) )
 
 // Route to INDEX.HTML
 // localhost:3000/
-app.get('/', function(req,res){
+app.get('\\', function(req,res){
 
     res.sendFile(__dirname + '\\' + 'index.html')
 })
@@ -415,34 +415,45 @@ app.get('/register', function(req,res){
 // REGISTER USER CREATION: Assigned to kyle
 // TODO: User must be created in database
 // TODO: Do not allow duplicates of the same Email
-app.post('/register', async(req,res) => {
-
+// USER REGISTRATION
+app.post('/register', async (req, res) => {
     try {
-        // const user_data={ user_id, last_name, first_name, email, password } = req.body
+        const { first_name, last_name, email, password, account_type } = req.body;
 
-        // this is not inserting for some reason
-        User.create({
-            user_id: req.body.user_id,
-            last_name: req.body.last_name,
-            first_name: req.body.first_name,
-            email: req.body.email, 
-            password: sha256(req.body.password),
-            account_type: "Student",
-            profile_picture: "profile_pics/default_avatar.jpg",
+        // Validate request body
+        if (!first_name || !last_name || !email || !password || !account_type) {
+            return res.status(400).json({ message: "All fields are required" });
+        }
+
+        // Check if user already exists
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ message: "Email already in use" });
+        }
+
+        // Hash the password
+        const hashedPassword = sha256(password);
+
+        // Create new user
+        const newUser = new User({
+            user_id: new mongoose.Types.ObjectId(),
+            first_name,
+            last_name,
+            email,
+            password: hashedPassword,
+            account_type,
+            profile_picture: "profile_pics/avatar.png"
         });
 
-        const users = await User.find()
-        console.log(users)
+        await newUser.save();
+        console.log("✅ New user registered:", email);
 
-        res.send("/login")
-    } catch(err){
-        res.status(500).send('Error creating user')
+        res.status(201).json({ message: "User registered successfully!" });
+    } catch (err) {
+        console.error("⚠️ Error registering user:", err);
+        res.status(500).json({ message: "Internal server error" });
     }
-
-
-
-})
-
+});
 
 // Route to login.html
 // localhost:3000/login
@@ -523,9 +534,38 @@ app.get('/dashboard', isAuthenticated, async(req,res) => {
     res.render('dashboard', {userData})
 })
 
+// CREATE A RESERVATION
+app.post('/reserve', isAuthenticated, async (req, res) => {
+    try {
+        const { room_num, seat_num, reserved_date, anonymous } = req.body;
+        const user_id = req.session.user._id; // Get logged-in user
 
+        // Check if seat is already reserved
+        const existingReservation = await Reservation.findOne({ room_num, seat_num, reserved_date });
+        if (existingReservation) {
+            return res.status(400).json({ message: "Seat already reserved for this date" });
+        }
 
+        // Create reservation
+        const newReservation = new Reservation({
+            user_id,
+            request_date: new Date(),
+            reserved_date: new Date(reserved_date),
+            room_num,
+            seat_num,
+            anonymous: anonymous === "Y" ? "Y" : "N",
+            reserved_for_id: anonymous === "Y" ? null : user_id // Set null if anonymous
+        });
 
+        await newReservation.save();
+        console.log(`✅ Reservation created by ${req.session.user.first_name}`);
+
+        res.status(201).json({ message: "Reservation created successfully!" });
+    } catch (err) {
+        console.error("⚠️ Error creating reservation:", err);
+        res.status(500).json({ message: "Internal server error" });
+    }
+});
 
 
 
@@ -536,7 +576,7 @@ app.get('/logout', (req, res) => {
             return res.status(500).send("Error logging out")
 
         res.clearCookie('sessionId')
-        res.redirect('/')
+        res.redirect('\\')
     })
 })
 

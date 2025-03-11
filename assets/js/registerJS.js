@@ -50,20 +50,50 @@ const successModal = new ModalHandler("successModal");
 document.addEventListener("DOMContentLoaded", function () {
     const createAccountButton = document.querySelector(".create-button");
     const getStartedButton = document.getElementById("getStartedButton");
+    const registrationForm = document.getElementById("registrationForm");
 
-    // Open modal when "Create Account" is clicked
+    // Handle form submission
     if (createAccountButton) {
-        createAccountButton.addEventListener("click", function (event) {
-            event.preventDefault();   // Prevent any default form submission
-            successModal.open();      // Only opens the modal
+        createAccountButton.addEventListener("click", async function (event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const formData = new FormData(registrationForm);
+            const data = {
+                first_name: formData.get("first_name"),
+                last_name: formData.get("last_name"),
+                email: formData.get("email"),
+                password: formData.get("password"),
+                account_type: "Student" // Automatically set account type to Student
+            };
+
+            try {
+                const response = await fetch("/register", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    successModal.open(); // Open success modal
+                } else {
+                    alert(result.message); // Show error message
+                }
+            } catch (error) {
+                console.error("⚠️ Error registering user:", error);
+                alert("An error occurred while registering. Please try again.");
+            }
         });
     }
 
     // "Get Started" closes the modal and redirects to /login
     if (getStartedButton) {
         getStartedButton.addEventListener("click", function () {
-            successModal.close();     // Close the modal first
-                window.location.href = "/login"; // Then redirect   
+            successModal.close(); // Close the modal first
+            window.location.href = "/login"; // Then redirect
         });
     }
 });

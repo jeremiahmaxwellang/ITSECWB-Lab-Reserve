@@ -30,90 +30,82 @@
                 </p>
 
                 <!-- Registration Form -->
+                <form id="registrationForm" enctype="multipart/form-data">
+                    <div class="registration-container">
 
-                
-                <form action="/login" method="post" 
-                enctype="multipart/form-data">
+                        <!-- Row 1: First & Last Name -->
+                        <div class="input-row-container">
+                            <div class="input-group">
+                                <label class="static-label" for="first_name">First Name</label>
+                                <input type="text" id="first_name" name="first_name" class="static-input" placeholder="Jimmy" required>
+                            </div>
 
-                <div class="registration-container">
+                            <div class="input-group">
+                                <label class="static-label" for="last_name">Last Name</label>
+                                <input type="text" id="last_name" name="last_name" class="static-input" placeholder="McGill" required>
+                            </div>
+                        </div>
 
-                    <!-- Row 1: First & Last Name -->
-                    <div class="input-row-container">
+                        <!-- Row 2: DLSU Email & ID Number -->
+                        <div class="input-row-container">
+                            <div class="input-group">
+                                <label class="static-label" for="email">DLSU Email</label>
+                                <input type="email" id="email" name="email" class="static-input" placeholder="jimmy_mcgill@dlsu.edu.ph" required>
+                            </div>
+
+                            <div class="input-group">
+                                <label class="static-label" for="user_id">DLSU ID Number</label>
+                                <input type="text" id="user_id" name="user_id" class="static-input" placeholder="1220987" required>
+                            </div>
+                        </div>
+
+                        <!-- Password Fields -->
                         <div class="input-group">
-                            <label class="static-label" for="first_name">First Name</label>
-                            <input type="text" id="first_name" name="first_name" class="static-input" placeholder="Jimmy">
+                            <label class="static-label" for="password">Enter password</label>
+                            <input type="password" id="password" name="password" class="static-input" placeholder="Password must be at least 15 characters" required>
                         </div>
 
                         <div class="input-group">
-                            <label class="static-label" for="last_name">Last Name</label>
-                            <input type="text" id="last_name" name="last_name" class="static-input" placeholder="McGill">
-                        </div>
-                    </div>
-
-                    <!-- Row 2: DLSU Email & ID Number -->
-                    <div class="input-row-container">
-                        <div class="input-group">
-                            <label class="static-label" for="email">DLSU Email</label>
-                            <input type="email" id="email" name="email" class="static-input" placeholder="jimmy_mcgill@dlsu.edu.ph">
+                            <label class="static-label" for="confirm_password">Confirm password</label>
+                            <input type="password" id="confirm_password" name="confirm_password" class="static-input" placeholder="Re-enter Password" required>
                         </div>
 
-                        <div class="input-group">
-                            <label class="static-label" for="user_id">DLSU ID Number</label>
-                            <input type="text" id="user_id" name="user_id" class="static-input" placeholder="1220987">
+                        <!-- Hidden Account Type Field -->
+                        <input type="hidden" id="account_type" name="account_type" value="Student">
+
+                        <!-- Create Account Button -->
+                        <button type="button" class="create-button">CREATE ACCOUNT</button>
+
+                        <!-- Already have an account? -->
+                        <div class="login-container">
+                            <div class="already-account">Already have an account?</div>
+                            <a href="/login"> <div class="login">Login</div> </a>
                         </div>
                     </div>
-
-                    <!-- Password Fields -->
-                    <div class="input-group">
-                        <label class="static-label" for="password">Enter password</label>
-                        <input type="password" id="password" name="password" class="static-input" placeholder="Password must be at least 15 characters">
-                    </div>
-
-                    <div class="input-group">
-                        <label class="static-label" for="confirm_password">Confirm password</label>
-                        <input type="password" id="confirm_password" name="confirm_password" class="static-input" placeholder="Re-enter Password">
-                    </div>
-
-                    <!-- Create Account Button -->
-                     <!-- PROBLEM: Create Account button automatically redirects to next page, but we have a pop-up afterwards -->
-                     <button type="button" class="create-button">CREATE ACCOUNT</button>
-
-                    
-                    
-
-                    <!-- Already have an account? -->
-                    <div class="login-container">
-                        <div class="already-account">Already have an account?</div>
-                        <a href="/login"> <div class="login">Login</div> </a>
-                    </div>
-
                 </form>
                 <!-- End of form -->
-                 
-                </div> 
             </div>
         </div>
     </div> 
 
-<!-- Success Modal -->
-<div id="successModal" class="modal">
-    <div class="modal-content">
-        <!-- Success Message -->
-        <h2 class="success-title"><strong>You're All Signed Up!</strong></h2>
-        <p class="success-subtitle">Your account has been created successfully!</p>
+    <!-- Success Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <!-- Success Message -->
+            <h2 class="success-title"><strong>You're All Signed Up!</strong></h2>
+            <p class="success-subtitle">Your account has been created successfully!</p>
 
-        <!-- Flex Container for Button & Image -->
-        <div class="success-body">
-            <!-- Button Section -->
-            <button id="getStartedButton" class="get-started-button">Get Started</button>
+            <!-- Flex Container for Button & Image -->
+            <div class="success-body">
+                <!-- Button Section -->
+                <button id="getStartedButton" class="get-started-button">Get Started</button>
 
-            <!-- Image Section -->
-            <img src="images/AccountCreated.webp" alt="Success Image" class="success-image">
+                <!-- Image Section -->
+                <img src="images/AccountCreated.webp" alt="Success Image" class="success-image">
+            </div>
         </div>
     </div>
-</div>
 
     <script src="js/registerJS.js"></script>
 </body>
 </html>
-    
