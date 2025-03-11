@@ -78,7 +78,6 @@ var admin1 = {
 }
 
 var admin2 = {
-    user_id: new mongoose.Types.ObjectId(), // Generate ObjectId for user_id
     last_name: "Fazbear",
     first_name: "John",
     email: "john_fazbear@dlsu.edu.ph",
@@ -89,7 +88,6 @@ var admin2 = {
 
 // Hardcoded Student Accounts
 var student1 = {
-    user_id: new mongoose.Types.ObjectId(), // Generate ObjectId for user_id
     last_name: "Ang",
     first_name: "Jeremiah",
     email: "jeremiah_ang@dlsu.edu.ph",
@@ -99,7 +97,6 @@ var student1 = {
 }
 
 var student2 = {
-    user_id: new mongoose.Types.ObjectId(), // Generate ObjectId for user_id
     last_name: "Duelas",
     first_name: "Charles Kevin",
     email: "charles_duelas@dlsu.edu.ph",
@@ -109,7 +106,6 @@ var student2 = {
 }
 
 var student3 = {
-    user_id: new mongoose.Types.ObjectId(), // Generate ObjectId for user_id
     last_name: "Woo",
     first_name: "Sung Jin",
     email: "sung_woo@dlsu.edu.ph",
