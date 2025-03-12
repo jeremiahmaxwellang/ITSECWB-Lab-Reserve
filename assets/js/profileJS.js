@@ -84,52 +84,6 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-    console.log("Script Loaded Successfully");
-
-    // ========== MODAL ELEMENTS ==========
-    var changePasswordModal = document.getElementById("changePasswordModal");
-    var changePasswordBtn = document.getElementById("changePasswordBtn");
-    var closeChangePasswordBtn = document.querySelector("#changePasswordModal .close-change-password");
-    var submitPasswordBtn = document.querySelector(".change-submit-btn");
-
-    // Ensure elements exist before proceeding
-    if (!changePasswordModal || !changePasswordBtn || !closeChangePasswordBtn || !submitPasswordBtn) {
-        console.error("One or more Change Password modal elements were not found in the DOM.");
-        return;
-    }
-
-    // ====== HIDE MODAL INITIALLY ======
-    changePasswordModal.style.display = "none"; // Force hiding at page load
-
-    // ====== OPEN CHANGE PASSWORD MODAL ======
-    changePasswordBtn.addEventListener("click", function () {
-        console.log("Opening Change Password modal...");
-        changePasswordModal.style.display = "flex"; // Show Change Password Modal
-    });
-
-    // ====== CLOSE MODAL ON BUTTON CLICK ======
-    closeChangePasswordBtn.addEventListener("click", function () {
-        console.log("Closing Change Password modal...");
-        changePasswordModal.style.display = "none"; // Hide Change Password Modal
-    });
-
-    submitPasswordBtn.addEventListener("click", function () {
-        console.log("Password changed successfully!");
-        changePasswordModal.style.display = "none"; // Close modal after submission
-    });
-
-    // ====== CLOSE MODAL WHEN CLICKING OUTSIDE ======
-    window.addEventListener("click", function (event) {
-        if (event.target === changePasswordModal) {
-            console.log("Clicked outside, closing modal...");
-            changePasswordModal.style.display = "none"; // Hide Change Password Modal
-        }
-    });
-
-});
-
-document.addEventListener("DOMContentLoaded", function () {
-    console.log("Script Loaded Successfully");
 
     // ========== MODAL ELEMENTS ==========
     var editProfileModal = document.getElementById("editProfileModal");
@@ -141,40 +95,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
     var editProfileBtn = document.getElementById("editProfileBtn");
     var deleteAccountBtn = document.getElementById("deleteAccountBtn");
+    var confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
     var changePasswordBtn = document.getElementById("changePasswordBtn");
     var saveChangesBtn = document.getElementById("saveChanges");
 
-    var closeEditProfile = document.querySelector("#editProfileModal .close");
-    var closeSaveChanges = document.querySelector("#saveChangesModal .close");
-    var closeDeleteAccount = document.querySelector("#deleteAccountModal .close");
-    var closeChangePasswordBtn = document.querySelector("#changePasswordModal .close");
-    var closeSuccessChangesBtn = document.querySelector("#successChangesModal .close");
-
-    var cancelBtn = document.getElementById("cancelBtn");
-    var leaveBtn = document.getElementById("leaveBtn");
-
-    var confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
     var cancelDeleteBtn = document.getElementById("cancelDeleteBtn");
     var goBackHomeBtn = document.getElementById("goBackHomeBtn");
-    var submitPasswordBtn = document.querySelector(".change-submit-btn");
-
     var goBackProfileBtn = document.getElementById("goBackProfileBtn");
 
-    // ========== HIDE ALL MODALS ON PAGE LOAD ==========
-    var modals = [
-        editProfileModal,
-        saveChangesModal,
-        deleteAccountModal,
-        accountDeletedModal,
-        changePasswordModal,
-        successChangesModal
-    ];
+    var closeEditProfileBtn = document.querySelector("#editProfileModal .close"); // X button for profile
+    var closeDeleteAccount = document.querySelector("#deleteAccountModal .close");
+    var closeSuccessChangesBtn = document.querySelector("#successChangesModal .close");
+    var closeChangePasswordBtn = document.querySelector("#changePasswordModal .close");
+    var closeSaveChangesBtn = document.querySelector("#saveChangesModal .close-confirm");
 
-    modals.forEach(function (modal) {
-        if (modal) {
-            modal.style.display = "none";
-        }
-    });
+    var cancelSaveChangesBtn = document.getElementById("cancelBtn");
+    var confirmSaveChangesBtn = document.getElementById("leaveBtn");
+
+    var submitPasswordBtn = document.querySelector(".change-submit-btn");
 
     // ========== SHOW & HIDE FUNCTIONS ==========
     function showModal(modal) {
@@ -211,34 +149,58 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // ========== CLOSE MODALS ==========
-    if (closeEditProfile) {
-        closeEditProfile.addEventListener("click", function () {
-            showModal(saveChangesModal);
+    // ========== CLOSE PROFILE WITH UNSAVED CHANGES ==========
+    if (closeEditProfileBtn) {
+        closeEditProfileBtn.addEventListener("click", function () {
+            showModal(saveChangesModal); // Show "Save Changes Confirmation Modal"
         });
     }
 
-    if (closeSaveChanges) {
-        closeSaveChanges.addEventListener("click", function () {
+    // ========== CONFIRM SAVE CHANGES ==========
+    if (confirmSaveChangesBtn) {
+        confirmSaveChangesBtn.addEventListener("click", function () {
             hideModal(saveChangesModal);
+            hideModal(editProfileModal);
         });
     }
 
+    // ========== DELETE ACCOUNT CONFIRMATION ==========
+    if (confirmDeleteBtn) {
+        confirmDeleteBtn.addEventListener("click", async function () {
+            try {
+                const response = await fetch("/deleteaccount", {
+                    method: "DELETE",
+                    headers: { "Content-Type": "application/json" }
+                });
+
+                if (response.ok) {
+                    hideModal(deleteAccountModal);
+                    showModal(accountDeletedModal);
+                } else {
+                    console.error("⚠️ Error deleting account.");
+                }
+
+            } catch (error) {
+                window.location.href = "/profile";
+            }
+        });
+    }
+
+    // ========== CLOSE MODALS ==========
     if (closeDeleteAccount) {
         closeDeleteAccount.addEventListener("click", function () {
             hideModal(deleteAccountModal);
         });
     }
 
-    if (cancelBtn) {
-        cancelBtn.addEventListener("click", function () {
+    if (closeSaveChangesBtn) {
+        closeSaveChangesBtn.addEventListener("click", function () {
             hideModal(saveChangesModal);
         });
     }
 
-    if (leaveBtn) {
-        leaveBtn.addEventListener("click", function () {
-            hideModal(editProfileModal);
+    if (cancelSaveChangesBtn) {
+        cancelSaveChangesBtn.addEventListener("click", function () {
             hideModal(saveChangesModal);
         });
     }
@@ -249,49 +211,38 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    if (confirmDeleteBtn) {
-        confirmDeleteBtn.addEventListener("click", function () {
-            hideModal(deleteAccountModal);
-            showModal(accountDeletedModal);
-        });
-    }
-
     if (goBackHomeBtn) {
         goBackHomeBtn.addEventListener("click", function () {
-            hideModal(accountDeletedModal);
-            window.location.href = "index.html"; // Redirect to homepage
+            window.location.href = "/";
         });
     }
 
     if (closeChangePasswordBtn) {
         closeChangePasswordBtn.addEventListener("click", function () {
-            hideModal(changePasswordModal); // Close only Change Password modal
+            hideModal(changePasswordModal);
         });
     }
 
     if (submitPasswordBtn) {
         submitPasswordBtn.addEventListener("click", function () {
-            console.log("Password changed successfully!");
-            hideModal(changePasswordModal); // Close Change Password
-            showModal(editProfileModal); // Return to Edit Profile
+            hideModal(changePasswordModal);
+            showModal(editProfileModal);
         });
     }
 
     if (closeSuccessChangesBtn) {
         closeSuccessChangesBtn.addEventListener("click", function () {
             hideModal(successChangesModal);
-            showModal(editProfileModal);
         });
     }
 
     if (goBackProfileBtn) {
         goBackProfileBtn.addEventListener("click", function () {
             hideModal(successChangesModal);
-            // showModal(editProfileModal);
         });
     }
 
-    // ========== CLOSE MODAL WHEN CLICKING OUTSIDE ==========
+    // ========== CLOSE MODALS WHEN CLICKING OUTSIDE ==========
     window.addEventListener("click", function (event) {
         if (event.target === changePasswordModal) {
             hideModal(changePasswordModal);
@@ -299,57 +250,37 @@ document.addEventListener("DOMContentLoaded", function () {
         if (event.target === successChangesModal) {
             hideModal(successChangesModal);
         }
+        if (event.target === saveChangesModal) {
+            hideModal(saveChangesModal);
+        }
     });
 
-});
+// ========== DELETE ACCOUNT CONFIRMATION (FIXED) ==========
+if (confirmDeleteBtn) {
+    confirmDeleteBtn.addEventListener("click", async function () {
+        try {
+            const response = await fetch("/deleteaccount", {
+                method: "DELETE",
+                headers: { "Content-Type": "application/json" }
+            });
 
-document.addEventListener("DOMContentLoaded", function () {
-    const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
-    const accountDeletedModal = document.getElementById("accountDeletedModal");
-    const goBackHomeBtn = document.getElementById("goBackHomeBtn");
-
-    if (confirmDeleteBtn) {
-        confirmDeleteBtn.addEventListener("click", async function () {
-            try {
-                const response = await fetch("/deleteaccount", {
-                    method: "DELETE",
-                    headers: { "Content-Type": "application/json" }
-                });
-
-                if (response.ok) {
-                    // Show the modal
-                    accountDeletedModal.style.display = "flex"; 
-                } else {
-                    window.location.href = "/profile"; 
-                }
-            } catch (error) {
-                console.error("⚠️ Error deleting account:", error);
-                window.location.href = "/profile"; 
+            if (response.ok) {
+                hideModal(deleteAccountModal); // Close delete confirmation modal
+                showModal(accountDeletedModal); // Show "Account Successfully Deleted" modal
+            } else {
+                console.error("⚠️ Error deleting account.");
             }
-        });
-    }
 
-    // Redirect to homepage when clicking "Go Back to Home Page"
-    if (goBackHomeBtn) {
-        goBackHomeBtn.addEventListener("click", function () {
-            window.location.href = "/";
-        });
-    }
+        } catch (error) {
+            console.error("⚠️ Error deleting account:", error);
+        }
+    });
+}
+
+// ========== REDIRECT ONLY WHEN "GO BACK TO HOME PAGE" IS CLICKED ==========
+if (goBackHomeBtn) {
+    goBackHomeBtn.addEventListener("click", function () {
+        window.location.href = "/"; // Redirect to home only when this button is clicked
+    });
+}
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
