@@ -195,7 +195,7 @@
         <div class="curved-divider"></div>
         
         <!-- Modal Body -->
-        <form action="/submit-profile-info" method="get" enctype="multipart/form-data">
+        <form action="/submit-profile-info" method="post" enctype="multipart/form-data"></form>
         <div class="modal-body">
             <h3 class="section-title">Personal Information</h3>
 
@@ -203,22 +203,22 @@
             <div class="input-row">
                 <div class="input-group">
                     <label class="static-label" for="firstName">First Name</label>
-                    <input type="text" id="firstName" class="static-input" placeholder="{{userData.first_name}}">
+                    <input type="text" name="first_name" class="static-input" placeholder="{{userData.first_name}}">
                 </div>
 
                 <div class="input-group">
                     <label class="static-label" for="lastName">Last Name</label>
-                    <input type="text" id="lastName" class="static-input" placeholder="{{userData.last_name}}">
+                    <input type="text" name="last_name" class="static-input" placeholder="{{userData.last_name}}">
                 </div>
             </div>
 
             <!-- Profile Description -->
             <div class="input-group">
                 <textarea id="profileDescription" class="static-input" placeholder=" "></textarea>
-                <label class="static-label" for="profileDescription">Profile Description</label>
+                <label class="static-label" name="description" for="profileDescription">Profile Description</label>
             </div>
         </div>
-        </form>
+        
 
         <!-- Divider -->
         <div class="divider"></div>
@@ -226,10 +226,13 @@
         <div class="modal-footer">
             <button id="deleteAccountBtn" class="delete-btn">Delete Account</button>
             <button id="changePasswordBtn" class="password-btn">Change Password</button>
-            <button id="saveChanges" class="save-btn">Save Changes</button>
+            <button id="saveChanges" type="submit" class="save-btn">Save Changes</button>
         </div>
     </div>
+
+    </form>
 </div>
+
 
 <!-- Save Changes Confirmation Modal -->
 <div id="saveChangesModal" class="modal">

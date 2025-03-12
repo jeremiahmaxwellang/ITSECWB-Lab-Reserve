@@ -287,7 +287,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (goBackProfileBtn) {
         goBackProfileBtn.addEventListener("click", function () {
             hideModal(successChangesModal);
-            showModal(editProfileModal);
+            // showModal(editProfileModal);
         });
     }
 
