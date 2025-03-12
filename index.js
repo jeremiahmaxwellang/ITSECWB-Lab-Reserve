@@ -241,6 +241,7 @@ async function insertReservations() {
                 email: student1.email,
                 request_date: new Date("2025-03-01T10:00:00Z"),
                 reserved_date: new Date("2025-03-02T14:00:00Z"),
+                building_id: 1,
                 room_num: "101",
                 seat_num: 1,
                 anonymous: "N",
@@ -250,6 +251,7 @@ async function insertReservations() {
                 email: student3.email,
                 request_date: new Date("2025-03-12T08:30:00Z"),
                 reserved_date: new Date("2025-03-13T13:30:00Z"),
+                building_id: 1,
                 room_num: "104",
                 seat_num: 3,
                 anonymous: "N",
@@ -259,6 +261,7 @@ async function insertReservations() {
                 email: student3.email,
                 request_date: new Date("2025-03-05T11:30:00Z"),
                 reserved_date: new Date("2025-03-06T09:00:00Z"),
+                building_id: 1,
                 room_num: "102",
                 seat_num: 1,
                 anonymous: "Y",
@@ -268,6 +271,7 @@ async function insertReservations() {
                 email: student2.email,
                 request_date: new Date("2025-03-10T14:45:00Z"),
                 reserved_date: new Date("2025-03-11T16:00:00Z"),
+                building_id: 1,
                 room_num: "103",
                 seat_num: 2,
                 anonymous: "N",
@@ -278,6 +282,7 @@ async function insertReservations() {
                 email: student3.email,
                 request_date: new Date("2025-03-15T12:00:00Z"),
                 reserved_date: new Date("2025-03-16T10:30:00Z"),
+                building_id: 1,
                 room_num: "105",
                 seat_num: 4,
                 anonymous: "Y", // ✅ Anonymous reservation
@@ -288,6 +293,7 @@ async function insertReservations() {
                 email: admin1.email,
                 request_date: new Date("2025-03-18T09:15:00Z"),
                 reserved_date: new Date("2025-03-19T15:45:00Z"),
+                building_id: 1,
                 room_num: "106",
                 seat_num: 1,
                 anonymous: "N", // ✅ Non-anonymous reservation
@@ -321,10 +327,10 @@ async function insertReservations() {
 // Run all insert functions sequentially
 async function runInserts() {
     await insertUsers()
-    await insertReservations()
     await insertBuildings()
     await insertRooms()
     await insertSeats()
+    await insertReservations()
 }
 runInserts()
 
