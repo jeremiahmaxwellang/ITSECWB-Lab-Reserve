@@ -578,7 +578,7 @@ app.post('/profile', isAuthenticated, async(req, res) => {
 })
 
 
-// TODO: Change password route (MAR 12)
+// DONE: Change password Route (MAR 12)
 app.post('/changepassword', isAuthenticated, async (req, res) => {
     try {
         const { newPassword, confirmPassword } = req.body;
@@ -603,6 +603,37 @@ app.post('/changepassword', isAuthenticated, async (req, res) => {
     }
 });
 
+//TODO: Delete User Route (Mar 12)
+app.delete('/deleteaccount', isAuthenticated, async (req, res) => {
+    try {
+        const user_id = req.session.user._id;
+
+        // Find and delete the user
+        const deletedUser = await User.findByIdAndDelete(user_id);
+
+        if (!deletedUser) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        console.log(`❌ User deleted: ${deletedUser.email}`);
+
+        // Destroy session and log out
+        req.session.destroy((err) => {
+            if (err) {
+                return res.status(500).json({ message: "Error logging out after deletion" });
+            }
+
+            res.clearCookie("sessionId");
+            res.clearCookie("rememberMe");
+
+            res.status(200).json({ message: "Account deleted successfully!" });
+        });
+
+    } catch (err) {
+        console.error("⚠️ Error deleting user:", err);
+        res.status(500).json({ message: "Internal server error" });
+    }
+});
 
 // Route to labtech handlebar (MUST DEPEND ON USER SESSION)
 app.get('/labtech', isAuthenticated, (req,res) => {

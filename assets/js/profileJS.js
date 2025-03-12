@@ -303,6 +303,42 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
+document.addEventListener("DOMContentLoaded", function () {
+    const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
+    const accountDeletedModal = document.getElementById("accountDeletedModal");
+    const goBackHomeBtn = document.getElementById("goBackHomeBtn");
+
+    if (confirmDeleteBtn) {
+        confirmDeleteBtn.addEventListener("click", async function () {
+            try {
+                const response = await fetch("/deleteaccount", {
+                    method: "DELETE",
+                    headers: { "Content-Type": "application/json" }
+                });
+
+                if (response.ok) {
+                    // Show the modal
+                    accountDeletedModal.style.display = "flex"; 
+                } else {
+                    window.location.href = "/profile"; 
+                }
+            } catch (error) {
+                console.error("⚠️ Error deleting account:", error);
+                window.location.href = "/profile"; 
+            }
+        });
+    }
+
+    // Redirect to homepage when clicking "Go Back to Home Page"
+    if (goBackHomeBtn) {
+        goBackHomeBtn.addEventListener("click", function () {
+            window.location.href = "/";
+        });
+    }
+});
+
+
+
 
 
 
