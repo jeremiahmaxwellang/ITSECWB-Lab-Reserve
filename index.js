@@ -581,7 +581,7 @@ app.post('/profile', isAuthenticated, async(req, res) => {
         
 })
 
-app.post('/profile', isAuthenticated, async (req, res) => {
+app.post('/submit-profile-details', isAuthenticated, async (req, res) => {
     try {
         const userData = req.session.user;
         const { first_name, last_name, description } = req.body;
@@ -595,6 +595,8 @@ app.post('/profile', isAuthenticated, async (req, res) => {
             const updatedUser = await User.findByIdAndUpdate(userData._id, updatedData, { new: true });
             req.session.user = updatedUser; // Update session with new user data
             console.log("✅ Profile updated:", updatedData);
+
+            res.redirect('/profile')
 
         } else {
             return res.status(400).json({ success: false, message: "No changes made." });
