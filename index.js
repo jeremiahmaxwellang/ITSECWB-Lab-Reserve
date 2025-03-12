@@ -575,8 +575,30 @@ app.post('/profile', isAuthenticated, async(req, res) => {
         
 })
 
+app.post('/profile', isAuthenticated, async (req, res) => {
+    try {
+        const userData = req.session.user;
+        const { first_name, last_name, description } = req.body;
 
-// DONE: Change password Route (MAR 12)
+        const updatedData = {};
+        if (first_name) updatedData.first_name = first_name;
+        if (last_name) updatedData.last_name = last_name;
+        if (description) updatedData.description = description;
+
+        if (Object.keys(updatedData).length > 0) {
+            const updatedUser = await User.findByIdAndUpdate(userData._id, updatedData, { new: true });
+            req.session.user = updatedUser; // Update session with new user data
+            console.log("✅ Profile updated:", updatedData);
+
+        } else {
+            return res.status(400).json({ success: false, message: "No changes made." });
+        }
+    } catch (err) {
+        console.error("⚠️ Error updating profile:", err);
+        res.status(500).json({ success: false, message: "Internal server error." });
+    }
+});
+
 // DONE: Change password Route (MAR 12)
 app.post('/changepassword', isAuthenticated, async (req, res) => {
     try {

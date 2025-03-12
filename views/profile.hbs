@@ -222,9 +222,14 @@
         <div class="divider"></div>
 
         <div class="modal-footer">
-            <button id="deleteAccountBtn" class="delete-btn">Delete Account</button>
-            <button id="changePasswordBtn" class="password-btn">Change Password</button>
-            <button id="saveChanges" type="submit" class="save-btn">Save Changes</button>
+            <!-- Delete Account Button (Prevent Submission) -->
+            <button id="deleteAccountBtn" type="button" class="delete-btn">Delete Account</button>
+
+            <!-- Change Password Button (Prevent Submission) -->
+            <button id="changePasswordBtn" type="button" class="password-btn">Change Password</button>
+
+            <!-- Save Changes Button (Submits the Form) -->
+            <button id="saveChanges" type="button" class="save-btn">Save Changes</button>
         </div>
     </div>
 
