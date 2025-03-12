@@ -368,7 +368,6 @@ app.get("/reservations", isLabTech, async (req, res) => {
                 : userMap[reservation.email] || "⚠️ Unknown"
         }));
 
-        console.log("✅ Sending Reservations:", formattedReservations);
         res.json(formattedReservations);
     } catch (err) {
         console.error("⚠️ Error fetching reservations:", err)

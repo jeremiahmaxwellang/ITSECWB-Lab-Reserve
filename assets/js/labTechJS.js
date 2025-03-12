@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', async function () {
+document.addEventListener("DOMContentLoaded", function () {
     console.log("Lab Tech Dashboard Loaded");
 
     let reservations = [];
@@ -63,9 +63,9 @@ document.addEventListener('DOMContentLoaded', async function () {
             console.error("❌ Table body not found!");
             return;
         }
-    
+
         tableBody.innerHTML = ""; // ✅ Clear old table data
-    
+
         reservations.forEach((reservation, index) => {
             const row = document.createElement("tr");
             row.innerHTML = `
@@ -76,59 +76,88 @@ document.addEventListener('DOMContentLoaded', async function () {
                 <td>${reservation.reservedBy || "⚠️ Unknown"}</td>
                 <td class="button-container">
                     <button class="editButton">Edit</button>
-                    <button class="deleteButton" onclick="showDeleteConfirmation(${index})">Delete</button>
+                    <button class="deleteButton" data-reservation-id="${reservation.id}">Delete</button>
                 </td>
             `;
-    
+
             tableBody.appendChild(row);
         });
-    }
-    
 
-    function showDeleteConfirmation(index) {
-        const deleteModal = document.getElementById("deleteModal");
+        // Attach event listeners to delete buttons
+        document.querySelectorAll(".deleteButton").forEach(button => {
+            button.addEventListener("click", function () {
+                const reservationId = this.getAttribute("data-reservation-id");
+                // Log the click event with reservation ID
+                console.log("Delete button clicked for reservation ID:", reservationId);
+                if (reservationId) {
+                    showDeleteConfirmation(reservationId);
+                } else {
+                    console.error("⚠️ Reservation ID not found.");
+                }
+            });
+        });
+    }
+
+    function showDeleteConfirmation(reservationId) {
+        const reservation = reservations.find(res => res.id === reservationId);
+        if (!reservation) {
+            console.error("❌ Reservation not found.");
+            return;
+        }
+    
+        // Get modal elements
+        const deleteModalOverlay = document.getElementById("deleteModal");
         const roomSpan = document.getElementById("deleteRoom");
         const seatSpan = document.getElementById("deleteSeat");
         const dateSpan = document.getElementById("deleteDate");
         const timeSpan = document.getElementById("deleteTime");
         const reservedBySpan = document.getElementById("deleteReservedBy");
-
-        roomSpan.textContent = reservations[index].roomNumber;
-        seatSpan.textContent = reservations[index].seatNumber;
-        dateSpan.textContent = formatDate(reservations[index].date);
-        timeSpan.textContent = generateTimeSlot(reservations[index].time);
-        reservedBySpan.textContent = reservations[index].reservedBy; // Show who reserved it
-
-        deleteModal.classList.add("active");
-
-        // Confirm Delete
-        document.querySelector(".confirm-button").onclick = async function () {
-            await deleteReservation(reservations[index].id);
-            fetchReservations(); // Refresh table
-            deleteModal.classList.remove("active");
-        };
-    }
-
-    async function deleteReservation(reservationId) {
-        try {
-            const response = await fetch(`/reservations/${reservationId}`, { method: "DELETE" });
-            if (!response.ok) {
-                throw new Error("Failed to delete reservation");
+        const confirmDeleteBtn = document.querySelector(".confirm-button");
+    
+        // Populate modal with reservation details
+        roomSpan.textContent = reservation.roomNumber;
+        seatSpan.textContent = reservation.seatNumber;
+        dateSpan.textContent = formatDate(reservation.date);
+        timeSpan.textContent = generateTimeSlot(reservation.time);
+        reservedBySpan.textContent = reservation.reservedBy || "Unknown";
+    
+        // ✅ Show the modal
+        deleteModalOverlay.style.visibility = "visible";
+        deleteModalOverlay.style.opacity = "1";
+    
+        // Handle Confirm button click to delete the reservation
+        confirmDeleteBtn.onclick = async function () {
+            console.log("🗑️ Deleting reservation with ID:", reservationId);
+    
+            try {
+                const response = await fetch(`/reservations/${reservationId}`, { 
+                    method: "DELETE",
+                    headers: { "Content-Type": "application/json" }
+                });
+    
+                if (response.ok) {
+                    console.log("✅ Reservation deleted successfully.");
+                    fetchReservations(); // Refresh table after deletion
+                    closeDeleteModal();
+                } else {
+                    console.error("⚠️ Failed to delete reservation.");
+                }
+            } catch (error) {
+                console.error("⚠️ Error deleting reservation:", error);
             }
-            console.log("Reservation deleted successfully");
-        } catch (error) {
-            console.error("Error deleting reservation:", error);
-        }
+        };
+    
+        // Close modal on cancel or close button click
+        document.querySelector(".cancel-button").addEventListener("click", closeDeleteModal);
+        document.querySelector(".close-button").addEventListener("click", closeDeleteModal);
     }
-
-    // Close modal on cancel or overlay click
-    document.querySelector(".cancel-button").addEventListener("click", function () {
-        document.getElementById("deleteModal").classList.remove("active");
-    });
-
-    document.querySelector(".close-button").addEventListener("click", function () {
-        document.getElementById("deleteModal").classList.remove("active");
-    });
+    
+    // ✅ Function to close the modal
+    function closeDeleteModal() {
+        const deleteModalOverlay = document.getElementById("deleteModal");
+        deleteModalOverlay.style.visibility = "hidden";
+        deleteModalOverlay.style.opacity = "0";
+    }    
 
     fetchReservations(); // Fetch data from database on page load
-});
+}); 
