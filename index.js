@@ -346,16 +346,16 @@ const isLabTech = (req, res, next) => {
     }
 }
 
+// LabTech Dashboard Table Data
 app.get("/reservations", isLabTech, async (req, res) => {
     try {
-        const reservations = await Reservation.find().populate("user_id", "first_name last_name").lean();
+        const reservations = await Reservation.find().lean();
 
         if (!reservations || reservations.length === 0) {
             console.warn("⚠️ No reservations found in the database.");
             return res.json([]);
         }
 
-        // Fetch user details manually
         const userEmails = reservations.map(res => res.email);
         const users = await User.find({ email: { $in: userEmails } }, "first_name last_name email").lean();
 
@@ -374,19 +374,37 @@ app.get("/reservations", isLabTech, async (req, res) => {
             time: reservation.reserved_date ? reservation.reserved_date.toISOString().split("T")[1].slice(0,5) : "N/A",
             reservedBy: reservation.anonymous === "Y"
                 ? "Anonymous"
-                : reservation.user_id
-                ? `${reservation.user_id.first_name} ${reservation.user_id.last_name}`
-                : "⚠️ Unknown"
+                : userMap[reservation.email] || "⚠️ Unknown"
         }));
 
-        console.log("✅ Sending Reservations:", formattedReservations)
-        res.json(formattedReservations)
-
+        console.log("✅ Sending Reservations:", formattedReservations);
+        res.json(formattedReservations);
     } catch (err) {
         console.error("⚠️ Error fetching reservations:", err)
         res.status(500).json({ message: "Error fetching reservations", error: err.message })
     }
 });
+
+// LabTech Dashboard Deletion Feature Route
+app.delete('/reservations/:id', isLabTech, async (req, res) => {
+    try {
+        const reservationId = req.params.id;
+
+        // Find and delete reservation
+        const deletedReservation = await Reservation.findByIdAndDelete(reservationId);
+
+        if (!deletedReservation) {
+            return res.status(404).json({ message: "Reservation not found" });
+        }
+
+        console.log(`✅ Reservation ${reservationId} deleted successfully`);
+        res.status(200).json({ message: "Reservation deleted successfully" });
+    } catch (error) {
+        console.error("⚠️ Error deleting reservation:", error);
+        res.status(500).json({ message: "Error deleting reservation", error: error.message });
+    }
+});
+
 
 
 /*
