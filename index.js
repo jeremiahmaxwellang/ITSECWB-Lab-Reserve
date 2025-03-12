@@ -688,12 +688,19 @@ app.get('/labtech', isAuthenticated, (req,res) => {
 
 
 // Route to reservation handlebar (MUST DEPEND ON USER SESSION)
-app.get('/reserve', isAuthenticated, async(req,res) => {
-    const userData = req.session.user
-    console.log(userData)
+app.get('/reserve', isAuthenticated, async (req, res) => {
+    try {
+        const userData = req.session.user;
+        console.log(userData);
 
-    res.render('reserve', {userData})
-})
+        const buildings = await Building.find({}, 'building_name'); // Fetch buildings
+
+        res.render('reserve', { userData, buildings }); // Pass buildings to Handlebars
+    } catch (error) {
+        console.error("Error fetching buildings:", error);
+        res.status(500).send("Error fetching buildings");
+    }
+});
 
 // Route to dashboard handlebar (MUST DEPEND ON USER SESSION)
 app.get('/dashboard', isAuthenticated, async(req,res) => {

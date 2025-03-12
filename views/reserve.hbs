@@ -37,9 +37,9 @@
             <div class="custom-dropdown">
                 <select id="building-location" class="dropdown-select">
                     <option value="" disabled selected>Location</option>
-                    <option value="Gokongwei Hall">Gokongwei Hall</option>
-                    <option value="Velasco Hall"> Velasco Hall</option>
-                    <option value="Andrew Gonzales">Andrew Gonzales</option>
+                    {{#each buildings}}
+                        <option value="{{this.building_name}}">{{this.building_name}}</option>
+                    {{/each}}
                 </select>
             </div>
         </div>
