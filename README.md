@@ -63,5 +63,5 @@ Kyle de Jesus
 [@ikyledj](https://github.com/ikyledj)
 
 ## Acknowledgments
-
+* Sir Arturo Caronongan
 * [techie delight](https://www.techiedelight.com/generate-sha-256-hash-javascript/)

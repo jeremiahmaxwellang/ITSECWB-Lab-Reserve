@@ -84,7 +84,7 @@ var student1 = {
     email: "jeremiah_ang@dlsu.edu.ph",
     password: "68eaeeaef51a40035b5d3705c4e0ffd68036b6b821361765145f410b0f996e11", // actual student password: "studentpassword"
     account_type: "Student",
-    profile_picture: "profile_pics/avatar.png",
+    profile_picture: "profile_pics/Ang_Jeremiah_avatar.jpg",
 }
 
 var student2 = {
@@ -93,7 +93,7 @@ var student2 = {
     email: "charles_duelas@dlsu.edu.ph",
     password: "af0d81ce666749c1e154a461a8c4f1117010dc058a4b08a45987328730e19d20", // actual student password: "quackerson"
     account_type: "Student",
-    profile_picture: "profile_pics/avatar.png",
+    profile_picture: "profile_pics/default_avatar.jpg",
 }
 
 var student3 = {
@@ -102,7 +102,7 @@ var student3 = {
     email: "sung_woo@dlsu.edu.ph",
     password: "ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f", // actual student password: "password123"
     account_type: "Student",
-    profile_picture: "profile_pics/avatar.png",
+    profile_picture: "profile_pics/Woo_Sung Jin_20250312.jpg",
 }
 
 // Function to Insert Hardcoded Users
@@ -311,9 +311,9 @@ async function insertReservations() {
 
             if (!existingReservation) {
                 await Reservation.create(reservation)
-                console.log(`✅ Reservation added for Room ${reservation.room_num}, Seat ${reservation.seat_num}`)
+                console.log(`✅ Reservation added for Building ${reservation.building_id}, Room ${reservation.room_num}, Seat ${reservation.seat_num}`)
             } else {
-                console.warn(`⚠️ Seat ${reservation.seat_num} in Room ${reservation.room_num} is already reserved.`)
+                console.warn(`⚠️ Seat ${reservation.seat_num} in Room ${reservation.room_num}, Building ${reservation.building_id} is already reserved.`)
             }
         }
 
