@@ -6,6 +6,7 @@ const ReservationSchema = new mongoose.Schema({
     request_date: { type: Date, required: true },
     reserved_date: { type: Date, required: true },
 
+    building_id: { type: Number, ref: 'Building', required: true },
     room_num: { type: String, ref: 'Room', required: true },
     seat_num: { type: Number, required: true },
     

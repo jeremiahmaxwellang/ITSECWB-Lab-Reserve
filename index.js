@@ -84,7 +84,7 @@ var student1 = {
     email: "jeremiah_ang@dlsu.edu.ph",
     password: "68eaeeaef51a40035b5d3705c4e0ffd68036b6b821361765145f410b0f996e11", // actual student password: "studentpassword"
     account_type: "Student",
-    profile_picture: "profile_pics/avatar.png",
+    profile_picture: "Ang_Jeremiah_avatar.jpg",
 }
 
 var student2 = {
@@ -93,7 +93,7 @@ var student2 = {
     email: "charles_duelas@dlsu.edu.ph",
     password: "af0d81ce666749c1e154a461a8c4f1117010dc058a4b08a45987328730e19d20", // actual student password: "quackerson"
     account_type: "Student",
-    profile_picture: "profile_pics/avatar.png",
+    profile_picture: "profile_pics/default_avatar.jpg",
 }
 
 var student3 = {
@@ -102,7 +102,7 @@ var student3 = {
     email: "sung_woo@dlsu.edu.ph",
     password: "ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f", // actual student password: "password123"
     account_type: "Student",
-    profile_picture: "profile_pics/avatar.png",
+    profile_picture: "profile_pics/Woo_Sung Jin_20250312.jpg",
 }
 
 // Function to Insert Hardcoded Users
@@ -241,6 +241,7 @@ async function insertReservations() {
                 email: student1.email,
                 request_date: new Date("2025-03-01T10:00:00Z"),
                 reserved_date: new Date("2025-03-02T14:00:00Z"),
+                building_id: 1, //new building_id field
                 room_num: "101",
                 seat_num: 1,
                 anonymous: "N",
@@ -250,6 +251,7 @@ async function insertReservations() {
                 email: student3.email,
                 request_date: new Date("2025-03-12T08:30:00Z"),
                 reserved_date: new Date("2025-03-13T13:30:00Z"),
+                building_id: 1, //new building_id field
                 room_num: "104",
                 seat_num: 3,
                 anonymous: "N",
@@ -259,6 +261,7 @@ async function insertReservations() {
                 email: student3.email,
                 request_date: new Date("2025-03-05T11:30:00Z"),
                 reserved_date: new Date("2025-03-06T09:00:00Z"),
+                building_id: 1, //new building_id field
                 room_num: "102",
                 seat_num: 1,
                 anonymous: "Y",
@@ -268,6 +271,7 @@ async function insertReservations() {
                 email: student2.email,
                 request_date: new Date("2025-03-10T14:45:00Z"),
                 reserved_date: new Date("2025-03-11T16:00:00Z"),
+                building_id: 1, //new building_id field
                 room_num: "103",
                 seat_num: 2,
                 anonymous: "N",
@@ -278,6 +282,7 @@ async function insertReservations() {
                 email: student3.email,
                 request_date: new Date("2025-03-15T12:00:00Z"),
                 reserved_date: new Date("2025-03-16T10:30:00Z"),
+                building_id: 1, //new building_id field
                 room_num: "105",
                 seat_num: 4,
                 anonymous: "Y", // ✅ Anonymous reservation
@@ -288,6 +293,7 @@ async function insertReservations() {
                 email: admin1.email,
                 request_date: new Date("2025-03-18T09:15:00Z"),
                 reserved_date: new Date("2025-03-19T15:45:00Z"),
+                building_id: 1, //new building_id field
                 room_num: "106",
                 seat_num: 1,
                 anonymous: "N", // ✅ Non-anonymous reservation
@@ -298,6 +304,7 @@ async function insertReservations() {
         // Insert reservations only if they don't exist
         for (const reservation of reservations) {
             const existingReservation = await Reservation.findOne({
+                building_id: reservation.building_id, //new building_id field
                 room_num: reservation.room_num,
                 seat_num: reservation.seat_num,
                 reserved_date: reservation.reserved_date
@@ -305,9 +312,9 @@ async function insertReservations() {
 
             if (!existingReservation) {
                 await Reservation.create(reservation)
-                console.log(`✅ Reservation added for Room ${reservation.room_num}, Seat ${reservation.seat_num}`)
+                console.log(`✅ Reservation added for Building ${reservation.building_id}, Room ${reservation.room_num}, Seat ${reservation.seat_num}`)
             } else {
-                console.warn(`⚠️ Seat ${reservation.seat_num} in Room ${reservation.room_num} is already reserved.`)
+                console.warn(`⚠️ Seat ${reservation.seat_num} in Room ${reservation.room_num}, Building ${reservation.building_id} is already reserved.`)
             }
         }
 
