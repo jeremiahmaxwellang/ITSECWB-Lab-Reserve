@@ -5,10 +5,9 @@
     <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/styleguide.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
 
-  </head>
-  <body>
-  
 <!-- Header -->
 <header class="header">
     <div class="logo-container">
@@ -16,60 +15,63 @@
     </div>
     
     <div class="labyrinthHeader">Labyrinth</div>
-  
+
     <!-- Profile Picture & Dropdown (Right-Aligned) -->
     <div class="profile-dropdown">
         <img class="profile-icon" src="{{userData.profile_picture}}" alt="Profile" id="profileDropdownBtn">
         <div class="dropdown-menu" id="profileDropdown">
-            
             <a href="/profile">Go to Profile</a>
-            <!-- redirects to index.html -->
             <a href="/logout">Logout</a> 
         </div>
     </div>
-  </header>
-    
-    <!-- Selection Section -->
-    <div class="selection-container">
-        <!-- Building Location Dropdown -->
-        <div class="dropdown-container">
-            <label for="building-location" class="dropdown-label">Building</label>
-            <div class="custom-dropdown">
-                <select id="building-location" class="dropdown-select">
-                    <option value="" disabled selected>Location</option>
-                    {{#each buildings}}
-                        <option value="{{this.building_name}}">{{this.building_name}}</option>
-                    {{/each}}
-                </select>
-            </div>
-        </div>
+</header>
 
-        <!-- Floor Selection Slider -->
-        <div class="floor-slider-container">
-            <label for="floor-selection" class="slider-label">Floor</label>
-            <div class="floor-slider">
-                <div class="floor-slider-thumb"></div>
-                <div class="floor-numbers">
-                    <span class="floor-number" data-floor="1">1</span>
-                    <span class="floor-number" data-floor="2">2</span>
-                    <span class="floor-number" data-floor="3">3</span>
-                    <span class="floor-number" data-floor="4">4</span>
-                    <span class="floor-number" data-floor="5">5</span>
-                </div>
+<!-- Selection Section -->
+<div class="selection-container">
+    <!-- Building Location Dropdown -->
+    <div class="dropdown-container">
+        <label for="building-location" class="dropdown-label">Building</label>
+        <div class="custom-dropdown">
+            <select id="building-location" class="dropdown-select">
+                {{#each buildings}}
+                    <option value="{{this.building_name}}" {{#if @first}}selected{{/if}}>{{this.building_name}}</option>
+                {{/each}}
+            </select>
+        </div>
+    </div>
+
+    <!-- Floor Selection Slider -->
+    <div class="floor-slider-container">
+        <label for="floor-selection" class="slider-label">Floor</label>
+        <div class="floor-slider">
+            <div class="floor-slider-thumb"></div>
+            <div class="floor-numbers">
+                <span class="floor-number" data-floor="1">1</span>
+                <span class="floor-number" data-floor="2">2</span>
+                <span class="floor-number" data-floor="3">3</span>
             </div>
         </div>
     </div>
+</div>
+
+<!-- Room Reservation Section -->
+<div class="room-container">
+    <h2 id="room-title" class="available-rooms-title">Choose a Building</h2>
+    <div id="room-container"></div>
+</div>
+
+<!-- Link to JavaScript -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const buildingDropdown = document.getElementById("building-location");
         
-
-    <!-- Room Reservation Section -->
-    <div class="room-container">
-        <h2 class="available-rooms-title">Available Rooms</h2>
-        <div id="room-container"></div>
-    </div>
-
-    <!-- Link to JavaScript -->
-    <script src="js/reservationJS.js"></script>
-    <script src="js/common.js"></script>
+        // Automatically set first building
+        const firstBuilding = buildingDropdown.options[0].value;
+        buildingDropdown.value = firstBuilding;
+    });
+</script>
+<script src="js/reservationJS.js"></script>
+<script src="js/common.js"></script>
 
 </body>
 </html>

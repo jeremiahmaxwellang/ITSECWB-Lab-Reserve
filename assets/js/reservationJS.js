@@ -1,52 +1,81 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const rooms = [
-        { name: "GK101", capacity: 20, projectors: 1, servers: 0 },
-        { name: "GK102", capacity: 20, projectors: 1, servers: 0 },
-        { name: "GK103", capacity: 20, projectors: 1, servers: 0 },
-        { name: "GK104", capacity: 20, projectors: 1, servers: 0 },
-        { name: "GK105", capacity: 20, projectors: 1, servers: 0 },
-        { name: "GK106", capacity: 20, projectors: 1, servers: 0 }
-    ];
-
     const roomContainer = document.getElementById("room-container");
-
-    rooms.forEach(room => {
-        const roomDiv = document.createElement("div");
-        roomDiv.classList.add("room-box");
-        roomDiv.innerHTML = `
-            <img src="images/goksdiv.png" alt="Room Image">
-            <div class="divider"></div>
-            <div class="room-info">
-                <div class="room-name">${room.name}</div>
-                <div class="room-details">
-                    Capacity: ${room.capacity} <br>
-                    Projectors: ${room.projectors} <br>
-                    Servers: ${room.servers}
-                </div>
-            </div>
-        `;
-
-        roomDiv.addEventListener("click", () => {
-            showOverlay(room.name);
-        });
-
-        roomContainer.appendChild(roomDiv);
-    });
-
+    const roomTitle = document.getElementById("room-title"); // Select the room title
     const floorNumbers = document.querySelectorAll(".floor-number");
     const sliderThumb = document.querySelector(".floor-slider-thumb");
+    const buildingDropdown = document.getElementById("building-location");
 
-    const floorPositions = [0, 60, 110, 160, 229]; // Positions for slider
+    const floorPositions = [0, 60, 110, 160, 229]; // Adjust slider positions
+    let selectedFloor = 1; // Default floor
+    let selectedBuilding = ""; // Default empty (forces user to select)
+
+    function fetchRooms(building, floor) {
+        if (!building || !floor) return; // Prevent API call if missing values
+
+        fetch(`/available-rooms?building=${encodeURIComponent(building)}&floor=${floor}`)
+            .then(response => response.json())
+            .then(data => {
+                roomContainer.innerHTML = ""; // Clear existing rooms
+
+                // Update title to "Available Rooms"
+                roomTitle.textContent = "Available Rooms";
+
+                if (data.success && data.rooms.length > 0) {
+                    data.rooms.forEach(room => {
+                        const roomDiv = document.createElement("div");
+                        roomDiv.classList.add("room-box");
+                        roomDiv.innerHTML = `
+                            <img src="images/goksdiv.png" alt="Room Image">
+                            <div class="divider"></div>
+                            <div class="room-info">
+                                <div class="room-name">${room.room_num}</div>
+                                <div class="room-details">
+                                    Capacity: 20 <br>
+                                    Projectors: 1 <br>
+                                    Servers: 0
+                                </div>
+                            </div>
+                        `;
+
+                        roomDiv.addEventListener("click", () => {
+                            showOverlay(room.room_num);
+                        });
+
+                        roomContainer.appendChild(roomDiv);
+                    });
+                } else {
+                    roomContainer.innerHTML = "<p class='no-rooms'>No available rooms in this building and floor.</p>";
+                }
+            })
+            .catch(error => {
+                console.error("Error fetching rooms:", error);
+                document.getElementById("room-container").innerHTML = "<p class='error-message'>Failed to load rooms.</p>";
+            });
+    }
+
+    // Run when the user selects a building
+    buildingDropdown.addEventListener("change", function () {
+        selectedBuilding = buildingDropdown.value;
+
+        // Change title from "Choose a Building" to "Available Rooms"
+        roomTitle.textContent = "Available Rooms";
+
+        fetchRooms(selectedBuilding, selectedFloor);
+    });
 
     floorNumbers.forEach((floor, index) => {
         floor.addEventListener("click", function () {
+            selectedFloor = floor.dataset.floor;
             sliderThumb.style.transform = `translateX(${floorPositions[index]}px)`;
 
             floorNumbers.forEach(f => f.classList.remove("selected"));
             floor.classList.add("selected");
+
+            fetchRooms(selectedBuilding, selectedFloor);
         });
     });
 
+    // Set slider thumb to first floor by default
     sliderThumb.style.transform = `translateX(${floorPositions[0]}px)`;
     floorNumbers[0].classList.add("selected");
 });

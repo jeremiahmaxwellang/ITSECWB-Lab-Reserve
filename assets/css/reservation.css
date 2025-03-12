@@ -91,39 +91,25 @@ body {
     outline: none;
 }
 
-/* Floor Slider Container */
-.floor-slider-container {
-    display: flex;
-    gap: 15px;
-}
-
-/* Slider Background */
+/* Floor Slider */
 .floor-slider {
     position: relative;
     font-family: 'Outfit', sans-serif;
-    width: 300px;
+    width: 200px; /* Adjust width to fit 3 floors */
     height: 45px;
     background: white;
     border-radius: 25px;
-    border: 1px solid #ccc; 
+    border: 1px solid #ccc;
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-    position: relative;
     padding: 5px;
-}
-
-/* Dropdown Label */
-.slider-label {
-    font-size: 20px;
-    color: #377684;
-    margin-top: 15px;
 }
 
 /* Slider Thumb */
 .floor-slider-thumb {
     position: absolute;
-    width: 70px;
+    width: 60px; /* Adjust size for better fit */
     height: 50px;
     background: #377684;
     border-radius: 25px;
@@ -131,6 +117,25 @@ body {
     left: 0;
 }
 
+/* Floor Numbers */
+.floor-numbers {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    font-size: 18px;
+    font-weight: bold;
+    color: #377684;
+}
+
+.floor-number {
+    cursor: pointer;
+    padding: 10px;
+    transition: color 0.2s ease-in-out;
+}
+
+.floor-number.selected {
+    color: white;
+}
 /* Floor Numbers */
 .floor-numbers {
     display: flex;

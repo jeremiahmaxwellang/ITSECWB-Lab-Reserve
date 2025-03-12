@@ -158,14 +158,34 @@ async function insertRooms() {
             return
         }
 
-        // Define rooms with foreign key `building_id`
-        const rooms = [
-            { building_id: 1, room_num: "101", floor_num: 1 },
-            { building_id: 1, room_num: "102", floor_num: 1 },
-            { building_id: 2, room_num: "201", floor_num: 2 },
-            { building_id: 2, room_num: "202", floor_num: 2 },
-            { building_id: 3, room_num: "301", floor_num: 3 }
-        ]
+        // Define room data
+        const buildings = 3;
+        const floorsPerBuilding = 3;
+        const roomsPerFloor = 6;
+        
+        const prefixes = {
+            1: "SH",
+            2: "EC",
+            3: "LB"
+        };
+        
+        const rooms = [];
+        
+        for (let b = 1; b <= 4; b++) {
+            for (let f = 1; f <= floorsPerBuilding; f++) {
+                for (let r = 1; r <= roomsPerFloor; r++) {
+                    rooms.push({
+                        building_id: b,
+                        room_num: `${prefixes[b]}${f}${r.toString().padStart(2, "0")}`, // Prefix + Floor + Room Number
+                        floor_num: f
+                    });
+                }
+            }
+        }
+        
+        console.log(rooms);
+        
+        console.log(rooms);
 
         for (const room of rooms) {
             // Check if the referenced building exists
@@ -196,26 +216,38 @@ async function insertRooms() {
 //hardcoded seat values
 async function insertSeats() {
     try {
-        // Define seats (Updated hardcoded values)
-        const seats = [
-            { room_num: "101", seat_num: 1 },
-            { room_num: "102", seat_num: 1 },
-            { room_num: "103", seat_num: 1 },        
-            { room_num: "103", seat_num: 2 },
-        ]
+        // Fetch all rooms from the database
+        const existingRooms = await Room.find();
 
-        // Insert seats if they don't exist
-        for (const seat of seats) {
-            await Seat.findOneAndUpdate(
-                { room_num: seat.room_num, seat_num: seat.seat_num }, // Search condition (unique key)
-                seat, // Data to insert/update
-                { upsert: true, new: true, setDefaultsOnInsert: true } // Upsert options
-            )
+        if (existingRooms.length === 0) {
+            console.error("⚠️ No rooms found. Cannot insert seats.");
+            return;
         }
 
-        console.log("✅ Seats inserted (if not duplicates)")
+        const seats = [];
+
+        // Generate 20 seats per room
+        for (const room of existingRooms) {
+            for (let seatNum = 1; seatNum <= 20; seatNum++) {
+                seats.push({
+                    room_num: room.room_num,
+                    seat_num: seatNum
+                });
+            }
+        }
+
+        // Insert seats into the database
+        for (const seat of seats) {
+            await Seat.findOneAndUpdate(
+                { room_num: seat.room_num, seat_num: seat.seat_num }, // Unique seat per room
+                seat, // Data to insert/update
+                { upsert: true, new: true, setDefaultsOnInsert: true } // Upsert options
+            );
+        }
+
+        console.log("✅ Seats inserted (if not duplicates)");
     } catch (err) {
-        console.error("⚠️ Error inserting seats:", err)
+        console.error("⚠️ Error inserting seats:", err);
     }
 }
 
@@ -242,7 +274,7 @@ async function insertReservations() {
                 request_date: new Date("2025-03-01T10:00:00Z"),
                 reserved_date: new Date("2025-03-02T14:00:00Z"),
                 building_id: 1,
-                room_num: "101",
+                room_num: "LB101",
                 seat_num: 1,
                 anonymous: "N",
                 reserved_for_id: student1.email // Assigned to a student
@@ -252,7 +284,7 @@ async function insertReservations() {
                 request_date: new Date("2025-03-12T08:30:00Z"),
                 reserved_date: new Date("2025-03-13T13:30:00Z"),
                 building_id: 1,
-                room_num: "104",
+                room_num: "EC104",
                 seat_num: 3,
                 anonymous: "N",
                 reserved_for_id: student3.email // Assigned to a student
@@ -262,7 +294,7 @@ async function insertReservations() {
                 request_date: new Date("2025-03-05T11:30:00Z"),
                 reserved_date: new Date("2025-03-06T09:00:00Z"),
                 building_id: 1,
-                room_num: "102",
+                room_num: "LB102",
                 seat_num: 1,
                 anonymous: "Y",
                 reserved_for_id: null // Anonymous reservation
@@ -272,7 +304,7 @@ async function insertReservations() {
                 request_date: new Date("2025-03-10T14:45:00Z"),
                 reserved_date: new Date("2025-03-11T16:00:00Z"),
                 building_id: 1,
-                room_num: "103",
+                room_num: "LB103",
                 seat_num: 2,
                 anonymous: "N",
                 reserved_for_id: student2.email
@@ -283,7 +315,7 @@ async function insertReservations() {
                 request_date: new Date("2025-03-15T12:00:00Z"),
                 reserved_date: new Date("2025-03-16T10:30:00Z"),
                 building_id: 1,
-                room_num: "105",
+                room_num: "SH105",
                 seat_num: 4,
                 anonymous: "Y", // ✅ Anonymous reservation
                 reserved_for_id: null
@@ -294,7 +326,7 @@ async function insertReservations() {
                 request_date: new Date("2025-03-18T09:15:00Z"),
                 reserved_date: new Date("2025-03-19T15:45:00Z"),
                 building_id: 1,
-                room_num: "106",
+                room_num: "SH106",
                 seat_num: 1,
                 anonymous: "N", // ✅ Non-anonymous reservation
                 reserved_for_id: admin1.email
@@ -420,16 +452,16 @@ function sha256(password) {
 
 // Route to INDEX.HTML
 // localhost:3000/
-app.get('\\', function(req,res){
+app.get('/', function(req,res){
 
-    res.sendFile(__dirname + '\\' + 'index.html')
+    res.sendFile(__dirname + '/' + 'index.html')
 })
 
 // Route to register.html
 // localhost:3000/register
 app.get('/register', function(req,res){
 
-    res.sendFile(__dirname + '\\' + 'register.html')
+    res.sendFile(__dirname + '/' + 'register.html')
 })
 
 // USER REGISTRATION
@@ -686,6 +718,33 @@ app.get('/labtech', isAuthenticated, (req,res) => {
     res.render('labtech', {userData})
 })
 
+// Fetch available rooms for a selected building and floor
+app.get("/available-rooms", async (req, res) => {
+    try {
+        const { building, floor } = req.query;
+
+        if (!building || !floor) {
+            return res.status(400).json({ error: "Building and floor are required." });
+        }
+
+        // Find building ID based on building name
+        const buildingData = await Building.findOne({ building_name: building }).lean();
+        if (!buildingData) {
+            return res.status(404).json({ error: "Building not found." });
+        }
+
+        // Fetch rooms that belong to the selected building and floor
+        const availableRooms = await Room.find({
+            building_id: buildingData.building_id,
+            floor_num: parseInt(floor),
+        }).lean();
+
+        res.json({ success: true, rooms: availableRooms });
+    } catch (error) {
+        console.error("⚠️ Error fetching available rooms:", error);
+        res.status(500).json({ error: "Failed to fetch available rooms." });
+    }
+});
 
 // Route to reservation handlebar (MUST DEPEND ON USER SESSION)
 app.get('/reserve', isAuthenticated, async (req, res) => {
@@ -753,7 +812,7 @@ app.get('/logout', (req, res) => {
 
         res.clearCookie('sessionId')
         res.clearCookie('rememberMe')
-        res.redirect('\\')
+        res.redirect('/')
     })
 })
 
