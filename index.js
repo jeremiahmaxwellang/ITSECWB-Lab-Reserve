@@ -491,7 +491,6 @@ app.get('/login', async function(req, res) {
 })
 
 // SUBMIT LOGIN CREDENTIALS ROUTE
-// DONE: Change this so it checks the DB if email exists (MAR 8, 2025)
 app.post("/login", express.urlencoded({extended: true}), async(req,res) => {
     const { email, password, rememberMe } = req.body
 
@@ -528,7 +527,7 @@ app.post("/login", express.urlencoded({extended: true}), async(req,res) => {
     }
 })
 
-// TODO: Profile page must load the user's details from the DB - JER
+// Profile Page
 app.get('/profile', isAuthenticated, (req,res) => {
     const userData = req.session.user
     console.log(userData)
@@ -601,9 +600,37 @@ app.post('/changepassword', isAuthenticated, async (req, res) => {
         console.error("⚠️ Error updating password:", err);
         res.status(500).send("<script>alert('Internal server error'); window.location='/profile';</script>");
     }
+
+    res.redirect('/profile')
 });
 
-//TODO: Delete User Route (Mar 12)
+// Submit Profile Details Route (MAR 12)
+app.post('/submit-profile-info', isAuthenticated, async (req, res) => {
+    try {
+        const userData = req.session.user
+        const { first_name, last_name, description } = req.body
+
+        const updatedData = {}
+
+        if(first_name) updatedData.first_name = first_name
+        if(last_name) updatedData.last_name = last_name
+        if(description) updatedData.description = description
+
+        if(Object.keys(updatedData).length > 0){
+            const updatedUser = await User.findByIdAndUpdate(userData._id, updatedData,{ new: true })
+            req.session.user = updatedUser
+            console.log("Profile details changed: ", updatedData)
+        }
+            
+        res.send("<script>alert('Profile Details updated successfully!'); window.location='/profile';</script>")
+
+    } catch (err) {
+        console.error("⚠️ Error updating profile details:", err)
+        res.status(500).send("<script>alert('Internal server error'); window.location='/profile';</script>")
+    }
+});
+
+//Delete User Route (Mar 12)
 app.delete('/deleteaccount', isAuthenticated, async (req, res) => {
     try {
         const user_id = req.session.user._id;

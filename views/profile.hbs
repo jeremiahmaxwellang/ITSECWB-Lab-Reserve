@@ -195,7 +195,7 @@
         <div class="curved-divider"></div>
         
         <!-- Modal Body -->
-        <form action="/submit-profile-info" method="post" enctype="multipart/form-data"></form>
+        <form action="/submit-profile-info" method="post">
         <div class="modal-body">
             <h3 class="section-title">Personal Information</h3>
 
@@ -214,8 +214,8 @@
 
             <!-- Profile Description -->
             <div class="input-group">
-                <textarea id="profileDescription" class="static-input" placeholder=" "></textarea>
-                <label class="static-label" name="description" for="profileDescription">Profile Description</label>
+                <textarea name="description" id="profileDescription" class="static-input" placeholder=" "></textarea>
+                <label class="static-label" for="profileDescription">Profile Description</label>
             </div>
         </div>
         
