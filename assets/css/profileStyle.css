@@ -147,6 +147,12 @@ body {
   margin-top: 50px;
 }
 
+.change-photo-button-container {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
 .edit-profile-button {
   font-family: Newsreader;
   background-color: #377684;
@@ -346,8 +352,8 @@ body {
 .modal-profile-container {
   display: flex;
   flex-direction: column; /* Stack elements vertically */
-  align-items: center; /* Center-align the items */
-  justify-content: center;
+  align-items: left; /* Center-align the items */
+  justify-content: left;
   margin-right: 10px; /* Space between profile and text */
 }
 
@@ -391,7 +397,8 @@ body {
   border-radius: 5px;
   cursor: pointer;
   transition: background 0.3s ease;
-  width: 100%; /* Ensure button width is auto-fit */
+  min-width: 50px;
+  max-width: 50%; /* Ensure button width is auto-fit */
   text-align: center;
 }
 

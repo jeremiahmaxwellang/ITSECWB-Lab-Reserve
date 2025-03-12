@@ -1,26 +1,18 @@
-// Commands for installing NodeJS Packages
-// npm init -y
-// npm install express hbs path express-fileupload express-session mongoose cookie-parser
-
 const express = require('express')
 const hbs = require('hbs') 
-
 
 const fileUpload = require('express-fileupload')
 const session = require('express-session')
 const mongoose = require('mongoose')
-const crypto = require('crypto') //no need to install crypto, it's built-in already
-const cookieParser = require("cookie-parser") //TODO: NEW LIBRARY PLS DOWNLOAD HEHE
+const crypto = require('crypto')
+const cookieParser = require("cookie-parser")
 
-// DB CONNECTION 
-// FEB 28 EDIT: Changed the connection string (copied from ccapdev sample activity)
+// DB CONNECTION
 mongoose.connect('mongodb://127.0.0.1:27017/labyrinthDB', { 
     useNewUrlParser: true, 
     useUnifiedTopology: true 
 }).then(() => console.log('Connected to MongoDB'))
 .catch(err => console.error('MongoDB connection error:', err))
-
-// mongoose.connect('mongodb://localhost/labyrinthDB')
 
 /* Initialize User path */
 const User = require("./database/models/User")
@@ -35,14 +27,13 @@ const app = express()
 
 app.set('view engine', 'hbs')
 
-app.use(express.json()) // use json
+app.use(express.json())
 app.use(express.urlencoded( {extended: false})) // files consist of more than strings
-app.use(express.static('assets')) // static directory for "assets" folder
-app.use(express.static('uploads')) // static directory for "uploads" folder
+app.use(express.static('assets')) 
+app.use(express.static('uploads')) 
 
 
 // SESSION
-// TODO: Remember me for 3 weeks
 app.use(session({
     secret: 'some secret',
 
@@ -67,7 +58,7 @@ const isAuthenticated = (req, res, next) => {
 }
 
 
-// Hardcoded Lab Technician Accounts
+// Autocreated Accounts
 var admin1 = {
     last_name: "Carunongan",
     first_name: "Arturo",
@@ -436,9 +427,6 @@ app.get('/register', function(req,res){
     res.sendFile(__dirname + '\\' + 'register.html')
 })
 
-// REGISTER USER CREATION: Assigned to kyle
-// DONE: User must be created in database
-// TODO: Do not allow duplicates of the same Email
 // USER REGISTRATION
 app.post('/register', async (req, res) => {
     try {
@@ -616,7 +604,6 @@ app.post('/changepassword', isAuthenticated, async (req, res) => {
 });
 
 
-// TODO: Top right Profile icon must be user's icon
 // Route to labtech handlebar (MUST DEPEND ON USER SESSION)
 app.get('/labtech', isAuthenticated, (req,res) => {
     const userData = req.session.user

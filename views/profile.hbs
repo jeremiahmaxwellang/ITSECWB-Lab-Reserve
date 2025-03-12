@@ -167,10 +167,17 @@
 
                 <div class="modal-profile-container">
                     <img class="modal-profile-picture" src="{{userData.profile_picture}}" alt="Profile Picture">
+                    
 
-                    <button type="submit" >Change Profile Photo</button>
-                    {{!-- TODO: Make this not elongated --}}
-                    <input type="file" name="profile_picture" class="change-photo-btn">
+
+                    <div class="change-photo-button-container">
+                        {{!-- TODO: Make this not elongated --}}
+                        <input type="file" name="profile_picture" class="change-photo-btn">
+
+                        <button type="submit" class="change-photo-btn">Submit Profile Photo</button>
+
+                    </div>
+
 
                 </div>
 
@@ -181,6 +188,7 @@
                     <h3>{{userData.first_name}} {{userData.last_name}}</h3>
                     <p>{{userData.account_type}}</p>
                 </div>
+
             </div>
         </div>
 
