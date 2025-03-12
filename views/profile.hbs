@@ -1,8 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{userData.first_name}} {{userData.last_name}}'s profile</title>
 
     <link rel="stylesheet" href="css/global.css">
@@ -287,36 +284,37 @@
 </div>
 
 <!-- Change Password Modal -->
-<form action="/profile" method="post">
-<div id="changePasswordModal" class="modal">
-    <div class="change-password">
-        <div class="lock-icon">
-            <i class="fa fa-lock"></i>
+<form action="/changepassword" method="post">
+    <div id="changePasswordModal" class="modal">
+        <div class="change-password">
+            <div class="lock-icon">
+                <i class="fa fa-lock"></i>
+            </div>
+
+            <!-- Close Button -->
+            <span class="close">&times;</span>
+
+            <!-- Title & Description -->
+            <h2>Create New Password</h2>
+            <p>Please enter and confirm your new password.</p>
+
+            <!-- Input Fields -->
+            <div class="input-group">
+                <label class="static-label" for="new-password">New Password:</label>
+                <input type="password" id="new-password" name="newPassword" class="static-input" required>
+            </div> 
+            
+            <div class="input-group">
+                <label class="static-label" for="confirm-password">Confirm Password:</label>
+                <input type="password" id="confirm-password" name="confirmPassword" class="static-input" required>
+            </div>   
+
+            <!-- Submit Button -->
+            <button type="submit" class="submit-btn change-submit-btn">Submit</button>
         </div>
-
-        <!-- Close Button (Make sure it has class "close") -->
-        <span class="close">&times;</span>
-
-        <!-- Title & Description -->
-        <h2>Create New Password</h2>
-        <p>Please enter and confirm your new password.</p>
-
-        <!-- Input Fields -->
-        <div class="input-group">
-            <label class="static-label" for="new-password">New Password:</label>
-            <input type="password" id="new-password" class="static-input">
-        </div> 
-        
-        <div class="input-group">
-            <label class="static-label" for="confirm-password">Confirm Password:</label>
-            <input type="password" id="confirm-password" class="static-input">
-        </div>   
-
-        <!-- Submit Button -->
-        <button class="submit-btn change-submit-btn">Submit</button>
     </div>
-</div>
 </form>
+
 
 
 <!-- Success Changes Modal -->

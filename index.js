@@ -589,9 +589,32 @@ app.post('/profile', isAuthenticated, async(req, res) => {
         
 })
 
-// app.post('/submit-password') {
-//     res.send("Password changed")
-// }
+
+// TODO: Change password route (MAR 12)
+app.post('/changepassword', isAuthenticated, async (req, res) => {
+    try {
+        const { newPassword, confirmPassword } = req.body;
+        const user_id = req.session.user._id;
+
+        // Check if passwords match
+        if (newPassword !== confirmPassword) {
+            return res.status(400).send("<script>alert('Passwords do not match!'); window.location='/profile';</script>");
+        }
+
+        // Hash new password
+        const hashedPassword = sha256(newPassword);
+
+        // Update password in the database
+        await User.findByIdAndUpdate(user_id, { password: hashedPassword });
+
+        console.log(`✅ Password updated for user: ${req.session.user.email}`);
+        res.send("<script>alert('Password changed successfully!'); window.location='/profile';</script>");
+    } catch (err) {
+        console.error("⚠️ Error updating password:", err);
+        res.status(500).send("<script>alert('Internal server error'); window.location='/profile';</script>");
+    }
+});
+
 
 // TODO: Top right Profile icon must be user's icon
 // Route to labtech handlebar (MUST DEPEND ON USER SESSION)
