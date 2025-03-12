@@ -64,8 +64,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        tableBody.innerHTML = ""; // ✅ Clear old table data
-
+        // Avoid clearing old table data, instead append new rows
         reservations.forEach((reservation, index) => {
             const row = document.createElement("tr");
             row.innerHTML = `
@@ -75,11 +74,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 <td>${generateTimeSlot(reservation.time)}</td>
                 <td>${reservation.reservedBy || "⚠️ Unknown"}</td>
                 <td class="button-container">
-                    <button class="editButton">Edit</button>
+                    <button class="editButton" data-reservation-id="${reservation.id}">Edit</button>
                     <button class="deleteButton" data-reservation-id="${reservation.id}">Delete</button>
                 </td>
             `;
-
             tableBody.appendChild(row);
         });
 
@@ -87,7 +85,6 @@ document.addEventListener("DOMContentLoaded", function () {
         document.querySelectorAll(".deleteButton").forEach(button => {
             button.addEventListener("click", function () {
                 const reservationId = this.getAttribute("data-reservation-id");
-                // Log the click event with reservation ID
                 console.log("Delete button clicked for reservation ID:", reservationId);
                 if (reservationId) {
                     showDeleteConfirmation(reservationId);
@@ -96,8 +93,22 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             });
         });
-    }
 
+        // Attach event listeners to edit buttons
+        document.querySelectorAll(".editButton").forEach(button => {
+            button.addEventListener("click", function () {
+                const reservationId = this.getAttribute("data-reservation-id");
+                console.log("Edit button clicked for reservation ID:", reservationId);
+                if (reservationId) {
+                    // Redirect to the reservation edit page
+                    window.location.href = `/reservation/${reservationId}`;
+                } else {
+                    console.error("⚠️ Reservation ID not found.");
+                }
+            });
+        });
+
+    }
     function showDeleteConfirmation(reservationId) {
         const reservation = reservations.find(res => res.id === reservationId);
         if (!reservation) {
@@ -160,4 +171,4 @@ document.addEventListener("DOMContentLoaded", function () {
     }    
 
     fetchReservations(); // Fetch data from database on page load
-}); 
+});
