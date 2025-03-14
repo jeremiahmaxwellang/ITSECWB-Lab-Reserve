@@ -22,6 +22,9 @@ const Room = require("./database/models/Room")
 const Reservation = require("./database/models/Reservation")
 const path = require('path')
 
+// Routes
+// const reservationRoutes = require('');
+
 
 const app = express()
 
@@ -773,7 +776,7 @@ app.get('/dashboard', isAuthenticated, async(req,res) => {
 app.post('/reserve', isAuthenticated, async (req, res) => {
     try {
         const { room_num, seat_num, reserved_date, anonymous } = req.body
-        const user_id = req.session.user._id // Get logged-in user
+        const user = req.session.user // Get logged-in user
 
         // Check if seat is already reserved
         const existingReservation = await Reservation.findOne({ room_num, seat_num, reserved_date })
@@ -783,13 +786,13 @@ app.post('/reserve', isAuthenticated, async (req, res) => {
 
         // Create reservation
         const newReservation = new Reservation({
-            user_id,
+            email: user.email, //who reserved the seat
             request_date: new Date(),
             reserved_date: new Date(reserved_date),
             room_num,
             seat_num,
             anonymous: anonymous === "Y" ? "Y" : "N",
-            reserved_for_id: anonymous === "Y" ? null : user_id // Set null if anonymous
+            reserved_for_id: anonymous === "Y" ? null : user.email // Set null if anonymous
         })
 
         await newReservation.save()
@@ -815,6 +818,9 @@ app.get('/logout', (req, res) => {
         res.redirect('/')
     })
 })
+
+// Use routes
+// app.use('/api', );
 
 // Server listens on port 3000
 var server = app.listen(3000, function(){

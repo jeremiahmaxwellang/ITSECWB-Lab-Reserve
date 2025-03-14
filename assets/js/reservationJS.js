@@ -107,11 +107,16 @@ function showOverlay(roomName) {
     // Date Picker
     const datePickerContainer = document.createElement("div");
     datePickerContainer.classList.add("date-picker-container");
+
     const datePickerLabel = document.createElement("label");
     datePickerLabel.textContent = "Select Date:";
+
     const datePicker = document.createElement("input");
+    datePicker.id = "datePicker"; //datePicker ID
     datePicker.type = "date";
+    
     datePicker.min = new Date().toISOString().split("T")[0];
+    datePicker.value = new Date().toISOString().split("T")[0]; //display date today by default
     datePickerContainer.appendChild(datePickerLabel);
     datePickerContainer.appendChild(datePicker);
 
@@ -123,6 +128,7 @@ function showOverlay(roomName) {
     timePickerLabel.textContent = "Select Time:";
     
     const timePicker = document.createElement("select");
+    timePicker.id = "timePicker"
     
     for (let hour = 8; hour <= 19; hour++) { // Ends at 19:30
         for (let minute of [0, 30]) {
@@ -217,14 +223,30 @@ function showOverlay(roomName) {
     
                         // Update seat info overlay
                         if (seat.classList.contains("available")) {
+
                             seatInfoOverlay.innerHTML = `
-                                <p class="available-text">This Seat Is Available</p>
-                                <div class="anonymous-container">
-                                    <input type="checkbox" id="anonymousCheckbox" class="anonymous-checkbox">
-                                    <label for="anonymousCheckbox" class="anonymous-label">Anonymous</label>
-                                </div>
-                                <button class="confirm-btn">Confirm</button>
-                            `;
+                            <p class="available-text">This Seat Is Available</p>
+                            <div class="anonymous-container">
+                                <input type="checkbox" id="anonymousCheckbox" class="anonymous-checkbox">
+                                <label for="anonymousCheckbox" class="anonymous-label">Anonymous</label>
+                            </div>
+                            <button class="confirm-btn">Confirm</button>
+                        `;
+
+                        // Seat Overlay with FORM (made by jer, mar 15)
+                            // seatInfoOverlay.innerHTML = `
+                            // <form method="post">
+                            //     <p class="available-text">This Seat Is Available</p>
+                            //     <div class="anonymous-container">
+                            //         <input type="checkbox" id="anonymousCheckbox" class="anonymous-checkbox">
+                            //         <label for="anonymousCheckbox" class="anonymous-label">Anonymous</label>
+                            //     </div>
+                            //     <button type="submit" class="confirm-btn">Confirm</button>
+                            // </form>
+                            // `;
+
+
+                            
                         } else if (seat.classList.contains("reserved")) {
                             seatInfoOverlay.innerHTML = `
                                 <p class="occupied-text">This seat is Occupied by:</p>
@@ -232,8 +254,36 @@ function showOverlay(roomName) {
                             `;
                         }
     
+                        // CONFIRM BUTTON LISTENER
                         document.querySelector(".confirm-btn")?.addEventListener("click", () => {
+
+                            // Set the reservedDate
+                            // const datePicker = document.getElementById("datePicker")
+                            console.log("reservedDate: ", datePicker.value);
+
+                            // const timePicker = document.getElementById("timePicker");
+                            console.log("reservedDate: ", timePicker.value);
+
+                            let reservedDate = `${datePicker.value}T${timePicker.value}:00`;
+                            reservedDate = new Date(reservedDate);
+                            
+
+                            const anonymousCheckbox = document.getElementById("anonymousCheckbox")
+                            let anonStatus = "F"
+                        
+                            if(anonymousCheckbox.checked){
+                                anonStatus = "T"
+                            }
+
+                            const myBuildingDropdown = document.getElementById("building-location")
+                            const building_id =  myBuildingDropdown.selectedIndex; // Capture the selected building ID
+                            
+
+                            // function call to create reservation (jer, mar 15)
+                            // createReservation(building_id, selectedRoomName, selectedSeat, anonStatus)
+
                             showConfirmationOverlay(roomName, datePicker.value, timePicker.value, selectedSeat);
+
                         });
                     }
                 });
@@ -270,6 +320,61 @@ closeButton.addEventListener("click", () => {
     overlay.appendChild(overlayContent);
     document.body.appendChild(overlay);
 }
+
+
+
+// Create Reservations (jer, mar 15)
+async function createReservation(reservedDate, building, roomName, seatNumber, anonStatus){
+
+    console.log("Creating Reservation...");
+
+
+// Check if the reservedDate is valid
+if (isNaN(reservedDate.valueOf())) {
+    console.error("Invalid reservedDate:", reservedDate);
+    return; // Stop the reservation process if invalid
+}
+
+reservedDate = reservedDate.toISOString();
+console.log("reservedDate:", reservedDate);
+
+
+    const reservationData = {
+        email: "test@dlsu.edu.ph", //CHANGE TO USER DATA LATER
+
+        request_date: new Date().toISOString().split("T")[0],
+        reserved_date: reservedDate,
+    
+        building_id: building,
+        room_num: roomName,
+        seat_num: seatNumber,
+        
+        anonymous: anonStatus,
+        
+    }
+    // Labtech -> reserved_for_email: ???
+
+    console.log("Adding reservation for ", reservationData.email, " at ", reservationData.roomName);
+
+    try {
+        const response = await fetch(`/reservations`, { 
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(reservationData)
+        });
+
+        if (response.ok) {
+            console.log("✅ Reservation created successfully.");
+
+        } else {
+            console.error("⚠️ Failed to create reservation.");
+        }
+    } catch (error) {
+        console.error("⚠️ Error creating reservation:", error);
+    }
+};
+
+
 
 function showConfirmationOverlay(roomName, date, time, seatNumber) {
     const confirmationOverlay = document.createElement("div");
@@ -315,4 +420,3 @@ function showConfirmationOverlay(roomName, date, time, seatNumber) {
 function closeConfirmation() {
     document.querySelector(".overlay").remove();
 }
-

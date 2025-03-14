@@ -33,6 +33,7 @@
         <label for="building-location" class="dropdown-label">Building</label>
         <div class="custom-dropdown">
             <select id="building-location" class="dropdown-select">
+                    <option value="Select a Building" selected>Select a Building</option>
                 {{#each buildings}}
                     <option value="{{this.building_name}}" {{#if @first}}selected{{/if}}>{{this.building_name}}</option>
                 {{/each}}
