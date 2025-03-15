@@ -224,6 +224,7 @@ function showOverlay(roomName) {
                         // Update seat info overlay
                         if (seat.classList.contains("available")) {
 
+                        // Old Seat Overlay code (without FORM)
                             seatInfoOverlay.innerHTML = `
                             <p class="available-text">This Seat Is Available</p>
                             <div class="anonymous-container">
@@ -256,18 +257,20 @@ function showOverlay(roomName) {
     
                         // CONFIRM BUTTON LISTENER
                         document.querySelector(".confirm-btn")?.addEventListener("click", () => {
+                            // Format & Set the reservedDate
+                            // Issue (Mar 15): reservedDate is not being passed to the form POST route
 
-                            // Set the reservedDate
-                            // const datePicker = document.getElementById("datePicker")
-                            console.log("reservedDate: ", datePicker.value);
+                            // Expected output:                             2025-03-15T08:00:00.000Z
+                            let reservedDateString = `${datePicker.value}T${timePicker.value}:00`;
+                            reservedDate = new Date(reservedDateString)
+                            reservedDate.setHours(reservedDate.getHours() + 8) //set to local time GMT+8
 
-                            // const timePicker = document.getElementById("timePicker");
-                            console.log("reservedDate: ", timePicker.value);
+                             // Setting example -> reserved_date: new Date("2025-03-16T10:30:00Z"),
+                            const formattedDate = reservedDate.toISOString();
 
-                            let reservedDate = `${datePicker.value}T${timePicker.value}:00`;
-                            reservedDate = new Date(reservedDate);
-                            
 
+
+                            // Check if anonymous box is checked
                             const anonymousCheckbox = document.getElementById("anonymousCheckbox")
                             let anonStatus = "F"
                         
@@ -275,14 +278,25 @@ function showOverlay(roomName) {
                                 anonStatus = "T"
                             }
 
+                           
                             const myBuildingDropdown = document.getElementById("building-location")
                             const building_id =  myBuildingDropdown.selectedIndex; // Capture the selected building ID
+
+                            // NOT WORKING: last ditch effort to pass the form data
+                            // document.getElementById("reserved-date").value = formattedDate;
+                            // document.getElementById("building-id").value = building_id;
+                            // document.getElementById("room-num").value = roomName;
+                            // document.getElementById("seat-num").value = selectedSeat;
                             
+                             
+                            // NOT WORKING: function call to create reservation (jer, mar 15)
+                            // createReservation(formattedDate, building_id, roomName, selectedSeat, anonStatus)
 
-                            // function call to create reservation (jer, mar 15)
-                            // createReservation(building_id, selectedRoomName, selectedSeat, anonStatus)
 
+                            // Issue: selectedSeat value = [object HTMLImageElement]
                             showConfirmationOverlay(roomName, datePicker.value, timePicker.value, selectedSeat);
+
+                            // showConfirmationOverlay(formattedDate, datePicker.value, building_id, selectedSeat); //im checking if values are null
 
                         });
                     }
@@ -324,26 +338,14 @@ closeButton.addEventListener("click", () => {
 
 
 // Create Reservations (jer, mar 15)
-async function createReservation(reservedDate, building, roomName, seatNumber, anonStatus){
-
-    console.log("Creating Reservation...");
-
-
-// Check if the reservedDate is valid
-if (isNaN(reservedDate.valueOf())) {
-    console.error("Invalid reservedDate:", reservedDate);
-    return; // Stop the reservation process if invalid
-}
-
-reservedDate = reservedDate.toISOString();
-console.log("reservedDate:", reservedDate);
-
+async function createReservation(formattedDate, building, roomName, seatNumber, anonStatus){
 
     const reservationData = {
         email: "test@dlsu.edu.ph", //CHANGE TO USER DATA LATER
 
         request_date: new Date().toISOString().split("T")[0],
-        reserved_date: reservedDate,
+        // Setting example -> reserved_date: new Date("2025-03-16T10:30:00Z"),
+        reserved_date: new Date(formattedDate), 
     
         building_id: building,
         room_num: roomName,
@@ -383,6 +385,13 @@ function showConfirmationOverlay(roomName, date, time, seatNumber) {
     const confirmationContent = document.createElement("div");
     confirmationContent.classList.add("confirmation-content");
 
+    // Extract day & month
+    const tempDate = new Date(date)
+    const day = tempDate.getDate(); 
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const month = months[tempDate.getMonth()];
+
+
     confirmationContent.innerHTML = `
         <div class="confirmation-header">
             <i class="fas fa-check-circle"></i>
@@ -397,11 +406,11 @@ function showConfirmationOverlay(roomName, date, time, seatNumber) {
         <div class="confirmation-container">
             <img class="room-image" src="images/goksdiv.png" alt="Room Image">
             <div class="confirmation-details">
-                <h1 class="reservation-date">31</h1>
-                <p class="reservation-month">February</p>
+                <h1 class="reservation-date">${day}</h1>
+                <p class="reservation-month">${month}</p>
                 <p class="reservation-time">${time} - ${time}</p>
                 <hr>
-                <p class="reservation-reference">Reference #: 12205931</p>
+                <p class="reservation-reference">Seat #: ${seatNumber}</p>
                 <p class="reservation-building">Building: Gokongwei Hall</p>
                 <p class="reservation-room">Room: ${roomName}</p>
             </div>

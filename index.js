@@ -775,7 +775,7 @@ app.get('/dashboard', isAuthenticated, async(req,res) => {
 // CREATE A RESERVATION
 app.post('/reserve', isAuthenticated, async (req, res) => {
     try {
-        const { room_num, seat_num, reserved_date, anonymous } = req.body
+        const { reserved_date, building_id, room_num, seat_num, anonymous } = req.body
         const user = req.session.user // Get logged-in user
 
         // Check if seat is already reserved
@@ -788,9 +788,10 @@ app.post('/reserve', isAuthenticated, async (req, res) => {
         const newReservation = new Reservation({
             email: user.email, //who reserved the seat
             request_date: new Date(),
-            reserved_date: new Date(reserved_date),
-            room_num,
-            seat_num,
+            reserved_date: reserved_date,
+            building_id: building_id,
+            room_num: room_num,
+            seat_num: seat_num,
             anonymous: anonymous === "Y" ? "Y" : "N",
             reserved_for_id: anonymous === "Y" ? null : user.email // Set null if anonymous
         })
