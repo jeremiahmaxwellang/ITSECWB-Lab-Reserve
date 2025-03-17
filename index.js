@@ -436,6 +436,41 @@ app.delete('/reservations/:id', isLabTech, async (req, res) => {
     }
 });
 
+// Student Dashboard Table Data
+app.get("/my-reservations", isAuthenticated, async (req, res) => {
+    try {
+        if (!req.session.user) {
+            console.error("❌ No user session found.");
+            return res.status(401).json({ message: "User not logged in." });
+        }
+
+        const userEmail = req.session.user.email; // Get current user's email
+        console.log(`🔍 Fetching reservations for user: ${userEmail}`);
+
+        // Query database for user's reservations
+        const reservations = await Reservation.find({ email: userEmail }).lean();
+
+        if (!reservations || reservations.length === 0) {
+            console.warn(`⚠️ No reservations found for ${userEmail}.`);
+            return res.json([]);
+        }
+
+        // Format reservations to send to frontend
+        const formattedReservations = reservations.map(reservation => ({
+            id: reservation._id,
+            roomNumber: reservation.room_num || "N/A",
+            seatNumber: `Seat #${reservation.seat_num}` || "N/A",
+            date: reservation.reserved_date ? reservation.reserved_date.toISOString().split("T")[0] : "N/A",
+            time: reservation.reserved_date ? reservation.reserved_date.toISOString().split("T")[1].slice(0,5) : "N/A"
+        }));
+
+        console.log(`✅ Reservations found for ${userEmail}:`, formattedReservations);
+        res.json(formattedReservations);
+    } catch (err) {
+        console.error("⚠️ Error fetching user reservations:", err);
+        res.status(500).json({ message: "Error fetching reservations", error: err.message });
+    }
+});
 
 
 /*
