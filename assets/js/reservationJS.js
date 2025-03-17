@@ -183,7 +183,8 @@ function showOverlay(roomName) {
 
     let selectedSeat = null;
 
-    seatPositions.forEach(row => {
+    seatPositions.forEach((row, seatIndex) => {
+
         if (row[0] === "D") {
             const divider = document.createElement("div");
             divider.classList.add("divider-bar");
@@ -225,27 +226,79 @@ function showOverlay(roomName) {
                         if (seat.classList.contains("available")) {
 
                         // Old Seat Overlay code (without FORM)
-                            seatInfoOverlay.innerHTML = `
-                            <p class="available-text">This Seat Is Available</p>
-                            <div class="anonymous-container">
-                                <input type="checkbox" id="anonymousCheckbox" class="anonymous-checkbox">
-                                <label for="anonymousCheckbox" class="anonymous-label">Anonymous</label>
-                            </div>
-                            <button class="confirm-btn">Confirm</button>
-                        `;
+
+                        //     seatInfoOverlay.innerHTML = `
+                        //     <p class="available-text">This Seat Is Available</p>
+                        //     <div class="anonymous-container">
+                        //         <input type="checkbox" id="anonymousCheckbox" class="anonymous-checkbox">
+                        //         <label for="anonymousCheckbox" class="anonymous-label">Anonymous</label>
+                        //     </div>
+                        //     <button class="confirm-btn">Confirm</button>
+                        // `;
+
+                        
 
                         // Seat Overlay with FORM (made by jer, mar 15)
-                            // seatInfoOverlay.innerHTML = `
-                            // <form method="post">
-                            //     <p class="available-text">This Seat Is Available</p>
-                            //     <div class="anonymous-container">
-                            //         <input type="checkbox" id="anonymousCheckbox" class="anonymous-checkbox">
-                            //         <label for="anonymousCheckbox" class="anonymous-label">Anonymous</label>
-                            //     </div>
-                            //     <button type="submit" class="confirm-btn">Confirm</button>
-                            // </form>
-                            // `;
 
+
+
+                            seatInfoOverlay.innerHTML = `
+                            <form method="post">
+                                <p class="available-text">This Seat Is Available</p>
+                                <div class="anonymous-container">
+                                    <input type="checkbox" id="anonymousCheckbox" class="anonymous-checkbox">
+                                    <label for="anonymousCheckbox" class="anonymous-label">Anonymous</label>
+
+                                <div>
+                                    <label for="reserved_date">Reserved Date:</label>
+                                    <input type="text" id="reserved_date" name="reserved_date">
+                                </div>
+                                  
+                                 <div>
+                                    <label for="building_id">Building ID:</label>
+                                    <input type="text" id="building_id" name="building_id">
+                                </div>
+
+                                <div>
+                                    <label for="room_num">Room Number:</label>
+                                    <input type="text" id="room_num" name="room_num">
+                                </div>
+                                
+                                <div>
+                                    <label for="seat_num">Seat Number:</label>
+                                    <input type="text" id="seat_num" name="seat_num">
+                                </div>
+                               
+                                <button type="submit" class="confirm-btn">Confirm</button>
+                            </form>
+                            `;
+
+                            // Temp solution: Set the default values of the reservation
+
+                            // Expected output:                             2025-03-15T08:00:00.000Z
+                            // let newDate = document.getElementById("datePicker").value //the newDate is year 2000 for some reason??
+                            // let newTime = document.getElementById("timePicker").value
+                            // let reservedDateString = `${newDate.value}T${newTime.value}:00`;
+
+                            let reservedDateString = `${datePicker.value}T${timePicker.value}:00`;
+                            reservedDate = new Date(reservedDateString)
+                            reservedDate.setHours(reservedDate.getHours() + 8) //TEMP SOLUTION: IDK HOW TO MAKE IT PHIL TIME
+
+                            // Setting example -> reserved_date: new Date("2025-03-16T10:30:00Z"),
+
+                            //ERROR: format is not in local Philippine time (pls find a way to make it local time)
+                            const formattedDate = reservedDate.toISOString(); 
+
+                            const myBuildingDropdown = document.getElementById("building-location")
+                            const building_id =  myBuildingDropdown.selectedIndex; // Capture the selected building ID
+
+                            const seat_num = seatIndex + 1;
+
+                            document.getElementById("reserved_date").value = formattedDate
+                            document.getElementById("building_id").value = building_id
+                            document.getElementById("room_num").value = roomName
+                            document.getElementById("seat_num").value = seat_num
+                            
 
                             
                         } else if (seat.classList.contains("reserved")) {
@@ -260,13 +313,13 @@ function showOverlay(roomName) {
                             // Format & Set the reservedDate
                             // Issue (Mar 15): reservedDate is not being passed to the form POST route
 
-                            // Expected output:                             2025-03-15T08:00:00.000Z
-                            let reservedDateString = `${datePicker.value}T${timePicker.value}:00`;
-                            reservedDate = new Date(reservedDateString)
-                            reservedDate.setHours(reservedDate.getHours() + 8) //set to local time GMT+8
+                            // // Expected output:                             2025-03-15T08:00:00.000Z
+                            // let reservedDateString = `${datePicker.value}T${timePicker.value}:00`;
+                            // reservedDate = new Date(reservedDateString)
+                            // reservedDate.setHours(reservedDate.getHours() + 8) //set to local time GMT+8
 
-                             // Setting example -> reserved_date: new Date("2025-03-16T10:30:00Z"),
-                            const formattedDate = reservedDate.toISOString();
+                            //  // Setting example -> reserved_date: new Date("2025-03-16T10:30:00Z"),
+                            // const formattedDate = reservedDate.toISOString();
 
 
 
@@ -279,18 +332,12 @@ function showOverlay(roomName) {
                             }
 
                            
-                            const myBuildingDropdown = document.getElementById("building-location")
-                            const building_id =  myBuildingDropdown.selectedIndex; // Capture the selected building ID
+                            // const myBuildingDropdown = document.getElementById("building-location")
+                            // const building_id =  myBuildingDropdown.selectedIndex; // Capture the selected building ID
 
-                            // NOT WORKING: last ditch effort to pass the form data
-                            // document.getElementById("reserved-date").value = formattedDate;
-                            // document.getElementById("building-id").value = building_id;
-                            // document.getElementById("room-num").value = roomName;
-                            // document.getElementById("seat-num").value = selectedSeat;
-                            
                              
                             // NOT WORKING: function call to create reservation (jer, mar 15)
-                            // createReservation(formattedDate, building_id, roomName, selectedSeat, anonStatus)
+                            createReservation(formattedDate, building_id, roomName, selectedSeat, anonStatus)
 
 
                             // Issue: selectedSeat value = [object HTMLImageElement]
@@ -340,18 +387,25 @@ closeButton.addEventListener("click", () => {
 // Create Reservations (jer, mar 15)
 async function createReservation(formattedDate, building, roomName, seatNumber, anonStatus){
 
+    // Typecast Values
+    const reserved_date = new Date(formattedDate)
+    const building_id = new Number(building)
+    const room_num = new String(roomName)
+    const seat_num = new Number(seatNumber)
+    const anonymous = new String(anonStatus)
+
     const reservationData = {
         email: "test@dlsu.edu.ph", //CHANGE TO USER DATA LATER
 
         request_date: new Date().toISOString().split("T")[0],
         // Setting example -> reserved_date: new Date("2025-03-16T10:30:00Z"),
-        reserved_date: new Date(formattedDate), 
+        reserved_date: reserved_date, 
     
-        building_id: building,
-        room_num: roomName,
-        seat_num: seatNumber,
+        building_id: building_id,
+        room_num: room_num,
+        seat_num: seat_num,
         
-        anonymous: anonStatus,
+        anonymous: anonymous,
         
     }
     // Labtech -> reserved_for_email: ???
@@ -386,10 +440,13 @@ function showConfirmationOverlay(roomName, date, time, seatNumber) {
     confirmationContent.classList.add("confirmation-content");
 
     // Extract day & month
-    const tempDate = new Date(date)
+    const tempDate = new Date(date);
     const day = tempDate.getDate(); 
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     const month = months[tempDate.getMonth()];
+
+    // Typecast seat number
+    const seat = new Number(seatNumber);
 
 
     confirmationContent.innerHTML = `
@@ -410,7 +467,7 @@ function showConfirmationOverlay(roomName, date, time, seatNumber) {
                 <p class="reservation-month">${month}</p>
                 <p class="reservation-time">${time} - ${time}</p>
                 <hr>
-                <p class="reservation-reference">Seat #: ${seatNumber}</p>
+                <p class="reservation-reference">Seat #: ${seat}</p>
                 <p class="reservation-building">Building: Gokongwei Hall</p>
                 <p class="reservation-room">Room: ${roomName}</p>
             </div>
