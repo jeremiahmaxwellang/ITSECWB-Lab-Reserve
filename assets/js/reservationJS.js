@@ -183,6 +183,7 @@ function showOverlay(roomName) {
 
     let selectedSeat = null;
 
+    // Mar 18: added new seatIndex to check the seat number - jer
     seatPositions.forEach((row, seatIndex) => {
 
         if (row[0] === "D") {
@@ -238,9 +239,7 @@ function showOverlay(roomName) {
 
                         
 
-                        // Seat Overlay with FORM (made by jer, mar 15)
-
-
+                        // Seat Overlay with FORM
 
                             seatInfoOverlay.innerHTML = `
                             <form method="post">
@@ -284,15 +283,15 @@ function showOverlay(roomName) {
                             reservedDate = new Date(reservedDateString)
                             reservedDate.setHours(reservedDate.getHours() + 8) //TEMP SOLUTION: IDK HOW TO MAKE IT PHIL TIME
 
-                            // Setting example -> reserved_date: new Date("2025-03-16T10:30:00Z"),
-
+                            // TODO: Make date & time follow Philippines timezone
+                            // TODO: formattedDate must update when user changes selected time
                             //ERROR: format is not in local Philippine time (pls find a way to make it local time)
                             const formattedDate = reservedDate.toISOString(); 
 
                             const myBuildingDropdown = document.getElementById("building-location")
                             const building_id =  myBuildingDropdown.selectedIndex; // Capture the selected building ID
 
-                            const seat_num = seatIndex + 1;
+                            const seat_num = seatIndex + 1; //seatIndex declared at " seatPositions.forEach((row, seatIndex) => { "
 
                             document.getElementById("reserved_date").value = formattedDate
                             document.getElementById("building_id").value = building_id
@@ -310,18 +309,6 @@ function showOverlay(roomName) {
     
                         // CONFIRM BUTTON LISTENER
                         document.querySelector(".confirm-btn")?.addEventListener("click", () => {
-                            // Format & Set the reservedDate
-                            // Issue (Mar 15): reservedDate is not being passed to the form POST route
-
-                            // // Expected output:                             2025-03-15T08:00:00.000Z
-                            // let reservedDateString = `${datePicker.value}T${timePicker.value}:00`;
-                            // reservedDate = new Date(reservedDateString)
-                            // reservedDate.setHours(reservedDate.getHours() + 8) //set to local time GMT+8
-
-                            //  // Setting example -> reserved_date: new Date("2025-03-16T10:30:00Z"),
-                            // const formattedDate = reservedDate.toISOString();
-
-
 
                             // Check if anonymous box is checked
                             const anonymousCheckbox = document.getElementById("anonymousCheckbox")
@@ -330,20 +317,12 @@ function showOverlay(roomName) {
                             if(anonymousCheckbox.checked){
                                 anonStatus = "T"
                             }
-
-                           
-                            // const myBuildingDropdown = document.getElementById("building-location")
-                            // const building_id =  myBuildingDropdown.selectedIndex; // Capture the selected building ID
-
                              
-                            // NOT WORKING: function call to create reservation (jer, mar 15)
-                            createReservation(formattedDate, building_id, roomName, selectedSeat, anonStatus)
+                            createReservation(formattedDate, building_id, roomName, selectedSeat, anonStatus);
 
 
                             // Issue: selectedSeat value = [object HTMLImageElement]
                             showConfirmationOverlay(roomName, datePicker.value, timePicker.value, selectedSeat);
-
-                            // showConfirmationOverlay(formattedDate, datePicker.value, building_id, selectedSeat); //im checking if values are null
 
                         });
                     }
@@ -384,10 +363,10 @@ closeButton.addEventListener("click", () => {
 
 
 
-// Create Reservations (jer, mar 15)
+// Create Reservations
 async function createReservation(formattedDate, building, roomName, seatNumber, anonStatus){
 
-    // Typecast Values
+    // Typecast Values (this didn't help with the errors)
     const reserved_date = new Date(formattedDate)
     const building_id = new Number(building)
     const room_num = new String(roomName)
@@ -395,7 +374,7 @@ async function createReservation(formattedDate, building, roomName, seatNumber, 
     const anonymous = new String(anonStatus)
 
     const reservationData = {
-        email: "test@dlsu.edu.ph", //CHANGE TO USER DATA LATER
+        email: "test@dlsu.edu.ph", //this changes to the current user, don't worry
 
         request_date: new Date().toISOString().split("T")[0],
         // Setting example -> reserved_date: new Date("2025-03-16T10:30:00Z"),
@@ -445,7 +424,7 @@ function showConfirmationOverlay(roomName, date, time, seatNumber) {
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     const month = months[tempDate.getMonth()];
 
-    // Typecast seat number
+    // TODO: Fix seat number
     const seat = new Number(seatNumber);
 
 
