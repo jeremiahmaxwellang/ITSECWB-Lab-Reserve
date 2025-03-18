@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const sliderThumb = document.querySelector(".floor-slider-thumb");
     const buildingDropdown = document.getElementById("building-location");
 
-    const floorPositions = [0, 60, 110, 160, 229]; // Adjust slider positions
+    const floorPositions = [0, 67, 140, 160, 229]; // Adjust slider positions
     let selectedFloor = 1; // Default floor
     let selectedBuilding = ""; // Default empty (forces user to select)
 
