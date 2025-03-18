@@ -841,7 +841,57 @@ app.post('/reserve', isAuthenticated, async (req, res) => {
     }
 })
 
+// Check for reservation conflicts
+app.post('/check-reservation-conflict', isAuthenticated, async (req, res) => {
+    try {
+        const { reservationId, date, time, roomNumber, seatNumber } = req.body;
+        
+        // Create a date object from the date and time
+        const reservationDateTime = new Date(`${date}T${time}`);
 
+        // Check for existing reservations
+        const conflict = await Reservation.findOne({
+            _id: { $ne: reservationId }, // Exclude current reservation
+            room_num: roomNumber,
+            seat_num: seatNumber,
+            reserved_date: reservationDateTime
+        });
+
+        res.json({ conflict: !!conflict });
+    } catch (error) {
+        console.error('Error checking conflicts:', error);
+        res.status(500).json({ error: 'Server error' });
+    }
+});
+
+// Update reservation
+app.put('/update-reservation/:id', isAuthenticated, async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { reserved_date, time } = req.body;
+
+        // Create a date object from the date and time
+        const reservationDateTime = new Date(`${reserved_date}T${time}`);
+
+        const updatedReservation = await Reservation.findByIdAndUpdate(
+            id,
+            {
+                reserved_date: reservationDateTime,
+                request_date: new Date() // Update request date to current time
+            },
+            { new: true }
+        );
+
+        if (!updatedReservation) {
+            return res.status(404).json({ error: 'Reservation not found' });
+        }
+
+        res.json(updatedReservation);
+    } catch (error) {
+        console.error('Error updating reservation:', error);
+        res.status(500).json({ error: 'Server error' });
+    }
+});
 
 // LOGOUT (destroy the session)
 app.get('/logout', (req, res) => {
