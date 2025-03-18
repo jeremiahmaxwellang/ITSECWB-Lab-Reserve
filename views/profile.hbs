@@ -105,26 +105,20 @@
 
             <!-- Profile Information -->
             <div class="profile-info">
-                <!-- Profile Picture + Button (Stacked) -->
-                <form action="/profile" method="post" enctype="multipart/form-data">
 
-                <div class="modal-profile-container">
-                    <img class="modal-profile-picture" src="{{userData.profile_picture}}" alt="Profile Picture">
                     
+                    <!-- Profile Picture Upload Form -->
+                    <form action="/profile" method="post" enctype="multipart/form-data">
+                        <div class="modal-profile-container">
+                            <img class="modal-profile-picture" src="{{userData.profile_picture}}" alt="Profile Picture" id="profilePicturePreview">
 
-
-                    <div class="change-photo-button-container">
-                        {{!-- TODO: Make this not elongated --}}
-                        <input type="file" name="profile_picture" class="change-photo-btn">
-
-                        <button type="submit" class="change-photo-btn">Submit Profile Photo</button>
-
-                    </div>
-
-
-                </div>
-
-                </form>
+                            <div class="change-photo-button-container">
+                                <!-- This button acts as both a trigger and submit when a file is selected -->
+                                <button type="button" class="change-photo-btn" id="uploadPhotoBtn">Upload Photo</button>
+                                <input type="file" name="profile_picture" id="profileInput" class="hidden-file-input">
+                            </div>
+                        </div>
+                    </form>
 
                 <!-- Name & Role -->
                 <div class="profile-text">

@@ -351,3 +351,29 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
+document.addEventListener("DOMContentLoaded", function () {
+    const uploadPhotoBtn = document.getElementById("uploadPhotoBtn");
+    const profileInput = document.getElementById("profileInput");
+    const editProfileModal = document.getElementById("editProfileModal");
+
+    if (uploadPhotoBtn && profileInput) {
+        // Clicking the button opens the file picker
+        uploadPhotoBtn.addEventListener("click", function () {
+            profileInput.click();
+        });
+
+        // When a file is selected, submit the form automatically
+        profileInput.addEventListener("change", function () {
+            if (profileInput.files.length > 0) {
+                profileInput.closest("form").submit(); // Auto-submit form
+
+                // Close modal after submitting
+                if (editProfileModal) {
+                    editProfileModal.style.display = "none";
+                }
+            }
+        });
+    }
+});
+
+
