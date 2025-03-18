@@ -112,7 +112,8 @@ document.addEventListener("DOMContentLoaded", function () {
         changePasswordSubmitBtn.addEventListener("click", function (event) {
             event.preventDefault();
             console.log("Redirecting to Dashboard...");
-            window.location.href = "dashboard.html"; // Redirects to dashboard.html
+            window.location.href = '/dashboard'; // Redirects to dashboard.html
         });
     }
 });
+

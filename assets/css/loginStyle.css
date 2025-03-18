@@ -519,6 +519,62 @@ form {
 }
 
 
+/*------------------------------------------------------------------- */
+.incorrect-password-modal {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Incorrect Password Title */
+.error-title {
+    color: #9B1C1C; /* Dark red color */
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* Error Message */
+.error-message {
+    color: #333; /* Dark gray text */
+    font-size: 16px;
+    margin-bottom: 50px;
+}
+
+/* "Try Again" Button */
+.try-again-btn {
+    font-family: outfit;
+    background-color: #333; /* Black button */
+    color: white;
+    border: none;
+    width: 70%;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-bottom: 15px;
+    align-self: center;
+    transition: background 0.3s ease-in-out;
+}
+
+.try-again-btn:hover {
+    background: #898989; /* Darker background on hover */
+}
+
+/* Forgot Password Link */
+.forgot-password-link {
+    display: block;
+    color: #333; /* Dark blue link */
+    font-size: 14px;
+    text-decoration: none;
+    align-self: center;
+}
+
+.forgot-password-link:hover {
+    text-decoration: underline;
+}
+
 
 
 
