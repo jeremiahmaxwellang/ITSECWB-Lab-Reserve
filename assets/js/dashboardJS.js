@@ -2,6 +2,8 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log("📌 Dashboard script loaded successfully.");
 
     const currentTableBody = document.querySelector("#currentReservationsTable tbody");
+    const editDateInput = document.querySelector("#edit-date");
+    const editTimeDropdown = document.querySelector("#edit-time");
 
     if (!currentTableBody) {
         console.error("❌ Current reservations table not found.");
@@ -27,16 +29,21 @@ document.addEventListener("DOMContentLoaded", function () {
         const endTime = new Date(startTime);
         endTime.setMinutes(startTime.getMinutes() + 30);
 
-        return `${format12HourTime(startTime)} - ${format12HourTime(endTime)}`;
+        return `${format12HourTime(startTime)} - ${format12HourTime(endTime)}`; // ✅ Table format 12-hour time
     }
 
     function format12HourTime(date) {
         let hours = date.getHours();
-        let minutes = date.getMinutes();
+        let minutes = String(date.getMinutes()).padStart(2, "0");
         let ampm = hours >= 12 ? "PM" : "AM";
         hours = hours % 12 || 12; // Convert 0 to 12
-        minutes = String(minutes).padStart(2, "0"); // Ensure two-digit minutes
         return `${hours}:${minutes} ${ampm}`;
+    }
+
+    function format24HourTime(date) {
+        let hours = String(date.getHours()).padStart(2, "0");
+        let minutes = String(date.getMinutes()).padStart(2, "0");
+        return `${hours}:${minutes}`;
     }
 
     function fetchUserReservations() {
@@ -53,13 +60,11 @@ document.addEventListener("DOMContentLoaded", function () {
                     return;
                 }
 
-                // Get today's date
-                const today = new Date().toISOString().split('T')[0]; // Format as YYYY-MM-DD
+                const today = new Date().toISOString().split('T')[0];
 
-                // Filter out past reservations
                 const futureReservations = data.filter(reservation => {
                     const reservationDate = new Date(reservation.date).toISOString().split('T')[0];
-                    return reservationDate >= today; // Only include future or today’s reservations
+                    return reservationDate >= today;
                 });
 
                 if (futureReservations.length === 0) {
@@ -74,7 +79,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     row.insertCell(0).innerText = reservation.roomNumber;
                     row.insertCell(1).innerText = reservation.seatNumber;
                     row.insertCell(2).innerText = formatDate(reservation.date);
-                    row.insertCell(3).innerText = formatTimeSlot(reservation.time);
+                    row.insertCell(3).innerText = formatTimeSlot(reservation.time); // ✅ Table uses 12-hour time
 
                     const editCell = row.insertCell(4);
                     const editButton = document.createElement("button");
@@ -94,20 +99,28 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function showEditOverlay(reservation) {
+        console.log("🛠 Editing Reservation:", reservation);
+
         document.querySelector(".edit-overlay").classList.add("active");
 
-        document.querySelector("#edit-date").value = reservation.date;
-        
-        generateTimeOptions(reservation.time); // Call the function properly
+        editDateInput.value = reservation.date;
+
+        // ✅ Automatically update time options
+        generateTimeOptions();
 
         document.querySelector("#edit-room").innerText = `Room: ${reservation.roomNumber}`;
         document.querySelector("#edit-seat").innerText = `Seat: ${reservation.seatNumber}`;
 
         document.querySelector("#saveButton").onclick = async function () {
-            const newDate = document.querySelector("#edit-date").value;
-            const newTime = document.querySelector("#edit-time").value;
+            const newDate = editDateInput.value;
+            const newTime = editTimeDropdown.value;
 
             console.log("🔄 Sending update request for ID:", reservation.id);
+
+            if (newTime === "00:00") {
+                alert("🚫 Invalid time selection.");
+                return;
+            }
 
             try {
                 const updateResponse = await fetch(`/update-reservation/${reservation.id}`, {
@@ -115,7 +128,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
                         reserved_date: newDate,
-                        time: newTime // Keep time in 24-hour format for backend
+                        time: newTime
                     })
                 });
 
@@ -142,35 +155,39 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document.querySelector("#cancelButton").addEventListener("click", closeEditOverlay);
 
-    function generateTimeOptions(selectedTime) {
-        const timeDropdown = document.querySelector("#edit-time");
-        timeDropdown.innerHTML = ""; // Clear existing options
+    function generateTimeOptions() {
+        editTimeDropdown.innerHTML = ""; // Clear previous options
 
-        let selectedValue = selectedTime ? formatTimeSlot(selectedTime) : null;
-        console.log("🔍 Selected Time:", selectedTime, "Converted:", selectedValue);
+        console.log("🔧 Running generateTimeOptions()");
 
-        for (let hour = 8; hour <= 19; hour++) {
+        for (let hour = 8; hour < 19; hour++) {
             for (let minute of [0, 30]) {
-                let startTime = new Date();
-                startTime.setHours(hour, minute, 0, 0);
-                let endTime = new Date(startTime);
-                endTime.setMinutes(startTime.getMinutes() + 30);
+                let startTime = `${String(hour).padStart(2, "0")}:${String(minute).padStart(2, "0")}`;
+                let endTime = new Date();
+                endTime.setHours(hour);
+                endTime.setMinutes(minute + 30);
 
-                let timeValue24Hour = `${String(hour).padStart(2, "0")}:${String(minute).padStart(2, "0")}`;
-                let timeValue12Hour = `${format12HourTime(startTime)} - ${format12HourTime(endTime)}`;
+                let timeLabel = `${startTime} - ${format24HourTime(endTime)}`; // ✅ Dropdown remains in 24-hour time
 
                 let option = document.createElement("option");
-                option.value = timeValue24Hour;
-                option.textContent = timeValue12Hour;
+                option.value = startTime;
+                option.textContent = timeLabel;
 
-                if (selectedValue === timeValue12Hour) {
-                    option.selected = true;
-                }
-
-                timeDropdown.appendChild(option);
+                editTimeDropdown.appendChild(option);
             }
         }
     }
+
+    editDateInput.addEventListener("change", function () {
+        const today = new Date().toISOString().split("T")[0];
+
+        if (this.value < today) {
+            alert("🚫 You cannot select past dates.");
+            this.value = today;
+        } else {
+            generateTimeOptions();
+        }
+    });
 
     fetchUserReservations();
 });
