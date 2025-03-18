@@ -120,6 +120,7 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener("DOMContentLoaded", function () {
     const loginForm = document.getElementById("login-form");
     const incorrectPasswordModal = new ModalHandler("incorrect-password-modal", "close-incorrect");
+    const forgotPasswordModal = new ModalHandler("forgot-password-modal", "close-forgot");
 
     loginForm.addEventListener("submit", async function (event) {
         event.preventDefault(); // Prevent default form submission
@@ -128,12 +129,10 @@ document.addEventListener("DOMContentLoaded", function () {
         const password = document.getElementById("password").value.trim();
 
         if (!email || !password) {
-            // Show the modal if inputs are empty
-            incorrectPasswordModal.open();
+            incorrectPasswordModal.open(); // Show error modal if fields are empty
             return;
         }
 
-        // Simulating form submission using fetch API (AJAX)
         try {
             const response = await fetch("/login", {
                 method: "POST",
@@ -143,15 +142,26 @@ document.addEventListener("DOMContentLoaded", function () {
                 body: JSON.stringify({ email, password })
             });
 
-            if (response.ok) {
-                window.location.href = "/dashboard"; // Redirect on success
+            const data = await response.json();
+
+            if (response.ok && data.redirect) {
+                window.location.href = data.redirect; // Redirect based on user role (Student/Lab Tech)
             } else {
-                incorrectPasswordModal.open(); // Show modal on failure
+                incorrectPasswordModal.open(); // Show modal on incorrect credentials
             }
         } catch (error) {
             console.error("Error:", error);
-            incorrectPasswordModal.open();
+            incorrectPasswordModal.open(); // Show modal on network failure
         }
     });
+
+    // Open Forgot Password Modal when clicking the forgot password link
+    const forgotPasswordLink = document.getElementById("forgot-password-link");
+    if (forgotPasswordLink) {
+        forgotPasswordLink.addEventListener("click", function (event) {
+            event.preventDefault();
+            forgotPasswordModal.open();
+        });
+    }
 });
 
