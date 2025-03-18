@@ -87,25 +87,37 @@
 <!-- Edit Overlay (Hidden by Default) -->
 <div class="edit-overlay">
     <div class="edit-container">
-        <h2>Edit Reservation</h2>
-        <div class="form-group">
-            <label for="edit-date">Date:</label>
-            <input type="date" id="edit-date">
+        <h2>EDIT RESERVATION</h2>
+
+        <!-- Date-Time Selection -->
+        <div class="date-time-container">
+            <!-- Date Picker -->
+            <div class="date-picker-container">
+                <label for="edit-date">Select Date:</label>
+                <input type="date" id="edit-date" required>
+            </div>
+
+            <!-- Time Picker -->
+            <div class="time-picker-container">
+                <label for="edit-time">Select Time:</label>
+                <select id="edit-time"></select>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="edit-time">Time:</label>
-            <select id="edit-time"></select>
-        </div>
+
+        <!-- Reservation Details -->
         <div class="reservation-details">
-            <p id="edit-room"></p>
-            <p id="edit-seat"></p>
+            <p id="edit-room"><strong>Room:</strong> Not Selected</p>
+            <p id="edit-seat"><strong>Seat:</strong> Not Selected</p>
         </div>
+
+        <!-- Buttons -->
         <div class="button-group">
             <button id="saveButton">Save Changes</button>
             <button id="cancelButton">Cancel</button>
         </div>
     </div>
 </div>
+
 
 <!-- JavaScript -->
 <script src="js/common.js"></script>

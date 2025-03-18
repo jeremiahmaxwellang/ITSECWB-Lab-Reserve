@@ -184,6 +184,7 @@
 }
 
 /* ------------------------- Edit Overlay Styles ------------------------- */
+/* ------------------------- Edit Overlay Styles (Updated to Match Reservation) ------------------------- */
 .edit-overlay {
   position: fixed;
   top: 0;
@@ -196,7 +197,6 @@
   align-items: center;
   visibility: hidden;
   opacity: 0;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
   z-index: 1000;
 }
 
@@ -207,43 +207,92 @@
 
 .edit-container {
   background: white;
-  padding: 2rem;
-  border-radius: 8px;
-  width: 90%;
-  max-width: 500px;
-  color: white;
+  border-radius: 10px;
+  width: 750px;
+  max-width: 90%;
+  padding: 40px;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.3);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Title Styling */
+.edit-container h2 {
+  font-size: 24px;
+  font-family: 'Outfit', sans-serif;
+  padding-bottom: 15px;
+  color: #595858;
+  font-weight: bold;
   text-align: center;
 }
 
-.edit-container h2 {
-  font-size: 1.5rem;
-  margin-bottom: 1.5rem;
-}
-
-.edit-container .form-group {
-  margin-bottom: 1rem;
-}
-
+/* Input & Select Styles */
 .edit-container label {
   display: block;
-  margin-bottom: 0.5rem;
-}
-
-.edit-container input,
-.edit-container select {
+  font-size: 16px;
+  font-family: outfit;
+  color: #595858;
+  text-align: left;
+  margin-bottom: 5px;
   width: 100%;
-  padding: 0.5rem;
-  border-radius: 4px;
+}
+
+/* Date-Time Container */
+.date-time-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+  width: 100%;
+}
+
+/* Individual Input Box */
+.date-picker-container,
+.time-picker-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 10px;
+}
+
+/* Calendar (Date Picker) Styling */
+.date-picker-container input,
+.time-picker-container select {
+  width: 100%;
+  padding: 10px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 16px;
   border: 1px solid #ccc;
+  border-radius: 5px;
+  background: white;
+  color: black;
+  cursor: pointer;
+  text-align: left;
 }
 
+/* Calendar (Date Picker) Focus Effect */
+.date-picker-container input:focus,
+.time-picker-container select:focus {
+  border-color: #3B6B53;
+  outline: none;
+}
+
+/* Reservation Details */
 .reservation-details {
-  margin: 1rem 0;
+  font-family: outfit;
+  margin-top: 10px;
   padding: 1rem;
-  background-color: #374151;
-  border-radius: 4px;
+  border: 1px solid #ccc; /* Light gray border */
+  border-radius: 8px; /* Rounded corners */
+  color: #595858;
+  text-align: center;
+  width: 100%;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Optional: Adds subtle shadow */
 }
 
+/* Buttons */
 .button-group {
   display: flex;
   gap: 1rem;
@@ -251,26 +300,41 @@
 }
 
 .button-group button {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 4px;
+  font-family: "Outfit", sans-serif;
+  width: 150px; 
+  height: 45px; 
+  padding: 10px;
+  background: white;
+  color: #3C4B5F; 
+  font-size: 14px;
+  border: 1px solid #D1D5DB; 
+  border-radius: 5px; 
   cursor: pointer;
-}
-
-#saveButton {
-  background-color: #3B6B53;
-  color: white;
+  text-align: center;
+  transition: all 0.2s ease;
+  display: inline-block;
 }
 
 #saveButton:hover {
-  background-color: #2a4d3b;
-}
-
-#cancelButton {
-  background-color: #900B09;
+  background: #1d5b3e; /* Darker gray on hover */
   color: white;
 }
 
 #cancelButton:hover {
-  background-color: #690c0a;
+  background-color: #900B09;
+  color: white;
 }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .edit-container {
+    max-width: 100%;
+    padding: 1.5rem;
+  }
+
+  .date-time-container {
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+

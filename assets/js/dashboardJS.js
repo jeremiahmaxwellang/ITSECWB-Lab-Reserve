@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function formatTimeSlot(timeString) {
         if (!timeString) return "";
-        
+
         const [hour, minute] = timeString.split(":").map(Number);
         const startTime = new Date();
         startTime.setHours(hour, minute, 0, 0);
@@ -27,15 +27,16 @@ document.addEventListener("DOMContentLoaded", function () {
         const endTime = new Date(startTime);
         endTime.setMinutes(startTime.getMinutes() + 30);
 
-        return `${startTime.toLocaleTimeString("en-US", {
-            hour: "2-digit",
-            minute: "2-digit",
-            hour12: false
-        })} - ${endTime.toLocaleTimeString("en-US", {
-            hour: "2-digit",
-            minute: "2-digit",
-            hour12: false
-        })}`;
+        return `${format12HourTime(startTime)} - ${format12HourTime(endTime)}`;
+    }
+
+    function format12HourTime(date) {
+        let hours = date.getHours();
+        let minutes = date.getMinutes();
+        let ampm = hours >= 12 ? "PM" : "AM";
+        hours = hours % 12 || 12; // Convert 0 to 12
+        minutes = String(minutes).padStart(2, "0"); // Ensure two-digit minutes
+        return `${hours}:${minutes} ${ampm}`;
     }
 
     function fetchUserReservations() {
@@ -74,7 +75,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     row.insertCell(1).innerText = reservation.seatNumber;
                     row.insertCell(2).innerText = formatDate(reservation.date);
                     row.insertCell(3).innerText = formatTimeSlot(reservation.time);
-                    
+
                     const editCell = row.insertCell(4);
                     const editButton = document.createElement("button");
                     editButton.className = "edit-button";
@@ -96,8 +97,9 @@ document.addEventListener("DOMContentLoaded", function () {
         document.querySelector(".edit-overlay").classList.add("active");
 
         document.querySelector("#edit-date").value = reservation.date;
-        document.querySelector("#edit-time").innerHTML = generateTimeOptions(reservation.time);
         
+        generateTimeOptions(reservation.time); // Call the function properly
+
         document.querySelector("#edit-room").innerText = `Room: ${reservation.roomNumber}`;
         document.querySelector("#edit-seat").innerText = `Seat: ${reservation.seatNumber}`;
 
@@ -106,14 +108,14 @@ document.addEventListener("DOMContentLoaded", function () {
             const newTime = document.querySelector("#edit-time").value;
 
             console.log("🔄 Sending update request for ID:", reservation.id);
-            
+
             try {
                 const updateResponse = await fetch(`/update-reservation/${reservation.id}`, {
                     method: "PUT",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
                         reserved_date: newDate,
-                        time: newTime.split(" - ")[0] // Fix: Store only the start time
+                        time: newTime // Keep time in 24-hour format for backend
                     })
                 });
 
@@ -141,28 +143,33 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelector("#cancelButton").addEventListener("click", closeEditOverlay);
 
     function generateTimeOptions(selectedTime) {
-        let options = "";
+        const timeDropdown = document.querySelector("#edit-time");
+        timeDropdown.innerHTML = ""; // Clear existing options
+
+        let selectedValue = selectedTime ? formatTimeSlot(selectedTime) : null;
+        console.log("🔍 Selected Time:", selectedTime, "Converted:", selectedValue);
+
         for (let hour = 8; hour <= 19; hour++) {
             for (let minute of [0, 30]) {
-                let startHour = String(hour).padStart(2, "0");
-                let startMinute = String(minute).padStart(2, "0");
+                let startTime = new Date();
+                startTime.setHours(hour, minute, 0, 0);
+                let endTime = new Date(startTime);
+                endTime.setMinutes(startTime.getMinutes() + 30);
 
-                let endHour = hour;
-                let endMinute = minute + 30;
-                if (endMinute >= 60) {
-                    endMinute -= 60;
-                    endHour += 1;
+                let timeValue24Hour = `${String(hour).padStart(2, "0")}:${String(minute).padStart(2, "0")}`;
+                let timeValue12Hour = `${format12HourTime(startTime)} - ${format12HourTime(endTime)}`;
+
+                let option = document.createElement("option");
+                option.value = timeValue24Hour;
+                option.textContent = timeValue12Hour;
+
+                if (selectedValue === timeValue12Hour) {
+                    option.selected = true;
                 }
-                let formattedEndHour = String(endHour).padStart(2, "0");
-                let formattedEndMinute = String(endMinute).padStart(2, "0");
 
-                let timeValue = `${startHour}:${startMinute} - ${formattedEndHour}:${formattedEndMinute}`;
-                let selected = timeValue === formatTimeSlot(selectedTime) ? "selected" : "";
-
-                options += `<option value="${timeValue}" ${selected}>${timeValue}</option>`;
+                timeDropdown.appendChild(option);
             }
         }
-        return options;
     }
 
     fetchUserReservations();
