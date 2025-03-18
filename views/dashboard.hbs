@@ -1,8 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     
     <link rel="stylesheet" href="css/global.css">
@@ -83,6 +80,29 @@
 
 
             
+        </div>
+    </div>
+</div>
+
+<!-- Edit Overlay (Hidden by Default) -->
+<div class="edit-overlay">
+    <div class="edit-container">
+        <h2>Edit Reservation</h2>
+        <div class="form-group">
+            <label for="edit-date">Date:</label>
+            <input type="date" id="edit-date">
+        </div>
+        <div class="form-group">
+            <label for="edit-time">Time:</label>
+            <select id="edit-time"></select>
+        </div>
+        <div class="reservation-details">
+            <p id="edit-room"></p>
+            <p id="edit-seat"></p>
+        </div>
+        <div class="button-group">
+            <button id="saveButton">Save Changes</button>
+            <button id="cancelButton">Cancel</button>
         </div>
     </div>
 </div>
