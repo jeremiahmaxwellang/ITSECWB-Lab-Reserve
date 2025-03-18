@@ -613,7 +613,6 @@ app.get('/profile', isAuthenticated, (req,res) => {
 app.use(fileUpload()) // for fileuploads
 
 // DONE: Change profile pic route (MAR 12)
-/* Copied from the all-in-one-backend kit */
 app.post('/profile', isAuthenticated, async(req, res) => {
 
     // Check if file was uploaded
@@ -827,14 +826,15 @@ app.post('/reserve', isAuthenticated, async (req, res) => {
             building_id: building_id,
             room_num: room_num,
             seat_num: seat_num,
-            anonymous: anonymous === "Y" ? "Y" : "N",
+            // anonymous: anonymous === "Y" ? "Y" : "N",
+            anonymous: anonymous,
             reserved_for_id: anonymous === "Y" ? null : user.email // Set null if anonymous
         })
 
         await newReservation.save()
         console.log(`✅ Reservation created by ${req.session.user.first_name}`)
 
-        res.status(201).json({ message: "Reservation created successfully!" })
+        // res.status(201).json({ message: "Reservation created successfully!" })
     } catch (err) {
         console.error("⚠️ Error creating reservation:", err)
         res.status(500).json({ message: "Internal server error" })

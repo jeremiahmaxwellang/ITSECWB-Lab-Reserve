@@ -730,6 +730,10 @@ hr {
     cursor: pointer;
 }
 
-
+#signed-in {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+}
 
 

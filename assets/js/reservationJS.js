@@ -245,8 +245,21 @@ function showOverlay(roomName) {
                             <form method="post">
                                 <p class="available-text">This Seat Is Available</p>
                                 <div class="anonymous-container">
-                                    <input type="checkbox" id="anonymousCheckbox" class="anonymous-checkbox">
+                                    <input 
+                                        type="checkbox" 
+                                        id="anonymousCheckbox" 
+                                        class="anonymous-checkbox" 
+                                        name="anonymous"
+                                        value="Y">
                                     <label for="anonymousCheckbox" class="anonymous-label">Anonymous</label>
+                                </div>
+
+
+                                <div>
+                                    <label for="anonStatus">Anon Status:</label>
+                                    <input type="text" id="anonStatus" name="anonStatus">
+                                </div>
+
 
                                 <div>
                                     <label for="reserved_date">Reserved Date:</label>
@@ -272,31 +285,63 @@ function showOverlay(roomName) {
                             </form>
                             `;
 
-                            // Temp solution: Set the default values of the reservation
+                           
 
-                            // Expected output:                             2025-03-15T08:00:00.000Z
-                            // let newDate = document.getElementById("datePicker").value //the newDate is year 2000 for some reason??
-                            // let newTime = document.getElementById("timePicker").value
-                            // let reservedDateString = `${newDate.value}T${newTime.value}:00`;
+                            // Working: Date updates when user changes selection
+                            datePicker.addEventListener("change", () => { 
+                                updateDateTime()
+                                
+                            })
 
-                            let reservedDateString = `${datePicker.value}T${timePicker.value}:00`;
-                            reservedDate = new Date(reservedDateString)
-                            reservedDate.setHours(reservedDate.getHours() + 8) //TEMP SOLUTION: IDK HOW TO MAKE IT PHIL TIME
+                            // Working: Time updates when user changes selection
+                            timePicker.addEventListener("click", () => { 
+                                updateDateTime()
+                                
+                            })
 
-                            // TODO: Make date & time follow Philippines timezone
-                            // TODO: formattedDate must update when user changes selected time
-                            //ERROR: format is not in local Philippine time (pls find a way to make it local time)
-                            const formattedDate = reservedDate.toISOString(); 
+                            function updateDateTime(){
+                                // Expected format: 2025-03-18T00:00:00.000Z
+                                const reservedDate = new Date(`${datePicker.value}T${timePicker.value}:00.000Z`);
+                                const formattedDate = reservedDate.toISOString()
+
+                                document.getElementById("reserved_date").value = formattedDate
+                            }
+
+                            
 
                             const myBuildingDropdown = document.getElementById("building-location")
                             const building_id =  myBuildingDropdown.selectedIndex; // Capture the selected building ID
 
                             const seat_num = seatIndex + 1; //seatIndex declared at " seatPositions.forEach((row, seatIndex) => { "
 
-                            document.getElementById("reserved_date").value = formattedDate
+                            // Check if anonymous box is checked
+                            const anonymousCheckbox = document.getElementById("anonymousCheckbox")
+
+                            anonymousCheckbox.addEventListener("change", () => { 
+                                let anonStatus = "N"
+                        
+                                if(anonymousCheckbox.checked){
+                                    anonStatus = "Y"
+                                }
+                                
+                                document.getElementById("anonStatus").value = anonStatus
+                            })
+                            
+                            
+
+                            // Working: Date updates when user changes selection
+                            datePicker.addEventListener("change", () => { 
+                                updateDateTime()
+                                
+                            })
+
+                            // Temp solution: Set the default values of the reservation
+                            updateDateTime()
                             document.getElementById("building_id").value = building_id
                             document.getElementById("room_num").value = roomName
                             document.getElementById("seat_num").value = seat_num
+                            document.getElementById("anonStatus").value = "N"
+                            
                             
 
                             
@@ -310,19 +355,9 @@ function showOverlay(roomName) {
                         // CONFIRM BUTTON LISTENER
                         document.querySelector(".confirm-btn")?.addEventListener("click", () => {
 
-                            // Check if anonymous box is checked
-                            const anonymousCheckbox = document.getElementById("anonymousCheckbox")
-                            let anonStatus = "F"
-                        
-                            if(anonymousCheckbox.checked){
-                                anonStatus = "T"
-                            }
-                             
-                            createReservation(formattedDate, building_id, roomName, selectedSeat, anonStatus);
+                            const seatNo = document.getElementById("seat_num").value
 
-
-                            // Issue: selectedSeat value = [object HTMLImageElement]
-                            showConfirmationOverlay(roomName, datePicker.value, timePicker.value, selectedSeat);
+                            showConfirmationOverlay(roomName, datePicker.value, timePicker.value, seatNo);
 
                         });
                     }
@@ -363,51 +398,6 @@ closeButton.addEventListener("click", () => {
 
 
 
-// Create Reservations
-async function createReservation(formattedDate, building, roomName, seatNumber, anonStatus){
-
-    // Typecast Values (this didn't help with the errors)
-    const reserved_date = new Date(formattedDate)
-    const building_id = new Number(building)
-    const room_num = new String(roomName)
-    const seat_num = new Number(seatNumber)
-    const anonymous = new String(anonStatus)
-
-    const reservationData = {
-        email: "test@dlsu.edu.ph", //this changes to the current user, don't worry
-
-        request_date: new Date().toISOString().split("T")[0],
-        // Setting example -> reserved_date: new Date("2025-03-16T10:30:00Z"),
-        reserved_date: reserved_date, 
-    
-        building_id: building_id,
-        room_num: room_num,
-        seat_num: seat_num,
-        
-        anonymous: anonymous,
-        
-    }
-    // Labtech -> reserved_for_email: ???
-
-    console.log("Adding reservation for ", reservationData.email, " at ", reservationData.roomName);
-
-    try {
-        const response = await fetch(`/reservations`, { 
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(reservationData)
-        });
-
-        if (response.ok) {
-            console.log("✅ Reservation created successfully.");
-
-        } else {
-            console.error("⚠️ Failed to create reservation.");
-        }
-    } catch (error) {
-        console.error("⚠️ Error creating reservation:", error);
-    }
-};
 
 
 
@@ -418,14 +408,20 @@ function showConfirmationOverlay(roomName, date, time, seatNumber) {
     const confirmationContent = document.createElement("div");
     confirmationContent.classList.add("confirmation-content");
 
+    // Extract username
+    const name = document.getElementById("username").textContent;
+
     // Extract day & month
     const tempDate = new Date(date);
     const day = tempDate.getDate(); 
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     const month = months[tempDate.getMonth()];
 
-    // TODO: Fix seat number
+    // DONE: Fix seat number
     const seat = new Number(seatNumber);
+
+    // Building Name
+    const building = document.getElementById("building-location").value;
 
 
     confirmationContent.innerHTML = `
@@ -434,7 +430,7 @@ function showConfirmationOverlay(roomName, date, time, seatNumber) {
             <h2>Your Reservation is <span class="confirmed-text">Confirmed</span></h2>
         </div>
         <hr>
-        <p class="confirmation-message">Hi, Jeremiah</p>
+        <p class="confirmation-message">Hi, ${name}</p>
         <p class="confirmation-subtext">
             You have successfully reserved a room and slot, please review your reservation details below
         </p>
@@ -446,8 +442,8 @@ function showConfirmationOverlay(roomName, date, time, seatNumber) {
                 <p class="reservation-month">${month}</p>
                 <p class="reservation-time">${time} - ${time}</p>
                 <hr>
-                <p class="reservation-reference">Seat #: ${seat}</p>
-                <p class="reservation-building">Building: Gokongwei Hall</p>
+                <p class="reservation-reference">Seat #${seat}</p>
+                <p class="reservation-building">Building: ${building}</p>
                 <p class="reservation-room">Room: ${roomName}</p>
             </div>
         </div>
