@@ -46,13 +46,6 @@ document.addEventListener("DOMContentLoaded", function () {
         { roomNumber: 'GK04', seatNumber: 'Seat #04', date: 'August 8, 2025', timeSlot: '2:30 PM - 3:00 PM' }
     ];
 
-    const recentReservations = [
-        { roomNumber: 'GK01', seatNumber: 'Seat #01', date: 'August 1, 2025', timeSlot: '8:30 AM - 9:00 AM', reservedBy: 'John Reservation' },
-        { roomNumber: 'GK02', seatNumber: 'Seat #02', date: 'August 2, 2025', timeSlot: '10:30 AM - 11:00 AM', reservedBy: 'Jane Doe' },
-        { roomNumber: 'GK03', seatNumber: 'Seat #03', date: 'August 3, 2025', timeSlot: '1:00 PM - 1:30 PM', reservedBy: 'Alice Smith' },
-        { roomNumber: 'GK04', seatNumber: 'Seat #04', date: 'August 4, 2025', timeSlot: '4:00 PM - 4:30 PM', reservedBy: 'Bob Johnson' }
-    ];
-
     function populateTable(data, tableBody, isCurrent) {
         tableBody.innerHTML = '';
 
@@ -114,8 +107,6 @@ document.addEventListener("DOMContentLoaded", async function () {
                 row.insertCell(1).innerText = reservation.seatNumber;
                 row.insertCell(2).innerText = reservation.date;
                 row.insertCell(3).innerText = reservation.time;
-                const reservedByCell = row.insertCell(4);
-                reservedByCell.innerText = reservation.reservedBy || "Anonymous"; // If no reservedBy, display "Anonymous"
             });
         } catch (error) {
             console.error("Error fetching reservations:", error);
