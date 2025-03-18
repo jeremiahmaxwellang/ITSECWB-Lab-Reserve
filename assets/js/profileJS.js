@@ -83,6 +83,49 @@ document.addEventListener("DOMContentLoaded", function () {
     populateTable(recentReservations, recentTableBody, false);
 });
 
+// to update the current reservations table body for the profile
+document.addEventListener("DOMContentLoaded", async function () {
+    const currentTableBody = document.querySelector('#currentReservationsTable tbody');
+
+    if (!currentTableBody) {
+        console.error("Current reservations table not found.");
+        return;
+    }
+
+    async function fetchReservations() {
+        try {
+            const response = await fetch("/my-reservations");
+            const reservations = await response.json();
+
+            currentTableBody.innerHTML = ''; // Clear existing table rows
+
+            if (reservations.length === 0) {
+                const row = currentTableBody.insertRow();
+                const cell = row.insertCell(0);
+                cell.colSpan = 5;
+                cell.innerText = "No reservations found.";
+                cell.style.textAlign = "center";
+                return;
+            }
+
+            reservations.forEach(reservation => {
+                const row = currentTableBody.insertRow();
+                row.insertCell(0).innerText = reservation.roomNumber;
+                row.insertCell(1).innerText = reservation.seatNumber;
+                row.insertCell(2).innerText = reservation.date;
+                row.insertCell(3).innerText = reservation.time;
+                const reservedByCell = row.insertCell(4);
+                reservedByCell.innerText = reservation.reservedBy || "Anonymous"; // If no reservedBy, display "Anonymous"
+            });
+        } catch (error) {
+            console.error("Error fetching reservations:", error);
+        }
+    }
+
+    fetchReservations();
+});
+
+
 document.addEventListener("DOMContentLoaded", function () {
 
     // ========== MODAL ELEMENTS ==========

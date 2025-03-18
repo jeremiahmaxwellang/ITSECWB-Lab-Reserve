@@ -301,6 +301,16 @@ async function insertReservations() {
                 reserved_for_id: null // Anonymous reservation
             },
             {
+                email: student3.email,
+                request_date: new Date("2025-03-05T10:30:00Z"),
+                reserved_date: new Date("2025-03-31T09:00:00Z"),
+                building_id: 1,
+                room_num: "LB103",
+                seat_num: 1,
+                anonymous: "N",
+                reserved_for_id: student3.email // Anonymous reservation
+            },
+            {
                 email: student2.email,
                 request_date: new Date("2025-03-10T14:45:00Z"),
                 reserved_date: new Date("2025-03-11T16:00:00Z"),

@@ -52,7 +52,21 @@ document.addEventListener("DOMContentLoaded", function () {
                     return;
                 }
 
-                data.forEach(reservation => {
+                // Get today's date
+                const today = new Date().toISOString().split('T')[0]; // Format as YYYY-MM-DD
+
+                // Filter out past reservations
+                const futureReservations = data.filter(reservation => {
+                    const reservationDate = new Date(reservation.date).toISOString().split('T')[0];
+                    return reservationDate >= today; // Only include future or today’s reservations
+                });
+
+                if (futureReservations.length === 0) {
+                    currentTableBody.innerHTML = `<tr><td colspan="5">No upcoming reservations.</td></tr>`;
+                    return;
+                }
+
+                futureReservations.forEach(reservation => {
                     console.log(`📝 Processing reservation:`, reservation);
 
                     const row = currentTableBody.insertRow();
