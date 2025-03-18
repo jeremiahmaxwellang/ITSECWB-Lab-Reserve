@@ -117,3 +117,41 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
+document.addEventListener("DOMContentLoaded", function () {
+    const loginForm = document.getElementById("login-form");
+    const incorrectPasswordModal = new ModalHandler("incorrect-password-modal", "close-incorrect");
+
+    loginForm.addEventListener("submit", async function (event) {
+        event.preventDefault(); // Prevent default form submission
+
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value.trim();
+
+        if (!email || !password) {
+            // Show the modal if inputs are empty
+            incorrectPasswordModal.open();
+            return;
+        }
+
+        // Simulating form submission using fetch API (AJAX)
+        try {
+            const response = await fetch("/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ email, password })
+            });
+
+            if (response.ok) {
+                window.location.href = "/dashboard"; // Redirect on success
+            } else {
+                incorrectPasswordModal.open(); // Show modal on failure
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            incorrectPasswordModal.open();
+        }
+    });
+});
+
