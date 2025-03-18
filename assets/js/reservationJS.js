@@ -249,7 +249,7 @@ function showOverlay(roomName) {
                                         type="checkbox" 
                                         id="anonymousCheckbox" 
                                         class="anonymous-checkbox" 
-                                        name="anonymous"
+                                        name="anonymous-checkbox"
                                         value="Y">
                                     <label for="anonymousCheckbox" class="anonymous-label">Anonymous</label>
                                 </div>
@@ -257,7 +257,7 @@ function showOverlay(roomName) {
 
                                 <div>
                                     <label for="anonStatus">Anon Status:</label>
-                                    <input type="text" id="anonStatus" name="anonStatus">
+                                    <input type="text" id="anonStatus" name="anonymous">
                                 </div>
 
 
