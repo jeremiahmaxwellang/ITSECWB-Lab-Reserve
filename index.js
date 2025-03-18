@@ -129,7 +129,8 @@ async function insertBuildings() {
         const buildings = [
             { building_id: 1, building_name: "Science Hall" },
             { building_id: 2, building_name: "Engineering Complex" },
-            { building_id: 3, building_name: "Library" }
+            { building_id: 3, building_name: "Library" },
+            { building_id: 4, building_name: "Miguel Hall" }
         ]
 
         for (const building of buildings) {
@@ -169,7 +170,8 @@ async function insertRooms() {
         const prefixes = {
             1: "SH",
             2: "EC",
-            3: "LB"
+            3: "LB",
+            4: "MH"
         };
         
         const rooms = [];
@@ -185,10 +187,6 @@ async function insertRooms() {
                 }
             }
         }
-        
-        console.log(rooms);
-        
-        console.log(rooms);
 
         for (const room of rooms) {
             // Check if the referenced building exists
