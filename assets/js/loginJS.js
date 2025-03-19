@@ -120,7 +120,6 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener("DOMContentLoaded", function () {
     const loginForm = document.getElementById("login-form");
     const incorrectPasswordModal = new ModalHandler("incorrect-password-modal", "close-incorrect");
-    const forgotPasswordModal = new ModalHandler("forgot-password-modal", "close-forgot");
 
     loginForm.addEventListener("submit", async function (event) {
         event.preventDefault(); // Prevent default form submission
@@ -144,24 +143,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const data = await response.json();
 
-            if (response.ok && data.redirect) {
-                window.location.href = data.redirect; // Redirect based on user role (Student/Lab Tech)
+            if (response.ok && data.success) {
+                console.log("✅ Login successful. Redirecting to:", data.redirect);
+                window.location.href = data.redirect; // Redirect based on user role
             } else {
+                console.warn("⚠️ Incorrect credentials. Showing modal.");
                 incorrectPasswordModal.open(); // Show modal on incorrect credentials
             }
         } catch (error) {
-            console.error("Error:", error);
+            console.error("❌ Error:", error);
             incorrectPasswordModal.open(); // Show modal on network failure
         }
     });
-
-    // Open Forgot Password Modal when clicking the forgot password link
-    const forgotPasswordLink = document.getElementById("forgot-password-link");
-    if (forgotPasswordLink) {
-        forgotPasswordLink.addEventListener("click", function (event) {
-            event.preventDefault();
-            forgotPasswordModal.open();
-        });
-    }
 });
+
 

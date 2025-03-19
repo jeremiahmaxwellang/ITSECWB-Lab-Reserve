@@ -574,41 +574,58 @@ app.get('/login', async function(req, res) {
 })
 
 // SUBMIT LOGIN CREDENTIALS ROUTE
-app.post("/login", express.urlencoded({extended: true}), async(req,res) => {
-    const { email, password, rememberMe } = req.body
+app.post("/login", express.urlencoded({ extended: true }), async (req, res) => {
+    const { email, password, rememberMe } = req.body;
 
-    console.log("Email: ", email)
-    console.log("Pass: ", sha256(password))
+    console.log("🔍 Attempting login with Email:", email);
+    console.log("🔍 Hashed Password:", sha256(password));
 
     try {
-        // Check if user email is registered in database
-        const existingUser = await User.findOne({ email: email })
+        // Check if user exists
+        const existingUser = await User.findOne({ email: email });
 
-        // Compare with the stored hashed password
-        if (existingUser.password === sha256(password)) {
-            console.log("signed in")
-            req.session.user = existingUser
-
-            // Set a long-lived cookie if "Remember Me" is checked
-            if (rememberMe) {
-                res.cookie("rememberMe", existingUser._id.toString(), { maxAge: 1814400000, httpOnly: true }) // 3 weeks
-            }
-
-            res.cookie("sessionId", req.sessionID)
-
-            // Student Route
-            if (existingUser.account_type == "Student")
-                res.redirect('/dashboard')
-            // Lab Technician Route
-            else
-                res.redirect("/labtech")
-        } else {
-            res.send("Wrong password")
+        if (!existingUser) {
+            console.warn("⚠️ User not found:", email);
+            return res.status(401).json({ success: false, message: "User not found." });
         }
+
+        // Check if password matches
+        if (existingUser.password !== sha256(password)) {
+            console.warn("⚠️ Incorrect password for:", email);
+            return res.status(401).json({ success: false, message: "Invalid password." });
+        }
+
+        console.log("✅ Signed in:", existingUser.email, "| Role:", existingUser.account_type);
+        req.session.user = existingUser; // Store user session
+
+        // Set "Remember Me" cookie if checked
+        if (rememberMe) {
+            res.cookie("rememberMe", existingUser._id.toString(), { maxAge: 1814400000, httpOnly: true }); // 3 weeks
+        }
+
+        res.cookie("sessionId", req.sessionID);
+
+        // Role-based Redirection (ONLY Student & Lab Technician)
+        let redirectUrl;
+        if (existingUser.account_type === "Student") {
+            redirectUrl = "/dashboard";
+        } else if (existingUser.account_type === "Lab Technician") {
+            redirectUrl = "/labtech";
+        } else {
+            console.warn("⚠️ Unknown account type:", existingUser.account_type);
+            return res.status(401).json({ success: false, message: "Invalid account type." });
+        }
+
+        console.log(`🔀 Redirecting ${existingUser.email} to: ${redirectUrl}`);
+        return res.json({ success: true, redirect: redirectUrl });
+
     } catch (err) {
-        res.status(401).send("Invalid credentials. <a href='login'>Please try again</a>")
+        console.error("❌ Error during login:", err);
+        res.status(500).json({ success: false, message: "Internal server error." });
     }
-})
+});
+
+
 
 // Profile Page
 app.get('/profile', isAuthenticated, (req,res) => {
