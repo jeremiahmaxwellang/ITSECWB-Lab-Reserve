@@ -171,6 +171,66 @@ document.addEventListener("DOMContentLoaded", function () {
         };
     }
 
+    function generateTimeOptions(editTimeDropdown, selectedTime) {
+        editTimeDropdown.innerHTML = ""; // Clear previous options
+    
+        const selectedHour = selectedTime.split(":")[0];
+        const selectedMinute = selectedTime.split(":")[1];
+    
+        for (let hour = 8; hour < 19; hour++) {  // Available time slots: 8 AM to 7 PM
+            for (let minute of [0, 30]) {  // Increment in 30-minute intervals
+                let startTime = `${String(hour).padStart(2, "0")}:${String(minute).padStart(2, "0")}`;
+                let endTime = new Date();
+                endTime.setHours(hour);
+                endTime.setMinutes(minute + 30);
+    
+                let timeLabel = `${startTime} - ${format24HourTime(endTime)}`; // Format as 24-hour time for dropdown
+    
+                let option = document.createElement("option");
+                option.value = startTime;
+                option.textContent = timeLabel;
+    
+                // Mark the current reservation time as selected
+                if (startTime === selectedTime) {
+                    option.selected = true;
+                }
+    
+                editTimeDropdown.appendChild(option);
+            }
+        }
+    }    
+
+    function format24HourTime(date) {
+        let hours = String(date.getHours()).padStart(2, "0");  // Get hours in 2-digit format
+        let minutes = String(date.getMinutes()).padStart(2, "0");  // Get minutes in 2-digit format
+        return `${hours}:${minutes}`;  // Return time in HH:mm format
+    }
+
+    function closeEditOverlay() {
+        const editOverlay = document.querySelector(".edit-overlay");
+        editOverlay.classList.remove("active");  // Remove the 'active' class to hide the overlay
+    }    
+
+    function updateTableRow(reservationId, newDate, newTime) {
+        // Find the row that contains the button with the specific reservationId
+        const row = document.querySelector(`button[data-reservation-id="${reservationId}"]`).closest('tr');
+        
+        if (row) {
+            // Format the new date and time for display in the table
+            const formattedDate = formatDate(newDate);
+            const formattedTime = generateTimeSlot(newTime);
+    
+            // Update the relevant cells in the table (Date and Time columns)
+            row.cells[2].innerText = formattedDate;  // Date column
+            row.cells[3].innerText = formattedTime;  // Time column
+    
+            // Optionally, you can log a message when the table is updated
+            console.log(`✅ Table row updated for reservation ID: ${reservationId}`);
+        } else {
+            console.error(`❌ Row not found for reservation ID: ${reservationId}`);
+        }
+    }    
+    
     function showEditOverlay(reservation) {
         console.log("🛠 Editing Reservation:", reservation);
     
@@ -217,8 +277,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.log("🔄 Server Response:", updateResponse);
     
                 if (updateResponse.ok) {
+                    // Close the overlay and update the table row with the new reservation data
                     closeEditOverlay();
-                    fetchReservations(); // Refresh the table
+                    updateTableRow(reservation.id, newDate, newTime);
+    
+                    // Log a success message in the console
+                    console.log(`✅ Reservation with ID ${reservation.id} updated successfully!`);
                 } else {
                     const errorData = await updateResponse.json();
                     console.error("❌ Update Failed:", errorData);
@@ -229,7 +293,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 alert("Failed to update reservation due to a network error.");
             }
         };
-    }    
+    }       
 
     // Close the delete confirmation modal
     function closeDeleteModal() {
