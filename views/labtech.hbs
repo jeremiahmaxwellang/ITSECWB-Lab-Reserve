@@ -7,6 +7,7 @@
     
     <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/styleguide.css">
+    <link rel="stylesheet" href="css/dashboardStyle.css">
     <link rel="stylesheet" href="css/labTechStyle.css">
 </head>
 
@@ -99,6 +100,40 @@
         <div class="delete-buttons">
             <button class="cancel-button">Cancel</button>
             <button class="confirm-button">Confirm</button>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Overlay (Hidden by Default) -->
+<div class="edit-overlay">
+    <div class="edit-container">
+        <h2>EDIT RESERVATION</h2>
+
+        <!-- Date-Time Selection -->
+        <div class="date-time-container">
+            <!-- Date Picker -->
+            <div class="date-picker-container">
+                <label for="edit-date">Select Date:</label>
+                <input type="date" id="edit-date" required>
+            </div>
+
+            <!-- Time Picker -->
+            <div class="time-picker-container">
+                <label for="edit-time">Select Time:</label>
+                <select id="edit-time"></select>
+            </div>
+        </div>
+
+        <!-- Reservation Details -->
+        <div class="reservation-details">
+            <p id="edit-room"><strong>Room:</strong> Not Selected</p>
+            <p id="edit-seat"><strong>Seat:</strong> Not Selected</p>
+        </div>
+
+        <!-- Buttons -->
+        <div class="button-group">
+            <button id="saveButton">Save Changes</button>
+            <button id="cancelButton">Cancel</button>
         </div>
     </div>
 </div>

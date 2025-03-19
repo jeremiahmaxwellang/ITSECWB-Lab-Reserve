@@ -100,22 +100,26 @@ document.addEventListener("DOMContentLoaded", function () {
                 const reservationId = this.getAttribute("data-reservation-id");
                 console.log("Edit button clicked for reservation ID:", reservationId);
                 if (reservationId) {
-                    // Redirect to the reservation edit page
-                    window.location.href = `/reservation/${reservationId}`;
+                    // Call showEditOverlay with reservation data
+                    const reservation = reservations.find(res => res.id === reservationId);
+                    if (reservation) {
+                        showEditOverlay(reservation);
+                    }
                 } else {
                     console.error("⚠️ Reservation ID not found.");
                 }
             });
         });
-
     }
+
+    // Show the delete confirmation modal
     function showDeleteConfirmation(reservationId) {
         const reservation = reservations.find(res => res.id === reservationId);
         if (!reservation) {
             console.error("❌ Reservation not found.");
             return;
         }
-    
+
         // Get modal elements
         const deleteModalOverlay = document.getElementById("deleteModal");
         const roomSpan = document.getElementById("deleteRoom");
@@ -124,37 +128,37 @@ document.addEventListener("DOMContentLoaded", function () {
         const timeSpan = document.getElementById("deleteTime");
         const reservedBySpan = document.getElementById("deleteReservedBy");
         const confirmDeleteBtn = document.querySelector(".confirm-button");
-    
+
         // Populate modal with reservation details
         roomSpan.textContent = reservation.roomNumber;
         seatSpan.textContent = reservation.seatNumber;
         dateSpan.textContent = formatDate(reservation.date);
         timeSpan.textContent = generateTimeSlot(reservation.time);
         reservedBySpan.textContent = reservation.reservedBy || "Unknown";
-    
-        // ✅ Show the modal
+
+        // Show the modal
         deleteModalOverlay.style.visibility = "visible";
         deleteModalOverlay.style.opacity = "1";
-    
+
         // Handle Confirm button click to delete the reservation
         confirmDeleteBtn.onclick = async function () {
             console.log("🗑️ Deleting reservation with ID:", reservationId);
-    
+
             try {
                 const response = await fetch(`/reservations/${reservationId}`, {
                     method: "DELETE",
                     headers: { "Content-Type": "application/json" }
                 });
-    
+
                 if (response.ok) {
                     console.log("✅ Reservation deleted successfully.");
-    
+
                     // Find and remove the row from the table after deletion
                     const rowToRemove = document.querySelector(`button[data-reservation-id="${reservationId}"]`).closest('tr');
                     if (rowToRemove) {
                         rowToRemove.remove();
                     }
-    
+
                     closeDeleteModal();
                 } else {
                     console.error("⚠️ Failed to delete reservation.");
@@ -165,18 +169,17 @@ document.addEventListener("DOMContentLoaded", function () {
                 alert("An error occurred. Please try again later.");
             }
         };
-    
-        // Close modal on cancel or close button click
-        document.querySelector(".cancel-button").addEventListener("click", closeDeleteModal);
-        document.querySelector(".close-button").addEventListener("click", closeDeleteModal);
     }
-    
-    // ✅ Function to close the modal
+
+    // Close the delete confirmation modal
     function closeDeleteModal() {
         const deleteModalOverlay = document.getElementById("deleteModal");
         deleteModalOverlay.style.visibility = "hidden";
         deleteModalOverlay.style.opacity = "0";
-    }    
+    }
+
+    document.querySelector(".cancel-button").addEventListener("click", closeDeleteModal);
+    document.querySelector(".close-button").addEventListener("click", closeDeleteModal);
 
     fetchReservations(); // Fetch data from database on page load
 });
