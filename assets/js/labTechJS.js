@@ -171,6 +171,66 @@ document.addEventListener("DOMContentLoaded", function () {
         };
     }
 
+    function showEditOverlay(reservation) {
+        console.log("🛠 Editing Reservation:", reservation);
+    
+        // Get the edit overlay and elements
+        const editOverlay = document.querySelector(".edit-overlay");
+        const editDateInput = document.querySelector("#edit-date");
+        const editTimeDropdown = document.querySelector("#edit-time");
+        const editRoom = document.querySelector("#edit-room");
+        const editSeat = document.querySelector("#edit-seat");
+    
+        // Display the overlay
+        editOverlay.classList.add("active");
+    
+        // Set the form inputs to the current reservation details
+        editDateInput.value = reservation.date;
+        generateTimeOptions(editTimeDropdown, reservation.time);
+    
+        // Display room and seat info
+        editRoom.innerText = `Room: ${reservation.roomNumber}`;
+        editSeat.innerText = `Seat: ${reservation.seatNumber}`;
+    
+        // Handle save button click
+        document.querySelector("#saveButton").onclick = async function () {
+            const newDate = editDateInput.value;
+            const newTime = editTimeDropdown.value;
+    
+            console.log("🔄 Sending update request for ID:", reservation.id);
+    
+            if (newTime === "00:00") {
+                alert("🚫 Invalid time selection.");
+                return;
+            }
+    
+            try {
+                const updateResponse = await fetch(`/update-reservation/${reservation.id}`, {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        reserved_date: newDate,
+                        time: newTime
+                    })
+                });
+    
+                console.log("🔄 Server Response:", updateResponse);
+    
+                if (updateResponse.ok) {
+                    closeEditOverlay();
+                    fetchReservations(); // Refresh the table
+                } else {
+                    const errorData = await updateResponse.json();
+                    console.error("❌ Update Failed:", errorData);
+                    alert("Failed to update reservation: " + (errorData.message || "Unknown error"));
+                }
+            } catch (error) {
+                console.error("⚠️ Error updating reservation:", error);
+                alert("Failed to update reservation due to a network error.");
+            }
+        };
+    }    
+
     // Close the delete confirmation modal
     function closeDeleteModal() {
         const deleteModalOverlay = document.getElementById("deleteModal");
