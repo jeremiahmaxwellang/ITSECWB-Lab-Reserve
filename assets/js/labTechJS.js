@@ -141,20 +141,28 @@ document.addEventListener("DOMContentLoaded", function () {
             console.log("🗑️ Deleting reservation with ID:", reservationId);
     
             try {
-                const response = await fetch(`/reservations/${reservationId}`, { 
+                const response = await fetch(`/reservations/${reservationId}`, {
                     method: "DELETE",
                     headers: { "Content-Type": "application/json" }
                 });
     
                 if (response.ok) {
                     console.log("✅ Reservation deleted successfully.");
-                    fetchReservations(); // Refresh table after deletion
+    
+                    // Find and remove the row from the table after deletion
+                    const rowToRemove = document.querySelector(`button[data-reservation-id="${reservationId}"]`).closest('tr');
+                    if (rowToRemove) {
+                        rowToRemove.remove();
+                    }
+    
                     closeDeleteModal();
                 } else {
                     console.error("⚠️ Failed to delete reservation.");
+                    alert("Failed to delete reservation. Please try again.");
                 }
             } catch (error) {
                 console.error("⚠️ Error deleting reservation:", error);
+                alert("An error occurred. Please try again later.");
             }
         };
     
