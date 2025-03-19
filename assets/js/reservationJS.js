@@ -358,6 +358,8 @@ function showOverlay(roomName) {
                             const seatNo = document.getElementById("seat_num").value
 
                             showConfirmationOverlay(roomName, datePicker.value, timePicker.value, seatNo);
+                            const buildingDropdown = document.getElementById("building-location");
+                            buildingDropdown.value = "Select a Building" //reset selected building
 
                         });
                     }
@@ -417,7 +419,29 @@ function showConfirmationOverlay(roomName, date, time, seatNumber) {
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     const month = months[tempDate.getMonth()];
 
-    // DONE: Fix seat number
+    // Extract time
+    const timeString = time;
+    const [hours, minutes] = timeString.split(":").map(Number);
+
+    function padWithZero(number) {
+        return number.toString().padStart(2, "0");
+    }
+
+    const startingTime = new Date()
+    startingTime.setHours(hours)
+    startingTime.setMinutes(minutes)
+    
+
+    let startString = `${padWithZero(startingTime.getHours())}:${padWithZero(startingTime.getMinutes())}`;
+
+    const endingTime = new Date()
+    endingTime.setHours(hours)
+    endingTime.setMinutes(minutes+30)
+
+    let endString = endingTime.getHours() + ":" + endingTime.getMinutes();
+
+
+    // Extract seat number
     const seat = new Number(seatNumber);
 
     // Building Name
@@ -440,7 +464,7 @@ function showConfirmationOverlay(roomName, date, time, seatNumber) {
             <div class="confirmation-details">
                 <h1 class="reservation-date">${day}</h1>
                 <p class="reservation-month">${month}</p>
-                <p class="reservation-time">${time} - ${time}</p>
+                <p class="reservation-time">${startString} - ${endString}</p>
                 <hr>
                 <p class="reservation-reference">Seat #${seat}</p>
                 <p class="reservation-building">Building: ${building}</p>
