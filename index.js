@@ -828,7 +828,10 @@ app.get('/dashboard', isAuthenticated, async(req,res) => {
     const userData = req.session.user
     console.log(userData)
 
-    res.render('dashboard', {userData})
+    if(userData.account_type == "Student")
+        res.render('dashboard', {userData})
+
+    else res.render('labtech', {userData})
 })
 
 // CREATE A RESERVATION
