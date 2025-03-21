@@ -7,8 +7,11 @@ const mongoose = require('mongoose')
 const crypto = require('crypto')
 const cookieParser = require("cookie-parser")
 
-// DB CONNECTION
-mongoose.connect('mongodb://127.0.0.1:27017/labyrinthDB', { 
+// DB CONNECTION: mongodb+srv://admin:<db_password>@labyrinthcluster.xwg3l.mongodb.net/
+// mongoose.connect('mongodb://127.0.0.1:27017/labyrinthDB', { 
+
+const mongoURI = 'mongodb+srv://admin:HdWcIfrhJ7oG6baf@labyrinthcluster.xwg3l.mongodb.net/'
+mongoose.connect(mongoURI, { 
     useNewUrlParser: true, 
     useUnifiedTopology: true 
 }).then(() => console.log('Connected to MongoDB'))
