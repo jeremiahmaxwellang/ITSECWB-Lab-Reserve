@@ -128,6 +128,8 @@ document.addEventListener("DOMContentLoaded", function () {
         const timeSpan = document.getElementById("deleteTime");
         const reservedBySpan = document.getElementById("deleteReservedBy");
         const confirmDeleteBtn = document.querySelector(".confirm-button");
+        const cancelDeleteBtn = document.querySelector(".deleteCancel-button"); // Cancel button
+        const closeButton = document.querySelector(".close-button"); // X button (close button)
 
         // Populate modal with reservation details
         roomSpan.textContent = reservation.roomNumber;
@@ -169,7 +171,31 @@ document.addEventListener("DOMContentLoaded", function () {
                 alert("An error occurred. Please try again later.");
             }
         };
+
+        // Close the delete modal when clicking outside the modal content
+        deleteModalOverlay.addEventListener("click", function(event) {
+            if (event.target === deleteModalOverlay) {
+                closeDeleteModal();
+            }
+        });
+
+        // Close the delete modal when the Cancel button is clicked
+        cancelDeleteBtn.addEventListener("click", function() {
+            closeDeleteModal();  // Close the modal
+        });
+
+        // Close the delete modal when the "X" button is clicked
+        closeButton.addEventListener("click", function() {
+            closeDeleteModal();  // Close the modal
+        });
     }
+
+    // Function to close the delete modal
+    function closeDeleteModal() {
+        const deleteModalOverlay = document.getElementById("deleteModal");
+        deleteModalOverlay.style.visibility = "hidden";
+        deleteModalOverlay.style.opacity = "0";
+    }    
 
     function generateTimeOptions(editTimeDropdown, selectedTime) {
         editTimeDropdown.innerHTML = ""; // Clear previous options
@@ -293,17 +319,18 @@ document.addEventListener("DOMContentLoaded", function () {
                 alert("Failed to update reservation due to a network error.");
             }
         };
-    }       
 
-    // Close the delete confirmation modal
-    function closeDeleteModal() {
-        const deleteModalOverlay = document.getElementById("deleteModal");
-        deleteModalOverlay.style.visibility = "hidden";
-        deleteModalOverlay.style.opacity = "0";
+        document.querySelector("#cancel-button").addEventListener("click", function() {
+            closeEditOverlay();  // Keep this to close the overlay as well
+        });
+
+        // Close the overlay when clicking outside of the overlay content
+        editOverlay.addEventListener("click", function(event) {
+            if (event.target === editOverlay) {
+                closeEditOverlay();
+            }
+        });
     }
-
-    document.querySelector(".cancel-button").addEventListener("click", closeDeleteModal);
-    document.querySelector(".close-button").addEventListener("click", closeDeleteModal);
 
     fetchReservations(); // Fetch data from database on page load
 });

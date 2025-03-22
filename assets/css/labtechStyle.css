@@ -337,11 +337,6 @@
   color: white;
 }
 
-#cancelButton:hover {
-  background-color: #900B09;
-  color: white;
-}
-
 /* Responsive Design */
 @media (max-width: 768px) {
   .edit-container {
@@ -439,6 +434,27 @@
   margin-top: 20px;
 }
 
+.deleteCancel-button {
+  font-family: outfit;
+  width: 45%;
+  margin-bottom: 5px; 
+  padding: 10px;
+  background: white;
+  color: #3C4B5F; /* Dark text color */
+  font-size: 16px;
+  border: 1px solid #D1D5DB; /* Light gray border */
+  border-radius: 10px; /* Rounded corners */
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.3s ease;
+  display: block;
+}
+
+.deleteCancel-button:hover {
+  background-color: #900B09;
+  color: white;
+}
+
 .cancel-button {
   font-family: outfit;
   width: 45%;
@@ -456,7 +472,8 @@
 }
 
 .cancel-button:hover {
-  background: #f5f5f5;
+  background-color: #900B09;
+  color: white;
 }
 
 .confirm-button {
@@ -476,6 +493,6 @@
 }
 
 .confirm-button:hover {
-  background-color: #900B09;
+  background-color: #1d5b3e;
   color: white;
 }
