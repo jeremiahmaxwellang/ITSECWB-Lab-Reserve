@@ -483,6 +483,20 @@ app.get("/my-reservations", isAuthenticated, async (req, res) => {
     }
 });
 
+// Function to fetch students from the database
+async function getStudentsFromDB() {
+    try {
+        // Fetch all users with account_type 'Student'
+        const students = await User.find({ account_type: 'Student' }).lean();
+        
+        // Return the students data
+        return students;
+    } catch (err) {
+        console.error("⚠️ Error fetching students from database:", err);
+        return [];
+    }
+}
+
 
 /*
     SHA256 hash generation
@@ -782,6 +796,25 @@ app.get('/labtech', isAuthenticated, (req,res) => {
 
     res.render('labtech', {userData})
 })
+
+// Route to labtech reservation
+app.get('/labtechReserve', async (req, res) => {
+    try {
+        const userData = req.session.user;
+        if (!userData) {
+            return res.redirect('/login'); // Redirect to login if the user is not logged in
+        }
+
+        // Fetch buildings from the database
+        const buildings = await Building.find({}, 'building_name').lean();
+
+        // Render the labtechReserve page and pass userData and buildings
+        res.render('labtechReserve', { userData, buildings });
+    } catch (error) {
+        console.error("Error fetching buildings:", error);
+        res.status(500).send("Error fetching buildings");
+    }
+});
 
 // Fetch available rooms for a selected building and floor
 app.get("/available-rooms", async (req, res) => {
