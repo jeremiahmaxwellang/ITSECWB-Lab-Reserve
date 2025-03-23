@@ -80,6 +80,13 @@ document.addEventListener("DOMContentLoaded", function () {
     floorNumbers[0].classList.add("selected");
 });
 
+document.getElementById("student-selection").addEventListener("change", function () {
+    const selectedStudentId = this.value;
+    console.log("Selected Student ID: ", selectedStudentId);
+
+    // You can then use the selectedStudentId to process the reservation or for further logic
+});
+
 function showOverlay(roomName) {
     const overlay = document.createElement("div");
     overlay.classList.add("overlay");

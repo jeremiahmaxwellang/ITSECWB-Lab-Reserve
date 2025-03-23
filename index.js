@@ -488,7 +488,7 @@ async function getStudentsFromDB() {
     try {
         // Fetch all users with account_type 'Student'
         const students = await User.find({ account_type: 'Student' }).lean();
-        
+
         // Return the students data
         return students;
     } catch (err) {
@@ -756,7 +756,6 @@ app.post('/changepassword', isAuthenticated, async (req, res) => {
     }
 });
 
-
 //Delete User Route (Mar 12)
 app.delete('/deleteaccount', isAuthenticated, async (req, res) => {
     try {
@@ -808,11 +807,14 @@ app.get('/labtechReserve', async (req, res) => {
         // Fetch buildings from the database
         const buildings = await Building.find({}, 'building_name').lean();
 
-        // Render the labtechReserve page and pass userData and buildings
-        res.render('labtechReserve', { userData, buildings });
+        // Fetch students using getStudentsFromDB function
+        const students = await getStudentsFromDB();
+
+        // Render the labtechReserve page and pass userData, buildings, and students
+        res.render('labtechReserve', { userData, buildings, students });
     } catch (error) {
-        console.error("Error fetching buildings:", error);
-        res.status(500).send("Error fetching buildings");
+        console.error("Error fetching buildings and students:", error);
+        res.status(500).send("Error fetching buildings and students");
     }
 });
 
