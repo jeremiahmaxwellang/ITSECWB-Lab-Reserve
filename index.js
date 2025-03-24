@@ -796,7 +796,49 @@ app.get('/labtech', isAuthenticated, (req,res) => {
     res.render('labtech', {userData})
 })
 
-// Route to labtech reservation
+// Route so Labtech admins can reserve for walk-in students
+app.post('/labtechReserve', isAuthenticated, async (req, res) => {
+    try {
+        const { reserved_date, building_id, room_num, seat_num, anonymous, reservedForEmail } = req.body;
+        const user = req.session.user;
+
+        // Confirm user is a lab technician
+        if (user.account_type !== 'Lab Technician') {
+            return res.status(403).json({ message: "Only Lab Technicians can create this type of reservation." });
+        }
+
+        // Check if the seat is already reserved
+        const existingReservation = await Reservation.findOne({ room_num, seat_num, reserved_date });
+        if (existingReservation) {
+            return res.status(400).json({ message: "Seat already reserved for this date" });
+        }
+
+        // Determine who the reservation is for
+        const reservedFor = anonymous === "Y" ? null : reservedForEmail;
+
+        // Create the reservation
+        const newReservation = new Reservation({
+            email: user.email, // the labtech who made the reservation
+            request_date: new Date(),
+            reserved_date,
+            building_id,
+            room_num,
+            seat_num,
+            anonymous,
+            reserved_for_email: reservedFor
+        });
+
+        await newReservation.save();
+        console.log(`✅ LabTech ${user.email} reserved a seat for ${reservedFor || "Anonymous"}`);
+
+        res.redirect('/labtech');
+    } catch (err) {
+        console.error("⚠️ Error creating LabTech reservation:", err);
+        res.status(500).json({ message: "Internal server error" });
+    }
+});
+
+// Route to get the list of registered students in the database
 app.get('/labtechReserve', async (req, res) => {
     try {
         const userData = req.session.user;
