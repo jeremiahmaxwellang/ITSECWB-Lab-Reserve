@@ -38,6 +38,13 @@ app.use(express.urlencoded( {extended: false})) // files consist of more than st
 app.use(express.static('assets')) 
 app.use(express.static('uploads')) 
 
+// Serve static files from the 'assets' directory
+app.use('/assets', express.static(path.join(__dirname, 'assets')));
+
+// Example route to serve the HTML view (labtech.hbs)
+app.get('/', (req, res) => {
+    res.render('labtech'); // Assuming you're using Handlebars for views
+});
 
 // SESSION
 app.use(session({
@@ -124,9 +131,6 @@ async function insertUsers() {
         console.error("⚠️ Error inserting users:", err)
     }
 }
-
-// DELETE BEFORE SUBMISSION
-app.use('/css', express.static(path.join(__dirname, 'css')));
 
 //hard coded of building values
 async function insertBuildings() {
