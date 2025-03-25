@@ -266,14 +266,16 @@ document.addEventListener("DOMContentLoaded", function () {
         const editTimeDropdown = document.querySelector("#edit-time");
         const editRoom = document.querySelector("#edit-room");
         const editSeat = document.querySelector("#edit-seat");
-    
+
         // Display the overlay
         editOverlay.classList.add("active");
-    
+
         // Set the form inputs to the current reservation details
         editDateInput.value = reservation.date;
+        editDateInput.min = new Date().toISOString().split("T")[0]; // ✅ restrict to current day and onwards
+
         generateTimeOptions(editTimeDropdown, reservation.time);
-    
+
         // Display room and seat info
         editRoom.innerText = `Room: ${reservation.roomNumber}`;
         editSeat.innerText = `Seat: ${reservation.seatNumber}`;
