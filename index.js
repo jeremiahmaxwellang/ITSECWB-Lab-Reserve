@@ -125,6 +125,9 @@ async function insertUsers() {
     }
 }
 
+// DELETE BEFORE SUBMISSION
+app.use('/css', express.static(path.join(__dirname, 'css')));
+
 //hard coded of building values
 async function insertBuildings() {
     try {
