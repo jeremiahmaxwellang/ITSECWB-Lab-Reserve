@@ -172,6 +172,48 @@ function showOverlay(roomName) {
     const seatContainer = document.createElement("div");
     seatContainer.classList.add("seat-container");
 
+    // Date updates when user changes selection
+    datePicker.addEventListener("change", () => { 
+        updateDateTime()
+        
+    })
+
+    // Time updates when user changes selection
+    timePicker.addEventListener("click", () => { 
+        updateDateTime()
+        
+    })
+
+    function updateDateTime(){
+        // Expected format: 2025-03-18T00:00:00.000Z
+        const reservedDate = new Date(`${datePicker.value}T${timePicker.value}:00.000Z`);
+        const formattedDate = reservedDate.toISOString()
+
+        document.getElementById("reserved_date").value = formattedDate
+        return formattedDate
+    }
+
+    const myBuildingDropdown = document.getElementById("building-location")
+    const building_id =  myBuildingDropdown.selectedIndex; // Capture the selected building ID
+
+     // Fetch reservations from the backend
+     let reservations = [];
+
+     async function fetchReservations() {
+         try {
+             const response = await fetch("/reservations");
+             reservations = await response.json();
+             console.log("🔍 Reservations Data:", reservations); // Debugging Log
+     
+             if (!Array.isArray(reservations) || reservations.length === 0) {
+                 console.warn("⚠️ No reservations available.");
+             }
+     
+         } catch (error) {
+             console.error("⚠️ Error fetching reservations:", error);
+         }
+     }
+    
     // R = Reserved
     // A = Available
     const seatPositions = [
@@ -186,6 +228,8 @@ function showOverlay(roomName) {
 
         ["R", "A", "R", "A", "R"]   //seatPositions[3]
     ];
+
+    
 
     let selectedSeat = null;
 
@@ -283,32 +327,6 @@ function showOverlay(roomName) {
                         </form>
                         `;
 
-                        
-
-                        // Working: Date updates when user changes selection
-                        datePicker.addEventListener("change", () => { 
-                            updateDateTime()
-                            
-                        })
-
-                        // Working: Time updates when user changes selection
-                        timePicker.addEventListener("click", () => { 
-                            updateDateTime()
-                            
-                        })
-
-                        function updateDateTime(){
-                            // Expected format: 2025-03-18T00:00:00.000Z
-                            const reservedDate = new Date(`${datePicker.value}T${timePicker.value}:00.000Z`);
-                            const formattedDate = reservedDate.toISOString()
-
-                            document.getElementById("reserved_date").value = formattedDate
-                        }
-
-                        
-
-                        const myBuildingDropdown = document.getElementById("building-location")
-                        const building_id =  myBuildingDropdown.selectedIndex; // Capture the selected building ID
 
                         // const seat_num = seatIndex + 1;
 
