@@ -79,17 +79,6 @@ document.addEventListener("DOMContentLoaded", function () {
         roomTitle.textContent = "Available Rooms";
 
         fetchRooms(selectedBuilding, selectedFloor);
-
-        // testing if reservations fetches properly
-
-        const reservationEntry = reservations.filter(reservation =>
-            reservation.building_id === 1 &&
-            reservation.room_num === "SH101" &&
-            reservation.seat_num === 17 &&
-            reservation.reserved_date == "2025-03-26T08:00:00.000+00:00"
-        )
-
-        document.getElementById("room-container").innerHTML = `<p ${reservationEntry.reserved_date} </p>`;
             
     });
 
@@ -472,26 +461,22 @@ function showConfirmationOverlay(roomName, date, time, seatNumber) {
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     const month = months[tempDate.getMonth()];
 
-    // Extract time
-    const timeString = time;
-    const [hours, minutes] = timeString.split(":").map(Number);
+   
 
-    function padWithZero(number) {
-        return number.toString().padStart(2, "0");
-    }
 
-    const startingTime = new Date()
-    startingTime.setHours(hours)
-    startingTime.setMinutes(minutes)
+
     
 
-    let startString = `${padWithZero(startingTime.getHours())}:${padWithZero(startingTime.getMinutes())}`;
+    // Extract time
+    const timeString = time;
 
-    const endingTime = new Date()
-    endingTime.setHours(hours)
-    endingTime.setMinutes(minutes+30)
+    const [hour, minute] = timeString.split(":").map(Number);
+    const startTime = new Date();
+    startTime.setHours(hour, minute, 0, 0);
 
-    let endString = endingTime.getHours() + ":" + endingTime.getMinutes();
+    const endTime = new Date(startTime);
+    endTime.setMinutes(startTime.getMinutes() + 30);
+
 
 
     // Extract seat number
@@ -517,7 +502,7 @@ function showConfirmationOverlay(roomName, date, time, seatNumber) {
             <div class="confirmation-details">
                 <h1 class="reservation-date">${day}</h1>
                 <p class="reservation-month">${month}</p>
-                <p class="reservation-time">${startString} - ${endString}</p>
+                <p class="reservation-time">${format12HourTime(startTime)} - ${format12HourTime(endTime)}</p>
                 <hr>
                 <p class="reservation-reference">Seat #${seat}</p>
                 <p class="reservation-building">Building: ${building}</p>
