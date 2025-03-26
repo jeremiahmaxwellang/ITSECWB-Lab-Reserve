@@ -212,7 +212,23 @@ function showOverlay(roomName) {
          } catch (error) {
              console.error("⚠️ Error fetching reservations:", error);
          }
-     }
+    }
+
+    function isSeatReserved(building_id, roomName, seat_num){
+        if(!Array.isArray(reservations) || reservations.length === 0){
+            console.warn("No reservations available to check");
+            return !!matchedReservation;
+        }
+
+        const matchedReservation = reservations.find(reservation =>
+            reservation.building_id === building_id &&
+            reservation.room_num === roomName &&
+            reservation.seat_num === seat_num &&
+            reservation.reserved_date == updateDateTime()
+        );
+
+        return matchedReservation;
+    }
     
     // R = Reserved
     // A = Available
