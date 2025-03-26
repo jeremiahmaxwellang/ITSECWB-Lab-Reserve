@@ -172,204 +172,202 @@ function showOverlay(roomName) {
     const seatContainer = document.createElement("div");
     seatContainer.classList.add("seat-container");
 
+    // R = Reserved
+    // A = Available
     const seatPositions = [
-        ["R", "A", "R", "R", "R"],
-        ["D"],
-        ["R", "R", "R", "A", "R"],
-        ["R", "R", "A", "R", "R"],
-        ["D"],
-        ["R", "A", "R", "A", "R"]
+        ["R", "A", "R", "R", "R"],  //seatPositions[0]
+        //0,   1,   2,   3,   4,    //Row 0   
+        //==========================   
+
+        ["R", "R", "R", "A", "R"],  //seatPositions[1]
+        //5,   6,   7,   8,   9,    //Row 1
+        ["R", "R", "A", "R", "R"],  //seatPositions[2]
+        //==========================   
+
+        ["R", "A", "R", "A", "R"]   //seatPositions[3]
     ];
 
     let selectedSeat = null;
 
-    // Mar 18: added new seatIndex to check the seat number - jer
-    seatPositions.forEach((row, seatIndex) => {
+   
+    seatPositions.forEach((row, rowIndex) => {
 
-        if (row[0] === "D") {
+        // Create divider before specific rows
+        if(rowIndex == 1 || rowIndex == 3){
             const divider = document.createElement("div");
             divider.classList.add("divider-bar");
             seatContainer.appendChild(divider);
-        } else {
-            const seatRow = document.createElement("div");
-            seatRow.classList.add("seat-row");
-    
-            row.forEach(type => {
-                const seat = document.createElement("img");
-                seat.classList.add("seat-svg");
-    
-                if (type === "A") {
-                    seat.src = "images/GreenSeat.svg";
-                    seat.classList.add("available");
-                } else if (type === "R") {
-                    seat.src = "images/RedSeat.svg";
-                    seat.classList.add("reserved");
-                }
-    
-                seat.addEventListener("click", () => {
-                    if (seat.classList.contains("available") || seat.classList.contains("reserved")) {
-                        // If another seat is already selected, reset it back to original color
-                        if (selectedSeat) {
-                            if (selectedSeat.classList.contains("available")) {
-                                selectedSeat.src = "images/GreenSeat.svg";
-                            } else if (selectedSeat.classList.contains("reserved")) {
-                                selectedSeat.src = "images/RedSeat.svg";
-                            }
-                            selectedSeat.classList.remove("selected");
+        }
+
+        const seatRow = document.createElement("div");
+        seatRow.classList.add("seat-row");
+
+        row.forEach((type, seatIndex) => {
+
+            let seat_num = (rowIndex * 5) + seatIndex + 1; //get seat number
+
+            const seat = document.createElement("img");
+            seat.classList.add("seat-svg");
+
+            if (type === "A") {
+                seat.src = "images/GreenSeat.svg";
+                seat.classList.add("available");
+            } else if (type === "R") {
+                seat.src = "images/RedSeat.svg";
+                seat.classList.add("reserved");
+            }
+
+            seat.addEventListener("click", () => {
+                if (seat.classList.contains("available") || seat.classList.contains("reserved")) {
+                    // If another seat is already selected, reset it back to original color
+                    if (selectedSeat) {
+                        if (selectedSeat.classList.contains("available")) {
+                            selectedSeat.src = "images/GreenSeat.svg";
+                        } else if (selectedSeat.classList.contains("reserved")) {
+                            selectedSeat.src = "images/RedSeat.svg";
                         }
-    
-                        // Set new selected seat
-                        selectedSeat = seat;
-                        seat.src = "images/BlueSeat.svg";
-                        seat.classList.add("selected");
-    
-                        // Update seat info overlay
-                        if (seat.classList.contains("available")) {
-
-                        // Old Seat Overlay code (without FORM)
-
-                        //     seatInfoOverlay.innerHTML = `
-                        //     <p class="available-text">This Seat Is Available</p>
-                        //     <div class="anonymous-container">
-                        //         <input type="checkbox" id="anonymousCheckbox" class="anonymous-checkbox">
-                        //         <label for="anonymousCheckbox" class="anonymous-label">Anonymous</label>
-                        //     </div>
-                        //     <button class="confirm-btn">Confirm</button>
-                        // `;
-
-                        
-
-                        // Seat Overlay with FORM
-
-                            seatInfoOverlay.innerHTML = `
-                            <form method="post">
-                                <p class="available-text">This Seat Is Available</p>
-                                <div class="anonymous-container">
-                                    <input 
-                                        type="checkbox" 
-                                        id="anonymousCheckbox" 
-                                        class="anonymous-checkbox" 
-                                        name="anonymous-checkbox"
-                                        value="Y">
-                                    <label for="anonymousCheckbox" class="anonymous-label">Anonymous</label>
-                                </div>
-
-
-                                <div>
-                                    <label for="anonStatus">Anon Status:</label>
-                                    <input type="text" id="anonStatus" name="anonymous">
-                                </div>
-
-
-                                <div>
-                                    <label for="reserved_date">Reserved Date:</label>
-                                    <input type="text" id="reserved_date" name="reserved_date">
-                                </div>
-                                  
-                                 <div>
-                                    <label for="building_id">Building ID:</label>
-                                    <input type="text" id="building_id" name="building_id">
-                                </div>
-
-                                <div>
-                                    <label for="room_num">Room Number:</label>
-                                    <input type="text" id="room_num" name="room_num">
-                                </div>
-                                
-                                <div>
-                                    <label for="seat_num">Seat Number:</label>
-                                    <input type="text" id="seat_num" name="seat_num">
-                                </div>
-                               
-                                <button type="submit" class="confirm-btn">Confirm</button>
-                            </form>
-                            `;
-
-                           
-
-                            // Working: Date updates when user changes selection
-                            datePicker.addEventListener("change", () => { 
-                                updateDateTime()
-                                
-                            })
-
-                            // Working: Time updates when user changes selection
-                            timePicker.addEventListener("click", () => { 
-                                updateDateTime()
-                                
-                            })
-
-                            function updateDateTime(){
-                                // Expected format: 2025-03-18T00:00:00.000Z
-                                const reservedDate = new Date(`${datePicker.value}T${timePicker.value}:00.000Z`);
-                                const formattedDate = reservedDate.toISOString()
-
-                                document.getElementById("reserved_date").value = formattedDate
-                            }
-
-                            
-
-                            const myBuildingDropdown = document.getElementById("building-location")
-                            const building_id =  myBuildingDropdown.selectedIndex; // Capture the selected building ID
-
-                            const seat_num = seatIndex + 1; //seatIndex declared at " seatPositions.forEach((row, seatIndex) => { "
-
-                            // Check if anonymous box is checked
-                            const anonymousCheckbox = document.getElementById("anonymousCheckbox")
-
-                            anonymousCheckbox.addEventListener("change", () => { 
-                                let anonStatus = "N"
-                        
-                                if(anonymousCheckbox.checked){
-                                    anonStatus = "Y"
-                                }
-                                
-                                document.getElementById("anonStatus").value = anonStatus
-                            })
-                            
-                            
-
-                            // Working: Date updates when user changes selection
-                            datePicker.addEventListener("change", () => { 
-                                updateDateTime()
-                                
-                            })
-
-                            // Temp solution: Set the default values of the reservation
-                            updateDateTime()
-                            document.getElementById("building_id").value = building_id
-                            document.getElementById("room_num").value = roomName
-                            document.getElementById("seat_num").value = seat_num
-                            document.getElementById("anonStatus").value = "N"
-                            
-                            
-
-                            
-                        } else if (seat.classList.contains("reserved")) {
-                            seatInfoOverlay.innerHTML = `
-                                <p class="occupied-text">This seat is Occupied by:</p>
-                                <p class="occupied-email">kyle_dejesus@dlsu.edu.ph</p>
-                            `;
-                        }
-    
-                        // CONFIRM BUTTON LISTENER
-                        document.querySelector(".confirm-btn")?.addEventListener("click", () => {
-
-                            const seatNo = document.getElementById("seat_num").value
-
-                            showConfirmationOverlay(roomName, datePicker.value, timePicker.value, seatNo);
-                            const buildingDropdown = document.getElementById("building-location");
-                            buildingDropdown.value = "Select a Building" //reset selected building
-
-                        });
+                        selectedSeat.classList.remove("selected");
                     }
-                });
-    
-                seatRow.appendChild(seat);
+
+                    // Set new selected seat
+                    selectedSeat = seat;
+                    seat.src = "images/BlueSeat.svg";
+                    seat.classList.add("selected");
+
+                    // Update seat info overlay
+                    if (seat.classList.contains("available")) {
+                    
+                    // Seat Overlay with FORM
+
+                        seatInfoOverlay.innerHTML = `
+                        <form method="post">
+                            <p class="available-text">This Seat Is Available</p>
+                            <div class="anonymous-container">
+                                <input 
+                                    type="checkbox" 
+                                    id="anonymousCheckbox" 
+                                    class="anonymous-checkbox" 
+                                    name="anonymous-checkbox"
+                                    value="Y">
+                                <label for="anonymousCheckbox" class="anonymous-label">Anonymous</label>
+                            </div>
+
+
+                            <div>
+                                <label for="anonStatus">Anon Status:</label>
+                                <input type="text" id="anonStatus" name="anonymous">
+                            </div>
+
+
+                            <div>
+                                <label for="reserved_date">Reserved Date:</label>
+                                <input type="text" id="reserved_date" name="reserved_date">
+                            </div>
+                                
+                                <div>
+                                <label for="building_id">Building ID:</label>
+                                <input type="text" id="building_id" name="building_id">
+                            </div>
+
+                            <div>
+                                <label for="room_num">Room Number:</label>
+                                <input type="text" id="room_num" name="room_num">
+                            </div>
+                            
+                            <div>
+                                <label for="seat_num">Seat Number:</label>
+                                <input type="text" id="seat_num" name="seat_num">
+                            </div>
+                            
+                            <button type="submit" class="confirm-btn">Confirm</button>
+                        </form>
+                        `;
+
+                        
+
+                        // Working: Date updates when user changes selection
+                        datePicker.addEventListener("change", () => { 
+                            updateDateTime()
+                            
+                        })
+
+                        // Working: Time updates when user changes selection
+                        timePicker.addEventListener("click", () => { 
+                            updateDateTime()
+                            
+                        })
+
+                        function updateDateTime(){
+                            // Expected format: 2025-03-18T00:00:00.000Z
+                            const reservedDate = new Date(`${datePicker.value}T${timePicker.value}:00.000Z`);
+                            const formattedDate = reservedDate.toISOString()
+
+                            document.getElementById("reserved_date").value = formattedDate
+                        }
+
+                        
+
+                        const myBuildingDropdown = document.getElementById("building-location")
+                        const building_id =  myBuildingDropdown.selectedIndex; // Capture the selected building ID
+
+                        // const seat_num = seatIndex + 1;
+
+                        // Check if anonymous box is checked
+                        const anonymousCheckbox = document.getElementById("anonymousCheckbox")
+
+                        anonymousCheckbox.addEventListener("change", () => { 
+                            let anonStatus = "N"
+                    
+                            if(anonymousCheckbox.checked){
+                                anonStatus = "Y"
+                            }
+                            
+                            document.getElementById("anonStatus").value = anonStatus
+                        })
+                        
+                        
+
+                        // Working: Date updates when user changes selection
+                        datePicker.addEventListener("change", () => { 
+                            updateDateTime()
+                            
+                        })
+
+                        // Temp solution: Set the default values of the reservation
+                        updateDateTime()
+                        document.getElementById("building_id").value = building_id
+                        document.getElementById("room_num").value = roomName
+                        document.getElementById("seat_num").value = seat_num
+                        document.getElementById("anonStatus").value = "N"
+                        
+                        
+
+                        
+                    } else if (seat.classList.contains("reserved")) {
+                        seatInfoOverlay.innerHTML = `
+                            <p class="occupied-text">This seat is Occupied by:</p>
+                            <p class="occupied-email">kyle_dejesus@dlsu.edu.ph</p>
+                        `;
+                    }
+
+                    // CONFIRM BUTTON LISTENER
+                    document.querySelector(".confirm-btn")?.addEventListener("click", () => {
+
+                        const seatNo = document.getElementById("seat_num").value
+
+                        showConfirmationOverlay(roomName, datePicker.value, timePicker.value, seatNo);
+                        const buildingDropdown = document.getElementById("building-location");
+                        buildingDropdown.value = "Select a Building" //reset selected building
+
+                    });
+                }
             });
+
+            seatRow.appendChild(seat);
+        });
     
             seatContainer.appendChild(seatRow);
-        }
+        
     });
     
     
