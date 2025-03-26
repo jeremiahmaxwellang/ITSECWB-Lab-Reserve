@@ -114,6 +114,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 function showOverlay(roomName) {
+    
+
     const overlay = document.createElement("div");
     overlay.classList.add("overlay");
 
@@ -229,8 +231,11 @@ function showOverlay(roomName) {
 
     let selectedSeat = null;
 
-   
+    changeSeatColors();
 
+
+// Sets the colors of the seats
+function initializeSeats(){
     seatPositions.forEach((row, rowIndex) => {
 
         function isSeatReserved(mybuilding_id, myroomName, myseat_num){
@@ -443,7 +448,32 @@ function showOverlay(roomName) {
         
     });
     
+}
     
+// Called to change the seat colors when date or time is changed
+function changeSeatColors(){
+    // reset seat container
+    while (seatContainer.firstChild) {
+        seatContainer.removeChild(seatContainer.firstChild);
+    }
+
+    initializeSeats()
+    
+    // Reset seatInfoOverlay
+    seatInfoOverlay.innerHTML = `<p>Select a seat to see details.</p>`;
+}
+
+datePicker.addEventListener("change", () => { 
+    changeSeatColors()
+
+})
+
+timePicker.addEventListener("click", () => { 
+    changeSeatColors()
+
+})
+
+
     
     
     seatLayout.appendChild(seatContainer);
