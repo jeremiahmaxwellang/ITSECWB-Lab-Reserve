@@ -400,7 +400,7 @@ function showOverlay(roomName) {
                         
                     } 
                     // Overlay when seat is taken
-                    else if (seat.classList.contains("reserved")) {
+                    else if (seat.classList.contains("reserved") && myReservation.anonymous === "N") {
                         seatInfoOverlay.innerHTML = `
                             <p class="occupied-text">This seat is Occupied by:</p>
                             
@@ -408,6 +408,17 @@ function showOverlay(roomName) {
                             <p class="occupied-email">
                             <a href="/profile">${myReservation.email}</a>
                             </p>
+                            
+                        `;
+
+                        
+                    }
+                    else {
+                        seatInfoOverlay.innerHTML = `
+                            <p class="occupied-text">This seat is Occupied by:</p>
+                            
+                             
+                            <p class="occupied-email">Anonymous</p>
                             
                         `;
                     }
