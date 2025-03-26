@@ -477,7 +477,13 @@ function showConfirmationOverlay(roomName, date, time, seatNumber) {
     const endTime = new Date(startTime);
     endTime.setMinutes(startTime.getMinutes() + 30);
 
-
+    function format12HourTime(date) {
+        let hours = date.getHours();
+        let minutes = String(date.getMinutes()).padStart(2, "0");
+        let ampm = hours >= 12 ? "PM" : "AM";
+        hours = hours % 12 || 12; // Convert 0 to 12
+        return `${hours}:${minutes} ${ampm}`;
+    }
 
     // Extract seat number
     const seat = new Number(seatNumber);
