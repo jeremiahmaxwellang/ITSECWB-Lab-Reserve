@@ -90,7 +90,7 @@ document.addEventListener("DOMContentLoaded", function () {
             reservation.reserved_date == "2025-03-26T08:00:00.000+00:00"
         )
 
-        document.getElementById("room-container").innerHTML = `<p ${reservationEntry} </p>`;
+        document.getElementById("room-container").innerHTML = `<p ${reservationEntry.reserved_date} </p>`;
         // <p class="reservation-time">${startString} - ${endString}</p>
             
     });
