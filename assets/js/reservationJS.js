@@ -222,7 +222,7 @@ function showOverlay(roomName) {
 
     
 
-    function isSeatReserved(building_id, roomName, seat_num){
+    function isSeatReserved(mybuilding_id, myroomName, myseat_num){
 
         if(!Array.isArray(reservations) || reservations.length === 0){
             console.warn("No reservations available to check");
@@ -230,10 +230,10 @@ function showOverlay(roomName) {
         }
 
         const matchedReservation = reservations.find(reservation =>
-            reservation.building_id === building_id &&
-            reservation.room_num === roomName &&
-            reservation.seat_num === seat_num &&
-            reservation.reserved_date == updateDateTime()
+            reservation.building_id === mybuilding_id &&
+            reservation.room_num === myroomName &&
+            reservation.seat_num === myseat_num &&
+            reservation.reserved_date == document.getElementById("reserved_date").value
         );
 
         return matchedReservation;
