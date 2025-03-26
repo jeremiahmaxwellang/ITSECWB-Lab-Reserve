@@ -79,7 +79,6 @@ document.addEventListener("DOMContentLoaded", function () {
         roomTitle.textContent = "Available Rooms";
 
         fetchRooms(selectedBuilding, selectedFloor);
-        fetchReservations();
 
         // testing if reservations fetches properly
 
@@ -91,7 +90,6 @@ document.addEventListener("DOMContentLoaded", function () {
         )
 
         document.getElementById("room-container").innerHTML = `<p ${reservationEntry.reserved_date} </p>`;
-        // <p class="reservation-time">${startString} - ${endString}</p>
             
     });
 
@@ -110,6 +108,11 @@ document.addEventListener("DOMContentLoaded", function () {
     // Set slider thumb to first floor by default
     sliderThumb.style.transform = `translateX(${floorPositions[0]}px)`;
     floorNumbers[0].classList.add("selected");
+
+
+
+
+    fetchReservations(); // Fetch data from database on page load
 });
 
 function showOverlay(roomName) {
