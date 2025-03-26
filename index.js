@@ -397,8 +397,7 @@ const isLabTech = (req, res, next) => {
 }
 
 // LabTech Dashboard Table Data
-// Mar 26: Changed from isLabTech to isAuthenticated since this is needed in Student Reservations also (seat colors)
-app.get("/reservations", isAuthenticated, async (req, res) => {
+app.get("/reservations", isLabTech, async (req, res) => {
     try {
         const reservations = await Reservation.find().lean();
 

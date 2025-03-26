@@ -172,71 +172,10 @@ function showOverlay(roomName) {
     const seatContainer = document.createElement("div");
     seatContainer.classList.add("seat-container");
 
-
-    // Date updates when user changes selection
-    datePicker.addEventListener("change", () => { 
-        updateDateTime()
-        
-    })
-
-    // Time updates when user changes selection
-    timePicker.addEventListener("click", () => { 
-        updateDateTime()
-        
-    })
-
-    function updateDateTime(){
-        // Expected format: 2025-03-18T00:00:00.000Z
-        const reservedDate = new Date(`${datePicker.value}T${timePicker.value}:00.000Z`);
-        const formattedDate = reservedDate.toISOString()
-
-        document.getElementById("reserved_date").value = formattedDate
-        return formattedDate;
-    }
-
-
-    // Fetch reservations from the backend
-    let reservations = [];
-
-    async function fetchReservations() {
-        try {
-            const response = await fetch("/reservations");
-            reservations = await response.json();
-            console.log("🔍 Reservations Data:", reservations); // Debugging Log
-    
-            if (!Array.isArray(reservations) || reservations.length === 0) {
-                console.warn("⚠️ No reservations available.");
-            }
-    
-        } catch (error) {
-            console.error("⚠️ Error fetching reservations:", error);
-        }
-    }
-
-    const myBuildingDropdown = document.getElementById("building-location")
-    const building_id =  myBuildingDropdown.selectedIndex; // Capture the selected building ID
-
-    function isSeatReserved(building_id, roomName, seat_num){
-        if(!Array.isArray(reservations) || reservations.length() === 0){
-            console.warn("No reservations available to check");
-            return false;
-        }
-
-        const matchedReservation = reservations.find(reservation =>
-            reservation.building_id === building_id &&
-            reservation.room_num === roomName &&
-            reservation.seat_num === seat_num &&
-            reservation.reserved_date == updateDateTime()
-        );
-
-        return matchedReservation ? true : false;
-    }
-
-
     // R = Reserved
     // A = Available
     const seatPositions = [
-        ["A", "A", "A", "A", "A"],  //seatPositions[0]
+        ["R", "A", "R", "R", "R"],  //seatPositions[0]
         //0,   1,   2,   3,   4,    //Row 0   
         //==========================   
 
@@ -249,7 +188,6 @@ function showOverlay(roomName) {
     ];
 
     let selectedSeat = null;
-
 
    
     seatPositions.forEach((row, rowIndex) => {
@@ -271,13 +209,10 @@ function showOverlay(roomName) {
             const seat = document.createElement("img");
             seat.classList.add("seat-svg");
 
-            // if (type === "A") {
-            if(!isSeatReserved(building_id, roomName, seat_num)){
+            if (type === "A") {
                 seat.src = "images/GreenSeat.svg";
                 seat.classList.add("available");
-            } 
-            // else if (type === "R") {
-            else{
+            } else if (type === "R") {
                 seat.src = "images/RedSeat.svg";
                 seat.classList.add("reserved");
             }
@@ -350,12 +285,30 @@ function showOverlay(roomName) {
 
                         
 
+                        // Working: Date updates when user changes selection
+                        datePicker.addEventListener("change", () => { 
+                            updateDateTime()
+                            
+                        })
 
+                        // Working: Time updates when user changes selection
+                        timePicker.addEventListener("click", () => { 
+                            updateDateTime()
+                            
+                        })
+
+                        function updateDateTime(){
+                            // Expected format: 2025-03-18T00:00:00.000Z
+                            const reservedDate = new Date(`${datePicker.value}T${timePicker.value}:00.000Z`);
+                            const formattedDate = reservedDate.toISOString()
+
+                            document.getElementById("reserved_date").value = formattedDate
+                        }
 
                         
 
-                        // const myBuildingDropdown = document.getElementById("building-location")
-                        // const building_id =  myBuildingDropdown.selectedIndex; // Capture the selected building ID
+                        const myBuildingDropdown = document.getElementById("building-location")
+                        const building_id =  myBuildingDropdown.selectedIndex; // Capture the selected building ID
 
                         // const seat_num = seatIndex + 1;
 
