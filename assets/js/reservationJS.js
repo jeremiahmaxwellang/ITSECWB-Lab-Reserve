@@ -112,8 +112,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-    fetchReservations(); // Fetch data from database on page load
-});
+
 
 function showOverlay(roomName) {
     const overlay = document.createElement("div");
@@ -539,3 +538,7 @@ function showConfirmationOverlay(roomName, date, time, seatNumber) {
 function closeConfirmation() {
     document.querySelector(".overlay").remove();
 }
+
+
+    fetchReservations(); // Fetch data from database on page load
+});
