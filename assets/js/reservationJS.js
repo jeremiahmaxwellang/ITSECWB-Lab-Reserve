@@ -53,6 +53,24 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     }
 
+    // Fetch reservations from the backend
+    let reservations = [];
+
+    async function fetchReservations() {
+        try {
+            const response = await fetch("/reservations");
+            reservations = await response.json();
+            console.log("🔍 Reservations Data:", reservations); // Debugging Log
+    
+            if (!Array.isArray(reservations) || reservations.length === 0) {
+                console.warn("⚠️ No reservations available.");
+            }
+    
+        } catch (error) {
+            console.error("⚠️ Error fetching reservations:", error);
+        }
+    }
+
     // Run when the user selects a building
     buildingDropdown.addEventListener("change", function () {
         selectedBuilding = buildingDropdown.value;
@@ -61,6 +79,7 @@ document.addEventListener("DOMContentLoaded", function () {
         roomTitle.textContent = "Available Rooms";
 
         fetchRooms(selectedBuilding, selectedFloor);
+        fetchReservations();
     });
 
     floorNumbers.forEach((floor, index) => {
@@ -196,28 +215,14 @@ function showOverlay(roomName) {
     const myBuildingDropdown = document.getElementById("building-location")
     const building_id =  myBuildingDropdown.selectedIndex; // Capture the selected building ID
 
-     // Fetch reservations from the backend
-     let reservations = [];
 
-     async function fetchReservations() {
-         try {
-             const response = await fetch("/reservations");
-             reservations = await response.json();
-             console.log("🔍 Reservations Data:", reservations); // Debugging Log
-     
-             if (!Array.isArray(reservations) || reservations.length === 0) {
-                 console.warn("⚠️ No reservations available.");
-             }
-     
-         } catch (error) {
-             console.error("⚠️ Error fetching reservations:", error);
-         }
-    }
+    
 
     function isSeatReserved(building_id, roomName, seat_num){
+
         if(!Array.isArray(reservations) || reservations.length === 0){
             console.warn("No reservations available to check");
-            return !!matchedReservation;
+            return false;
         }
 
         const matchedReservation = reservations.find(reservation =>
