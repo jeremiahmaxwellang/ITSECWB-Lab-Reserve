@@ -388,9 +388,25 @@ const isLabTech = (req, res, next) => {
     }
 }
 
+// Get Reservations Seat Availability
+app.get("/all-reservations", isAuthenticated, async (req, res) => {
+    try {
+        const reservations = await Reservation.find().lean();
+
+        if (!reservations || reservations.length === 0) {
+            console.warn("⚠️ No reservations found in the database.");
+            return res.json([reservations]);
+        }
+
+        res.json(reservations);
+    } catch (err) {
+        console.error("⚠️ Error fetching reservations:", err);
+        res.status(500).json({ message: "Error fetching reservations", error: err.message });
+    }
+});
+
 // LabTech Dashboard Table Data
-// Mar 26: Changed from isLabTech to isAuthenticated since this is needed in Student Reservations also (seat colors)
-app.get("/reservations", isAuthenticated, async (req, res) => {
+app.get("/reservations", isLabTech, async (req, res) => {
     try {
         const reservations = await Reservation.find().lean();
 

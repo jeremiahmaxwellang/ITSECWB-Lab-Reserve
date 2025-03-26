@@ -1,4 +1,30 @@
 document.addEventListener("DOMContentLoaded", function () {
+
+     // Fetch reservations from the backend
+    let reservations = [];
+
+    async function fetchReservations() {
+        try {
+            const response = await fetch("/all-reservations");
+            if(!response.ok){
+                throw new Error(`Error fetching reservations: ${response.status}`);
+            }
+
+            reservations = await response.json();
+            console.log("🔍 Reservations Data:", reservations); // Debugging Log
+    
+            if (!Array.isArray(reservations) || reservations.length === 0) {
+                console.warn("⚠️ No reservations available.");
+            }
+
+    
+        } catch (error) {
+            console.error("⚠️ Error fetching reservations:", error);
+        }
+    }
+
+    fetchReservations()
+
     const roomContainer = document.getElementById("room-container");
     const roomTitle = document.getElementById("room-title"); // Select the room title
     const floorNumbers = document.querySelectorAll(".floor-number");
@@ -53,23 +79,7 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     }
 
-    // Fetch reservations from the backend
-    let reservations = [];
-
-    async function fetchReservations() {
-        try {
-            const response = await fetch("/reservations");
-            reservations = await response.json();
-            console.log("🔍 Reservations Data:", reservations); // Debugging Log
-    
-            if (!Array.isArray(reservations) || reservations.length === 0) {
-                console.warn("⚠️ No reservations available.");
-            }
-    
-        } catch (error) {
-            console.error("⚠️ Error fetching reservations:", error);
-        }
-    }
+   
 
     // Run when the user selects a building
     buildingDropdown.addEventListener("change", function () {
@@ -195,50 +205,13 @@ function showOverlay(roomName) {
     const seatContainer = document.createElement("div");
     seatContainer.classList.add("seat-container");
 
-    // Date updates when user changes selection
-    datePicker.addEventListener("change", () => { 
-        updateDateTime()
-        
-    })
 
-    // Time updates when user changes selection
-    timePicker.addEventListener("click", () => { 
-        updateDateTime()
-        
-    })
-
-    function updateDateTime(){
-        // Expected format: 2025-03-18T00:00:00.000Z
-        const reservedDate = new Date(`${datePicker.value}T${timePicker.value}:00.000Z`);
-        const formattedDate = reservedDate.toISOString()
-
-        document.getElementById("reserved_date").value = formattedDate
-        return formattedDate
-    }
 
     const myBuildingDropdown = document.getElementById("building-location")
     const building_id =  myBuildingDropdown.selectedIndex; // Capture the selected building ID
 
 
-    
 
-    function isSeatReserved(mybuilding_id, myroomName, myseat_num){
-
-        if(!Array.isArray(reservations) || reservations.length === 0){
-            console.warn("No reservations available to check");
-            return false;
-        }
-
-        const matchedReservation = reservations.find(reservation =>
-            reservation.building_id === mybuilding_id &&
-            reservation.room_num === myroomName &&
-            reservation.seat_num === myseat_num &&
-            reservation.reserved_date == document.getElementById("reserved_date").value
-        );
-
-        return matchedReservation;
-    }
-    
     // R = Reserved
     // A = Available
     const seatPositions = [
@@ -254,12 +227,33 @@ function showOverlay(roomName) {
         ["R", "A", "R", "A", "R"]   //seatPositions[3]
     ];
 
-    
-
     let selectedSeat = null;
 
    
+
     seatPositions.forEach((row, rowIndex) => {
+
+        function isSeatReserved(mybuilding_id, myroomName, myseat_num){
+
+            if(!Array.isArray(reservations) || reservations.length === 0){
+                console.warn("No reservations available to check");
+                return null;
+            }
+    
+            const reservedDate = new Date(`${datePicker.value}T${timePicker.value}:00.000Z`);
+            const formattedDate = reservedDate.toISOString()
+    
+            let matchedReservation = reservations.find(reservation =>
+                reservation.building_id === mybuilding_id &&
+                reservation.room_num === myroomName &&
+                reservation.seat_num === myseat_num &&
+                reservation.reserved_date == formattedDate
+            );
+
+    
+            return matchedReservation || null;
+        }
+
 
         // Create divider before specific rows
         if(rowIndex == 1 || rowIndex == 3){
@@ -278,13 +272,16 @@ function showOverlay(roomName) {
             const seat = document.createElement("img");
             seat.classList.add("seat-svg");
 
-        if (isSeatReserved(building_id, roomName, seat_num)) {
-            seat.src = "images/RedSeat.svg";
-            seat.classList.add("reserved");
-        }
-        else {
+        let myReservation = isSeatReserved(building_id, roomName, seat_num) 
+
+        // Available if no matching reservation
+        if (myReservation == null) {
             seat.src = "images/GreenSeat.svg";
             seat.classList.add("available");
+        }
+        else {
+            seat.src = "images/RedSeat.svg";
+            seat.classList.add("reserved");
         }
 
             seat.addEventListener("click", () => {
@@ -354,7 +351,6 @@ function showOverlay(roomName) {
                         `;
 
 
-                        // const seat_num = seatIndex + 1;
 
                         // Check if anonymous box is checked
                         const anonymousCheckbox = document.getElementById("anonymousCheckbox")
@@ -371,11 +367,26 @@ function showOverlay(roomName) {
                         
                         
 
-                        // Working: Date updates when user changes selection
+
+                        // Date updates when user changes selection
                         datePicker.addEventListener("change", () => { 
                             updateDateTime()
                             
                         })
+
+                        // Time updates when user changes selection
+                        timePicker.addEventListener("click", () => { 
+                            updateDateTime()
+                            
+                        })
+
+                        function updateDateTime(){
+                            // Expected format: 2025-03-18T00:00:00.000Z
+                            const reservedDate = new Date(`${datePicker.value}T${timePicker.value}:00.000Z`);
+                            const formattedDate = reservedDate.toISOString()
+
+                            document.getElementById("reserved_date").value = formattedDate
+                        }
 
                         // Temp solution: Set the default values of the reservation
                         updateDateTime()
@@ -387,10 +398,17 @@ function showOverlay(roomName) {
                         
 
                         
-                    } else if (seat.classList.contains("reserved")) {
+                    } 
+                    // Overlay when seat is taken
+                    else if (seat.classList.contains("reserved")) {
                         seatInfoOverlay.innerHTML = `
                             <p class="occupied-text">This seat is Occupied by:</p>
-                            <p class="occupied-email">kyle_dejesus@dlsu.edu.ph</p>
+                            
+                             
+                            <p class="occupied-email">
+                            <a href="/profile">${myReservation.email}</a>
+                            </p>
+                            
                         `;
                     }
 
