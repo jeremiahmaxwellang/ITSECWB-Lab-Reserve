@@ -233,7 +233,7 @@ function showOverlay(roomName) {
     // R = Reserved
     // A = Available
     const seatPositions = [
-        ["R", "A", "R", "R", "R"],  //seatPositions[0]
+        ["A", "A", "A", "A", "A"],  //seatPositions[0]
         //0,   1,   2,   3,   4,    //Row 0   
         //==========================   
 
@@ -269,13 +269,14 @@ function showOverlay(roomName) {
             const seat = document.createElement("img");
             seat.classList.add("seat-svg");
 
-            if (type === "A") {
-                seat.src = "images/GreenSeat.svg";
-                seat.classList.add("available");
-            } else if (type === "R") {
-                seat.src = "images/RedSeat.svg";
-                seat.classList.add("reserved");
-            }
+        if (isSeatReserved(building_id, roomName, seat_num)) {
+            seat.src = "images/RedSeat.svg";
+            seat.classList.add("reserved");
+        }
+        else {
+            seat.src = "images/GreenSeat.svg";
+            seat.classList.add("available");
+        }
 
             seat.addEventListener("click", () => {
                 if (seat.classList.contains("available") || seat.classList.contains("reserved")) {
