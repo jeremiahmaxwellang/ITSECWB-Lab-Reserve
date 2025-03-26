@@ -80,6 +80,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
         fetchRooms(selectedBuilding, selectedFloor);
         fetchReservations();
+
+        // testing if reservations fetches properly
+
+        const reservationEntry = reservations.filter(reservation =>
+            reservation.building_id === 1 &&
+            reservation.room_num === "SH101" &&
+            reservation.seat_num === 17 &&
+            reservation.reserved_date == "2025-03-26T08:00:00.000+00:00"
+        )
+
+        document.getElementById("room-container").innerHTML = `<p ${reservationEntry} </p>`;
+        // <p class="reservation-time">${startString} - ${endString}</p>
+            
     });
 
     floorNumbers.forEach((floor, index) => {
