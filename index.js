@@ -36,15 +36,7 @@ app.set('view engine', 'hbs')
 app.use(express.json())
 app.use(express.urlencoded( {extended: false})) // files consist of more than strings
 app.use(express.static('assets')) 
-app.use(express.static('uploads')) 
-
-// Serve static files from the 'assets' directory
-app.use('/assets', express.static(path.join(__dirname, 'assets')));
-
-// Example route to serve the HTML view (labtech.hbs)
-app.get('/', (req, res) => {
-    res.render('labtech'); // Assuming you're using Handlebars for views
-});
+app.use(express.static('uploads'))
 
 // SESSION
 app.use(session({
