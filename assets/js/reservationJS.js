@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
 // Fetch User from the backend
     let User = {};
 
-    async function fetchReservations() {
+    async function fetchUser() {
         try {
             const response = await fetch("/get-user");
             if(!response.ok){
@@ -45,6 +45,8 @@ document.addEventListener("DOMContentLoaded", function () {
             console.error("⚠️ Error fetching logged in User:", error);
         }
     }
+
+fetchUser()
 
     const roomContainer = document.getElementById("room-container");
     const roomTitle = document.getElementById("room-title"); // Select the room title
