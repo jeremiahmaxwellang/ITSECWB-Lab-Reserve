@@ -1032,6 +1032,23 @@ app.put('/update-reservation/:id', isAuthenticated, async (req, res) => {
     }
 });
 
+// Get Logged In User
+app.get("/get-user", isAuthenticated, async (req, res) => {
+    try {
+        const User = req.session.user;
+
+        if (!User) {
+            console.warn("⚠️ No reservations found in the database.");
+            return res.json([User]);
+        }
+
+        res.json(User);
+    } catch (err) {
+        console.error("⚠️ Error fetching reservations:", err);
+        res.status(500).json({ message: "Error fetching User", error: err.message });
+    }
+});
+
 // LOGOUT (destroy the session)
 app.get('/logout', (req, res) => {
     req.session.destroy((err) => {
@@ -1044,8 +1061,6 @@ app.get('/logout', (req, res) => {
     })
 })
 
-// Use routes
-// app.use('/api', );
 
 // Server listens on port 3000
 var server = app.listen(3000, function(){
