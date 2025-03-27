@@ -42,7 +42,8 @@ body {
 .dropdown-container {
     display: flex;
     gap: 15px;
-    margin-top: 2px;
+    margin-top: 7px;
+    /* margin-bottom: 10px; */
 }
 
 /* Dropdown Label */
@@ -494,11 +495,12 @@ body {
 
 /* Seat Info Overlay */
 .seat-info-overlay {
-    display: block;
+    display: column;
     background: white;
     padding: 16px;
     border-radius: 12px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    /* min-height: 100px; */
 }
 
 /* "This Seat Is Available" Text */
@@ -513,8 +515,9 @@ body {
 /* Checkbox and Label Container */
 .anonymous-container {
     display: inline-flex;
+    flex-direction: row;
     align-items: left;
-    justify-content: left;
+    justify-content: left; 
     white-space: nowrap;
     gap: 5px;
 }
@@ -737,3 +740,13 @@ hr {
 }
 
 
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    /* padding: 20px 30px; */
+    width: 100%;
+    max-width: 400px;
+    text-align: left;
+}

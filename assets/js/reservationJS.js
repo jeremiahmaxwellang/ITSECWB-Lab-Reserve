@@ -23,15 +23,15 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    fetchReservations()
+    fetchReservations(); // Fetch data from database on page load
 
 
-// Fetch User from the backend
+    // Fetch User from the backend
     let User = {};
 
     async function fetchUser() {
         try {
-            const response = await fetch("/get-user");
+            const response = await fetch("/get-current-user");
             if(!response.ok){
                 throw new Error(`Error fetching User: ${response.status}`);
             }
@@ -46,7 +46,32 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-fetchUser()
+    fetchUser(); //Fetch logged-in user
+
+    let students = [];
+    async function fetchAllStudents() {
+        try {
+            const response = await fetch("/all-students");
+            if(!response.ok){
+                throw new Error(`Error fetching students: ${response.status}`);
+            }
+
+            students = await response.json();
+            console.log("🔍 Students Data:", students); // Debugging Log
+    
+            if (!Array.isArray(students) || students.length === 0) {
+                console.warn("⚠️ No students available.");
+            }
+
+    
+        } catch (error) {
+            console.error("⚠️ Error fetching students:", error);
+        }
+    }
+
+    if(User.account_type != "Student") fetchAllStudents(); // Fetch data from database on page load
+
+
 
     const roomContainer = document.getElementById("room-container");
     const roomTitle = document.getElementById("room-title"); // Select the room title
@@ -132,10 +157,6 @@ fetchUser()
     floorNumbers[0].classList.add("selected");
 
 
-
-
-
-
 function showOverlay(roomName) {
     
 
@@ -157,6 +178,7 @@ function showOverlay(roomName) {
     const roomNameElement = document.createElement("h2");
     roomNameElement.textContent = `${roomName}`;
     reservationDetails.appendChild(roomNameElement);
+    
 
     // Date-Time Selection
     const dateTimeContainer = document.createElement("div");
@@ -210,12 +232,30 @@ function showOverlay(roomName) {
             timePicker.appendChild(option);
         }
     }
+
+    // Student Dropdown Container
+    const studentDropdownContainer = document.createElement("div");
+    studentDropdownContainer.className = "dropdown-container";
+    studentDropdownContainer.innerHTML =`
+    <div class="dropdown-container">
+        <label for="student-selection" class="dropdown-label">Assignee</label>
+        <div class="custom-dropdown">
+            <!-- Student Dropdown -->
+            <select id="student-selection" class="dropdown-select">
+                <option value="" selected>Select a Student</option>
+
+            </select>
+        </div>
+    <div>
+    `
     
     timePickerContainer.appendChild(timePickerLabel);
     timePickerContainer.appendChild(timePicker);
     dateTimeContainer.appendChild(datePickerContainer);
     dateTimeContainer.appendChild(timePickerContainer);
     reservationDetails.appendChild(dateTimeContainer);
+
+
 
     // Seat Info Overlay (Dynamically Updated)
     const seatInfoOverlay = document.createElement("div");
@@ -312,6 +352,49 @@ function initializeSeats(){
             seat.classList.add("reserved");
         }
 
+        function updateDateTime(){
+            // Expected format: 2025-03-18T00:00:00.000Z
+            const reservedDate = new Date(`${datePicker.value}T${timePicker.value}:00.000Z`);
+            const formattedDate = reservedDate.toISOString()
+
+            document.getElementById("reserved_date").value = formattedDate
+        }
+
+        // Update hidden form input fields
+        function updateInputs(){
+            // Check if anonymous box is checked
+            const anonymousCheckbox = document.getElementById("anonymousCheckbox")
+
+            anonymousCheckbox.addEventListener("change", () => { 
+                let anonStatus = "N"
+        
+                if(anonymousCheckbox.checked){
+                    anonStatus = "Y"
+                }
+                
+                document.getElementById("anonStatus").value = anonStatus
+            })
+
+            // Date updates when user changes selection
+            datePicker.addEventListener("change", () => { 
+                updateDateTime()
+                
+            })
+
+            // Time updates when user changes selection
+            timePicker.addEventListener("click", () => { 
+                updateDateTime()
+                
+            })
+
+             // Set the default values of the reservation
+             updateDateTime()
+             document.getElementById("building_id").value = building_id
+             document.getElementById("room_num").value = roomName
+             document.getElementById("seat_num").value = seat_num
+             document.getElementById("anonStatus").value = "N"
+        }
+
             seat.addEventListener("click", () => {
                 if (seat.classList.contains("available") || seat.classList.contains("reserved")) {
                     // If another seat is already selected, reset it back to original color
@@ -342,99 +425,34 @@ function initializeSeats(){
                                     type="checkbox" 
                                     id="anonymousCheckbox" 
                                     class="anonymous-checkbox" 
-                                    name="anonymous-checkbox"
+                                    name="anonymous"
                                     value="Y">
                                 <label for="anonymousCheckbox" class="anonymous-label">Anonymous</label>
                             </div>
 
-
-                            <div>
-                                <label for="anonStatus">Anon Status:</label>
-                                <input type="text" id="anonStatus" name="anonymous">
-                            </div>
-
-
-                            <div>
-                                <label for="reserved_date">Reserved Date:</label>
-                                <input type="text" id="reserved_date" name="reserved_date">
-                            </div>
-                                
-                                <div>
-                                <label for="building_id">Building ID:</label>
-                                <input type="text" id="building_id" name="building_id">
-                            </div>
-
-                            <div>
-                                <label for="room_num">Room Number:</label>
-                                <input type="text" id="room_num" name="room_num">
-                            </div>
-                            
-                            <div>
-                                <label for="seat_num">Seat Number:</label>
-                                <input type="text" id="seat_num" name="seat_num">
-                            </div>
+                            <div><input type="hidden" id="anonStatus" name="anonymous"></div>
+                            <div><input type="hidden" id="reserved_date" name="reserved_date"></div>
+                            <div><input type="hidden" id="building_id" name="building_id"></div>
+                            <div><input type="hidden" id="room_num" name="room_num"></div>
+                            <div><input type="hidden" id="seat_num" name="seat_num"></div>
                             
                             <button type="submit" class="confirm-btn">Confirm</button>
                         </form>
                         `;
 
-
-
-                        // Check if anonymous box is checked
-                        const anonymousCheckbox = document.getElementById("anonymousCheckbox")
-
-                        anonymousCheckbox.addEventListener("change", () => { 
-                            let anonStatus = "N"
-                    
-                            if(anonymousCheckbox.checked){
-                                anonStatus = "Y"
-                            }
-                            
-                            document.getElementById("anonStatus").value = anonStatus
-                        })
-                        
-                        
-
-
-                        // Date updates when user changes selection
-                        datePicker.addEventListener("change", () => { 
-                            updateDateTime()
-                            
-                        })
-
-                        // Time updates when user changes selection
-                        timePicker.addEventListener("click", () => { 
-                            updateDateTime()
-                            
-                        })
-
-                        function updateDateTime(){
-                            // Expected format: 2025-03-18T00:00:00.000Z
-                            const reservedDate = new Date(`${datePicker.value}T${timePicker.value}:00.000Z`);
-                            const formattedDate = reservedDate.toISOString()
-
-                            document.getElementById("reserved_date").value = formattedDate
-                        }
-
-                        // Temp solution: Set the default values of the reservation
-                        updateDateTime()
-                        document.getElementById("building_id").value = building_id
-                        document.getElementById("room_num").value = roomName
-                        document.getElementById("seat_num").value = seat_num
-                        document.getElementById("anonStatus").value = "N"
-                        
-                        
-
+                        updateInputs();
                         
                     } 
 
-else if (seat.classList.contains("available") && User.account_type === "Lab Technician") {
+                    else if (seat.classList.contains("available") && User.account_type === "Lab Technician") {
                     
-                    // Seat Overlay with FORM
 
                         seatInfoOverlay.innerHTML = `
                         <form method="post">
+
+                        <div class="form-container">
                             <p class="available-text">This Seat Is Available</p>
+
                             <div class="anonymous-container">
                                 <input 
                                     type="checkbox" 
@@ -445,87 +463,48 @@ else if (seat.classList.contains("available") && User.account_type === "Lab Tech
                                 <label for="anonymousCheckbox" class="anonymous-label">Anonymous</label>
                             </div>
 
-
-                            <div>
-                                <label for="anonStatus">Anon Status:</label>
-                                <input type="text" id="anonStatus" name="anonymous">
-                            </div>
-
-
-                            <div>
-                                <label for="reserved_for">Reserved For:</label>
-                                <input type="text" id="reserved_for" name="reserved_for">
-                            </div>
-
-<div>
-                                <label for="reserved_date">Reserved Date:</label>
-                                <input type="text" id="reserved_date" name="reserved_date">
-                            </div>
-                                
-                                <div>
-                                <label for="building_id">Building ID:</label>
-                                <input type="text" id="building_id" name="building_id">
-                            </div>
-
-                            <div>
-                                <label for="room_num">Room Number:</label>
-                                <input type="text" id="room_num" name="room_num">
-                            </div>
                             
+
+                            <div class="dropdown-container">
+                                <label for="student-selection" class="anonymous-label">Reserve for:</label>
+                                <div class="custom-dropdown">
+
+                                    <select id="student-selection" class="dropdown-select" name="reserved_for_email">
+                                        <option value="" selected>Select a Student</option>
+                                    </select>
+
+                                </div>
                             <div>
-                                <label for="seat_num">Seat Number:</label>
-                                <input type="text" id="seat_num" name="seat_num">
-                            </div>
+
                             
                             <button type="submit" class="confirm-btn">Confirm</button>
+
+                            <div><input type="hidden" id="anonStatus" name="anonymous"></div>
+                            <div><input type="hidden" id="reserved_date" name="reserved_date"></div>
+                            <div><input type="hidden" id="building_id" name="building_id"></div>
+                            <div><input type="hidden" id="room_num" name="room_num"></div>
+                            <div><input type="hidden" id="seat_num" name="seat_num"></div>
+                            
+                            
+                        </div>    
                         </form>
                         `;
 
+                        updateInputs()
 
-
-                        // Check if anonymous box is checked
-                        const anonymousCheckbox = document.getElementById("anonymousCheckbox")
-
-                        anonymousCheckbox.addEventListener("change", () => { 
-                            let anonStatus = "N"
-                    
-                            if(anonymousCheckbox.checked){
-                                anonStatus = "Y"
-                            }
-                            
-                            document.getElementById("anonStatus").value = anonStatus
-                        })
-                        
-                        
-
-
-                        // Date updates when user changes selection
-                        datePicker.addEventListener("change", () => { 
-                            updateDateTime()
-                            
-                        })
-
-                        // Time updates when user changes selection
-                        timePicker.addEventListener("click", () => { 
-                            updateDateTime()
-                            
-                        })
-
-                        function updateDateTime(){
-                            // Expected format: 2025-03-18T00:00:00.000Z
-                            const reservedDate = new Date(`${datePicker.value}T${timePicker.value}:00.000Z`);
-                            const formattedDate = reservedDate.toISOString()
-
-                            document.getElementById("reserved_date").value = formattedDate
+                        // ✅ Set reservedForEmail from dropdown
+                        function fillStudentDropdown() {
+                            const dropdown = document.getElementById("student-selection");
+                            students.forEach((student) => {
+                                const option = document.createElement("option");
+                                option.value = student.email;
+                                option.textContent = student.email;
+                                option.setAttribute("data-email", student.email);
+                                dropdown.appendChild(option);
+                            })
                         }
-
-                        // Temp solution: Set the default values of the reservation
-                        updateDateTime()
-                        document.getElementById("building_id").value = building_id
-                        document.getElementById("room_num").value = roomName
-                        document.getElementById("seat_num").value = seat_num
-                        document.getElementById("anonStatus").value = "N"
-                        
+                    
+                        fillStudentDropdown();
                         
 
                         
@@ -637,10 +616,8 @@ function showConfirmationOverlay(roomName, date, time, seatNumber) {
     const confirmationContent = document.createElement("div");
     confirmationContent.classList.add("confirmation-content");
 
-    // Extract username
-    //const name = document.getElementById("username").textContent;
 
-const name = User.first_name
+    const name = User.first_name
 
     // Extract day & month
     const tempDate = new Date(date);
@@ -648,11 +625,6 @@ const name = User.first_name
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     const month = months[tempDate.getMonth()];
 
-   
-
-
-
-    
 
     // Extract time
     const timeString = time;
@@ -718,5 +690,4 @@ function closeConfirmation() {
 }
 
 
-    fetchReservations(); // Fetch data from database on page load
 });

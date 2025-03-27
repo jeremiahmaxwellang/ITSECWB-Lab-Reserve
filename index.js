@@ -405,6 +405,23 @@ app.get("/all-reservations", isAuthenticated, async (req, res) => {
     }
 });
 
+// Get All Students
+app.get("/all-students", isAuthenticated, async (req, res) => {
+    try {
+        const students = await User.find({account_type: "Student"}).lean();
+
+        if (!students || students.length === 0) {
+            console.warn("⚠️ No students found in the database.");
+            return res.json([students]);
+        }
+
+        res.json(students);
+    } catch (err) {
+        console.error("⚠️ Error fetching students:", err);
+        res.status(500).json({ message: "Error fetching students", error: err.message });
+    }
+});
+
 // LabTech Dashboard Table Data
 app.get("/reservations", isLabTech, async (req, res) => {
     try {
@@ -948,7 +965,7 @@ app.get('/dashboard', isAuthenticated, async(req,res) => {
 // CREATE A RESERVATION
 app.post('/reserve', isAuthenticated, async (req, res) => {
     try {
-        const { reserved_date, building_id, room_num, seat_num, anonymous } = req.body
+        const { reserved_date, building_id, room_num, seat_num, anonymous,  reserved_for_email } = req.body
         const user = req.session.user // Get logged-in user
 
         // Check if seat is already reserved
@@ -956,6 +973,16 @@ app.post('/reserve', isAuthenticated, async (req, res) => {
         if (existingReservation) {
             return res.status(400).json({ message: "Seat already reserved for this date" })
         }
+
+        let reserved_for = user.email;
+
+        // If lab tech reserves for a student
+        if(user.account_type != "Student"){
+            reserved_for = reserved_for_email;
+        }
+
+        let anonStatus = "N"
+        if(anonymous === "Y") anonStatus = "Y" 
 
         // Create reservation
         const newReservation = new Reservation({
@@ -965,9 +992,8 @@ app.post('/reserve', isAuthenticated, async (req, res) => {
             building_id: building_id,
             room_num: room_num,
             seat_num: seat_num,
-            // anonymous: anonymous === "Y" ? "Y" : "N",
-            anonymous: anonymous,
-            reserved_for_id: anonymous === "Y" ? null : user.email // Set null if anonymous
+            anonymous: anonStatus,
+            reserved_for_email: anonymous === "Y" ? null :  reserved_for // Set null if anonymous
         })
 
         await newReservation.save()
@@ -1033,7 +1059,7 @@ app.put('/update-reservation/:id', isAuthenticated, async (req, res) => {
 });
 
 // Get Logged In User
-app.get("/get-user", isAuthenticated, async (req, res) => {
+app.get("/get-current-user", isAuthenticated, async (req, res) => {
     try {
         const User = req.session.user;
 
