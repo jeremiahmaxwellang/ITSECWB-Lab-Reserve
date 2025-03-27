@@ -25,6 +25,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
     fetchReservations()
 
+
+// Fetch User from the backend
+    let User = {};
+
+    async function fetchReservations() {
+        try {
+            const response = await fetch("/get-user");
+            if(!response.ok){
+                throw new Error(`Error fetching User: ${response.status}`);
+            }
+
+            User = await response.json();
+            console.log("🔍 Logged-in User:", User); // Debugging Log
+    
+
+    
+        } catch (error) {
+            console.error("⚠️ Error fetching logged in User:", error);
+        }
+    }
+
     const roomContainer = document.getElementById("room-container");
     const roomTitle = document.getElementById("room-title"); // Select the room title
     const floorNumbers = document.querySelectorAll(".floor-number");
@@ -512,7 +533,9 @@ function showConfirmationOverlay(roomName, date, time, seatNumber) {
     confirmationContent.classList.add("confirmation-content");
 
     // Extract username
-    const name = document.getElementById("username").textContent;
+    //const name = document.getElementById("username").textContent;
+
+const name = User.first_name
 
     // Extract day & month
     const tempDate = new Date(date);
