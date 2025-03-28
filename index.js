@@ -693,8 +693,15 @@ app.post("/login", express.urlencoded({ extended: true }), async (req, res) => {
 
 
 // Profile Page
-app.get('/profile', isAuthenticated, (req,res) => {
-    const userData = req.session.user
+app.get('/profile', (req,res) => {
+    // TODO: anyone's profile can be viewed, not just the user viewing their own profile
+    // Suggestion: the profile url should include the email or name of the user (/profile?q=john) something like that
+
+    // const name = req.query.q //queried name in the url
+
+    const userData = req.session.user //change userData to the user found from the db
+    // const userData = User.findOne({email: req.query.})
+
     console.log(userData)
 
     res.render('profile', {userData})
@@ -702,7 +709,7 @@ app.get('/profile', isAuthenticated, (req,res) => {
 
 app.use(fileUpload()) // for fileuploads
 
-// DONE: Change profile pic route (MAR 12)
+// Route for changing profile pictures
 app.post('/profile', isAuthenticated, async(req, res) => {
 
     // Check if file was uploaded
