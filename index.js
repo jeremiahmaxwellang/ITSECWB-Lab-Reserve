@@ -7,6 +7,9 @@ const mongoose = require('mongoose')
 const crypto = require('crypto')
 const cookieParser = require("cookie-parser")
 
+// Register the 'eq' helper
+hbs.registerHelper('eq', (a, b) => a === b);
+
 // DB CONNECTION: mongodb+srv://admin:<db_password>@labyrinthcluster.xwg3l.mongodb.net/
 // mongoose.connect('mongodb://127.0.0.1:27017/labyrinthDB', { 
 
@@ -702,8 +705,7 @@ app.get('/profile', isAuthenticated, async (req, res) => {
             return res.status(404).send("<script>alert('User not found!'); window.location='/dashboard';</script>");
         }
 
-        console.log(userData);
-        res.render('profile', { userData });
+        res.render('profile', { userData, sessionUser: req.session.user }); // Pass session user
     } catch (err) {
         console.error("⚠️ Error fetching profile:", err);
         res.status(500).send("<script>alert('Internal server error'); window.location='/dashboard';</script>");
