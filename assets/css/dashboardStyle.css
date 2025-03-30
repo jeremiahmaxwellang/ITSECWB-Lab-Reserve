@@ -96,6 +96,8 @@
 }
 
 /* Right Side - Stack Content Vertically */
+
+
 .right-side {
   display: flex;
   flex-direction: column; /* Ensures stacked layout */
@@ -103,15 +105,42 @@
   gap: 15px; 
 }
 
-/* Calendar Container */
-.calendarContainer {
+/* About Container */
+.aboutContainer {
   width: 100%;
   max-width: 400px;
   height: 360px;
-  background: #ffffff;
+  background: white;
   border-radius: 24px;
   padding: 20px;
+  text-align: center;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.1s ease-in-out;
+}
+
+.aboutContainer:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+.aboutSection {
+  position: relative;
+  text-align: center;
+}
+
+.aboutSection .ContainerText {
+  font-family: Newsreader;
+  font-weight: 400;
+  color: #377684;
+  font-size: 24px;
+  letter-spacing: -0.48px;
+  margin-bottom: 20px;
+}
+
+.aboutSection .aboutImage {
+  max-width: 65%;
+  height: auto;
+  border-radius: 10px;
 }
 
 /* Reserve Now Container */
