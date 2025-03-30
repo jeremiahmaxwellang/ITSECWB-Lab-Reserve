@@ -513,12 +513,9 @@ function initializeSeats(){
                     else if (seat.classList.contains("reserved") && myReservation.anonymous === "N") {
                         seatInfoOverlay.innerHTML = `
                             <p class="occupied-text">This seat is Occupied by:</p>
-                            
-                             
                             <p class="occupied-email">
-                            <a href="/profile">${myReservation.email}</a>
+                                <a href="/profile?email=${myReservation.reserved_for_email}">${myReservation.reserved_for_email}</a>
                             </p>
-                            
                         `;
 
                         

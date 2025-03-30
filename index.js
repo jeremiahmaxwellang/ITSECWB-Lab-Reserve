@@ -693,19 +693,22 @@ app.post("/login", express.urlencoded({ extended: true }), async (req, res) => {
 
 
 // Profile Page
-app.get('/profile', (req,res) => {
-    // TODO: anyone's profile can be viewed, not just the user viewing their own profile
-    // Suggestion: the profile url should include the email or name of the user (/profile?q=john) something like that
+app.get('/profile', isAuthenticated, async (req, res) => {
+    try {
+        const email = req.query.email || req.session.user.email; // Use query parameter or fallback to logged-in user
+        const userData = await User.findOne({ email }).lean();
 
-    // const name = req.query.q //queried name in the url
+        if (!userData) {
+            return res.status(404).send("<script>alert('User not found!'); window.location='/dashboard';</script>");
+        }
 
-    const userData = req.session.user //change userData to the user found from the db
-    // const userData = User.findOne({email: req.query.})
-
-    console.log(userData)
-
-    res.render('profile', {userData})
-})
+        console.log(userData);
+        res.render('profile', { userData });
+    } catch (err) {
+        console.error("⚠️ Error fetching profile:", err);
+        res.status(500).send("<script>alert('Internal server error'); window.location='/dashboard';</script>");
+    }
+});
 
 app.use(fileUpload()) // for fileuploads
 
