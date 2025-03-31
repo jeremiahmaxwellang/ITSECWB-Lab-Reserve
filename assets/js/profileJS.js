@@ -158,9 +158,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // ========== OPEN MODALS ==========
-    if (editProfileBtn) {
+    if (editProfileBtn && editProfileModal) {
         editProfileBtn.addEventListener("click", function () {
-            showModal(editProfileModal);
+            editProfileModal.style.display = "flex"; // Show the modal
         });
     }
 
