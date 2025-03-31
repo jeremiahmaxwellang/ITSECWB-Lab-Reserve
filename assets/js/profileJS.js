@@ -95,7 +95,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             if (reservations.length === 0) {
                 const row = currentTableBody.insertRow();
                 const cell = row.insertCell(0);
-                cell.colSpan = 5;
+                cell.colSpan = 4;
                 cell.innerText = "No reservations found.";
                 cell.style.textAlign = "center";
                 return;
