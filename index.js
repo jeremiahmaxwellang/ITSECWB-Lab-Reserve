@@ -693,7 +693,10 @@ app.post("/login", express.urlencoded({ extended: true }), async (req, res) => {
     }
 });
 
-
+// Route to serve AboutUs.html
+app.get('/AboutUs', (req, res) => {
+    res.sendFile(__dirname + '/AboutUs.html');
+});
 
 // Profile Page
 app.get('/profile', isAuthenticated, async (req, res) => {
