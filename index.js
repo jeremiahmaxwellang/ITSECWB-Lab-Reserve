@@ -571,6 +571,13 @@ app.get('/', function(req,res){
     res.sendFile(__dirname + '/' + 'index.html')
 })
 
+// Route to About Us
+// localhost:3000/about-us
+app.get('/about-us', function(req,res){
+
+    res.sendFile(__dirname + '/' + 'about-us.html')
+})
+
 // Route to register.html
 // localhost:3000/register
 app.get('/register', function(req,res){
