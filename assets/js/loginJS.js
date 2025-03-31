@@ -16,7 +16,7 @@ class ModalHandler {
         }
 
         // Prevent clicking inside the modal from closing it
-        this.modal.querySelector(".modal-content").addEventListener("click", (event) => {
+        this.modal.querySelector(".modal-content")?.addEventListener("click", (event) => {
             event.stopPropagation();
         });
 
@@ -43,118 +43,202 @@ class ModalHandler {
     }
 }
 
-// Instantiate modals
-const forgotPasswordModal = new ModalHandler("forgot-password-modal", "close-forgot");
-const otpModal = new ModalHandler("otp-modal", "close-otp");
-const changePasswordModal = new ModalHandler("change-password-modal", "close-change-password");
-
-// Ensure elements exist before adding event listeners
 document.addEventListener("DOMContentLoaded", function () {
-    const forgotPasswordLink = document.getElementById("forgot-password-link");
-    const forgotSubmitBtn = document.getElementById("forgot-submit");
-    const otpConfirmBtn = document.querySelector(".otp-submit-btn");
-    const backToLogin = document.getElementById("back-to-login");
-    const closeChangePasswordBtn = document.querySelector(".close-change-password");
-    const changePasswordSubmitBtn = document.querySelector(".change-submit-btn"); // Selects Submit button
-
-    // Open Forgot Password Modal
-    if (forgotPasswordLink) {
-        forgotPasswordLink.addEventListener("click", function (event) {
-            event.preventDefault();
-            forgotPasswordModal.open();
-        });
-    }
-
-    // Back to Login closes Forgot Password Modal
-    if (backToLogin) {
-        backToLogin.addEventListener("click", function (event) {
-            event.preventDefault();
-            forgotPasswordModal.close();
-        });
-    }
-
-    // Clicking "Submit" closes Forgot Password Modal and opens OTP Modal
-    if (forgotSubmitBtn) {
-        forgotSubmitBtn.addEventListener("click", function (event) {
-            event.preventDefault();
-            forgotPasswordModal.close();
-
-            // Delay to prevent accidental closure
-            setTimeout(() => {
-                otpModal.open();
-            }, 200);
-        });
-    }
-
-    // Clicking "Confirm" on OTP Modal closes OTP and opens Change Password Modal
-    if (otpConfirmBtn) {
-        otpConfirmBtn.addEventListener("click", function (event) {
-            event.preventDefault();
-            otpModal.close();
-
-            // Delay to prevent accidental closure
-            setTimeout(() => {
-                changePasswordModal.open();
-            }, 200);
-        });
-    }
-
-    // Close Change Password Modal
-    if (closeChangePasswordBtn) {
-        closeChangePasswordBtn.addEventListener("click", function () {
-            console.log("Closing Change Password Modal");
-            changePasswordModal.close();
-        });
-    }
-
-    // Redirect to dashboard.html when Submit is clicked on Change Password Modal
-    if (changePasswordSubmitBtn) {
-        changePasswordSubmitBtn.addEventListener("click", function (event) {
-            event.preventDefault();
-            console.log("Redirecting to Dashboard...");
-            window.location.href = '/dashboard'; // Redirects to dashboard.html
-        });
-    }
-});
-
-document.addEventListener("DOMContentLoaded", function () {
-    const loginForm = document.getElementById("login-form");
+    // Initialize modals
+    const forgotPasswordModal = new ModalHandler("forgot-password-modal", "close-forgot");
+    const changePasswordModal = new ModalHandler("change-password-modal", "close-change-password");
     const incorrectPasswordModal = new ModalHandler("incorrect-password-modal", "close-incorrect");
 
-    loginForm.addEventListener("submit", async function (event) {
-        event.preventDefault(); // Prevent default form submission
+    // Get form elements
+    const loginForm = document.getElementById("login-form");
+    const forgotPasswordLink = document.getElementById("forgot-password-link");
+    const backToLogin = document.getElementById("back-to-login");
+    const closeChangePasswordBtn = document.querySelector(".close-change-password");
+    const changePasswordForm = document.getElementById('change-password-form');
 
+    // Store email for password reset
+    let resetEmail = '';
+
+    // Handle login form submission
+    loginForm?.addEventListener("submit", async function (event) {
+        event.preventDefault();
+    
         const email = document.getElementById("email").value.trim();
         const password = document.getElementById("password").value.trim();
-
+        const rememberMe = document.querySelector('input[name="rememberMe"]')?.checked || false;
+    
         if (!email || !password) {
-            incorrectPasswordModal.open(); // Show error modal if fields are empty
+            incorrectPasswordModal.open();
             return;
         }
-
+    
         try {
             const response = await fetch("/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ email, password })
+                body: JSON.stringify({ email, password, rememberMe })
+            });
+    
+            const data = await response.json();
+
+            if (data.success) {
+                console.log("✅ Login successful. Redirecting to:", data.redirect);
+                window.location.href = data.redirect;
+            } else {
+                console.warn("⚠️ Login failed:", data.message);
+                incorrectPasswordModal.open();
+            }
+        } catch (error) {
+            console.error("❌ Error:", error);
+            incorrectPasswordModal.open();
+        }
+    });
+
+    // Handle forgot password flow
+    forgotPasswordLink?.addEventListener('click', async (e) => {
+        e.preventDefault();
+        forgotPasswordModal.open();
+
+        document.querySelector('.forgot-form-container').innerHTML = `
+            <div class="input-group">
+                <label class="static-label" for="recovery-email">DLSU Email</label>
+                <input type="email" id="recovery-email" class="static-input" placeholder="example_name@dlsu.edu.ph">
+            </div>
+            <button id="verify-email" class="submit-btn">Next</button>
+            <a href="#" id="back-to-login" class="back-link">Back to Login</a>
+        `;
+
+        document.getElementById('verify-email')?.addEventListener('click', verifyEmail);
+    });
+
+    // Email verification handler
+    async function verifyEmail() {
+        const email = document.getElementById('recovery-email').value;
+        
+        try {
+            const response = await fetch('/verify-email', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email })
             });
 
             const data = await response.json();
 
-            if (response.ok && data.success) {
-                console.log("✅ Login successful. Redirecting to:", data.redirect);
-                window.location.href = data.redirect; // Redirect based on user role
+            if (data.success) {
+                resetEmail = email; // Store email for password reset
+                showSecurityQuestion(data.question);
             } else {
-                console.warn("⚠️ Incorrect credentials. Showing modal.");
-                incorrectPasswordModal.open(); // Show modal on incorrect credentials
+                alert(data.message);
             }
         } catch (error) {
-            console.error("❌ Error:", error);
-            incorrectPasswordModal.open(); // Show modal on network failure
+            console.error('❌ Error:', error);
+            alert('An error occurred. Please try again.');
         }
+    }
+
+    // Show security question
+    function showSecurityQuestion(question) {
+        document.querySelector('.forgot-form-container').innerHTML = `
+            <h3>Security Question</h3>
+            <p>${question}</p>
+            <div class="input-group">
+                <label class="static-label" for="security-answer">Your Answer</label>
+                <input type="text" id="security-answer" class="static-input">
+            </div>
+            <button id="verify-answer" class="submit-btn">Verify</button>
+        `;
+
+        document.getElementById('verify-answer')?.addEventListener('click', verifySecurityAnswer);
+    }
+
+    // Security answer verification handler
+    // Update the security answer verification handler
+async function verifySecurityAnswer() {
+    const answer = document.getElementById('security-answer').value;
+    
+    try {
+        const verifyResponse = await fetch('/verify-security-answer', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                email: resetEmail, 
+                answer 
+            })
+        });
+
+        const verifyData = await verifyResponse.json();
+
+        if (verifyData.success) {
+            forgotPasswordModal.close();
+            changePasswordModal.open();
+            
+            // Add event listener for password change form
+            const changePasswordForm = document.getElementById('change-password-form');
+            if (changePasswordForm) {
+                changePasswordForm.addEventListener('submit', handlePasswordChange);
+            }
+        } else {
+            alert('Incorrect answer. Please try again.');
+        }
+    } catch (error) {
+        console.error('❌ Error verifying answer:', error);
+        alert('Failed to verify answer. Please try again.');
+    }
+}
+
+// Separate function to handle password change
+async function handlePasswordChange(e) {
+    e.preventDefault();
+    console.log('Password change form submitted');
+
+    const newPassword = document.getElementById('new-password').value;
+    const confirmPassword = document.getElementById('confirm-password').value;
+
+    if (!newPassword || !confirmPassword) {
+        alert('Please fill in both password fields');
+        return;
+    }
+
+    if (newPassword !== confirmPassword) {
+        alert('Passwords do not match!');
+        return;
+    }
+
+    try {
+        const changeResponse = await fetch('/reset-password', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                email: resetEmail, 
+                newPassword 
+            })
+        });
+
+        const changeData = await changeResponse.json();
+
+        if (changeData.success) {
+            alert('Password changed successfully!');
+            changePasswordModal.close();
+            window.location.href = '/login';
+        } else {
+            alert(changeData.message || 'Failed to change password');
+        }
+    } catch (error) {
+        console.error('❌ Error changing password:', error);
+        alert('Failed to change password. Please try again.');
+    }
+}
+
+    // Handle back to login
+    backToLogin?.addEventListener("click", (event) => {
+        event.preventDefault();
+        forgotPasswordModal.close();
+    });
+
+    // Handle close change password modal
+    closeChangePasswordBtn?.addEventListener("click", () => {
+        changePasswordModal.close();
     });
 });
-
-

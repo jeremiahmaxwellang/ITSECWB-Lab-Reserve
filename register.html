@@ -77,6 +77,32 @@
                             <div class="already-account">Already have an account?</div>
                             <a href="/login"> <div class="login">Login</div> </a>
                         </div>
+
+                        <!-- Security Questions -->
+                        <div class="input-row-container">
+                            <div class="input-group">
+                                <label class="static-label" for="security_question">Security Question</label>
+                                <input type="text" 
+                                    id="security_question" 
+                                    name="security_question" 
+                                    class="static-input" 
+                                    placeholder="Enter your security question" 
+                                    required>
+                                <p class="helper-text">This will be used to recover your account if you forget your password.</p>
+                            </div>
+                        </div>
+
+                        <div class="input-row-container">
+                            <div class="input-group">
+                                <label class="static-label" for="security_answer">Security Answer</label>
+                                <input type="text" 
+                                    id="security_answer" 
+                                    name="security_answer" 
+                                    class="static-input" 
+                                    placeholder="Enter your answer" 
+                                    required>
+                            </div>
+                        </div>
                     </div>
                 </form>
                 <!-- End of form -->

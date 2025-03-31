@@ -52,9 +52,6 @@
         </div>
     </div>
 
-
-
-
 <!-- Forgot Password Modal -->
 <div id="forgot-password-modal" class="modal">
     <div class="modal-content">
@@ -89,45 +86,13 @@
     </div>
 </div>
 
-
-
-<!-- OTP Modal -->
-<div id="otp-modal" class="modal">
-    <div class="modal-content">
-        <!-- Top Section: Key Icon & Close Button -->
-        <div class="modal-header">
-            <i class="fa fa-key key-icon"></i> <!-- Key Icon -->
-            <span class="close" id="close-otp">&times;</span> <!-- Close Button -->
-        </div>
-
-        <h2 class="overlay-title">One Time Pin</h2>
-        
-        <!-- OTP Input Fields -->
-        <div class="modal-body otp-body">
-            <p class="overlay-text">Please enter the 6-digit code sent to your email.</p>
-
-            <div class="otp-container">
-                <input type="text" maxlength="1" class="otp-input" autofocus>
-                <input type="text" maxlength="1" class="otp-input">
-                <input type="text" maxlength="1" class="otp-input">
-                <input type="text" maxlength="1" class="otp-input">
-                <input type="text" maxlength="1" class="otp-input">
-                <input type="text" maxlength="1" class="otp-input">
-            </div>
-
-            <button class="submit-btn otp-submit-btn">Confirm</button>
-        </div>
-    </div>
-</div>
-
-
 <!-- Change Password Modal -->
 <div id="change-password-modal" class="modal">
     <div class="modal-content">
         <!-- Top Section: Lock Icon & Close Button -->
         <div class="modal-header">
-            <i class="fa fa-lock lock-icon"></i> <!-- Lock Icon -->
-            <span class="close close-change-password">&times;</span> <!-- Close Button -->
+            <i class="fa fa-lock lock-icon"></i>
+            <span class="close close-change-password">&times;</span>
         </div>
 
         <!-- Title & Description -->
@@ -136,19 +101,18 @@
 
         <!-- Modal Body -->
         <div class="modal-body change-password-body">
-            <!-- Input Fields (Stacked Layout) -->
-            <div class="input-group">
-                <label class="static-label" for="new-password">New Password:</label>
-                <input type="password" id="new-password" class="static-input">
-            </div> 
-            
-            <div class="input-group">
-                <label class="static-label" for="confirm-password">Confirm Password:</label>
-                <input type="password" id="confirm-password" class="static-input">
-            </div>   
-
-            <!-- Submit Button -->
-            <button class="submit-btn change-submit-btn">Submit</button>
+            <form id="change-password-form">
+                <div class="input-group">
+                    <label class="static-label" for="new-password">New Password:</label>
+                    <input type="password" id="new-password" class="static-input" required>
+                </div> 
+                
+                <div class="input-group">
+                    <label class="static-label" for="confirm-password">Confirm Password:</label>
+                    <input type="password" id="confirm-password" class="static-input" required>
+                </div>   
+                <button type="submit" class="submit-btn change-submit-btn">Submit</button>
+            </form>
         </div>
     </div>
 </div>

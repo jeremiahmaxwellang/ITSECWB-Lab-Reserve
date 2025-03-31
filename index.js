@@ -17,8 +17,12 @@ const mongoURI = 'mongodb+srv://admin:HdWcIfrhJ7oG6baf@labyrinthcluster.xwg3l.mo
 mongoose.connect(mongoURI, { 
     useNewUrlParser: true, 
     useUnifiedTopology: true 
-}).then(() => console.log('Connected to MongoDB'))
-.catch(err => console.error('MongoDB connection error:', err))
+}).then(() => {
+    console.log('Connected to MongoDB');
+    // Add default security questions for existing users
+    addDefaultSecurityQuestions();
+})
+.catch(err => console.error('MongoDB connection error:', err));
 
 /* Initialize User path */
 const User = require("./database/models/User")
@@ -26,6 +30,7 @@ const Seat = require("./database/models/Seat")
 const Building = require("./database/models/Building.js")
 const Room = require("./database/models/Room")
 const Reservation = require("./database/models/Reservation")
+const SecurityQuestion = require('./database/models/SecurityQuestion');
 const path = require('path')
 
 const app = express()
@@ -250,6 +255,28 @@ async function insertSeats() {
         console.log("✅ Seats inserted (if not duplicates)");
     } catch (err) {
         console.error("⚠️ Error inserting seats:", err);
+    }
+}
+
+// Add default security questions for existing users
+async function addDefaultSecurityQuestions() {
+    try {
+        const users = await User.find();
+        for (const user of users) {
+            const existingQuestion = await SecurityQuestion.findOne({ user_id: user._id });
+            if (!existingQuestion) {
+                const defaultQuestion = new SecurityQuestion({
+                    user_id: user._id,
+                    email: user.email,
+                    security_question: "What is your mother's maiden name?",
+                    security_answer: "smith" // Default answer
+                });
+                await defaultQuestion.save();
+                console.log(`Added default security question for ${user.email}`);
+            }
+        }
+    } catch (err) {
+        console.error("Error adding default security questions:", err);
     }
 }
 
@@ -584,42 +611,46 @@ app.get('/register', function(req,res){
 // USER REGISTRATION
 app.post('/register', async (req, res) => {
     try {
-        const { first_name, last_name, email, password, account_type } = req.body
-
-        // Validate request body
-        if (!first_name || !last_name || !email || !password || !account_type) {
-            return res.status(400).json({ message: "All fields are required" })
-        }
-
-        // Check if user already exists
-        const existingUser = await User.findOne({ email })
-        if (existingUser) {
-            return res.status(400).json({ message: "Email already in use" })
-        }
-
-        // Hash the password
-        const hashedPassword = sha256(password)
+        const { 
+            first_name, 
+            last_name, 
+            email, 
+            password, 
+            account_type,
+            security_question,
+            security_answer 
+        } = req.body;
 
         // Create new user
+        const hashedPassword = sha256(password);
         const newUser = new User({
             email,
             first_name,
             last_name,
-            
             password: hashedPassword,
             account_type,
             profile_picture: "profile_pics/default_avatar.jpg"
-        })
+        });
 
-        await newUser.save()
-        console.log("✅ New user registered:", email)
+        const savedUser = await newUser.save();
 
-        res.status(201).json({ message: "User registered successfully!" })
+        // Save security question
+        const securityQuestionDoc = new SecurityQuestion({
+            user_id: savedUser._id,
+            email: email,
+            security_question,
+            security_answer: security_answer.toLowerCase() // Store answer in lowercase
+        });
+
+        await securityQuestionDoc.save();
+
+        console.log("✅ New user registered with security question:", email);
+        res.status(201).json({ message: "User registered successfully!" });
     } catch (err) {
-        console.error("⚠️ Error registering user:", err)
-        res.status(500).json({ message: "Internal server error" })
+        console.error("⚠️ Error registering user:", err);
+        res.status(500).json({ message: "Internal server error" });
     }
-})
+});
 
 // Route to login.html
 // localhost:3000/login
@@ -643,6 +674,84 @@ app.get('/login', async function(req, res) {
         res.sendFile(__dirname + '/login.html')
     }
 })
+
+// Add these routes for the forgot password flow
+app.post('/verify-email', async (req, res) => {
+    try {
+        const { email } = req.body;
+        const securityQuestion = await SecurityQuestion.findOne({ email });
+
+        if (!securityQuestion) {
+            return res.status(404).json({ 
+                success: false, 
+                message: "Email not found" 
+            });
+        }
+
+        res.json({ 
+            success: true, 
+            question: securityQuestion.security_question 
+        });
+    } catch (error) {
+        console.error('Error verifying email:', error);
+        res.status(500).json({ success: false, message: "Server error" });
+    }
+});
+
+app.post('/verify-security-answer', async (req, res) => {
+    try {
+        const { email, answer } = req.body;
+        const securityQuestion = await SecurityQuestion.findOne({ email });
+
+        if (!securityQuestion) {
+            return res.status(404).json({ 
+                success: false, 
+                message: "Security question not found" 
+            });
+        }
+
+        if (securityQuestion.security_answer === answer.toLowerCase()) {
+            req.session.resetPasswordEmail = email;
+            res.json({ success: true });
+        } else {
+            res.json({ 
+                success: false, 
+                message: "Incorrect answer" 
+            });
+        }
+    } catch (error) {
+        console.error('Error verifying answer:', error);
+        res.status(500).json({ success: false, message: "Server error" });
+    }
+});
+
+app.post('/reset-password', async (req, res) => {
+    try {
+        const { email, newPassword } = req.body;
+        const hashedPassword = sha256(newPassword);
+
+        const updatedUser = await User.findOneAndUpdate(
+            { email },
+            { password: hashedPassword },
+            { new: true }
+        );
+
+        if (!updatedUser) {
+            return res.status(404).json({ 
+                success: false, 
+                message: "User not found" 
+            });
+        }
+
+        res.json({ 
+            success: true, 
+            message: "Password updated successfully" 
+        });
+    } catch (error) {
+        console.error('Error resetting password:', error);
+        res.status(500).json({ success: false, message: "Server error" });
+    }
+});
 
 // SUBMIT LOGIN CREDENTIALS ROUTE
 app.post("/login", express.urlencoded({ extended: true }), async (req, res) => {

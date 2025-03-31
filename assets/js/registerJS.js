@@ -53,9 +53,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const registrationForm = document.getElementById("registrationForm");
 
     // Handle form submission
+    // Update the form submission handler in registerJS.js
     if (createAccountButton) {
         createAccountButton.addEventListener("click", async function (event) {
-            event.preventDefault(); // Prevent default form submission
+            event.preventDefault();
 
             const formData = new FormData(registrationForm);
             const data = {
@@ -63,7 +64,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 last_name: formData.get("last_name"),
                 email: formData.get("email"),
                 password: formData.get("password"),
-                account_type: "Student" // Automatically set account type to Student
+                account_type: "Student",
+                security_question: formData.get("security_question"),
+                security_answer: formData.get("security_answer")
             };
 
             try {
@@ -78,9 +81,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 const result = await response.json();
 
                 if (response.ok) {
-                    successModal.open(); // Open success modal
+                    successModal.open();
                 } else {
-                    alert(result.message); // Show error message
+                    alert(result.message);
                 }
             } catch (error) {
                 console.error("⚠️ Error registering user:", error);
