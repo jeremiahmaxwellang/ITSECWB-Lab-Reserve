@@ -28,10 +28,6 @@ const Room = require("./database/models/Room")
 const Reservation = require("./database/models/Reservation")
 const path = require('path')
 
-// Routes
-// const reservationRoutes = require('');
-
-
 const app = express()
 
 app.set('view engine', 'hbs')
@@ -698,11 +694,6 @@ app.post("/login", express.urlencoded({ extended: true }), async (req, res) => {
         console.error("❌ Error during login:", err);
         res.status(500).json({ success: false, message: "Internal server error." });
     }
-});
-
-// Route to serve AboutUs.html
-app.get('/AboutUs', (req, res) => {
-    res.sendFile(__dirname + '/AboutUs.html');
 });
 
 // Profile Page
