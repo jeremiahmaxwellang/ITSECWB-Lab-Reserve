@@ -521,6 +521,34 @@ app.delete('/reservations/:id', isLabTech, async (req, res) => {
     }
 });
 
+// Current User Profile Reservations
+app.get("/profile-reservations", isAuthenticated, async (req, res) => {
+    try {
+        const email = req.query.email || req.session.user.email; // Use query parameter or fallback to logged-in user
+        console.log(`🔍 Fetching profile reservations for email: ${email}`);
+
+        const reservations = await Reservation.find({ email }).lean();
+
+        if (!reservations || reservations.length === 0) {
+            console.warn(`⚠️ No reservations found for ${email}.`);
+            return res.json([]);
+        }
+
+        const formattedReservations = reservations.map(reservation => ({
+            id: reservation._id,
+            roomNumber: reservation.room_num || "N/A",
+            seatNumber: `Seat #${reservation.seat_num}` || "N/A",
+            date: reservation.reserved_date ? reservation.reserved_date.toISOString().split("T")[0] : "N/A",
+            time: reservation.reserved_date ? reservation.reserved_date.toISOString().split("T")[1].slice(0, 5) : "N/A"
+        }));
+
+        res.json(formattedReservations);
+    } catch (err) {
+        console.error("⚠️ Error fetching profile reservations:", err);
+        res.status(500).json({ message: "Error fetching reservations", error: err.message });
+    }
+});
+
 // Student Dashboard Table Data
 app.get("/my-reservations", isAuthenticated, async (req, res) => {
     try {

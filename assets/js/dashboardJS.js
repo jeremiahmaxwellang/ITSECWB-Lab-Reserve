@@ -29,21 +29,15 @@ document.addEventListener("DOMContentLoaded", function () {
         const endTime = new Date(startTime);
         endTime.setMinutes(startTime.getMinutes() + 30);
 
-        return `${format12HourTime(startTime)} - ${format12HourTime(endTime)}`; // ✅ Table format 12-hour time
+        return `${format12HourTime(startTime)} - ${format12HourTime(endTime)}`;
     }
 
     function format12HourTime(date) {
         let hours = date.getHours();
         let minutes = String(date.getMinutes()).padStart(2, "0");
         let ampm = hours >= 12 ? "PM" : "AM";
-        hours = hours % 12 || 12; // Convert 0 to 12
+        hours = hours % 12 || 12;
         return `${hours}:${minutes} ${ampm}`;
-    }
-
-    function format24HourTime(date) {
-        let hours = String(date.getHours()).padStart(2, "0");
-        let minutes = String(date.getMinutes()).padStart(2, "0");
-        return `${hours}:${minutes}`;
     }
 
     function fetchUserReservations() {
@@ -54,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(data => {
                 console.log("📥 Reservations received from server:", data);
 
-                currentTableBody.innerHTML = "";
+                currentTableBody.innerHTML = ""; // Clear existing rows
                 if (data.length === 0) {
                     currentTableBody.innerHTML = `<tr><td colspan="5">No reservations found.</td></tr>`;
                     return;
@@ -79,7 +73,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     row.insertCell(0).innerText = reservation.roomNumber;
                     row.insertCell(1).innerText = reservation.seatNumber;
                     row.insertCell(2).innerText = formatDate(reservation.date);
-                    row.insertCell(3).innerText = formatTimeSlot(reservation.time); // ✅ Table uses 12-hour time
+                    row.insertCell(3).innerText = formatTimeSlot(reservation.time);
 
                     const editCell = row.insertCell(4);
                     const editButton = document.createElement("button");
@@ -105,7 +99,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         editDateInput.value = reservation.date;
 
-        // ✅ Automatically update time options
         generateTimeOptions();
 
         document.querySelector("#edit-room").innerText = `Room: ${reservation.roomNumber}`;
@@ -132,8 +125,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     })
                 });
 
-                console.log("🔄 Server Response:", updateResponse);
-
                 if (updateResponse.ok) {
                     closeEditOverlay();
                     fetchUserReservations();
@@ -158,8 +149,6 @@ document.addEventListener("DOMContentLoaded", function () {
     function generateTimeOptions() {
         editTimeDropdown.innerHTML = ""; // Clear previous options
 
-        console.log("🔧 Running generateTimeOptions()");
-
         for (let hour = 8; hour < 19; hour++) {
             for (let minute of [0, 30]) {
                 let startTime = `${String(hour).padStart(2, "0")}:${String(minute).padStart(2, "0")}`;
@@ -167,7 +156,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 endTime.setHours(hour);
                 endTime.setMinutes(minute + 30);
 
-                let timeLabel = `${startTime} - ${format24HourTime(endTime)}`; // ✅ Dropdown remains in 24-hour time
+                let timeLabel = `${startTime} - ${format12HourTime(endTime)}`;
 
                 let option = document.createElement("option");
                 option.value = startTime;

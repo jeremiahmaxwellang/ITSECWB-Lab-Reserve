@@ -87,7 +87,8 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     async function fetchReservations() {
         try {
-            const response = await fetch("/my-reservations");
+            const visitedEmail = new URLSearchParams(window.location.search).get("email");
+            const response = await fetch(`/profile-reservations?email=${visitedEmail || ""}`);
             const reservations = await response.json();
 
             currentTableBody.innerHTML = ''; // Clear existing table rows
