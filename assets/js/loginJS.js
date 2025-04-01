@@ -113,6 +113,24 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById('verify-email')?.addEventListener('click', verifyEmail);
     });
 
+    // Handle forgot password link in incorrect password modal
+    document.getElementById('forgot-password-link-modal')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        incorrectPasswordModal.close();
+        forgotPasswordModal.open();
+
+        document.querySelector('.forgot-form-container').innerHTML = `
+            <div class="input-group">
+                <label class="static-label" for="recovery-email">DLSU Email</label>
+                <input type="email" id="recovery-email" class="static-input" placeholder="example_name@dlsu.edu.ph">
+            </div>
+            <button id="verify-email" class="submit-btn">Next</button>
+            <a href="#" id="back-to-login" class="back-link">Back to Login</a>
+        `;
+
+        document.getElementById('verify-email')?.addEventListener('click', verifyEmail);
+    });
+
     // Email verification handler
     async function verifyEmail() {
         const email = document.getElementById('recovery-email').value;

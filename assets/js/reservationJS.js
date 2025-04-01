@@ -301,24 +301,26 @@ function showOverlay(roomName) {
 function initializeSeats(){
     seatPositions.forEach((row, rowIndex) => {
 
-        function isSeatReserved(mybuilding_id, myroomName, myseat_num){
-
-            if(!Array.isArray(reservations) || reservations.length === 0){
+        function isSeatReserved(mybuilding_id, myroomName, myseat_num) {
+            if(!Array.isArray(reservations) || reservations.length === 0) {
                 console.warn("No reservations available to check");
                 return null;
             }
-    
-            const reservedDate = new Date(`${datePicker.value}T${timePicker.value}:00.000Z`);
-            const formattedDate = reservedDate.toISOString()
-    
-            let matchedReservation = reservations.find(reservation =>
-                reservation.building_id === mybuilding_id &&
-                reservation.room_num === myroomName &&
-                reservation.seat_num === myseat_num &&
-                reservation.reserved_date == formattedDate
-            );
-
-    
+        
+            const selectedDateTime = new Date(`${datePicker.value}T${timePicker.value}:00.000Z`);
+            const selectedEndTime = new Date(selectedDateTime.getTime() + 30 * 60000); // Add 30 minutes
+        
+            let matchedReservation = reservations.find(reservation => {
+                const reservationTime = new Date(reservation.reserved_date);
+                const reservationEndTime = new Date(reservationTime.getTime() + 30 * 60000);
+        
+                return reservation.building_id === mybuilding_id &&
+                    reservation.room_num === myroomName &&
+                    reservation.seat_num === myseat_num &&
+                    // Check if the time slots overlap
+                    !(selectedDateTime >= reservationEndTime || selectedEndTime <= reservationTime);
+            });
+        
             return matchedReservation || null;
         }
 
@@ -553,27 +555,32 @@ function initializeSeats(){
 }
     
 // Called to change the seat colors when date or time is changed
-function changeSeatColors(){
+function changeSeatColors() {
+    console.log("Updating seat colors...");
+    console.log("Selected date:", datePicker.value);
+    console.log("Selected time:", timePicker.value);
+
     // reset seat container
     while (seatContainer.firstChild) {
         seatContainer.removeChild(seatContainer.firstChild);
     }
 
-    initializeSeats()
+    initializeSeats();
     
-    // Reset seatInfoOverlay
+    // Reset seatInfoOverlay and selected seat
     seatInfoOverlay.innerHTML = `<p>Select a seat to see details.</p>`;
+    selectedSeat = null;
 }
 
 datePicker.addEventListener("change", () => { 
-    changeSeatColors()
+    console.log("Date changed, updating seats...");
+    changeSeatColors();
+});
 
-})
-
-timePicker.addEventListener("click", () => { 
-    changeSeatColors()
-
-})
+timePicker.addEventListener("change", () => { 
+    console.log("Time changed, updating seats...");
+    changeSeatColors();
+});
 
 
     
