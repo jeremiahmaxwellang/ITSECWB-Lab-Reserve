@@ -363,38 +363,61 @@ function initializeSeats(){
         }
 
         // Update hidden form input fields
-        function updateInputs(){
+        function updateInputs() {
             // Check if anonymous box is checked
-            const anonymousCheckbox = document.getElementById("anonymousCheckbox")
-
-            anonymousCheckbox.addEventListener("change", () => { 
-                let anonStatus = "N"
+            const anonymousCheckbox = document.getElementById("anonymousCheckbox");
+            const form = anonymousCheckbox.closest("form");
+            const anonStatus = document.getElementById("anonStatus");
         
-                if(anonymousCheckbox.checked){
-                    anonStatus = "Y"
-                }
-                
-                document.getElementById("anonStatus").value = anonStatus
-            })
-
-            // Date updates when user changes selection
-            datePicker.addEventListener("change", () => { 
-                updateDateTime()
-                
-            })
-
-            // Time updates when user changes selection
-            timePicker.addEventListener("click", () => { 
-                updateDateTime()
-                
-            })
-
-             // Set the default values of the reservation
-             updateDateTime()
-             document.getElementById("building_id").value = building_id
-             document.getElementById("room_num").value = roomName
-             document.getElementById("seat_num").value = seat_num
-             document.getElementById("anonStatus").value = "N"
+            // Set initial value
+            anonStatus.value = anonymousCheckbox.checked ? "Y" : "N";
+            console.log("Initial anonymous status:", anonStatus.value); // Debug log
+        
+            // Update on checkbox change
+            anonymousCheckbox.addEventListener("change", () => { 
+                anonStatus.value = anonymousCheckbox.checked ? "Y" : "N";
+                console.log("Anonymous status changed to:", anonStatus.value); // Debug log
+            });
+        
+            // Ensure form submission captures the correct value
+            form.addEventListener("submit", (e) => {
+                e.preventDefault();
+                anonStatus.value = anonymousCheckbox.checked ? "Y" : "N";
+                console.log("Form submitting with anonymous status:", anonStatus.value); // Debug log
+        
+                // Submit the form
+                fetch('/reserve', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        reserved_date: document.getElementById("reserved_date").value,
+                        building_id: document.getElementById("building_id").value,
+                        room_num: document.getElementById("room_num").value,
+                        seat_num: document.getElementById("seat_num").value,
+                        anonymous: anonStatus.value,
+                        reserved_for_email: document.getElementById("student-selection")?.value || null
+                    })
+                }).then(response => {
+                    if (response.ok) {
+                        showConfirmationOverlay(
+                            document.getElementById("room_num").value,
+                            document.getElementById("datePicker").value,
+                            document.getElementById("timePicker").value,
+                            document.getElementById("seat_num").value
+                        );
+                    }
+                }).catch(error => {
+                    console.error('Error:', error);
+                });
+            });
+        
+            // Set the default values of the reservation
+            updateDateTime();
+            document.getElementById("building_id").value = building_id;
+            document.getElementById("room_num").value = roomName;
+            document.getElementById("seat_num").value = seat_num;
         }
 
             seat.addEventListener("click", () => {
