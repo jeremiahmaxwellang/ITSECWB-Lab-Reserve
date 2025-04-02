@@ -19,9 +19,8 @@
     <div class="labyrinthHeader">Labyrinth</div>
 
     <div class="profile-dropdown">
-        <img class="profile-icon" src="{{userData.profile_picture}}" alt="Profile" id="profileDropdownBtn">
+        <img class="profile-icon" src="{{sessionUser.profile_picture}}" alt="Profile" id="profileDropdownBtn">
         <div class="dropdown-menu" id="profileDropdown">
-            {{!-- Profile redirection (idk if this route is correct) --}}
             <a href="profile">Go to Profile</a>
             <a href="/logout">Logout</a>
         </div>
