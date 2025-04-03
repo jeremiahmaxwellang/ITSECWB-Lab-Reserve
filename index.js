@@ -649,7 +649,15 @@ app.post('/register', async (req, res) => {
             security_answer 
         } = req.body;
 
-        // Create new user
+        if (!first_name || !last_name || !email || !password || !account_type || !security_question || !security_answer) {
+            return res.status(400).json({ success: false, message: "Missing input. Please complete all fields." });
+        }
+
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(409).json({ success: false, message: "This account already exists." });
+        }
+
         const hashedPassword = sha256(password);
         const newUser = new User({
             email,
@@ -662,22 +670,33 @@ app.post('/register', async (req, res) => {
 
         const savedUser = await newUser.save();
 
-        // Save security question
         const securityQuestionDoc = new SecurityQuestion({
             user_id: savedUser._id,
             email: email,
             security_question,
-            security_answer: security_answer.toLowerCase() // Store answer in lowercase
+            security_answer: security_answer.toLowerCase()
         });
 
         await securityQuestionDoc.save();
 
         console.log("✅ New user registered with security question:", email);
-        res.status(201).json({ message: "User registered successfully!" });
+        res.status(201).json({ success: true, message: "User registered successfully!" });
+
     } catch (err) {
         console.error("⚠️ Error registering user:", err);
-        res.status(500).json({ message: "Internal server error" });
+
+        // Handle MongoDB duplicate key error
+        if (err.code === 11000 && err.keyPattern?.email) {
+            return res.status(409).json({ success: false, message: "This account already exists." });
+        }
+
+        // Handle missing fields (optional but helpful)
+        if (err.name === "ValidationError") {
+            return res.status(400).json({ message: "Missing input. Please fill in all required fields." });
+        }
+
     }
+
 });
 
 // Route to login.html

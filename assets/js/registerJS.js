@@ -60,21 +60,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const formData = new FormData(registrationForm);
             const data = {
-                first_name: formData.get("first_name"),
-                last_name: formData.get("last_name"),
-                email: formData.get("email"),
-                password: formData.get("password"),
+                first_name: formData.get("first_name")?.trim(),
+                last_name: formData.get("last_name")?.trim(),
+                email: formData.get("email")?.trim(),
+                password: formData.get("password")?.trim(),
                 account_type: "Student",
-                security_question: formData.get("security_question"),
-                security_answer: formData.get("security_answer")
+                security_question: formData.get("security_question")?.trim(),
+                security_answer: formData.get("security_answer")?.trim()
             };
+
+            const hasMissingFields = Object.values(data).some(value => !value);
+            if (hasMissingFields) {
+                alert("⚠️ Missing input. Please fill in all required fields.");
+                return;
+            }
 
             try {
                 const response = await fetch("/register", {
                     method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
+                    headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(data)
                 });
 
@@ -83,14 +87,23 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (response.ok) {
                     successModal.open();
                 } else {
-                    alert(result.message);
+                    const msg = result.message?.toLowerCase() || "";
+
+                    if (msg.includes("already exists") || msg.includes("duplicate")) {
+                        alert("⚠️ This account already exists. Please try logging in.");
+                    } else if (msg.includes("missing input")) {
+                        alert("⚠️ Please complete all required fields.");
+                    } else {
+                        alert(result.message || "⚠️ An unexpected error occurred. Please try again.");
+                    }
                 }
             } catch (error) {
-                console.error("⚠️ Error registering user:", error);
-                alert("An error occurred while registering. Please try again.");
+                console.error("❌ Registration error:", error);
+                alert("An internal server error occurred. Please try again later.");
             }
         });
     }
+    
 
     // "Get Started" closes the modal and redirects to /login
     if (getStartedButton) {
