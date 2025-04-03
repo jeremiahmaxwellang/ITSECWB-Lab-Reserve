@@ -128,7 +128,7 @@ async function insertUsers() {
     }
 }
 
-//hard coded of building values
+// Insert Buildings into DB
 async function insertBuildings() {
     try {
         // Define building data
@@ -636,7 +636,7 @@ app.get('/register', function(req,res){
     res.sendFile(__dirname + '/' + 'register.html')
 })
 
-// USER REGISTRATION
+// User registration POST Route
 app.post('/register', async (req, res) => {
     try {
         const { 
@@ -726,6 +726,7 @@ app.post('/verify-email', async (req, res) => {
     }
 });
 
+// Security Answer POST Route
 app.post('/verify-security-answer', async (req, res) => {
     try {
         const { email, answer } = req.body;
@@ -753,6 +754,7 @@ app.post('/verify-security-answer', async (req, res) => {
     }
 });
 
+// Reset Password POST Route
 app.post('/reset-password', async (req, res) => {
     try {
         const { email, newPassword } = req.body;
@@ -781,7 +783,7 @@ app.post('/reset-password', async (req, res) => {
     }
 });
 
-// SUBMIT LOGIN CREDENTIALS ROUTE
+// Submit Login Credentials POST Route
 app.post("/login", express.urlencoded({ extended: true }), async (req, res) => {
     const { email, password, rememberMe } = req.body;
 
@@ -852,7 +854,7 @@ app.get('/profile', isAuthenticated, async (req, res) => {
 
 app.use(fileUpload()) // for fileuploads
 
-// Route for changing profile pictures
+// Upload Profile Picture POST Route
 app.post('/profile', isAuthenticated, async(req, res) => {
 
     // Check if file was uploaded
@@ -890,6 +892,7 @@ app.post('/profile', isAuthenticated, async(req, res) => {
         
 })
 
+// Submit Profile Details Route
 app.post('/submit-profile-details', isAuthenticated, async (req, res) => {
     try {
         const userData = req.session.user;
@@ -916,7 +919,7 @@ app.post('/submit-profile-details', isAuthenticated, async (req, res) => {
     }
 });
 
-// DONE: Change password Route (MAR 12)
+// Change password POST Route
 app.post('/changepassword', isAuthenticated, async (req, res) => {
     try {
         const { newPassword, confirmPassword } = req.body;
@@ -954,7 +957,7 @@ app.post('/changepassword', isAuthenticated, async (req, res) => {
     }
 });
 
-//Delete User Route (Mar 12)
+// Delete User Account Route
 app.delete('/deleteaccount', isAuthenticated, async (req, res) => {
     try {
         const user_id = req.session.user._id;
@@ -986,7 +989,7 @@ app.delete('/deleteaccount', isAuthenticated, async (req, res) => {
     }
 });
 
-// Route to labtech handlebar (MUST DEPEND ON USER SESSION)
+// Route to labtech handlebar
 app.get('/labtech', isAuthenticated, (req,res) => {
     const userData = req.session.user
     console.log(userData)
@@ -1112,7 +1115,7 @@ app.get('/dashboard', isAuthenticated, async(req,res) => {
     else res.render('labtech', {userData})
 })
 
-// CREATE A RESERVATION
+// Create Reservation POST Route
 app.post('/reserve', isAuthenticated, async (req, res) => {
     try {
         const { reserved_date, building_id, room_num, seat_num, anonymous,  reserved_for_email } = req.body
