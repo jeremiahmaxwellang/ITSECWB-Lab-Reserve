@@ -475,7 +475,6 @@ function initializeSeats(){
                         seatInfoOverlay.innerHTML = `
                         <form method="post">
 
-                        <div class="form-container">
                             <p class="available-text">This Seat Is Available</p>
 
                             <div class="anonymous-container">
@@ -491,18 +490,14 @@ function initializeSeats(){
                             
 
                             <div class="dropdown-container">
-                                <label for="student-selection" class="anonymous-label">Reserve for:</label>
-                                <div class="custom-dropdown">
-
-                                    <select id="student-selection" class="dropdown-select" name="reserved_for_email">
-                                        <option value="" selected>Select a Student</option>
+                                <div class="selectstudent-dropdown">
+                                    <select id="student-selection" class="dropdown-select small-text" name="reserved_for_email">
+                                        <option value="" selected>Reserve For Who:</option>
                                     </select>
-
                                 </div>
-                            <div>
+                                        <button type="submit" class="confirm-btn">Confirm</button>
 
-                            
-                            <button type="submit" class="confirm-btn">Confirm</button>
+                            </div>
 
                             <div><input type="hidden" id="anonStatus" name="anonymous"></div>
                             <div><input type="hidden" id="reserved_date" name="reserved_date"></div>
