@@ -100,7 +100,10 @@ document.addEventListener("DOMContentLoaded", function () {
     forgotPasswordLink?.addEventListener('click', async (e) => {
         e.preventDefault();
         forgotPasswordModal.open();
-
+    
+        // ✅ Reset overlay text for the email step
+        document.querySelector('.overlay-text').textContent = "Please enter your email address to reset your password";
+    
         document.querySelector('.forgot-form-container').innerHTML = `
             <div class="input-group">
                 <label class="static-label" for="recovery-email">DLSU Email</label>
@@ -109,7 +112,7 @@ document.addEventListener("DOMContentLoaded", function () {
             <button id="verify-email" class="submit-btn">Next</button>
             <a href="#" id="back-to-login" class="back-link">Back to Login</a>
         `;
-
+    
         document.getElementById('verify-email')?.addEventListener('click', verifyEmail);
     });
 
@@ -156,18 +159,23 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // Show security question
     function showSecurityQuestion(question) {
+        const overlayText = document.querySelector('.overlay-text');
+        if (overlayText) {
+            overlayText.textContent = "Answer the Security Question";
+        }
+    
+        // Replace form content with security question UI
         document.querySelector('.forgot-form-container').innerHTML = `
-            <h3>Security Question</h3>
-            <p>${question}</p>
+
+            <p>${question}<br></br></p>
             <div class="input-group">
                 <label class="static-label" for="security-answer">Your Answer</label>
                 <input type="text" id="security-answer" class="static-input">
             </div>
             <button id="verify-answer" class="submit-btn">Verify</button>
         `;
-
+    
         document.getElementById('verify-answer')?.addEventListener('click', verifySecurityAnswer);
     }
 
