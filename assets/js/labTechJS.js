@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
         try {
             const response = await fetch("/reservations");
             reservations = await response.json();
+            reservations.reverse();
             console.log("🔍 Reservations Data:", reservations); // Debugging Log
     
             if (!Array.isArray(reservations) || reservations.length === 0) {
