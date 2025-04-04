@@ -26,13 +26,6 @@ function signalHandler() {
     process.exit();
 }
 
-process.on('SIGINT', signalHandler);
-process.on('SIGQUIT', signalHandler);
-process.on('SIGTERM', signalHandler);
-process.on('SIGKILL', signalHandler);
-
-process.on('SIG', signalHandler);
-
 module.exports = {
     connect: connectToDB,
     disconnect: disconnect
