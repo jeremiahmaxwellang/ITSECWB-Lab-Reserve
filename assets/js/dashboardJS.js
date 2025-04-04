@@ -92,6 +92,25 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     }
 
+    
+    let existingReservation = {};
+    async function fetchExistingReservation() {
+        try {
+            const response = await fetch("/get-existing-reservation");
+            if(!response.ok){
+                throw new Error(`Error fetching existingReservation: ${response.status}`);
+            }
+
+            existingReservation = await response.json();
+            console.log("🔍 existingReservation:", existingReservation); // Debugging Log
+
+    
+        } catch (error) {
+            console.error("⚠️ Error fetching existingReservation:", error);
+        }
+    }
+
+    // EDIT OVERLAY
     function showEditOverlay(reservation) {
         console.log("🛠 Editing Reservation:", reservation);
 
@@ -107,6 +126,11 @@ document.addEventListener("DOMContentLoaded", function () {
         document.querySelector("#saveButton").onclick = async function () {
             const newDate = editDateInput.value;
             const newTime = editTimeDropdown.value;
+            const room = reservation.roomNumber;
+            
+            const tempSeat = reservation.seatNumber;
+            const [first, second] = tempSeat.split('#');
+            const seat = second; //the string after '#'
 
             console.log("🔄 Sending update request for ID:", reservation.id);
 
@@ -115,13 +139,16 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
+            
             try {
                 const updateResponse = await fetch(`/update-reservation/${reservation.id}`, {
                     method: "PUT",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
                         reserved_date: newDate,
-                        time: newTime
+                        time: newTime,
+                        room: room,
+                        seat: seat,
                     })
                 });
 

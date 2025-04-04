@@ -879,25 +879,41 @@ app.post('/check-reservation-conflict', isAuthenticated, async (req, res) => {
 app.put('/update-reservation/:id', isAuthenticated, async (req, res) => {
     try {
         const { id } = req.params;
-        const { reserved_date, time } = req.body;
+        const { reserved_date, time, room, seat } = req.body;
+        console.log("Edit reservation: " + reserved_date, time, room, seat);
 
         // Create a date object from the date and time
         const reservationDateTime = new Date(`${reserved_date}T${time}`);
 
-        const updatedReservation = await Reservation.findByIdAndUpdate(
-            id,
-            {
-                reserved_date: reservationDateTime,
-                request_date: new Date() // Update request date to current time
-            },
-            { new: true }
-        );
+        let reservationExists = await Reservation.findOne({reserved_date: reservationDateTime, room_num: room, seat_num: seat});
+        console.log("reservationExists: " + reservationExists);
+
+        let updatedReservation = {}
+
+        // UPDATE if seat is available at the new time
+        if(reservationExists == null){
+            console.log("Reservation is free.")
+            updatedReservation = await Reservation.findByIdAndUpdate(
+                id,
+                {
+                    reserved_date: reservationDateTime,
+                    request_date: new Date(), // Update request date to current time
+                },
+                { new: true }
+            );
+
+            res.json(updatedReservation);
+            console.log("updatedReservation: " +updatedReservation);
+        }
+        else {
+            return res.status(404).json({ error: 'Seat already reserved at that date and time' });
+        }
 
         if (!updatedReservation) {
             return res.status(404).json({ error: 'Reservation not found' });
         }
 
-        res.json(updatedReservation);
+
     } catch (error) {
         console.error('Error updating reservation:', error);
         res.status(500).json({ error: 'Server error' });
@@ -910,13 +926,13 @@ app.get("/get-current-user", isAuthenticated, async (req, res) => {
         const User = req.session.user;
 
         if (!User) {
-            console.warn("⚠️ No reservations found in the database.");
+            console.warn("⚠️ No User found in the database.");
             return res.json([User]);
         }
 
         res.json(User);
     } catch (err) {
-        console.error("⚠️ Error fetching reservations:", err);
+        console.error("⚠️ Error fetching User:", err);
         res.status(500).json({ message: "Error fetching User", error: err.message });
     }
 });
