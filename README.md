@@ -39,6 +39,10 @@ npm install express hbs path express-fileupload express-session mongoose cookie-
 cd Downloads/CCAPDEV_MCO-main
 ```
 
+* Populate the database by executing the populateDB script with this command:
+```
+node populateDB.js
+```
 * Run the Node.js server locally using the command:
 ```
 node index.js

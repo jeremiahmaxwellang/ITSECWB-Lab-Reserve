@@ -62,12 +62,14 @@ async function runInserts() {
     try{
         await connect();
 
-        // Uncomment if building, rooms and seats aren't initialized in the DB
-        // await insertUsers();
-        // await insertBuildings();
-        // await insertRooms();
-        // await insertSeats();
         await insertReservations();
+        
+        // Uncomment if building, rooms and seats aren't initialized in the DB
+        await insertUsers();
+        await insertBuildings();
+        await insertRooms();
+        await insertSeats();
+        
 
         // addDefaultSecurityQuestions();
 
