@@ -649,15 +649,24 @@ app.post('/register', async (req, res) => {
             security_answer 
         } = req.body;
 
+        // Check for missing fields
         if (!first_name || !last_name || !email || !password || !account_type || !security_question || !security_answer) {
-            return res.status(400).json({ success: false, message: "Missing input. Please complete all fields." });
+            return res.status(400).json({ 
+                success: false, 
+                message: "Missing required fields" 
+            });
         }
 
+        // Check for existing user BEFORE creating new one
         const existingUser = await User.findOne({ email });
         if (existingUser) {
-            return res.status(409).json({ success: false, message: "This account already exists." });
+            return res.status(409).json({
+                success: false,
+                message: "This account already exists"
+            });
         }
 
+        // If no existing user, proceed with registration
         const hashedPassword = sha256(password);
         const newUser = new User({
             email,
@@ -670,6 +679,7 @@ app.post('/register', async (req, res) => {
 
         const savedUser = await newUser.save();
 
+        // Create security question document
         const securityQuestionDoc = new SecurityQuestion({
             user_id: savedUser._id,
             email: email,
@@ -680,23 +690,36 @@ app.post('/register', async (req, res) => {
         await securityQuestionDoc.save();
 
         console.log("✅ New user registered with security question:", email);
-        res.status(201).json({ success: true, message: "User registered successfully!" });
+        res.status(201).json({ 
+            success: true, 
+            message: "User registered successfully!" 
+        });
 
     } catch (err) {
         console.error("⚠️ Error registering user:", err);
 
         // Handle MongoDB duplicate key error
         if (err.code === 11000 && err.keyPattern?.email) {
-            return res.status(409).json({ success: false, message: "This account already exists." });
+            return res.status(409).json({
+                success: false,
+                message: "This account already exists"
+            });
         }
 
-        // Handle missing fields (optional but helpful)
+        // Handle validation errors
         if (err.name === "ValidationError") {
-            return res.status(400).json({ message: "Missing input. Please fill in all required fields." });
+            return res.status(400).json({
+                success: false,
+                message: "Please complete all required fields"
+            });
         }
 
+        // Handle other errors
+        res.status(500).json({
+            success: false,
+            message: "An error occurred during registration"
+        });
     }
-
 });
 
 // Route to login.html
