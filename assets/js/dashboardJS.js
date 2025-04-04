@@ -148,20 +148,31 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function generateTimeOptions() {
         editTimeDropdown.innerHTML = ""; // Clear previous options
-
+    
         for (let hour = 8; hour < 19; hour++) {
             for (let minute of [0, 30]) {
-                let startTime = `${String(hour).padStart(2, "0")}:${String(minute).padStart(2, "0")}`;
-                let endTime = new Date();
-                endTime.setHours(hour);
-                endTime.setMinutes(minute + 30);
-
-                let timeLabel = `${startTime} - ${format12HourTime(endTime)}`;
-
+                // Format start time (12-hour)
+                const startHour = hour % 12 || 12;
+                const startMinute = String(minute).padStart(2, "0");
+                const startPeriod = hour >= 12 ? "PM" : "AM";
+                const startTime = `${String(hour).padStart(2, "0")}:${startMinute}`; // Keep 24h format for value
+    
+                // Calculate and format end time (12-hour)
+                let endHour = hour;
+                let endMinute = minute + 30;
+                if (endMinute >= 60) {
+                    endHour++;
+                    endMinute -= 60;
+                }
+                const displayEndHour = endHour % 12 || 12;
+                const endPeriod = endHour >= 12 ? "PM" : "AM";
+    
+                // Create time label in 12-hour format
+                const timeLabel = `${startHour}:${startMinute} ${startPeriod} - ${displayEndHour}:${String(endMinute).padStart(2, "0")} ${endPeriod}`;
+    
                 let option = document.createElement("option");
-                option.value = startTime;
-                option.textContent = timeLabel;
-
+                option.value = startTime; // Keep 24h format for value
+                option.textContent = timeLabel; // Show 12h format for display
                 editTimeDropdown.appendChild(option);
             }
         }
