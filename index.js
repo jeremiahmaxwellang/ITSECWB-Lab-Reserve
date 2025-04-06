@@ -654,6 +654,17 @@ app.post('/changepassword', isAuthenticated, async (req, res) => {
 app.delete('/deleteaccount', isAuthenticated, async (req, res) => {
     try {
         const user_id = req.session.user._id;
+        const user_email = req.session.user.email;
+
+        // Delete all future reservations associated with the user
+        const currentDate = new Date();
+        const deletedReservations = await Reservation.deleteMany({
+            email: user_email,
+            reserved_date: { $gte: currentDate }
+        });
+
+        console.log(`🗑️ Deleted ${deletedReservations.deletedCount} future reservations for user: ${user_email}`);
+        console.log(`🕒 Current session time: ${currentDate.toISOString()}`);
 
         // Find and delete the user
         const deletedUser = await User.findByIdAndDelete(user_id);
@@ -673,11 +684,11 @@ app.delete('/deleteaccount', isAuthenticated, async (req, res) => {
             res.clearCookie("sessionId");
             res.clearCookie("rememberMe");
 
-            res.status(200).json({ message: "Account deleted successfully!" });
+            res.status(200).json({ message: "Account and future reservations deleted successfully!" });
         });
 
     } catch (err) {
-        console.error("⚠️ Error deleting user:", err);
+        console.error("⚠️ Error deleting user and reservations:", err);
         res.status(500).json({ message: "Internal server error" });
     }
 });
