@@ -671,6 +671,10 @@ app.delete('/deleteaccount', isAuthenticated, async (req, res) => {
             reserved_date: { $gte: currentDate }
         });
 
+        const deletedSecurityQuestion = await SecurityQuestion.deleteOne({
+            email: user_email,
+        });
+
         console.log(`🗑️ Deleted ${deletedReservations.deletedCount} future reservations for user: ${user_email}`);
         console.log(`🕒 Current session time: ${currentDate.toISOString()}`);
 
