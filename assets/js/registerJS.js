@@ -75,6 +75,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
+            // Check if email contains @dlsu.edu.ph
+            if (!data.email.endsWith("@dlsu.edu.ph")) {
+                alert("⚠️ Email must be a valid DLSU email ending with @dlsu.edu.ph.");
+                return;
+            }
+
             try {
                 const response = await fetch("/register", {
                     method: "POST",

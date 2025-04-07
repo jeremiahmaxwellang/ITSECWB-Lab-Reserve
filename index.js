@@ -308,6 +308,14 @@ app.post('/register', async (req, res) => {
             });
         }
 
+        // Check if email contains @dlsu.edu.ph
+        if (!email.endsWith("@dlsu.edu.ph")) {
+            return res.status(400).json({
+                success: false,
+                message: "Email must be a valid DLSU email ending with @dlsu.edu.ph"
+            });
+        }
+
         // Check for existing user BEFORE creating new one
         const existingUser = await User.findOne({ email });
         if (existingUser) {
