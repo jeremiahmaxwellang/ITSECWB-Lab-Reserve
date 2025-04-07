@@ -92,24 +92,6 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     }
 
-    
-    let existingReservation = {};
-    async function fetchExistingReservation() {
-        try {
-            const response = await fetch("/get-existing-reservation");
-            if(!response.ok){
-                throw new Error(`Error fetching existingReservation: ${response.status}`);
-            }
-
-            existingReservation = await response.json();
-            console.log("🔍 existingReservation:", existingReservation); // Debugging Log
-
-    
-        } catch (error) {
-            console.error("⚠️ Error fetching existingReservation:", error);
-        }
-    }
-
     // EDIT OVERLAY
     function showEditOverlay(reservation) {
         console.log("🛠 Editing Reservation:", reservation);
@@ -158,7 +140,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 } else {
                     const errorData = await updateResponse.json();
                     console.error("❌ Update Failed:", errorData);
-                    alert("Failed to update reservation: " + (errorData.message || "Unknown error"));
+                    alert("Failed to update reservation: " + (errorData.message || "Seat is not available at this time"));
                 }
             } catch (error) {
                 console.error("⚠️ Error updating reservation:", error);

@@ -285,6 +285,11 @@ document.addEventListener("DOMContentLoaded", function () {
         document.querySelector("#saveButton").onclick = async function () {
             const newDate = editDateInput.value;
             const newTime = editTimeDropdown.value;
+            const room = reservation.roomNumber;
+            
+            const tempSeat = reservation.seatNumber;
+            const [first, second] = tempSeat.split('#'); //remove string "Seat #" from the seat number
+            const seat = second; //seat number
     
             console.log("🔄 Sending update request for ID:", reservation.id);
     
@@ -299,7 +304,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
                         reserved_date: newDate,
-                        time: newTime
+                        time: newTime,
+                        room: room,
+                        seat: seat,
                     })
                 });
     
@@ -315,7 +322,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 } else {
                     const errorData = await updateResponse.json();
                     console.error("❌ Update Failed:", errorData);
-                    alert("Failed to update reservation: " + (errorData.message || "Unknown error"));
+                    alert("Failed to update reservation: " + (errorData.message || "Seat is not available at this time."));
                 }
             } catch (error) {
                 console.error("⚠️ Error updating reservation:", error);
