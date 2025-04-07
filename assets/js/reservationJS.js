@@ -85,21 +85,34 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function fetchRooms(building, floor) {
         if (!building || !floor) return; // Prevent API call if missing values
-
+    
         fetch(`/available-rooms?building=${encodeURIComponent(building)}&floor=${floor}`)
             .then(response => response.json())
             .then(data => {
                 roomContainer.innerHTML = ""; // Clear existing rooms
-
+    
                 // Update title to "Available Rooms"
                 roomTitle.textContent = "Available Rooms";
-
+    
                 if (data.success && data.rooms.length > 0) {
                     data.rooms.forEach(room => {
                         const roomDiv = document.createElement("div");
                         roomDiv.classList.add("room-box");
+    
+                        // Determine building image
+                        let buildingImage = "images/default-building.png"; // Default image
+                        if (building === "Science Hall") {
+                            buildingImage = "images/laboratory.jpeg";
+                        } else if (building === "Miguel Hall") {
+                            buildingImage = "images/miguelHall.jpg";
+                        } else if (building === "Library") {
+                            buildingImage = "images/henryLibrary.jpg";
+                        } else if (building === "Engineering Complex") {
+                            buildingImage = "images/engineeringGoks.jpg";
+                        }
+    
                         roomDiv.innerHTML = `
-                            <img src="images/goksdiv.png" alt="Room Image">
+                            <img src="${buildingImage}" alt="Room Image">
                             <div class="divider"></div>
                             <div class="room-info">
                                 <div class="room-name">${room.room_num}</div>
@@ -110,11 +123,11 @@ document.addEventListener("DOMContentLoaded", function () {
                                 </div>
                             </div>
                         `;
-
+    
                         roomDiv.addEventListener("click", () => {
                             showOverlay(room.room_num);
                         });
-
+    
                         roomContainer.appendChild(roomDiv);
                     });
                 } else {
@@ -126,7 +139,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 document.getElementById("room-container").innerHTML = "<p class='error-message'>Failed to load rooms.</p>";
             });
     }
-
    
 
     // Run when the user selects a building
@@ -638,19 +650,16 @@ function showConfirmationOverlay(roomName, date, time, seatNumber) {
     const confirmationContent = document.createElement("div");
     confirmationContent.classList.add("confirmation-content");
 
-
-    const name = User.first_name
+    const name = User.first_name;
 
     // Extract day & month
     const tempDate = new Date(date);
-    const day = tempDate.getDate(); 
+    const day = tempDate.getDate();
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     const month = months[tempDate.getMonth()];
 
-
     // Extract time
     const timeString = time;
-
     const [hour, minute] = timeString.split(":").map(Number);
     const startTime = new Date();
     startTime.setHours(hour, minute, 0, 0);
@@ -672,6 +681,19 @@ function showConfirmationOverlay(roomName, date, time, seatNumber) {
     // Building Name
     const building = document.getElementById("building-location").value;
 
+    console.log("Building Name:", building); // Debugging Log
+
+    // Determine building image
+    let buildingImage = "images/default-building.png"; // Default image
+    if (building === "Science Hall") {
+        buildingImage = "images/laboratory.jpeg";
+    } else if (building === "Miguel Hall") {
+        buildingImage = "images/miguelHall.jpg";
+    } else if (building === "Library") {
+        buildingImage = "images/henryLibrary.jpg";
+    } else if (building === "Engineering Complex") {
+        buildingImage = "images/engineeringGoks.jpg";
+    }
 
     confirmationContent.innerHTML = `
         <div class="confirmation-header">
@@ -685,7 +707,7 @@ function showConfirmationOverlay(roomName, date, time, seatNumber) {
         </p>
         
         <div class="confirmation-container">
-            <img class="room-image" src="images/goksdiv.png" alt="Room Image">
+            <img class="room-image" src="${buildingImage}" alt="Building Image">
             <div class="confirmation-details">
                 <h1 class="reservation-date">${day}</h1>
                 <p class="reservation-month">${month}</p>
@@ -698,9 +720,6 @@ function showConfirmationOverlay(roomName, date, time, seatNumber) {
         </div>
 
         <button class="home-btn" onclick="window.location.href='/dashboard'">Go Back to Home Page</button>
-
-
-        </button>
     `;
 
     confirmationOverlay.appendChild(confirmationContent);
