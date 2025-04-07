@@ -172,33 +172,7 @@ app.delete('/reservations/:id', isLabTech, async (req, res) => {
     }
 });
 
-// Current User Profile Reservations
-app.get("/profile-reservations", isAuthenticated, async (req, res) => {
-    try {
-        const email = req.query.email || req.session.user.email; // Use query parameter or fallback to logged-in user
-        console.log(`🔍 Fetching profile reservations for email: ${email}`);
 
-        const reservations = await Reservation.find({ email }).lean();
-
-        if (!reservations || reservations.length === 0) {
-            console.warn(`⚠️ No reservations found for ${email}.`);
-            return res.json([]);
-        }
-
-        const formattedReservations = reservations.map(reservation => ({
-            id: reservation._id,
-            roomNumber: reservation.room_num || "N/A",
-            seatNumber: `Seat #${reservation.seat_num}` || "N/A",
-            date: reservation.reserved_date ? reservation.reserved_date.toISOString().split("T")[0] : "N/A",
-            time: reservation.reserved_date ? reservation.reserved_date.toISOString().split("T")[1].slice(0, 5) : "N/A"
-        }));
-
-        res.json(formattedReservations);
-    } catch (err) {
-        console.error("⚠️ Error fetching profile reservations:", err);
-        res.status(500).json({ message: "Error fetching reservations", error: err.message });
-    }
-});
 
 // Student Dashboard Table Data
 app.get("/my-reservations", isAuthenticated, async (req, res) => {
@@ -208,11 +182,15 @@ app.get("/my-reservations", isAuthenticated, async (req, res) => {
             return res.status(401).json({ message: "User not logged in." });
         }
 
-        const userEmail = req.session.user.email; // Get current user's email
+        const userEmail = req.query.email || req.session.user.email;
+
+        // const userEmail = req.session.user.email; // Get current user's email
         console.log(`🔍 Fetching reservations for user: ${userEmail}`);
 
         // Query database for user's reservations
-        const reservations = await Reservation.find({ email: userEmail }).lean();
+        // let my_reservations = await Reservation.find({ email: userEmail }).lean();
+        let reservations = await Reservation.find({reserved_for_email: userEmail }).lean();
+        // let reservations = my_reservations.concat(labtech_reservations); //combine
 
         if (!reservations || reservations.length === 0) {
             console.warn(`⚠️ No reservations found for ${userEmail}.`);
@@ -862,7 +840,7 @@ app.post('/reserve', isAuthenticated, async (req, res) => {
             room_num: room_num,
             seat_num: seat_num,
             anonymous: anonStatus,
-            reserved_for_email: anonymous === "Y" ? null :  reserved_for // Set null if anonymous
+            reserved_for_email: reserved_for,
         })
 
         await newReservation.save()

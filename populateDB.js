@@ -278,7 +278,7 @@ async function insertReservations() {
                 room_num: "LB101",
                 seat_num: 1,
                 anonymous: "N",
-                reserved_for_id: student1.email // Assigned to a student
+                reserved_for_email: student1.email // Assigned to a student
             },
             {
                 email: student3.email,
@@ -288,7 +288,7 @@ async function insertReservations() {
                 room_num: "EC104",
                 seat_num: 3,
                 anonymous: "N",
-                reserved_for_id: student3.email // Assigned to a student
+                reserved_for_email: student3.email // Assigned to a student
             },
             {
                 email: student3.email,
@@ -298,7 +298,7 @@ async function insertReservations() {
                 room_num: "LB102",
                 seat_num: 1,
                 anonymous: "Y",
-                reserved_for_id: null // Anonymous reservation
+                reserved_for_email: student3.email // Anonymous reservation
             },
             {
                 email: student3.email,
@@ -308,39 +308,39 @@ async function insertReservations() {
                 room_num: "LB103",
                 seat_num: 1,
                 anonymous: "N",
-                reserved_for_id: student3.email // Anonymous reservation
+                reserved_for_email: student3.email // Anonymous reservation
             },
             {
-                email: student2.email,
+                email: admin2.email,
                 request_date: new Date("2025-04-09T14:45:00Z"),
                 reserved_date: new Date("2025-04-09T16:00:00Z"),
                 building_id: 3,
                 room_num: "LB103",
                 seat_num: 2,
                 anonymous: "N",
-                reserved_for_id: student2.email
+                reserved_for_email: student2.email
             },
             // 🔹 New Anonymous Reservation
             {
-                email: student3.email,
+                email: admin.email,
                 request_date: new Date("2025-04-09T12:00:00Z"),
                 reserved_date: new Date("2025-04-10T10:30:00Z"),
                 building_id: 1,
                 room_num: "SH105",
                 seat_num: 4,
                 anonymous: "Y", // ✅ Anonymous reservation
-                reserved_for_id: null
+                reserved_for_email: student3.email
             },
             // 🔹 New Non-Anonymous Reservation
             {
-                email: admin1.email,
+                email: admin.email,
                 request_date: new Date("2025-04-09T09:15:00Z"),
                 reserved_date: new Date("2025-04-19T15:45:00Z"),
                 building_id: 1,
                 room_num: "SH106",
                 seat_num: 1,
                 anonymous: "N", // ✅ Non-anonymous reservation
-                reserved_for_id: student1.email
+                reserved_for_email: student1.email
             }
         ]        
 
