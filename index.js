@@ -649,7 +649,7 @@ app.delete('/deleteaccount', isAuthenticated, async (req, res) => {
             reserved_date: { $gte: currentDate }
         });
 
-        const deletedSecurityQuestion = await SecurityQuestion.deleteOne({
+        const deletedSecurityQuestion = await SecurityQuestion.deleteMany({
             email: user_email,
         });
 
