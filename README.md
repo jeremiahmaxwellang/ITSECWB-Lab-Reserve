@@ -18,7 +18,7 @@ Labyrinth is a lab reservation web application where students can view availabil
 * Extract to desired folder (ex: C:\Users\Me\Downloads)
 * On command prompt, change directory to the path of the project folder. Example command below:
 ```
-cd Downloads/CCAPDEV_MCO-main
+cd Downloads/ITSECWB-main
 ``` 
 
 * Use the package manager [npm] to initialize the folder as a NodeJS project.
@@ -76,8 +76,9 @@ Charles Kevin Duelas
 [@Duelly01](https://github.com/Duelly01)
 
 Justin Lee
-[@juicetice] (https://github.com/juiceticedlsu)
+[@juicetice](https://github.com/juiceticedlsu)
 
 ## Acknowledgments
-* Sir Arturo Caronongan
+* Miss Katrina Solomon - ITSECWB Professor
+* Sir Arturo Caronongan - CCAPDEV Professor
 * [techie delight](https://www.techiedelight.com/generate-sha-256-hash-javascript/)
