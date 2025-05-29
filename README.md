@@ -1,4 +1,5 @@
 # Labyrinth: Lab Reservation System
+As part of our ITSECWB Case Study, this project aims to add security controls to a lab reservation system. 
 This application allows students to reserve seats in a desired computer laboratory.
 
 ## Description
