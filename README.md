@@ -54,7 +54,7 @@ node index.js
 
 Ensure port 3000 is free on your device before running the server
 
-## Authors
+## Original Authors
 Jeremiah Maxwell Ang
 [@jeremiahmaxwellang](https://github.com/jeremiahmaxwellang)
 
@@ -66,6 +66,17 @@ Charles Kevin Duelas
 
 Kyle de Jesus
 [@ikyledj](https://github.com/ikyledj)
+
+## ITSECWB Group 10 Members
+
+Jeremiah Maxwell Ang
+[@jeremiahmaxwellang](https://github.com/jeremiahmaxwellang)
+
+Charles Kevin Duelas
+[@Duelly01](https://github.com/Duelly01)
+
+Justin Lee
+[@juicetice] (https://github.com/juiceticedlsu)
 
 ## Acknowledgments
 * Sir Arturo Caronongan
